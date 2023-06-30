@@ -59,16 +59,16 @@ export const login = async (req, res) => {
 };
 
 export const getuser = async (req, res) => {
-  // const token = req.cookies.accessToken;
-  // if (!token) res.status(401).send("You are not authenticated");
-  // else {
-  try {
-    const user = await Company.findById(req.params.id);
-    res.send(user);
-  } catch (err) {
-    res.status(500).send("Something went wrong");
+  const token = req.cookies.accessToken;
+  if (!token) res.status(401).send("You are not authenticated");
+  else {
+    try {
+      const user = await Company.findById(req.params.id);
+      res.send(user);
+    } catch (err) {
+      res.status(500).send("Something went wrong");
+    }
   }
-  // }
 };
 
 export const logout = async (req, res) => {
