@@ -1,4 +1,4 @@
-import axios from "axios";
+import axios from "redaxios";
 
 export const upload = async (file) => {
   const data = new FormData();
