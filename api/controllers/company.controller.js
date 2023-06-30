@@ -63,6 +63,7 @@ export const getuser = async (req, res) => {
   // if (!token) res.status(401).send("You are not authenticated");
   // else {
   try {
+    // find user
     const user = await Company.findById(req.params.id);
     res.send(user);
   } catch (err) {
