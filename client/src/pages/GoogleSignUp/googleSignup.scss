@@ -1,0 +1,113 @@
+.googleSignUp {
+    margin-bottom: 30px;
+    .container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+        width: 100%;
+        height: auto;
+        .stakeholderContainer {
+            display: flex;
+            width: 60%;
+            border-radius: 25px;
+            justify-content: space-evenly;
+            background: #CDDDED;
+            align-items: center;
+            padding: 80px 50px;
+            .dropdownContainer{
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+                gap: 60px;
+                .dropdown {
+                    border-radius: 10px;
+                    height: 55px;
+                    outline: none;
+                    width: 300px;
+                    padding: 10px 30px;
+                    outline: none;
+                    border: none;
+                    background-color: #EBEBEB;
+                    letter-spacing: 1px;
+                    // color: #868686;
+                    font-weight: 100;
+                    font-size: 15px;
+                }
+            }
+        }
+        .topInputContainer {
+            display: flex;
+            width: 70%;
+            justify-content: space-evenly;
+            margin-top: 50px;   
+            .left, .right {
+                display: flex;
+                flex-direction: column;
+                gap: 20px;
+                align-items: center;
+                justify-content: center;
+                input, textarea {
+                    border-radius: 10px;
+                    height: 40px;
+                    width: 100%;
+                    padding: 10px 30px;
+                    outline: none;
+                    border: none;
+                    background-color: #EBEBEB;
+                    letter-spacing: 1px;
+                    // color: #868686;
+                    font-weight: 100;
+                    font-size: 15px;
+                    width: 300px;
+
+                }
+                textarea {
+                    height: 50px;
+                }
+            }
+            .right {
+            }
+        }
+        .collabs {
+            margin-top: 50px;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            .collabsinputs {
+                display: flex;
+                gap: 50px;
+                input, textarea {
+                    border-radius: 10px;
+                    height: 40px;
+                    width: 100%;
+                    padding: 10px 30px;
+                    outline: none;
+                    border: none;
+                    background-color: #EBEBEB;
+                    letter-spacing: 1px;
+                    // color: #868686;
+                    font-weight: 100;
+                    font-size: 15px;
+                    width: 300px;
+                }
+            }
+        }
+        button {
+            background-color: #87CEEB;
+                padding: 10px 30px;
+                border: none;
+                border-radius: 10px;
+                font-weight: 600;
+                letter-spacing: 1px;
+                font-size: 16px;
+                margin-top: 50px;
+                &:hover {
+                    cursor: pointer;
+                    box-shadow: 0px 0px 5px 1px #1a7fe3;
+    
+                }
+        }
+    }
+}

@@ -1,0 +1,15 @@
+.profileLinks {
+    display: flex;
+    align-items: center;
+    justify-content: start;
+    gap: 50px;
+    margin-left: 60px;
+    width: 200px;
+
+    .img {
+        height: 30px;
+    }
+    .linkText {
+        text-align: center;
+    }
+}

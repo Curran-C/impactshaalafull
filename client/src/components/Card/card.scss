@@ -1,0 +1,25 @@
+.card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background-color:#E2DCF8;
+    border-radius: 25px;
+    gap: 15px;
+    width: 25%;
+    padding: 30px 25px;
+    img {
+        width: 200px;
+    }
+    .title {
+        font-weight: 400;
+        font-size: 28px;
+        line-height: 35px;
+        text-align: center;
+    }
+    .text {
+        color: #858587;
+        text-align: center;
+
+    }
+}
