@@ -1,0 +1,22 @@
+.homePage {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-evenly;
+    width: 100%;
+
+    background-color: #D9DEF2;
+    .createpost {
+        margin-top: 0;
+    }
+    .left{
+        width: 25%;
+    }
+    .center {
+        width: 50%;
+    }
+    .right {
+        width: 25%;
+    }
+
+}

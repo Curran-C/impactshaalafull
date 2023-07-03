@@ -5,7 +5,8 @@ body {
   margin: 0px;
 }
 
-button {
+button,
+input {
   font-family: "Poppins", sans-serif;
 }
 

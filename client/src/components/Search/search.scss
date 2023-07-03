@@ -1,0 +1,41 @@
+.search {
+    display: flex;
+    flex-direction: column;
+    .title {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        .imgs {
+            display: flex;
+            gap: 40px;
+            img {
+                height: 30px;
+            }
+        }
+    }
+    .inputContainer {
+        display: flex;
+        gap: 20px;
+        .input {
+            width: 400px;
+            border-radius: 25px;
+            background-color: #fff;
+            display: flex;
+            align-items: center;
+            padding-left: 20px;
+            input {
+                border: none;
+                padding: 10px 50px 10px 20px;
+                border-radius: 25px;
+                outline: none;
+                font-size: 15px;
+            }
+        }
+        img {
+            &:hover {
+                cursor: pointer;
+            }
+        }
+
+    }
+}

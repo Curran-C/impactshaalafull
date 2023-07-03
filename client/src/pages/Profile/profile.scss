@@ -3,53 +3,6 @@
     .profileContainer {
         display: flex;
         gap: 50px;
-        .left {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            gap: 40px;
-            .createpost {
-                background-color: #759BD3;
-                border: none;
-                border-radius: 20px;
-                padding: 15px 25px;
-                margin-top: -600px;
-                color: white;
-                letter-spacing: 1px;
-                font-size: 15px;
-                outline: none;
-            }
-            .logout {
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                background: none;
-                border: none;
-                gap: 20px;
-                margin-top: 60px;
-                span {
-                    font-size: 18px;
-                }
-                &:hover { 
-                    cursor: pointer;
-                }
-            }
-        }
-        .right {
-            .intro {
-                display: flex;
-                flex-direction: column;
-                gap: 10px;
-                h1 {
-                    margin-bottom: 0;
-                }
-                p {
-                    margin-top: 0;
-                }
-
-            }
-        }
     }
 }
 

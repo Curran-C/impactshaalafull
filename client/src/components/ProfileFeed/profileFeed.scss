@@ -36,22 +36,7 @@
                 .company-info {
                     display: flex;
                     align-items: center;
-                    gap: 50px;
-                        .profile-links {
-                            display: flex;
-                            align-items: center;
-                            justify-content: start;
-                            gap: 10px;
-                            // width: 200px;
-                            .img {
-                                height: 20px;
-                            }
-                            .linkText {
-                                text-align: center;
-                                font-size: 15px;
-                            }
-                  
-                    }
+                    gap: 50px;                       
                 }
                 .company-about {
                     width: 700px;

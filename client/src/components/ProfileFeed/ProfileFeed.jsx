@@ -1,9 +1,8 @@
-
 import { corporate, location, nopfp } from "../../assets/profile";
 import Hex from "../Hex/Hex";
 import ProfileLinks from "../ProfileLinks/ProfileLinks";
+import Tile from "../Tile/Tile";
 import "./profileFeed.scss";
-
 
 const ProfileFeed = ({ user }) => {
   return (
@@ -18,14 +17,8 @@ const ProfileFeed = ({ user }) => {
             <img className="pfp" src={user.pfp || nopfp} alt="" />
             <div className="company-info">
               <h3>{user.companyName}</h3>
-              <div className="profile-links">
-                <img className="img" src={corporate} alt="" />
-                <span className="linkText">{user.stakeholder}</span>
-              </div>
-              <div className="profile-links">
-                <img className="img" src={location} alt="" />
-                <span className="linkText">{user.city}</span>
-              </div>
+              <Tile image={corporate} type={user.stakeholder} />
+              <Tile image={location} type={user.city} />
             </div>
             <div className="company-about">
               <p>{user.description}</p>

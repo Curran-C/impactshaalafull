@@ -1,10 +1,10 @@
 import "./profileLinks.scss";
 
-const ProfileLinks = (props) => {
+const ProfileLinks = ({ img, linkText, highlighted }) => {
   return (
-    <div className="profileLinks">
-      <img className="img" src={props.img} alt="" />
-      <span className="linkText">{props.linkText}</span>
+    <div className={`profileLinks ${highlighted ? "highlighted" : ""}`}>
+      <img className="img" src={img} alt="" />
+      <span className="linkText">{linkText}</span>
     </div>
   );
 };

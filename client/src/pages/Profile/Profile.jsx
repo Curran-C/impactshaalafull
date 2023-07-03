@@ -6,6 +6,9 @@ import { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 
 import "./profile.scss";
+import ProfileLeft from "../../components/ProfileLeft/ProfileLeft";
+import NameDate from "../../components/NameDate/NameDate";
+import { date } from "../../utils/date";
 
 const Profile = () => {
   // states
@@ -27,42 +30,12 @@ const Profile = () => {
     getUser();
   }, []);
 
-  // date
-  const current = new Date();
-  const month = current.toLocaleString("default", { month: "short" });
-  const day = current.toLocaleString("default", { weekday: "long" });
-  const date = `${day}, ${current.getDate()} ${month} ${current.getFullYear()}`;
-
-  // functions
-  const handleLogout = async () => {
-    try {
-      const res = await axios.get(
-        `${import.meta.env.VITE_BASE_URL}/api/company/logout`
-      );
-      navigate("/");
-    } catch (err) {
-      console.log(err);
-    }
-  };
   return (
     <div className="companyProfile">
       <div className="profileContainer">
-        <div className="left">
-          <button className="createpost">Create Post +</button>
-          <ProfileLinks img={chat} linkText={"Chat"} />
-          <ProfileLinks img={home} linkText={"Home"} />
-          <ProfileLinks img={savedposts} linkText={"Saved Posts"} />
-          <ProfileLinks img={feedback} linkText={"Feedbacks"} />
-          <button onClick={handleLogout} className="logout">
-            <img src={logout} alt="" />
-            <span>Logout</span>
-          </button>
-        </div>
+        <ProfileLeft />
         <div className="right">
-          <div className="intro">
-            <h1>Hello, {user.name}</h1>
-            <p>Today is {date}</p>
-          </div>
+          <NameDate name={user.name} date={date} />
           <ProfileFeed user={user} />
         </div>
       </div>
