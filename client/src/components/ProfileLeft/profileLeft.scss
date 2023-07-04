@@ -15,6 +15,9 @@
         letter-spacing: 1px;
         font-size: 15px;
         outline: none;
+        &:hover {
+            cursor: pointer;
+        }
     }
     .logout {
         display: flex;

@@ -1,4 +1,5 @@
 import HomeMiddle from "../../components/HomeMiddle/HomeMiddle";
+import HomeRight from "../../components/HomeRight/HomeRight";
 import ProfileLeft from "../../components/ProfileLeft/ProfileLeft";
 import "./home.scss";
 
@@ -11,7 +12,9 @@ const Home = () => {
       <div className="center">
         <HomeMiddle />
       </div>
-      <div className="right"></div>
+      <div className="right">
+        <HomeRight />
+      </div>
     </div>
   );
 };

@@ -1,0 +1,40 @@
+.chatSingle {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    gap: 20px;
+    padding: 20px 20px;
+    background: white;
+    border-radius: 25px;
+    img {
+        height: 40px;
+        border-radius: 100%;
+    }
+    .name {
+        display: flex;
+        flex-direction: column;
+
+        h4 {
+            margin: 0;
+        }
+        p {
+            font-size: 15px;
+            margin: 0;
+        }
+    }
+    .time{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        p {
+            margin: 0;
+        }
+        .unreadCounter {
+            font-size: 14px;
+            background: #D9D9D9;
+            padding: 2px 9px;
+            border-radius: 100%;
+        }
+    }
+    
+}

@@ -8,8 +8,10 @@ const HomeMiddle = () => {
   return (
     <div className="homeMiddle">
       <Search />
+      <h1 className="title">Recent Posts</h1>
       <Posts />
       <Collab />
+      <Posts />
     </div>
   );
 };

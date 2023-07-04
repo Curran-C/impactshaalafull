@@ -1,9 +1,16 @@
 .collab {
     display: flex;
+    flex-direction: column;
     overflow-x: scroll;
     gap: 20px;
     height: 500px;
-    background: white;
+    background: #F5F7F6;
     border-radius: 25px;
     margin-bottom: 80px;
+    padding: 20px 50px;
+    .companyNames {
+        display: flex;
+        flex-wrap: nowrap;
+        gap: 20px;
+    }
 }

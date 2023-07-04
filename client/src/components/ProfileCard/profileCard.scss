@@ -1,0 +1,44 @@
+.profileCard {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    border-radius: 25px;
+    background-color: white;
+    padding: 20px 50px;
+    .header {
+        display: flex;
+        justify-content: space-between;
+        width: 100%;
+    }
+    .profileInfo {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+        .profilepic {
+            height: 130px;
+            border-radius: 100%;
+        }
+        h2 {
+            margin: 0;
+        }
+        p {
+            text-align: center;
+            width: 100%;
+        }
+    }
+    button {
+        background-color: #759BD3;
+        border: none;
+        width: 250px;
+        border-radius: 20px;
+        padding: 10px 25px;
+        color: white;
+        letter-spacing: 1px;
+        font-size: 15px;
+        margin-top: 20px;
+        outline: none;
+    }
+}

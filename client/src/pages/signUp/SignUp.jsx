@@ -214,7 +214,7 @@ const SignUp = () => {
           <input
             onChange={(e) => handleSignUpInputChange(e)}
             required
-            placeholder="Enter you name"
+            placeholder="Enter your name"
             type="text"
             name="name"
             id=""
@@ -222,7 +222,7 @@ const SignUp = () => {
           <input
             onChange={(e) => handleSignUpInputChange(e)}
             required
-            placeholder="Enter you email"
+            placeholder="Enter your email"
             type="email"
             name="email"
             id=""
@@ -230,7 +230,7 @@ const SignUp = () => {
           <input
             onChange={(e) => handleSignUpInputChange(e)}
             required
-            placeholder="Enter you password"
+            placeholder="Enter your password"
             type="password"
             name="password"
             id=""

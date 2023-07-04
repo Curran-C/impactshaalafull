@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import "./googleSignup.scss";
 import axios from "axios";
 import { gmail } from "../../assets/signUp";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { upload } from "../../../../api/utils/upload";
 
 // this page is shown after google signup
@@ -13,6 +13,7 @@ const GoogleSignUp = () => {
   const { id } = useParams();
   const [updatedUser, setUpdatedUser] = useState({});
   const [coverImg, setCoverImg] = useState("");
+  const navigate = useNavigate();
 
   // functions
   // tag input
@@ -32,16 +33,17 @@ const GoogleSignUp = () => {
   const handleFormSubmit = async (e) => {
     e.preventDefault();
     console.log(updatedUser);
-    const coverPicUrl = upload(coverImg);
+    const coverPicUrl = await upload(coverImg);
     try {
       const res = await axios.post(
         `${import.meta.env.VITE_BASE_URL}/api/company/updateuser/${id}`,
         {
           ...updatedUser,
-          coverImg: coverPicUrl?.toString(),
+          coverPic: coverPicUrl?.toString(),
           tags: tags,
         }
       );
+      navigate(`/profile/${res.data._id}`);
     } catch (err) {
       console.log(err);
     }

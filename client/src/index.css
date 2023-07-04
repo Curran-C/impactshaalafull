@@ -6,7 +6,8 @@ body {
 }
 
 button,
-input {
+input,
+textarea {
   font-family: "Poppins", sans-serif;
 }
 

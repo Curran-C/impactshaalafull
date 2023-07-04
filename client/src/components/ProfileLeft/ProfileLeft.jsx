@@ -1,11 +1,16 @@
 import "./profileLeft.scss";
+
 import ProfileLinks from "../ProfileLinks/ProfileLinks";
-import { chat, feedback, home, logout, savedposts } from "../../assets/profile";
 import axios from "axios";
+import CreatePost from "../CreatePost/CreatePost";
+
+import { chat, feedback, home, logout, savedposts } from "../../assets/profile";
 import { useNavigate } from "react-router-dom";
+import { useState } from "react";
 
 const ProfileLeft = ({ page }) => {
   const navigate = useNavigate();
+  const [showCreatePost, setShowCreatePost] = useState(false);
 
   const handleLogout = async () => {
     try {
@@ -17,10 +22,19 @@ const ProfileLeft = ({ page }) => {
       console.log(err);
     }
   };
+  const handleCancel = (prop) => {
+    setShowCreatePost(prop);
+  };
 
   return (
     <div className="profileLeft">
-      <button className="createpost">Create Post +</button>
+      {showCreatePost && <CreatePost onCancel={handleCancel} />}
+      <button
+        className="createpost"
+        onClick={() => handleCancel(!showCreatePost)}
+      >
+        Create Post +
+      </button>
       <ProfileLinks
         highlighted={page === "chat" ? true : false}
         img={chat}

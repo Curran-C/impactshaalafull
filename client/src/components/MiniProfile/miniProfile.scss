@@ -1,0 +1,26 @@
+.miniProfile {
+    display: flex;
+    border-radius: 25px;
+    background-color: #F5F7F6;
+    height: 100px;
+    justify-content: center;
+    align-items: center;
+    .container {
+        display: flex;
+        gap: 20px;
+        .pfp {
+            height: 50px;
+            border-radius: 100%;
+            
+        }
+        .about {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            h4{
+                margin: 0;
+            }
+        }
+    }
+    
+}
