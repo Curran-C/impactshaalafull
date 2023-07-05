@@ -16,6 +16,10 @@
     &:hover {
         cursor: pointer;
     }
+    &:hover {
+        background: white;
+        border-radius: 25px;
+    }
 }
 .highlighted {
     background: white;

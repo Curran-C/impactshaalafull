@@ -4,7 +4,14 @@ import ProfileLinks from "../ProfileLinks/ProfileLinks";
 import axios from "axios";
 import CreatePost from "../CreatePost/CreatePost";
 
-import { chat, feedback, home, logout, savedposts } from "../../assets/profile";
+import {
+  chat,
+  feedback,
+  home,
+  logout,
+  savedposts,
+  settings,
+} from "../../assets/profile";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 
@@ -54,6 +61,11 @@ const ProfileLeft = ({ page }) => {
         highlighted={page === "feedback" ? true : false}
         img={feedback}
         linkText={"Feedbacks"}
+      />
+      <ProfileLinks
+        highlighted={page === "settings" ? true : false}
+        img={settings}
+        linkText={"Settings"}
       />
       <button onClick={handleLogout} className="logout">
         <img src={logout} alt="" />

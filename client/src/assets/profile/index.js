@@ -5,6 +5,7 @@ import logout from "./logincurve.svg";
 import savedposts from "./savedposts.svg";
 import corporate from "./corporate.svg";
 import location from "./location.svg";
+import settings from "./settings.svg";
 import hex from "./hex.png";
 import nopfp from "./nopfp.png";
 
@@ -18,4 +19,5 @@ export {
   corporate,
   location,
   nopfp,
+  settings,
 };

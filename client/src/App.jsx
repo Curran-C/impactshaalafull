@@ -9,6 +9,7 @@ import GoogleSignUp from "./pages/GoogleSignUp/GoogleSignUp";
 import Home from "./pages/Home/Home";
 import SavedPosts from "./pages/SavedPosts/SavedPosts";
 import Chats from "./pages/Chat/Chats";
+import Settings from "./pages/Settings/Settings";
 
 function App() {
   return (
@@ -21,6 +22,7 @@ function App() {
         <Route path="/home/:id" element={<Home />} />
         <Route path="/savedPosts/:id" element={<SavedPosts />} />
         <Route path="/chat/:id" element={<Chats />} />
+        <Route path="/settings/:id" element={<Settings />} />
       </Routes>
     </BrowserRouter>
   );

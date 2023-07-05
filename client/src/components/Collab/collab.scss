@@ -1,7 +1,6 @@
 .collab {
     display: flex;
     flex-direction: column;
-    overflow-x: scroll;
     gap: 20px;
     height: 500px;
     background: #F5F7F6;
@@ -9,6 +8,7 @@
     margin-bottom: 80px;
     padding: 20px 50px;
     .companyNames {
+        overflow-x: scroll;
         display: flex;
         flex-wrap: nowrap;
         gap: 20px;
