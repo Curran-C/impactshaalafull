@@ -16,8 +16,10 @@
                 margin: 0;
             }
             .pfp {
-                border-radius: 50px;
                 height: 50px;
+                object-fit: cover;
+                width: 50px;
+                border-radius: 50px;
             }
             .userAbout {
                 display: flex;
@@ -44,6 +46,7 @@
         background: #F5F7F6;
         padding: 0px 30px;
         height: 200px;
+        width: 550px;
         border-radius: 25px;
         .containerFooter {
             align-items: center;

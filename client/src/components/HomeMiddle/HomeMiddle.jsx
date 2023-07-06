@@ -11,7 +11,7 @@ const HomeMiddle = () => {
       <h1 className="title">Recent Posts</h1>
       <Posts />
       <Collab />
-      <Posts />
+      {/* <Posts /> */}
     </div>
   );
 };

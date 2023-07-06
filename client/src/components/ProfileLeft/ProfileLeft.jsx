@@ -15,10 +15,13 @@ import {
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 
+// functional component
 const ProfileLeft = ({ page }) => {
+  // states
   const navigate = useNavigate();
   const [showCreatePost, setShowCreatePost] = useState(false);
 
+  // functions
   const handleLogout = async () => {
     try {
       const res = await axios.get(
@@ -33,6 +36,7 @@ const ProfileLeft = ({ page }) => {
     setShowCreatePost(prop);
   };
 
+  // return
   return (
     <div className="profileLeft">
       {showCreatePost && <CreatePost onCancel={handleCancel} />}
