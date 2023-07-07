@@ -30,19 +30,19 @@ const Home = () => {
   }, []);
 
   return (
-    <UserContext.Provider value={user}>
-      <div className="homePage">
-        <div className="left">
-          <ProfileLeft page={"home"} />
-        </div>
-        <div className="center">
-          <HomeMiddle />
-        </div>
-        <div className="right">
-          <HomeRight />
-        </div>
+    <div className="homePage">
+      <div className="left">
+        <ProfileLeft page={"home"} />
       </div>
-    </UserContext.Provider>
+      <div className="center">
+        <UserContext.Provider value={user}>
+          <HomeMiddle />
+        </UserContext.Provider>
+      </div>
+      <div className="right">
+        <HomeRight user={user} />
+      </div>
+    </div>
   );
 };
 

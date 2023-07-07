@@ -11,24 +11,38 @@ import { corporate, location } from "../../assets/profile";
 import "./post.scss";
 import Tile from "../Tile/Tile";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
 const Post = ({ post }) => {
   // states
   const [bookmarked, setBookmarked] = useState(false);
   const [user, setUser] = useState();
+  const { id } = useParams();
   const navigate = useNavigate();
 
   // side effects
   useEffect(() => {
     const getUser = async () => {
       try {
+        // getting post of the user
         const res = await axios.get(
           `${import.meta.env.VITE_BASE_URL}/api/company/getuser/${
             post.createdById
           }`
         );
         setUser(res.data);
+        // checking if user has bookmarked post and setting bookmarked state
+        try {
+          const res = await axios.get(
+            `${import.meta.env.VITE_BASE_URL}/api/company/getuser/${id}`
+          );
+          const bookmarkedPosts = res.data.bookmarkedPosts;
+          bookmarkedPosts?.map((bookmarkedPost) => {
+            if (bookmarkedPost === post._id) setBookmarked(true);
+          });
+        } catch (err) {
+          console.log(err);
+        }
       } catch (err) {
         console.log(err);
       }
@@ -37,8 +51,35 @@ const Post = ({ post }) => {
   }, []);
 
   // function
-  const handleBookmark = () => {
+  const handleBookmark = async () => {
     setBookmarked(!bookmarked);
+    // only works in reverse for some reason
+    if (bookmarked === false) {
+      console.log("Bookmarked");
+      try {
+        const res = await axios.post(
+          `${import.meta.env.VITE_BASE_URL}/api/company/updateuser/${id}`,
+          {
+            $push: { bookmarkedPosts: post._id },
+          }
+        );
+        console.log(res.data);
+      } catch (err) {
+        console.log(err);
+      }
+    } else if (bookmarked === true) {
+      console.log("Unbookmarked");
+      try {
+        const res = await axios.post(
+          `${import.meta.env.VITE_BASE_URL}/api/company/updateuser/${id}`,
+          {
+            $pull: { bookmarkedPosts: post?._id },
+          }
+        );
+      } catch (err) {
+        console.log(err);
+      }
+    }
   };
   return (
     <div className="post">
@@ -54,9 +95,9 @@ const Post = ({ post }) => {
           </div>
         </div>
         <img
-          src={bookmarked ? bookmark : bookmarkfilled}
-          alt=""
-          onClick={handleBookmark}
+          src={bookmarked ? bookmarkfilled : bookmark}
+          alt="bookmark"
+          onClick={() => handleBookmark()}
           className="bookmark"
         />
       </div>

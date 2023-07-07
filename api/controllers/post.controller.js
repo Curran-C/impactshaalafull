@@ -46,4 +46,17 @@ const getAllPosts = async (req, res) => {
   }
 };
 
-export { createPost, getPostByUser, getAllPosts};
+const getSomePosts = async (req, res) => {
+  const token = req.cookies.accessToken;
+  if (!token) res.status(401).send("You are not authenticated");
+  else {
+    try {
+      const posts = await Post.findById(req.params.id);
+      res.status(200).send(posts);
+    } catch (err) {
+      res.status(500).send(err);
+    }
+  }
+};
+
+export { createPost, getPostByUser, getAllPosts, getSomePosts };

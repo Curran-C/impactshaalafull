@@ -88,6 +88,10 @@ const companySchema = new Schema(
       // required: true,
       // default: "",
     },
+    bookmarkedPosts: {
+      type: Array,
+      default: [],
+    },
   },
   {
     timestamps: true,

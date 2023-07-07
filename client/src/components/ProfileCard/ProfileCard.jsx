@@ -7,8 +7,7 @@ import { useContext, useEffect, useState } from "react";
 import axios from "axios";
 import { UserContext } from "../../pages/Home/Home";
 
-const ProfileCard = () => {
-  const user = useContext(UserContext);
+const ProfileCard = ({ user }) => {
 
   // states
 
@@ -16,6 +15,7 @@ const ProfileCard = () => {
 
   return (
     <div className="profileCard">
+      {console.log(user)}
       <div className="header">
         <h2>Profile</h2>
         <img src={edit} alt="" />

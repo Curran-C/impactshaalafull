@@ -2,10 +2,10 @@ import Preferences from "../Preferences/Preferences";
 import ProfileCard from "../ProfileCard/ProfileCard";
 import "./homeRight.scss";
 
-const HomeRight = () => {
+const HomeRight = ({ user }) => {
   return (
     <div className="homeRight">
-      <ProfileCard />
+      <ProfileCard user={user} />
       <Preferences />
     </div>
   );

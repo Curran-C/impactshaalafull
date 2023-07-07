@@ -1,10 +1,34 @@
+import { useEffect, useState } from "react";
 import { corporate, location, nopfp } from "../../assets/profile";
 import Hex from "../Hex/Hex";
 import ProfileLinks from "../ProfileLinks/ProfileLinks";
 import Tile from "../Tile/Tile";
 import "./profileFeed.scss";
+import axios from "axios";
+import { useParams, useSearchParams } from "react-router-dom";
+import Posts from "../Posts/Posts";
 
 const ProfileFeed = ({ user }) => {
+  const { id } = useParams();
+
+  // states
+  const [posts, setPosts] = useState();
+
+  useEffect(() => {
+    const getPosts = async () => {
+      try {
+        const res = await axios.get(
+          `${import.meta.env.VITE_BASE_URL}/api/post/getpost/${id}`
+        );
+        setPosts(res.data);
+      } catch (err) {
+        console.log(err);
+      }
+    };
+
+    getPosts();
+  }, []);
+
   return (
     <div className="profile">
       {console.log(user)}
@@ -43,7 +67,7 @@ const ProfileFeed = ({ user }) => {
 
         <div className="posts">
           <h2>Your Posts</h2>
-          <div className="post-placeholder"></div>
+          <Posts posts={posts} />
         </div>
       </div>
     </div>
