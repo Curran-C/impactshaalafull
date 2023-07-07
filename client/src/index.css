@@ -11,6 +11,16 @@ textarea {
   font-family: "Poppins", sans-serif;
 }
 
+button:hover {
+  cursor: pointer;
+}
+p:hover,
+h1:hover,
+h2:hover,
+h3:hover {
+  cursor: default;
+}
+
 .carousel-root .carousel {
   height: 500px;
   object-fit: contain;

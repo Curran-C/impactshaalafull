@@ -1,0 +1,31 @@
+.feedbackCard {
+    background: white;
+    width: 300px;
+    padding: 20px;
+    margin-top: 20px;
+    border-radius: 25px;
+    .feedbackprofile {
+        display: flex;
+        gap: 20px;
+        .pfp {
+            height: 50px;
+            border-radius: 100%;
+            
+        }
+        .about {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            h4{
+                margin: 0;
+            }
+        }
+    }
+    .feedbacktext {
+        padding: 20px;
+        text-align: center;
+        background: #F5F7F6;
+        margin-top:  20px;
+        border-radius: 25px;
+    }
+}
