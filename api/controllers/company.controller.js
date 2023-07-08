@@ -35,21 +35,21 @@ export const login = async (req, res) => {
         req.body.password,
         user.password
       );
-      // if (!isCorrectPassword)
-      //   return next(createError(400, "Wrong password or Email!"));
-      // // generates token than will then then be passed as cookie
-      // const token = jwt.sign(
-      //   {
-      //     id: user._id,
-      //   },
-      //   process.env.JWT_KEY
-      // );
+      if (!isCorrectPassword)
+        return next(createError(400, "Wrong password or Email!"));
+      // generates token than will then then be passed as cookie
+      const token = jwt.sign(
+        {
+          id: user._id,
+        },
+        process.env.JWT_KEY
+      );
 
       const { password, ...info } = user._doc;
       res
-        // .cookie("accessToken", token, {
-        //   // httpOnly: true, //generates cookie with accessToken as it's name and token variable as its value with httpOnly rule
-        // })
+        .cookie("accessToken", token, {
+          // httpOnly: true, //generates cookie with accessToken as it's name and token variable as its value with httpOnly rule
+        })
         .status(200)
         .send(info);
     }
