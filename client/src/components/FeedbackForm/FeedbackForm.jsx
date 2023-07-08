@@ -37,6 +37,7 @@ const FeedbackForm = ({ onCancel }) => {
         }
       );
       console.log(feedbackWriter.data);
+      location.reload();
     } catch (err) {
       console.log(err);
     }
