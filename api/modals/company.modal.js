@@ -92,6 +92,14 @@ const companySchema = new Schema(
       type: Array,
       default: [],
     },
+    feedbacksGiven: {
+      type: Array,
+      default: [],
+    },
+    feedbacksRecieved: {
+      type: Array,
+      default: [],
+    },
   },
   {
     timestamps: true,

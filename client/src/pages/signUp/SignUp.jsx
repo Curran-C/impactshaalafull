@@ -154,7 +154,7 @@ const SignUp = () => {
           coverPic: coverPicUrl?.toString(),
         }
       );
-      navigate("/");
+      navigate(`/profile/${res._id}`);
     } catch (err) {
       console.log(err);
     }
@@ -164,7 +164,6 @@ const SignUp = () => {
     setOldUser((prev) => {
       return { ...prev, [e.target.name]: e.target.value };
     });
-    console.log(oldUser);
   };
   const handleSignInChange = () => {
     setSignInState(true);
