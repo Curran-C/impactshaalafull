@@ -1,14 +1,16 @@
+import { useEffect } from "react";
 import ChatSingle from "../ChatSingle/ChatSingle";
+import axios from "axios";
 import "./chatsAll.scss";
+import { useParams } from "react-router-dom";
 
-const ChatsAll = () => {
+const ChatsAll = ({ user, chats }) => {
   return (
     <div className="chatsAll">
-      <ChatSingle />
-      <ChatSingle />
-      <ChatSingle />
-      <ChatSingle />
-      <ChatSingle />
+      {console.log(user)}
+      {chats?.map((chat) => (
+        <ChatSingle key={chat._id} chat={chat} currentUserId={user?._id} />
+      ))}
     </div>
   );
 };

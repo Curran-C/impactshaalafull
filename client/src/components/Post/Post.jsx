@@ -109,7 +109,7 @@ const Post = ({ post }) => {
             <img
               src={chatblue}
               alt=""
-              onClick={() => navigate(`/chats/${post.createdById}`)}
+              onClick={() => navigate(`/chats/${id + post.createdById}`)}
             />
             <img
               src={backblue}

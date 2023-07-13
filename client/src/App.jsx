@@ -22,7 +22,7 @@ function App() {
         <Route path="/googlesignup/:id" element={<GoogleSignUp />} />
         <Route path="/home/:id" element={<Home />} />
         <Route path="/savedPosts/:id" element={<SavedPosts />} />
-        <Route path="/chat/:id" element={<Chats />} />
+        <Route path="/chats/:id" element={<Chats />} />
         <Route path="/settings/:id" element={<Settings />} />
         <Route path="/feedbacks/:id" element={<Feedback />} />
       </Routes>

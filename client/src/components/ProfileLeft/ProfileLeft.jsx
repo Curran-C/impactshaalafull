@@ -49,7 +49,7 @@ const ProfileLeft = ({ page }) => {
       <ProfileLinks
         highlighted={page === "chat" ? true : false}
         img={chat}
-        linkText={"Chat"}
+        linkText={"Chats"}
       />
       <ProfileLinks
         highlighted={page === "home" ? true : false}
