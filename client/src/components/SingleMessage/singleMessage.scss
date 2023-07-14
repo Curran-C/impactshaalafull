@@ -1,0 +1,42 @@
+.singleChat {
+    gap: 30px;
+    display: flex;
+    // flex-direction: row;
+    width: 100%;
+    align-items: start;
+    margin-bottom: 10px;
+    .imgandtime {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 5px;
+        .pfpsmaller{
+            height: 40px;
+            width: 40px;
+            object-fit: cover;
+            border-radius: 25px;
+        }
+        p {
+            margin: 0;
+            font-size: 10px;
+        }
+    }
+    .messages {
+        display: flex;
+        flex-direction: column;
+        .message {
+            width: 300px;
+            background: #F5F7FB;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 15px;
+        }
+    }
+}
+.chatright {
+    flex-direction: row-reverse;
+}
+.chatleft {
+    flex-direction: row;
+}

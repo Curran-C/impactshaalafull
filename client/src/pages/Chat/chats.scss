@@ -36,6 +36,15 @@
                     outline: none;
                 }
             }
+            .chatsAll {
+                display: flex;
+                flex-direction: column;
+                background-color: #F1F1F1;
+                height: 500px;
+                gap: 10px;
+                border-radius: 25px;
+                padding: 20px 20px;
+            }
         }
     }
 }

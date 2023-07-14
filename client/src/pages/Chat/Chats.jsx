@@ -1,18 +1,49 @@
 import { useParams } from "react-router-dom";
 import { search } from "../../assets/home";
 import { chat } from "../../assets/profile";
+
+import ChatSingle from "../../components/ChatSingle/ChatSingle";
 import ChatMessages from "../../components/ChatMessages/ChatMessages";
-import ChatsAll from "../../components/ChatsAll/ChatsAll";
-import "./chats.scss";
-import { useEffect, useState } from "react";
+
+import { useEffect, useRef, useState } from "react";
 import axios from "axios";
+import { io } from "socket.io-client";
+
+import "./chats.scss";
 
 const Chats = () => {
   const { id } = useParams();
 
   const [loggedInUser, setLoggedInUser] = useState();
   const [chats, setChats] = useState();
+  const [currentChat, setCurrentChat] = useState(null);
+  const [onlineUsers, setOnlineUsers] = useState([]);
+  const [sendMessage, setSendMessage] = useState(null);
+  const [recieveMessage, setRecieveMessage] = useState(null);
+  const socket = useRef();
 
+  //SOCKET IO
+  useEffect(() => {
+    socket.current = io("http://localhost:8800");
+    socket.current.emit("new-user-add", loggedInUser?.data._id);
+    socket.current.on("get-users", (users) => {
+      setOnlineUsers(users);
+    });
+  }, [loggedInUser]);
+
+  // RECIEVE MESSAGE FROM SOCKET SERVER
+  useEffect(() => {
+    socket.current.on("recieve-message", (data) => {
+      setRecieveMessage(data);
+    });
+  }, []);
+
+  //SEND MESSAGE TO SOCKET IO SERVER
+  useEffect(() => {
+    if (sendMessage !== null) {
+      socket.current.emit("send-message", sendMessage);
+    }
+  }, [sendMessage]);
   useEffect(() => {
     //GET USER
     const getUser = async () => {
@@ -21,7 +52,6 @@ const Chats = () => {
           `${import.meta.env.VITE_BASE_URL}/api/company/getuser/${id}`
         );
         setLoggedInUser(user);
-        console.log(loggedInUser);
       } catch (err) {
         console.log(err);
       }
@@ -34,7 +64,6 @@ const Chats = () => {
           `${import.meta.env.VITE_BASE_URL}/api/chat/${id}`
         );
         setChats(allchats);
-        console.log(chats);
       } catch (err) {
         console.log(err);
       }
@@ -55,10 +84,26 @@ const Chats = () => {
             <img src={search} alt="search" />
             <input type="text" placeholder="Search" />
           </div>
-          <ChatsAll user={loggedInUser?.data} chats={chats?.data} />
+          <div className="chatsAll">
+            {chats?.data.map((chat) => (
+              <ChatSingle
+                showChat={setCurrentChat}
+                key={chat._id}
+                chat={chat}
+                currentUserId={loggedInUser?.data._id}
+              />
+            ))}
+          </div>
         </div>
         <div className="right">
-          <ChatMessages />
+          {currentChat && (
+            <ChatMessages
+              chat={currentChat}
+              currentUserId={loggedInUser?.data._id}
+              setSendMessage={setSendMessage}
+              recieveMessage={recieveMessage}
+            />
+          )}
         </div>
       </div>
     </div>

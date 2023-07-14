@@ -6,6 +6,9 @@
     padding: 20px 20px;
     background: white;
     border-radius: 25px;
+    &:hover{
+        cursor: pointer;
+    }
     img {
         height: 40px;
         width: 40px;
