@@ -31,19 +31,22 @@ const Chats = () => {
     });
   }, [loggedInUser]);
 
-  // RECIEVE MESSAGE FROM SOCKET SERVER
-  useEffect(() => {
-    socket.current.on("recieve-message", (data) => {
-      setRecieveMessage(data);
-    });
-  }, []);
-
   //SEND MESSAGE TO SOCKET IO SERVER
   useEffect(() => {
     if (sendMessage !== null) {
       socket.current.emit("send-message", sendMessage);
     }
   }, [sendMessage]);
+
+  // RECIEVE MESSAGE FROM SOCKET SERVER
+  useEffect(() => {
+    console.log("44");
+    socket.current.on("recieve-message", (data) => {
+      console.log(data);
+      setRecieveMessage(data);
+    });
+  }, [sendMessage]);
+
   useEffect(() => {
     //GET USER
     const getUser = async () => {
@@ -96,6 +99,7 @@ const Chats = () => {
           </div>
         </div>
         <div className="right">
+          {console.log(recieveMessage)}
           {currentChat && (
             <ChatMessages
               chat={currentChat}

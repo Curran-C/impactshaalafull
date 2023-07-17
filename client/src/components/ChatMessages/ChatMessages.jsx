@@ -20,8 +20,9 @@ const ChatMessages = ({
 
   // SETTING RECIEVED MESSAGE
   useEffect(() => {
+    console.log(recieveMessage);
     if (recieveMessage !== null && recieveMessage?.chatId === chat?._id) {
-      setMessages([...messages, recieveMessage]);
+      setMessages([...messages, recieveMessage?.text]);
     }
   }, [recieveMessage]);
 
@@ -82,7 +83,6 @@ const ChatMessages = ({
         }
       );
       setMessages([...messages, res.data]);
-      console.log(newMessage);
     } catch (err) {
       console.log(err);
     }
@@ -94,6 +94,11 @@ const ChatMessages = ({
     setNewMessage("");
   };
 
+  // SCROLL TO LAST CHAT
+  useEffect(() => {
+    scroll.current?.scrollIntoView({ behavior: "smooth" });
+  }, [messages]);
+
   return (
     <div className="chatMessages">
       <div className="name">
@@ -104,7 +109,8 @@ const ChatMessages = ({
       <div className="chats">
         {messages?.map((message) => (
           <div
-            key={message}
+            ref={scroll}
+            key={message._id}
             className={`singleChat ${
               message.senderId === currentUserId ? "chatright" : "chatleft"
             }`}

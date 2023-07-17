@@ -23,3 +23,26 @@
 
     }
 }
+
+@media (max-width: 1024px) {
+    .card{
+        .title{
+            font-size: 20px;
+        }
+    }
+}
+@media (max-width: 768px) {
+    .card{
+        img {
+            width: 150px;
+        }
+        .title{
+            font-size: 18px;
+            line-height: 25px;
+        }
+        .text{
+            font-size: 15px;
+            line-height: 20px;
+        }
+    }
+}

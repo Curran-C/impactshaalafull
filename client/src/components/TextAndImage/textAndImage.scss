@@ -1,0 +1,106 @@
+.beforeAboutUsWrapperOne {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    .left {
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+        width: 700px;
+        align-items: start;
+        .titleContainer {
+            display: flex;
+            flex-direction: column;
+            .line {
+                text-align: left;
+                width: 110px;
+                height: 14px;
+                border-radius: 50px;
+                background-color:#02C8AF;
+            }
+            .title {
+                text-align: center;
+                font-weight: 600;
+                font-size: 40px;
+            }
+        }
+        .textContainer {
+            width: 600px;
+            display: flex;
+            gap: 20px;
+            flex-direction: column;
+            span {
+                font-size: 18px;
+                line-height: 32px;
+            }
+        }
+    }
+    .right {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        img {
+            width: 500px;
+        }
+    }
+}
+.reverse {
+    flex-direction: row-reverse;
+}
+
+@media (max-width: 1024px) {
+        .beforeAboutUsWrapperOne{
+            .left {
+                width: 500px;
+                .titleContainer{
+                    .title {
+                        font-size: 30px;   
+                        text-align: left;
+                    }
+                }
+                .textContainer {
+                    width: 500px;
+                    span {
+                        font-size: 16px;
+                        line-height: 25px;
+                    }
+                }
+            }
+            .right {
+                img {
+                    width: 380px;
+                    // height: 350px;
+                }
+            }
+        }
+            
+}
+
+@media (max-width: 768px) {
+    .beforeAboutUsWrapperOne{
+        flex-direction: column;
+        .left {
+            width: 600px;
+            .titleContainer{
+                .title {
+                    font-size: 25px;   
+                    text-align: left;
+                }
+            }
+            .textContainer {
+                width: 600px;
+                span {
+                    font-size: 15px;
+                    line-height: 25px;
+                }
+            }
+        }
+        .right {
+            img {
+                width: 380px;
+                // height: 350px;
+            }
+        }
+    }
+}

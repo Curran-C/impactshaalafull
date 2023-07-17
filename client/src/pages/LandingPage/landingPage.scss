@@ -1,23 +1,5 @@
 .landingPage {
-    .dot {
-        height: 1000px;
-        width: 2300px;
-        position: absolute;
-        top: -350px;
-        left: -350px;
-        z-index: -10;
-        border-radius: 45% 55% 35% 65% / 41% 23% 77% 59%  ;
-        overflow-x: hidden;
-        background-color: #cddded;
-    }
-    .blob1 {
-        position: absolute;
-        height: 800px;
-        z-index: -9;
-        right: -200px;
-        rotate: -10deg;
-        top: -300px;
-    }
+    width: 100%;
     .leftblob {
         position: absolute;
         height: 800px;
@@ -30,7 +12,6 @@
         top: 2500px;
         right: 0;
         z-index: -10;
-
     }
     .rightblob2 {
         width: 800px;
@@ -40,7 +21,7 @@
         width: 100%;
         display: flex;
         justify-content: center;
-        // align-items: center;
+        align-items: center;
         .heroContainer {
             display: flex;
             justify-content: space-between;
@@ -89,23 +70,6 @@
                 align-items: center;
                 justify-content: center;
                 gap: 12px;
-                .titleWrapper {
-                    display: flex;
-                    flex-direction: column;
-                    // gap: 10px;
-                    .line {
-                        text-align: left;
-                        width: 110px;
-                        height: 14px;
-                        border-radius: 50px;
-                        background-color:#02C8AF;
-                    }
-                    .title {
-                        text-align: center;
-                        font-weight: 600;
-                        font-size: 45px;
-                    }
-                }
                     .subTitle {
                         font-weight: 400;
                         font-size: 23px;
@@ -138,24 +102,6 @@
                 justify-content: center;
                 gap: 12px;
                 width: 950px;
-                .titleWrapper {
-                    display: flex;
-                    flex-direction: column;
-                    align-items: start;
-                    // gap: 10px;
-                    .line {
-                        text-align: left;
-                        width: 110px;
-                        height: 14px;
-                        border-radius: 50px;
-                        background-color:#02C8AF;
-                    }
-                    .title {
-                        text-align: center;
-                        font-weight: 600;
-                        font-size: 45px;
-                    }
-                }
             }
             .videoPlaceholder {
                 background-color: #D9D9D9;
@@ -175,55 +121,10 @@
         .beforeAboutUsContainer {
             display: flex;
             width: 90%;
+            gap: 80px;
             justify-content: center;
             flex-direction: column;
             align-items: center;
-            .beforeAboutUsWrapperOne {
-                display: flex;
-                justify-content: space-between;
-                align-items: center;
-                width: 100%;
-                .left {
-                    display: flex;
-                    flex-direction: column;
-                    gap: 20px;
-                    width: 700px;
-                    align-items: start;
-                    .titleContainer {
-                        display: flex;
-                        flex-direction: column;
-                        
-                        .line {
-                            text-align: left;
-                            width: 110px;
-                            height: 14px;
-                            border-radius: 50px;
-                            background-color:#02C8AF;
-                        }
-                        .title {
-                            text-align: center;
-                            font-weight: 600;
-                            font-size: 40px;
-                        }
-                    }
-                    .textContainer {
-                        width: 600px;
-                        display: flex;
-                        gap: 20px;
-                        flex-direction: column;
-                        span {
-                            font-size: 18px;
-                            line-height: 32px;
-                        }
-                    }
-                }
-                .right {
-                    img {
-                        width: 500px;
-                    }
-                }
-            } 
-            
             .beforeAboutUsWrapperTwo {
                 display: flex;
                 justify-content: space-between;
@@ -239,18 +140,6 @@
                     .titleContainer {
                         display: flex;
                         flex-direction: column;
-                        .line {
-                            text-align: left;
-                            width: 110px;
-                            height: 14px;
-                            border-radius: 50px;
-                            background-color:#02C8AF;
-                        }
-                        .title {
-                            text-align: center;
-                            font-weight: 600;
-                            font-size: 40px;
-                        }
                     }
                     .textContainer {
                         width: 600px;
@@ -284,24 +173,6 @@
                 display: flex;
                 flex-direction: column;
                 align-items: center;
-                .titleWrapper {
-                    display: flex;
-                    flex-direction: column;
-                    align-items: start;
-                    // gap: 10px;
-                    .line {
-                        text-align: left;
-                        width: 110px;
-                        height: 14px;
-                        border-radius: 50px;
-                        background-color:#02C8AF;
-                    }
-                    .title {
-                        text-align: center;
-                        font-weight: 600;
-                        font-size: 45px;
-                    }
-                }
                 .textContainer {
                     width: 900px;
                     display: flex;
@@ -316,63 +187,8 @@
             .threequestions {
                 display: flex;
                 flex-direction: column;
-                margin: 40px 50px auto 50px;
-                .firstQuestionContainer {
-                    display: flex;
-                    width: 100%;
-                    align-items: start;
-                    justify-content: start;
-                    .firstQuestionWrapper {
-                        display: flex;
-                        flex-direction: column;
-                        width: 400px;
-                        padding: 50px 40px;
-                        background-color: #D9DEF2;
-                        border-radius: 25px;
-                        h3 {
-                            font-size: 20px;
-                            font-weight: 600;
-                        }
-                    }
-                }
-                .secondQuestionContainer {
-                    display: flex;
-                    width: 100%;
-                    align-items: start;
-                    justify-content: center;
-                    margin-top: 30px;
-                    .secondQuestionWrapper {
-                        display: flex;
-                        flex-direction: column;
-                        width: 400px;
-                        padding: 50px 40px;
-                        background-color: #D9DEF2;
-                        border-radius: 25px;
-                        h3 {
-                            font-size: 20px;
-                            font-weight: 600;
-                        }
-                    }
-                }
-                .thirdQuestionContainer {
-                    display: flex;
-                    width: 100%;
-                    align-items: start;
-                    justify-content: end;
-                    margin-top: 30px;
-                    .thirdQuestionWrapper {
-                        display: flex;
-                        flex-direction: column;
-                        width: 400px;
-                        padding: 50px 40px;
-                        background-color: #D9DEF2;
-                        border-radius: 25px;
-                        h3 {
-                            font-size: 20px;
-                            font-weight: 600;
-                        }
-                    }
-                }
+                margin: 40px 50px 80px 50px;
+                gap: 50px;
             }
 
         }
@@ -388,24 +204,6 @@
                 display: flex;
                 flex-direction: column;
                 align-items: start;
-                .titleWrapper {
-                    display: flex;
-                    flex-direction: column;
-                    align-items: start;
-                    // gap: 10px;
-                    .line {
-                        text-align: left;
-                        width: 110px;
-                        height: 14px;
-                        border-radius: 50px;
-                        background-color:#02C8AF;
-                    }
-                    .title {
-                        text-align: center;
-                        font-weight: 600;
-                        font-size: 45px;
-                    }
-                }
                 .textContainer {
                     width: 600px;
                     
@@ -446,32 +244,11 @@
             display: flex;
             flex-direction: column;
             padding: 10px 80px;
-
             .titleContainer {
                 display: flex;
                 flex-direction: column;
                 align-items: end;
-                .titleWrapper {
-                    display: flex;
-                    flex-direction: column;
-                    align-items: start;
-                    // gap: 10px;
-                    .line {
-                        text-align: left;
-                        width: 110px;
-                        height: 14px;
-                        border-radius: 50px;
-                        background-color:#02C8AF;
-                    }
-                    .title {
-                        text-align: center;
-                        font-weight: 600;
-                        font-size: 45px;
-                    }
-                }
-                
             }
-
             .partnerCardContainer {
                 display: flex;
                 width: 100%;
@@ -493,24 +270,6 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            .titleWrapper {
-                display: flex;
-                flex-direction: column;
-                align-items: start;
-                // gap: 10px;
-                .line {
-                    text-align: left;
-                    width: 110px;
-                    height: 14px;
-                    border-radius: 50px;
-                    background-color:#02C8AF;
-                }
-                .title {
-                    text-align: center;
-                    font-weight: 600;
-                    font-size: 45px;
-                }
-            }
             .textContainer {
                 width: 900px;
                 display: flex;
@@ -552,71 +311,105 @@
             }
         }
     }
+}
 
-    .footer {
-        height: 250px;
-        width: 100%;
-        margin-top: 90px;
-        background-color: #D8F3EA;
-        padding-bottom: 20px;
-        .footerContainer {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            gap: 15px;
-            h3 {
-                font-weight: 400;
-                color: #1C4980;
-                font-size: 24px;
-                letter-spacing: 2px;
-                margin-bottom: 0;
-            }
-            p {
-                color: #A9A0A0;
-            }
-            .email {
-                position: relative;
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                margin-left: -100px;
-                input {
-                    padding: 10px 20px;
-                    outline: none;
-                    border-radius: 50px;
-                    width: 300px;
-                    height: 19px;
-                    border: 1px black solid;
-                    position: absolute;
-                    z-index: 10;
+@media (max-width: 1024px) {
+    .landingPage {
+        .hero {
+            .heroContainer{
+                width: 90%;
+                .left {
+                    font-size: 35px;
+                    padding-left: 0px;
                 }
-                button {
-                    height: 40px;
-                    border-radius: 50px;
-                    padding-left: 200px;
-                    padding-right: 20px;
-                    // position: absolute;
-                    font-size: 15px;
-                    font-weight: 400;
-                    margin-left: 250px;
-                    border: none;
-                    color: white;
-                    background-color: #263238;
-                }
-            }
-            .links {
-                display: flex;
-                align-items: center;
-                justify-content: space-between;
-                width: 100%;
-                div {
-                    display: flex;
-                    gap: 10px;
-                    padding: 0px 30px;
+                .right {
                     img {
-                        height: 30px;
+                        width: 390px;
                     }
+                }
+            }
+        }
+        .videoSection {
+            .videoSectionContainer {
+                .videoPlaceholder{
+                    width: 900px;
+                }
+            }
+        }
+        .aboutus {
+            .aboutusContainer {
+                .textContainer {
+                    font-size: 30px;
+                }
+            }
+        }
+        .partners {
+            .partnersContainer{
+                width: 100%;
+                padding: 0px 0px;
+                .partnerCardContainer {
+                    align-items: flex-start;
+                    justify-content: flex-start;
+                    gap: 20px;
+                }
+            }
+        }
+    }
+}
+
+@media (max-width: 768px) {
+    .landingPage {
+        .hero {
+            .heroContainer{
+                width: 90%;
+                .left {
+                    padding-left: 0px;
+                    span {
+                        font-size: 33px;
+                        
+                    }
+                }
+                .right {
+                    img {
+                        width: 350px;
+                    }
+                }
+            }
+        }
+        .coreValues{
+            .coreValuesContainer{
+                .titleContainer{
+                    .subTitle{
+                        font-size: 18px;
+                        text-align: center;
+                    }
+                }
+            }
+        }
+        .videoSection {
+            .videoSectionContainer {
+                .videoPlaceholder{
+                    width: 700px;
+                }
+            }
+        }
+        .aboutus {
+            .aboutusContainer {
+                .titleContainer {
+                    .textContainer {
+                        font-size: 30px;
+                    }
+                }
+            }
+        }
+        .partners {
+            .partnersContainer{
+                width: 100%;
+                padding: 0px 0px;
+                .partnerCardContainer {
+                    align-items: flex-start;
+                    justify-content: flex-start;
+                    gap: 20px;
                 }
             }
         }

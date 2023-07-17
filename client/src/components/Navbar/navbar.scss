@@ -8,6 +8,7 @@
         width: 20%;
     }
 
+
     .right {
         display: flex;
         align-items: center;
@@ -17,6 +18,8 @@
         font-size: 18px;
         // gap: 5px;
         a {
+            text-decoration: none;
+            color: #2f2d38;
             button {
                 font-size: 18px;
                 padding: 12px 19px;
@@ -33,3 +36,37 @@
         }
     }
 }
+
+@media (max-width: 1024px) {
+   .navbar {
+    .left {
+        width: 30%;
+    }
+    .right {
+        width: 50%;
+        gap: 10px;
+        a {
+            button {
+                font-size: 15px;
+                width: 150px;
+            }
+        }
+    }
+   } 
+}
+
+@media (max-width: 768px) {
+    .navbar {
+     padding: 50px 50px;
+     .right {
+         width: 50%;
+         gap: 10px;
+         a {
+             button {
+                 font-size: 15px;
+                 width: 130px;
+             }
+         }
+     }
+    } 
+ }

@@ -2,19 +2,30 @@ import React from "react";
 
 import "./navbar.scss";
 import { logo } from "../../assets";
+import { useNavigate } from "react-router-dom";
 
 const Navbar = () => {
+  const navigate = useNavigate();
+
   return (
     <div className="navbar">
       {/*logo*/}
-      <img className="left" src={logo} alt="" />
+      <img className="left" src={logo} alt="" onClick={() => navigate("/")} />
 
       {/* navlinks */}
       <div className="right">
-        <span>Home</span>
-        <span>About</span>
-        <span>Partner</span>
-        <span>Blog</span>
+        <a href="/">
+          <span>Home</span>
+        </a>
+        <a href="#about-us">
+          <span>About</span>
+        </a>
+        <a href="#benificiariesandpartners">
+          <span>Partner</span>
+        </a>
+        <a href="#blog">
+          <span>Blog</span>
+        </a>
         <a href="/signup">
           <button>Get Started</button>
         </a>

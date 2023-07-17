@@ -11,6 +11,8 @@ import SavedPosts from "./pages/SavedPosts/SavedPosts";
 import Chats from "./pages/Chat/Chats";
 import Settings from "./pages/Settings/Settings";
 import Feedback from "./pages/Feedback/Feedback";
+import AboutUs from "./pages/AboutUs/AboutUs";
+import TC from "./pages/TC/TC";
 
 function App() {
   return (
@@ -25,6 +27,8 @@ function App() {
         <Route path="/chats/:id" element={<Chats />} />
         <Route path="/settings/:id" element={<Settings />} />
         <Route path="/feedbacks/:id" element={<Feedback />} />
+        <Route path="/aboutus/" element={<AboutUs />} />
+        <Route path="/terms-conditions/" element={<TC />} />
       </Routes>
     </BrowserRouter>
   );

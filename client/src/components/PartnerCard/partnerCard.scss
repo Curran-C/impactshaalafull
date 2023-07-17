@@ -27,3 +27,19 @@
         }
     }
 }
+
+@media (max-width: 1024px) {
+    .partnerCard{
+        margin: 0px 10px;
+        .cardItems {
+            gap: 20px;
+            padding: 50px 20px;
+            height: 200px;
+        }
+        .cardTitle {
+            span {
+                font-size: 18px;
+            }
+        }
+    }
+}
