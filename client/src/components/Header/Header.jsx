@@ -5,7 +5,7 @@ const Header = () => {
   return (
     <div className="header">
       {/* blue bg curved */}
-      {/* <div className="dot"></div> */}
+      <div className="dot"></div>
       {/* hero left blob */}
       {/* <img className="blob1" src={blob2} alt="" /> */}
     </div>

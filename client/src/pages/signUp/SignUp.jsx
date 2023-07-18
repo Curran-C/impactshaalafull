@@ -15,7 +15,7 @@ const SignUp = () => {
   const [coverPic, setCoverPic] = useState("");
   const [loggedInUser, setLoggedInUser] = useState({});
   const [jwtToken, setJwtToken] = useState(null);
-
+  const [hidden, setHidden] = useState(false);
   const [signInState, setSignInState] = useState(true);
   const [signUpState, setSignUpState] = useState(false);
   const [companyDetailsState, setCompanyDetailsState] = useState(false);
@@ -124,7 +124,6 @@ const SignUp = () => {
     e.preventDefault();
     setSignInState(false);
     setSignUpState(false);
-    // setBlueState(false);
     setCompanyDetailsState(true);
   };
 
@@ -184,6 +183,11 @@ const SignUp = () => {
     } catch (err) {
       console.log(err);
     }
+  };
+
+  const handleSwitch = (e) => {
+    e.preventDefault();
+    setHidden(!hidden);
   };
 
   // constants
@@ -255,29 +259,25 @@ const SignUp = () => {
 
   const signIn = (
     <div className="signinpage">
-      <div className="signupblue">
+      <div className={`signupblue ${hidden ? "visible" : "hidden"}`}>
         <div className="bluecontainer">
           <h1>Hello</h1>
           <p>Enter your personal details and start journey with us</p>
           <button onClick={handleSignUpChange} type="submit">
             Sign Up
           </button>
+          <p className="signinToggle" onClick={handleSwitch}>
+            Sign in?
+          </p>
         </div>
       </div>
-      <form className="signup" onSubmit={handleSignIn}>
+      <form
+        className={`signup ${hidden ? "hidden" : "visible"}`}
+        onSubmit={handleSignIn}
+      >
         <h1>Sign In</h1>
         <div className="signupButtons">
           <div id="googlesignin"></div>
-          {/* <FacebookLogin
-            appId="6233102716807727"
-            autoLoad={false}
-            fields="name,email,picture"
-            callback={handleFacebookCallback}
-            icon="fa-facebook"
-            textButton={<span></span>}
-          /> */}
-          {/* <img src={apple} alt="" />
-          <img src={facebook} alt="" /> */}
         </div>
         <div className="or">
           <hr />
@@ -303,6 +303,9 @@ const SignUp = () => {
           />
         </div>
         <a>Forgot your password?</a>
+        <p className="signupToggle" onClick={handleSwitch}>
+          Sign up?
+        </p>
         <button type="submit">Sign In</button>
       </form>
     </div>
