@@ -8,7 +8,7 @@
         top: -350px;
         left: -350px;
         z-index: -10;
-        border-radius: 45% 55% 35% 65% / 41% 23% 77% 59%  ;
+        border-radius: 45% 55% 35% 65% / 41% 23% 77% 59%;
         overflow-x: hidden;
         background-color: #cddded;
     }
@@ -19,5 +19,13 @@
         right: -200px;
         rotate: -10deg;
         top: -300px;
-    }   
+    }
+}
+
+@media (max-width: 376px) {
+    .header {
+        .dot {
+            height: 800px;
+        }
+    }
 }

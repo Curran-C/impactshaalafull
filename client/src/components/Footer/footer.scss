@@ -2,7 +2,7 @@
     height: 250px;
     width: 100%;
     margin-top: 90px;
-    background-color: #D8F3EA;
+    background-color: #d8f3ea;
     padding-bottom: 20px;
     .footerContainer {
         display: flex;
@@ -12,13 +12,13 @@
         gap: 15px;
         h3 {
             font-weight: 400;
-            color: #1C4980;
+            color: #1c4980;
             font-size: 24px;
             letter-spacing: 2px;
             margin-bottom: 0;
         }
         p {
-            color: #A9A0A0;
+            color: #a9a0a0;
         }
         .email {
             position: relative;
@@ -61,6 +61,47 @@
                 padding: 0px 30px;
                 img {
                     height: 30px;
+                }
+            }
+        }
+    }
+}
+
+@media (max-width: 426px) {
+    .footer {
+        height: 200px;
+        .footerContainer {
+            gap: 10px;
+            h3 {
+                font-size: 18px;
+                letter-spacing: 1px;
+            }
+            p {
+                text-align: center;
+                font-size: 15px;
+            }
+            .email {
+                input {
+                    width: 200px;
+                }
+                button {
+                    padding-left: 100px;
+                }
+            }
+            .links {
+                font-size: 15px;
+                a {
+                    div {
+                        span {
+                            font-size: 11px;
+                        }
+                    }
+                }
+                div {
+                    gap: 8px;
+                    img {
+                        height: 25px;
+                    }
                 }
             }
         }

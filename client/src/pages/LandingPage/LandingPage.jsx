@@ -194,10 +194,7 @@ const LandingPage = () => {
       <div className="blog" id="blog">
         <div className="blogContainer">
           <div className="titleContainer">
-            <div className="titleWrapper">
-              <div className="line"></div>
-              <span className="title">Blog&apos;s</span>
-            </div>
+            <Title text={"Blog"} />
             <div className="textContainer">
               <span>
                 Forem ipsum dolor sit amet, consectetur adipiscing elit. Nunc

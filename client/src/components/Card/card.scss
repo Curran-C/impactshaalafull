@@ -46,3 +46,14 @@
         }
     }
 }
+
+@media (max-width: 426px) {
+    .card{
+        gap: 15px;
+        width: 60%;
+        .img {
+            width: 180px;
+        }
+        .title{}
+    }
+}
