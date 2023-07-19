@@ -48,7 +48,7 @@ export const login = async (req, res) => {
       const { password, ...info } = user._doc;
       res
         .cookie("accessToken", token, {
-          // httpOnly: true, //generates cookie with accessToken as it's name and token variable as its value with httpOnly rule
+          httpOnly: true, //generates cookie with accessToken as it's name and token variable as its value with httpOnly rule
         })
         .status(200)
         .send(info);
