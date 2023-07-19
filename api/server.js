@@ -26,7 +26,7 @@ const connect = async () => {
 app.use(express.json());
 app.use(cookieParser());
 // app.use(cors({ origin: "http://localhost:5173", credentials: true }));
-app.use(cors({ origin: "https://impact-shaala.web.app/", credentials: true }));
+app.use(cors({ origin: "https://impact-shaala.web.app", credentials: true }));
 
 //routes
 app.use("/api/company", companyRoutes);
