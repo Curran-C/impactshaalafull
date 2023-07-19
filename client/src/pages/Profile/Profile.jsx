@@ -30,6 +30,7 @@ const Profile = () => {
       setAccessToken(decodeURIComponent(cookie[1]));
       accessToken && setDecodedToken(jwtDecode(accessToken));
     }
+    console.log(accessToken);
   };
 
   useEffect(() => {
