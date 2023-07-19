@@ -11,6 +11,7 @@ const ProfileLinks = ({ img, linkText, highlighted }) => {
 
   useEffect(() => {
     const cookie = document.cookie;
+    console.log(cookie);
     const cookies = cookie.split("; ");
     for (let i = 0; i < cookies.length; i++) {
       const cookie = cookies[i].split("=");
