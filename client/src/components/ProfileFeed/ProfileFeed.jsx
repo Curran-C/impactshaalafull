@@ -31,7 +31,6 @@ const ProfileFeed = ({ user }) => {
 
   return (
     <div className="profile">
-      {console.log(user)}
       <div className="coverimg">
         <img src={user.coverPic} alt="" />
       </div>
