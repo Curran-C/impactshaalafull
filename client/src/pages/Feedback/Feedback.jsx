@@ -5,8 +5,8 @@ import ProfileLeft from "../../components/ProfileLeft/ProfileLeft";
 import Search from "../../components/Search/Search";
 import axios from "axios";
 import HomeRight from "../../components/HomeRight/HomeRight";
-import FeedBacksWritten from "../../components/FeedBacksWritten/FeedBacksWritten";
-import FeedbacksRecieved from "../../components/FeedbacksRecieved/FeedbacksRecieved";
+import FeedBacksWritten from "../../components/FeedBacksWritten/FeedBacksWritten.jsx";
+import FeedbacksRecieved from "../../components/FeedbacksRecieved/FeedbacksRecieved.jsx";
 
 const Feedback = () => {
   const { id } = useParams();

@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import FeedbackCard from "../FeedbackCard/FeedbackCard";
 import "./feedbacksWritten.scss";
-import jwtDecode from "jwt-decode";
 import axios from "axios";
 import { useParams } from "react-router-dom";
 
