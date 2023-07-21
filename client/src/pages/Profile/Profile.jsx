@@ -1,7 +1,7 @@
 import axios from "axios";
 import ProfileFeed from "../../components/ProfileFeed/ProfileFeed";
 import { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
 import "./profile.scss";
 import ProfileLeft from "../../components/ProfileLeft/ProfileLeft";
@@ -10,16 +10,13 @@ import { date } from "../../utils/date";
 import jwtDecode from "jwt-decode";
 import FeedbackForm from "../../components/FeedbackForm/FeedbackForm";
 
-// context
-
 const Profile = () => {
-  // UserFront.init("demo1234");
-
   // states
   const [user, setUser] = useState({});
   const [accessToken, setAccessToken] = useState();
   const [decodedToken, setDecodedToken] = useState();
   const [feedbackFrom, setFeedbackFrom] = useState(false);
+  const navigate = useNavigate();
   const { id } = useParams();
 
   const getCookie = () => {
@@ -33,7 +30,6 @@ const Profile = () => {
   };
 
   useEffect(() => {
-    console.log(document.cookie);
     const getUser = async () => {
       try {
         const res = await axios.get(
@@ -52,6 +48,33 @@ const Profile = () => {
     setFeedbackFrom(props);
   };
 
+  const handleMessage = async () => {
+    try {
+      const findChat = await axios.get(
+        `${import.meta.env.VITE_BASE_URL}/api/chat/find/${id}/${
+          decodedToken?.id
+        }`
+      );
+      if (!findChat) {
+        try {
+          const chatRes = await axios.post(
+            `${import.meta.env.VITE_BASE_URL}/api/chat/`,
+            {
+              senderId: decodedToken?.id,
+              recieverId: id,
+            }
+          );
+        } catch (err) {
+          console.log(err);
+        }
+      }
+
+      navigate(`/chats/${decodedToken.id}`);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
   return (
     <div className="companyProfile">
       {feedbackFrom && <FeedbackForm onCancel={handleFeedbackShow} />}
@@ -61,12 +84,17 @@ const Profile = () => {
           <div className="nameandfeedback">
             <NameDate name={user.name} date={date} />
             {decodedToken?.id !== id && (
-              <button
-                className="feedbackbutton"
-                onClick={() => handleFeedbackShow(true)}
-              >
-                Leave a feedback
-              </button>
+              <>
+                <button
+                  className="feedbackbutton"
+                  onClick={() => handleFeedbackShow(true)}
+                >
+                  Leave a feedback
+                </button>
+                {/* <button className="feedbackbutton" onClick={handleMessage}>
+                  Message
+                </button> */}
+              </>
             )}
           </div>
           <ProfileFeed user={user} />

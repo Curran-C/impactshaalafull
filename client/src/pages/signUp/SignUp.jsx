@@ -1,13 +1,17 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { apple, facebook, gmail } from "../../assets/signUp";
 import jwt_decode from "jwt-decode";
-import { LoginSocialFacebook } from "reactjs-social-login";
-import FacebookLogin from "react-facebook-login";
 import axios from "axios";
 
 import "./signUp.scss";
 import { upload } from "../../../../api/utils/upload";
+import {
+  citizenOptions,
+  corporateOptions,
+  educationalOptions,
+  ngoOptions,
+  sectors,
+} from "../../constants";
 
 const SignUp = () => {
   // states
@@ -40,17 +44,13 @@ const SignUp = () => {
     pinCode: "",
     city: "",
     state: "",
+    sector: "",
   });
   const [oldUser, setOldUser] = useState({
     email: "",
     password: "",
   });
   const navigate = useNavigate();
-
-  //connecting to facebook
-  const handleFacebookCallback = (res) => {
-    console.log(res);
-  };
 
   // connecting to google
   const handleGoogleCallback = async (res) => {
@@ -106,7 +106,9 @@ const SignUp = () => {
   // function
   const handleTagSubmit = (e) => {
     e.preventDefault();
-    if (tag) setTags((prev) => [...prev, tag]);
+    if (tag) {
+      setTags((prev) => [...prev, tag]);
+    }
     setTag("");
   };
   const handleSignUpInputChange = (e) => {
@@ -151,9 +153,23 @@ const SignUp = () => {
           ...newUser,
           pfp: pfpUrl?.toString(),
           coverPic: coverPicUrl?.toString(),
+          tags: tags,
         }
       );
-      navigate(`/profile/${res._id}`);
+      try {
+        const res = await axios.post(
+          `${import.meta.env.VITE_BASE_URL}/api/company/login`,
+          {
+            email: newUser.email,
+            password: newUser.password,
+          }
+        );
+        console.log(res.data);
+        navigate(`/home/${res.data._id}`);
+      } catch (err) {
+        console.log(err);
+      }
+      // navigate("/");
     } catch (err) {
       console.log(err);
     }
@@ -170,7 +186,6 @@ const SignUp = () => {
   };
   const handleSignIn = async (e) => {
     e?.preventDefault();
-    console.log(jwtToken);
     try {
       const res = await axios.post(
         `${import.meta.env.VITE_BASE_URL}/api/company/login`,
@@ -179,7 +194,7 @@ const SignUp = () => {
         }
       );
       console.log(res.data);
-      navigate(`/profile/${res.data._id}`);
+      navigate(`/home/${res.data._id}`);
     } catch (err) {
       console.log(err);
     }
@@ -314,13 +329,13 @@ const SignUp = () => {
   const companyDetails = (
     <div className="companyDetails">
       <form className="signup" onSubmit={handleCompanySubmit}>
-        <h1>Company Details</h1>
+        <h2>{newUser?.stakeholder} Details</h2>
 
         <div className="inputs">
           <input
             onChange={(e) => handleSignUpInputChange(e)}
             required
-            placeholder="Company name"
+            placeholder={`${newUser?.stakeholder} name`}
             type="text"
             name="companyName"
             id=""
@@ -458,23 +473,77 @@ const SignUp = () => {
           <option value="" disabled selected hidden>
             Stakeholder
           </option>
-          <option value="School">School</option>
+          <option value="Educational Institution">
+            Educational Institutions
+          </option>
           <option value="NGO">NGO</option>
           <option value="Corporate">Corporate</option>
+          <option value="Working Professional">Working Professional</option>
         </select>
         <select
           required
           onChange={(e) => handleSignUpInputChange(e)}
           className="dropdown"
-          name="type"
+          name={"type"}
           id=""
         >
           <option value="" disabled selected hidden>
             Type
           </option>
-          <option value="Private">Private</option>
-          <option value="Public">Public</option>
+          {newUser?.stakeholder === "Educational Institution" &&
+            educationalOptions.map((option) => (
+              <option key={option} value={option}>
+                {option}
+              </option>
+            ))}
+          {newUser?.stakeholder === "NGO" &&
+            ngoOptions.map((option) => (
+              <option key={option} value={option}>
+                {option}
+              </option>
+            ))}
+          {newUser?.stakeholder === "Corporate" &&
+            corporateOptions.map((option) => (
+              <option key={option} value={option}>
+                {option}
+              </option>
+            ))}
+          {newUser?.stakeholder === "Working Professionals" &&
+            citizenOptions.map((option) => (
+              <option key={option} value={option}>
+                {option}
+              </option>
+            ))}
         </select>
+        {newUser?.type === "Other" && (
+          <input
+            className="otherInput"
+            onChange={(e) => handleSignInInputChange(e)}
+            name="type"
+            type="text"
+            placeholder="Enter Profession"
+            id=""
+            required
+          />
+        )}
+        {newUser?.stakeholder === "Educational Institution" && (
+          <select
+            required
+            onChange={(e) => handleSignUpInputChange(e)}
+            className="dropdown"
+            name="sector"
+            id=""
+          >
+            <option value="" disabled selected hidden>
+              Sectors
+            </option>
+            {sectors.map((sector) => (
+              <option key={sector} value={sector}>
+                {sector}
+              </option>
+            ))}
+          </select>
+        )}
         <button type="submit">Next</button>
       </form>
     </div>

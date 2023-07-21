@@ -25,6 +25,7 @@ export const register = async (req, res) => {
   }
 };
 
+//login
 export const login = async (req, res) => {
   try {
     const user = await Company.findOne({ email: req.body.email });
@@ -44,7 +45,6 @@ export const login = async (req, res) => {
         },
         process.env.JWT_KEY
       );
-
       const { password, ...info } = user._doc;
       // localStorage.setItem("Savedtoken", token);
       res
@@ -60,17 +60,17 @@ export const login = async (req, res) => {
 };
 
 export const getuser = async (req, res) => {
-  // const token = req.cookies.accessToken;
-  // if (!token) res.status(401).send("You are not authenticated");
-  // else {
-  try {
-    // find user
-    const user = await Company.findById(req.params.id);
-    res.send(user);
-  } catch (err) {
-    res.status(500).send("Something went wrong");
+  const token = req.cookies.accessToken;
+  if (!token) res.status(401).send("You are not authenticated");
+  else {
+    try {
+      // find user
+      const user = await Company.findById(req.params.id);
+      res.send(user);
+    } catch (err) {
+      res.status(500).send("Something went wrong");
+    }
   }
-  // }
 };
 
 export const logout = async (req, res) => {
@@ -117,5 +117,15 @@ export const findUserAndUpdate = async (req, res) => {
     res.status(200).send(user);
   } catch (err) {
     res.status(500).send("Something went wrong :(");
+  }
+};
+
+export const findUserByName = async (req, res) => {
+  try {
+    const user = await Company.find({ name: req.body.name });
+    if (!user) res.status(400).send("User doesnt exist");
+    res.status(200).send(user);
+  } catch (err) {
+    res.status(500).send("user not present");
   }
 };

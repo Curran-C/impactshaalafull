@@ -133,17 +133,6 @@ const ChatMessages = ({
               </div>
             </div>
           </div>
-          // <SingleMessage
-          //   key={message}
-          //   pfp={
-          //     message.senderId === currentUserId
-          //       ? loggedInUser?.data.pfp
-          //       : userData?.data.pfp
-          //   }
-          //   time={message.createdAt}
-          //   text={message.text}
-          //   who={message.senderId === currentUserId ? "chatright" : "chatleft"}
-          // />
         ))}
       </div>
 

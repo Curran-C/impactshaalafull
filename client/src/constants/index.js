@@ -63,6 +63,60 @@ const socialOrgos = [
   "Volunteer Engagement",
 ];
 
+const educationalOptions = [
+  "High school",
+  "K - 12 school",
+  "Pre -University",
+  "Undergraduation",
+  "Post - Graduation",
+];
+
+const corporateOptions = [
+  "Manufaturing",
+  "Renewable Energy",
+  "Retai & E-commerce",
+  "Metals & Mining",
+  "Oil & Gas",
+  "HealthCare",
+  "Banking and Finance",
+  "Telecommunication",
+  "Media and Entertainment",
+  "Transport and Logistics",
+  "Real Estate",
+  "IT and BPM",
+  "Railways",
+  "Food and Beverage",
+  "Pharmaceuticals",
+  "Automotive",
+  "Tourism and Hospitality",
+  "Insurance",
+  "Consulting",
+  "Aviation",
+  "Fintech and Financial Services",
+  "Biotechnology",
+  "Chemicals",
+  "Constructions",
+  "Defense Manucaturing",
+  "Space",
+  "Sports",
+  "Telecommunications",
+  "Textiles and Apparales",
+];
+
+const ngoOptions = ["ngo1", "ngo2", "ngo3"];
+const citizenOptions = [
+  "Product Manager",
+  "Investment Banker",
+  "Managing Director",
+  "Teacher",
+  "Software Developer",
+  "UI/UX Designer",
+  "Investment Analyst",
+  "Other",
+];
+
+const sectors = ["Private", "Public"];
+
 export {
   text1,
   text2,
@@ -74,4 +128,9 @@ export {
   students,
   corporates,
   socialOrgos,
+  educationalOptions,
+  corporateOptions,
+  ngoOptions,
+  citizenOptions,
+  sectors,
 };

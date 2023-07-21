@@ -1,0 +1,68 @@
+.tagsContainer {
+    display: flex;
+    gap: 10px;
+    // align-items: center;
+    flex-direction: column;
+    .tagsWrapper {
+        display: flex;
+        gap: 10px;
+        background-color: #d9def2;
+        width: 400px;
+        padding: 10px 20px;
+        border-radius: 25px;
+        // overflow-x: scroll;
+        .tag {
+            margin: 0;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            background: white;
+            padding: 5px 20px;
+            border-radius: 25px;
+            font-size: 15px;
+            p {
+                margin: 0;
+            }
+            .x {
+                background: #d9def2;
+                border-radius: 100%;
+                padding: 1px 5px;
+                color: red;
+                font-size: 10px;
+                &:hover {
+                    cursor: pointer;
+                }
+            }
+        }
+    }
+    .addTags {
+        display: flex;
+        gap: 10px;
+        align-items: center;
+        input {
+            border-radius: 10px;
+            width: 50px;
+            padding: 5px 30px;
+            outline: none;
+            border: none;
+            background-color: #ebebeb;
+            letter-spacing: 1px;
+            // color: #868686;
+            font-weight: 400;
+            font-size: 15px;
+        }
+        button {
+            background-color: #759bd3;
+            border: none;
+            border-radius: 50px;
+            padding: 10px 10px;
+            color: white;
+            letter-spacing: 1px;
+            font-size: 12px;
+            outline: none;
+            &:hover {
+                cursor: pointer;
+            }
+        }
+    }
+}

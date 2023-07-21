@@ -7,6 +7,7 @@ import "./profileFeed.scss";
 import axios from "axios";
 import { useParams, useSearchParams } from "react-router-dom";
 import Posts from "../Posts/Posts";
+import Tags from "../Tags/tags";
 
 const ProfileFeed = ({ user }) => {
   const { id } = useParams();
@@ -46,6 +47,7 @@ const ProfileFeed = ({ user }) => {
             <div className="company-about">
               <p>{user.description}</p>
             </div>
+            <Tags tags={user?.tags} />
           </div>
           <div className="stats">
             <Hex />

@@ -1,6 +1,7 @@
 import express from "express";
 import {
   findUserAndUpdate,
+  findUserByName,
   getUserFromEmail,
   getuser,
   login,
@@ -16,6 +17,7 @@ router.post("/login", login);
 router.post("/verifyuser", getUserFromEmail);
 router.post("/updateuser/:id", findUserAndUpdate);
 router.get("/getuser/:id", getuser);
+router.post("/getuserfromname", findUserByName);
 router.get("/logout", logout);
 
 export default router;

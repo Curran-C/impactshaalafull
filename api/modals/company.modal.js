@@ -100,13 +100,9 @@ const companySchema = new Schema(
       type: Array,
       default: [],
     },
-    conversationIDs: {
-      type: Array,
-      default: []
+    sector: {
+      type: String,
     },
-    isInitiator: {
-      type: Boolean
-    }
   },
   {
     timestamps: true,

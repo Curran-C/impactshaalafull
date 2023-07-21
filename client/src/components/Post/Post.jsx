@@ -10,6 +10,7 @@ import { corporate, location } from "../../assets/profile";
 
 import "./post.scss";
 import Tile from "../Tile/Tile";
+import { format } from "timeago.js";
 import axios from "axios";
 import { useNavigate, useParams } from "react-router-dom";
 
@@ -81,6 +82,38 @@ const Post = ({ post }) => {
       }
     }
   };
+
+  const handleChatClick = async () => {
+    try {
+      const findChat = await axios.get(
+        `${import.meta.env.VITE_BASE_URL}/api/chat/find/${id}/${
+          post?.createdById
+        }`
+      );
+      if (!findChat?.data) {
+        try {
+          const chatRes = await axios.post(
+            `${import.meta.env.VITE_BASE_URL}/api/chat/`,
+            {
+              senderId: id,
+              recieverId: post?.createdById,
+            }
+          );
+        } catch (err) {
+          console.log(err);
+        }
+        console.log("chat not found");
+        navigate(`/chats/${id}`);
+      }
+      if (findChat?.data) {
+        console.log("chat found");
+        navigate(`/chats/${id}`);
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
   return (
     <div className="post">
       <div className="user">
@@ -104,13 +137,11 @@ const Post = ({ post }) => {
       <div className="container">
         <p>{post.posDetails}</p>
         <div className="containerFooter">
-          <p>3 Hours ago</p>
+          <p>{format(post?.createdAt)}</p>
           <div className="links">
-            <img
-              src={chatblue}
-              alt=""
-              onClick={() => navigate(`/chats/${id + post.createdById}`)}
-            />
+            {id !== post?.createdById && (
+              <img src={chatblue} alt="" onClick={handleChatClick} />
+            )}
             <img
               src={backblue}
               alt=""

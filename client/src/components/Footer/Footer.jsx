@@ -22,8 +22,12 @@ const Footer = () => {
             </div>
           </a>
           <div>
-            <img src={insta} alt="" />
-            <img src={linkedin} alt="" />
+            <a href="https://www.instagram.com/impactshaala/">
+              <img src={insta} alt="" />
+            </a>
+            <a href="https://www.linkedin.com/company/impactshaala/">
+              <img src={linkedin} alt="" />
+            </a>
           </div>
         </div>
       </div>

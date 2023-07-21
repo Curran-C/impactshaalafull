@@ -10,6 +10,7 @@ import axios from "axios";
 import { io } from "socket.io-client";
 
 import "./chats.scss";
+import ChatFiller from "../../components/ChatFiller/ChatFiller";
 
 const Chats = () => {
   const { id } = useParams();
@@ -100,13 +101,15 @@ const Chats = () => {
         </div>
         <div className="right">
           {console.log(recieveMessage)}
-          {currentChat && (
+          {currentChat ? (
             <ChatMessages
               chat={currentChat}
               currentUserId={loggedInUser?.data._id}
               setSendMessage={setSendMessage}
               recieveMessage={recieveMessage}
             />
+          ) : (
+            <ChatFiller />
           )}
         </div>
       </div>

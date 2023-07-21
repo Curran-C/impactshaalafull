@@ -14,7 +14,7 @@
             width: 50px;
             object-fit: cover;
             border-radius: 100%;
-        } 
+        }
 
         h1 {
             font-weight: 600;
@@ -23,7 +23,7 @@
     hr {
         width: 858px;
         height: 2px;
-        background: #1B63AA;
+        background: #1b63aa;
         margin-bottom: 20px;
     }
     .chats {
@@ -44,7 +44,7 @@
             flex-direction: column;
             align-items: center;
             gap: 5px;
-            .pfpsmaller{
+            .pfpsmaller {
                 height: 40px;
                 width: 40px;
                 object-fit: cover;
@@ -60,7 +60,7 @@
             flex-direction: column;
             .message {
                 width: 300px;
-                background: #F5F7FB;
+                background: #f5f7fb;
                 display: flex;
                 align-items: center;
                 justify-content: center;
@@ -84,7 +84,7 @@
             padding: 5px 30px;
             border-radius: 30px;
             align-items: center;
-            background: #F5F7FB;
+            background: #f5f7fb;
             width: 700px;
             .inputContainer {
                 display: flex;
@@ -95,9 +95,8 @@
                     border: none;
                     outline: none;
                     height: 50px;
-                    background: #F5F7FB;
+                    background: #f5f7fb;
                     font-size: 18px;
-                    
                 }
             }
         }
