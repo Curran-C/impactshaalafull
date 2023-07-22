@@ -13,6 +13,7 @@ import Settings from "./pages/Settings/Settings";
 import Feedback from "./pages/Feedback/Feedback";
 import AboutUs from "./pages/AboutUs/AboutUs";
 import TC from "./pages/TC/TC";
+import EditProfile from "./pages/EditProfile/EditProfile";
 
 function App() {
   return (
@@ -29,6 +30,7 @@ function App() {
         <Route path="/feedbacks/:id" element={<Feedback />} />
         <Route path="/aboutus/" element={<AboutUs />} />
         <Route path="/terms-conditions/" element={<TC />} />
+        <Route path="/edit/:id" element={<EditProfile />} />
       </Routes>
     </BrowserRouter>
   );

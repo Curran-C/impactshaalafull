@@ -8,6 +8,7 @@ import axios from "axios";
 import { useParams, useSearchParams } from "react-router-dom";
 import Posts from "../Posts/Posts";
 import Tags from "../Tags/tags";
+import ProfileHeader from "../ProfileHeader/ProfileHeader";
 
 const ProfileFeed = ({ user }) => {
   const { id } = useParams();
@@ -32,28 +33,7 @@ const ProfileFeed = ({ user }) => {
 
   return (
     <div className="profile">
-      <div className="coverimg">
-        <img src={user.coverPic} alt="" />
-      </div>
-      <div className="info">
-        <div className="info-container">
-          <div className="pfp-text">
-            <img className="pfp" src={user.pfp || nopfp} alt="" />
-            <div className="company-info">
-              <h3>{user.companyName}</h3>
-              <Tile image={corporate} type={user.stakeholder} />
-              <Tile image={location} type={user.city} />
-            </div>
-            <div className="company-about">
-              <p>{user.description}</p>
-            </div>
-            <Tags tags={user?.tags} />
-          </div>
-          <div className="stats">
-            <Hex />
-          </div>
-        </div>
-      </div>
+      <ProfileHeader user={user} pageName={"profile"} />
 
       <div className="feed">
         <div className="achievements">

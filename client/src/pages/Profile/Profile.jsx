@@ -48,32 +48,32 @@ const Profile = () => {
     setFeedbackFrom(props);
   };
 
-  const handleMessage = async () => {
-    try {
-      const findChat = await axios.get(
-        `${import.meta.env.VITE_BASE_URL}/api/chat/find/${id}/${
-          decodedToken?.id
-        }`
-      );
-      if (!findChat) {
-        try {
-          const chatRes = await axios.post(
-            `${import.meta.env.VITE_BASE_URL}/api/chat/`,
-            {
-              senderId: decodedToken?.id,
-              recieverId: id,
-            }
-          );
-        } catch (err) {
-          console.log(err);
-        }
-      }
+  // const handleMessage = async () => {
+  //   try {
+  //     const findChat = await axios.get(
+  //       `${import.meta.env.VITE_BASE_URL}/api/chat/find/${id}/${
+  //         decodedToken?.id
+  //       }`
+  //     );
+  //     if (!findChat) {
+  //       try {
+  //         const chatRes = await axios.post(
+  //           `${import.meta.env.VITE_BASE_URL}/api/chat/`,
+  //           {
+  //             senderId: decodedToken?.id,
+  //             recieverId: id,
+  //           }
+  //         );
+  //       } catch (err) {
+  //         console.log(err);
+  //       }
+  //     }
 
-      navigate(`/chats/${decodedToken.id}`);
-    } catch (err) {
-      console.log(err);
-    }
-  };
+  //     navigate(`/chats/${decodedToken.id}`);
+  //   } catch (err) {
+  //     console.log(err);
+  //   }
+  // };
 
   return (
     <div className="companyProfile">
@@ -96,6 +96,12 @@ const Profile = () => {
                 </button> */}
               </>
             )}
+            <button
+              className="feedbackbutton"
+              onClick={() => navigate(`/edit/${decodedToken?.id}`)}
+            >
+              Edit Profile
+            </button>
           </div>
           <ProfileFeed user={user} />
         </div>

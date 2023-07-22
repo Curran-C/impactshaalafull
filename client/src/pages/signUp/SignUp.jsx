@@ -169,7 +169,6 @@ const SignUp = () => {
       } catch (err) {
         console.log(err);
       }
-      // navigate("/");
     } catch (err) {
       console.log(err);
     }
@@ -508,7 +507,7 @@ const SignUp = () => {
                 {option}
               </option>
             ))}
-          {newUser?.stakeholder === "Working Professionals" &&
+          {newUser?.stakeholder === "Working Professional" &&
             citizenOptions.map((option) => (
               <option key={option} value={option}>
                 {option}

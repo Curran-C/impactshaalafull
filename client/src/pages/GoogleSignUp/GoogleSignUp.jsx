@@ -4,6 +4,13 @@ import axios from "axios";
 import { gmail } from "../../assets/signUp";
 import { useNavigate, useParams } from "react-router-dom";
 import { upload } from "../../../../api/utils/upload";
+import {
+  citizenOptions,
+  corporateOptions,
+  educationalOptions,
+  ngoOptions,
+  sectors,
+} from "../../constants";
 
 // this page is shown after google signup
 const GoogleSignUp = () => {
@@ -43,7 +50,20 @@ const GoogleSignUp = () => {
           tags: tags,
         }
       );
-      navigate(`/profile/${res.data._id}`);
+      try {
+        const res = await axios.post(
+          `${import.meta.env.VITE_BASE_URL}/api/company/login`,
+          {
+            email: updatedUser.email,
+            password: updatedUser.password,
+          }
+        );
+        console.log(res.data);
+        navigate(`/home/${res.data._id}`);
+      } catch (err) {
+        console.log(err);
+        navigate("/");
+      }
     } catch (err) {
       console.log(err);
     }
@@ -71,9 +91,12 @@ const GoogleSignUp = () => {
               <option value="" disabled selected hidden>
                 Stakeholder
               </option>
-              <option value="School">School</option>
+              <option value="Educational Institution">
+                Educational Institutions
+              </option>
               <option value="NGO">NGO</option>
               <option value="Corporate">Corporate</option>
+              <option value="Working Professional">Working Professional</option>
             </select>
             <select
               onChange={(e) => handleInputChange(e)}
@@ -85,9 +108,60 @@ const GoogleSignUp = () => {
               <option value="" disabled selected hidden>
                 Type
               </option>
-              <option value="Private">Private</option>
-              <option value="Public">Public</option>
+              {updatedUser?.stakeholder === "Educational Institution" &&
+                educationalOptions.map((option) => (
+                  <option key={option} value={option}>
+                    {option}
+                  </option>
+                ))}
+              {updatedUser?.stakeholder === "NGO" &&
+                ngoOptions.map((option) => (
+                  <option key={option} value={option}>
+                    {option}
+                  </option>
+                ))}
+              {updatedUser?.stakeholder === "Corporate" &&
+                corporateOptions.map((option) => (
+                  <option key={option} value={option}>
+                    {option}
+                  </option>
+                ))}
+              {updatedUser?.stakeholder === "Working Professional" &&
+                citizenOptions.map((option) => (
+                  <option key={option} value={option}>
+                    {option}
+                  </option>
+                ))}
             </select>
+            {updatedUser?.type === "Other" && (
+              <input
+                className="otherInput"
+                onChange={(e) => handleInputChange(e)}
+                // name="type"
+                type="text"
+                placeholder="Enter Profession"
+                id=""
+                required
+              />
+            )}
+            {updatedUser?.stakeholder === "Educational Institution" && (
+              <select
+                required
+                onChange={(e) => handleInputChange(e)}
+                className="dropdown"
+                name="sector"
+                id=""
+              >
+                <option value="" disabled selected hidden>
+                  Sectors
+                </option>
+                {sectors.map((sector) => (
+                  <option key={sector} value={sector}>
+                    {sector}
+                  </option>
+                ))}
+              </select>
+            )}
           </div>
         </div>
 
