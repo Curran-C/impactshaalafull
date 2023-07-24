@@ -7,6 +7,7 @@ import bookmarkfilled from "./bookmarkfilled.png";
 import chatblue from "./chatblue.png";
 import backblue from "./backblue.png";
 import edit from "./edit.svg";
+import collaboration from "./collaboration.png";
 
 export {
   search,
@@ -18,4 +19,5 @@ export {
   backblue,
   bookmarkfilled,
   edit,
+  collaboration,
 };

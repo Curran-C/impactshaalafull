@@ -12,6 +12,9 @@ import {
   ngoOptions,
   sectors,
 } from "../../constants";
+import Backbutton from "../../components/Backbutton/Backbutton";
+import { tagsImage } from "../../assets/signUp";
+import Tags from "../../components/Tags/Tags";
 
 const SignUp = () => {
   // states
@@ -25,8 +28,13 @@ const SignUp = () => {
   const [companyDetailsState, setCompanyDetailsState] = useState(false);
   const [locationDetailsState, setLocationDetailsState] = useState(false);
   const [stakeholderState, setStakeholderState] = useState(false);
+  const [tagsState, setTagsState] = useState(false);
   const [tag, setTag] = useState("");
   const [tags, setTags] = useState([]);
+  const [location, setLocation] = useState({
+    city: "",
+    state: "",
+  });
   const [newUser, setNewUser] = useState({
     name: "",
     email: "",
@@ -101,6 +109,23 @@ const SignUp = () => {
       text: "continue_with",
       size: "large",
     });
+    const getLocation = async () => {
+      try {
+        const { data } = await axios.get("https://ipapi.co/json/", {
+          withCredentials: false,
+        });
+        const { latitude, longitude } = data;
+        setLocation({ city: data.city, state: data.region });
+        const locationFromGoogle = await axios.get(
+          `https://maps.googleapis.com/maps/api/geocode/json?latlng=${latitude},${longitude}&key=AIzaSyAphv25nyRmd3k1SbgHW4gcymZSIqdXS_U`,
+          { withCredentials: false }
+        );
+        console.log(locationFromGoogle);
+      } catch (err) {
+        console.log(err);
+      }
+    };
+    getLocation();
   }, []);
 
   // function
@@ -142,36 +167,9 @@ const SignUp = () => {
   };
 
   const handleLocationSubmit = async (e) => {
-    e?.preventDefault();
-    let pfpUrl, coverPicUrl;
-    if (pfp) pfpUrl = await upload(pfp);
-    if (coverPic) coverPicUrl = await upload(coverPic);
-    try {
-      const res = await axios.post(
-        `${import.meta.env.VITE_BASE_URL}/api/company/register`,
-        {
-          ...newUser,
-          pfp: pfpUrl?.toString(),
-          coverPic: coverPicUrl?.toString(),
-          tags: tags,
-        }
-      );
-      try {
-        const res = await axios.post(
-          `${import.meta.env.VITE_BASE_URL}/api/company/login`,
-          {
-            email: newUser.email,
-            password: newUser.password,
-          }
-        );
-        console.log(res.data);
-        navigate(`/home/${res.data._id}`);
-      } catch (err) {
-        console.log(err);
-      }
-    } catch (err) {
-      console.log(err);
-    }
+    e.preventDefault();
+    setLocationDetailsState(false);
+    setTagsState(true);
   };
 
   const handleSignInInputChange = (e) => {
@@ -204,73 +202,47 @@ const SignUp = () => {
     setHidden(!hidden);
   };
 
+  const removeTag = (tag) => {
+    const newTags = tags.filter((item) => item !== tag);
+    setTags(newTags);
+  };
+
+  const handleFinalSubmit = async (e) => {
+    e?.preventDefault();
+    let pfpUrl, coverPicUrl;
+    if (pfp) pfpUrl = await upload(pfp);
+    if (coverPic) coverPicUrl = await upload(coverPic);
+    try {
+      const res = await axios.post(
+        `${import.meta.env.VITE_BASE_URL}/api/company/register`,
+        {
+          ...newUser,
+          pfp: pfpUrl?.toString(),
+          coverPic: coverPicUrl?.toString(),
+          tags: tags,
+        }
+      );
+      try {
+        const res = await axios.post(
+          `${import.meta.env.VITE_BASE_URL}/api/company/login`,
+          {
+            email: newUser.email,
+            password: newUser.password,
+          }
+        );
+        console.log(res.data);
+        navigate(`/home/${res.data._id}`);
+      } catch (err) {
+        console.log(err);
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
   // constants
-  const signUp = (
-    <div className="signinpage">
-      <form className="signup" onSubmit={handleSignUpSubmit}>
-        <h1>Sign Up</h1>
-        <div className="signupButtons">
-          <div id="googlesignin"></div>
-          {/* <LoginSocialFacebook
-            appId="6233102716807727"
-            onResolve={(res) => console.log(res)}
-            onReject={(err) => console.log(err)}
-          >
-            <button>Facebook</button>
-          </LoginSocialFacebook> */}
-          {/* <img id="googlesignin" src={gmail} alt="" /> */}
-          {/* <img src={apple} alt="" /> */}
-          {/* <img src={facebook} alt="" /> */}
-        </div>
-        <div className="or">
-          <hr />
-          <p>Or</p>
-          <hr />
-        </div>
-        <div className="inputs">
-          <input
-            onChange={(e) => handleSignUpInputChange(e)}
-            required
-            placeholder="Enter your name"
-            type="text"
-            name="name"
-            id=""
-          />
-          <input
-            onChange={(e) => handleSignUpInputChange(e)}
-            required
-            placeholder="Enter your email"
-            type="email"
-            name="email"
-            id=""
-          />
-          <input
-            onChange={(e) => handleSignUpInputChange(e)}
-            required
-            placeholder="Enter your password"
-            type="password"
-            name="password"
-            id=""
-          />
-        </div>
 
-        <button type="submit">Sign Up</button>
-      </form>
-
-      <div className="signupblue">
-        <div className="bluecontainer">
-          <h1>WELCOME BACK</h1>
-          <p>
-            To Keep connected With us Please login with you login credentials
-          </p>
-          <button onClick={handleSignInChange} type="submit">
-            Sign In
-          </button>
-        </div>
-      </div>
-    </div>
-  );
-
+  // signin
   const signIn = (
     <div className="signinpage">
       <div className={`signupblue ${hidden ? "visible" : "hidden"}`}>
@@ -325,141 +297,10 @@ const SignUp = () => {
     </div>
   );
 
-  const companyDetails = (
-    <div className="companyDetails">
-      <form className="signup" onSubmit={handleCompanySubmit}>
-        <h2>{newUser?.stakeholder} Details</h2>
-
-        <div className="inputs">
-          <input
-            onChange={(e) => handleSignUpInputChange(e)}
-            required
-            placeholder={`${newUser?.stakeholder} name`}
-            type="text"
-            name="companyName"
-            id=""
-          />
-          <input
-            onChange={(e) => handleSignUpInputChange(e)}
-            required
-            placeholder="Tag Line"
-            type="text"
-            name="tagline"
-          />
-          <div className="tag">
-            <input
-              placeholder="Tags"
-              type="text"
-              name="tags"
-              onChange={(e) => setTag(e.target.value)}
-              value={tag}
-            />
-            <button type="button" onClick={handleTagSubmit}>
-              {" "}
-              Add{" "}
-            </button>
-          </div>
-          <input type="text" disabled value={tags} />
-          <textarea
-            placeholder="Description"
-            name="description"
-            onChange={(e) => handleSignUpInputChange(e)}
-          />
-        </div>
-
-        <button type="submit">Next</button>
-      </form>
-
-      <div className="signup white">
-        <div className="upload">
-          <span>Profile Picture</span>
-          {/* <img src={upload} alt="" /> */}
-        </div>
-        <input
-          required
-          type="file"
-          className="imageupload"
-          name="filename"
-          onChange={(e) => setPfp(e.target.files[0])}
-        ></input>
-      </div>
-    </div>
-  );
-
-  const locationDetails = (
-    <div className="location">
-      <div className="signup white">
-        <div className="upload">
-          <span>Cover Photo</span>
-          <input
-            required
-            onChange={(e) => setCoverPic(e.target.files[0])}
-            type="file"
-            className="imageupload"
-            name="filename"
-          ></input>
-        </div>
-      </div>
-
-      <form className="signup" onSubmit={handleLocationSubmit}>
-        <h1>Address</h1>
-
-        <div className="inputs">
-          <input
-            onChange={(e) => handleSignUpInputChange(e)}
-            required
-            placeholder="Address 1"
-            type="text"
-            name="addressOne"
-            id=""
-          />
-          <input
-            onChange={(e) => handleSignUpInputChange(e)}
-            required
-            placeholder="Address 2"
-            type="text"
-            name="addressTwo"
-            id=""
-          />
-          <div className="pin">
-            <input
-              onChange={(e) => handleSignUpInputChange(e)}
-              required
-              placeholder="Pincode"
-              type="number"
-              name="pinCode"
-            />
-            <input
-              onChange={(e) => handleSignUpInputChange(e)}
-              required
-              placeholder="City"
-              type="text"
-              name="city"
-            />
-          </div>
-          <input
-            onChange={(e) => handleSignUpInputChange(e)}
-            required
-            type="text"
-            placeholder="State"
-            name="state"
-          />
-          <input
-            onChange={(e) => handleSignUpInputChange(e)}
-            required
-            type="number"
-            placeholder="Phone number"
-            name="phNum"
-          />
-        </div>
-
-        <button type="submit">Next</button>
-      </form>
-    </div>
-  );
-
+  // stakeholder
   const stakeholder = (
     <div className="stakeholderCategory">
+      <Backbutton trueState={setSignInState} falseState={setStakeholderState} />
       <form onSubmit={handleStakeholderSubmit} className="stakeholderContainer">
         <h1>Give us some Details</h1>
         <select
@@ -547,6 +388,244 @@ const SignUp = () => {
       </form>
     </div>
   );
+
+  // signup
+  const signUp = (
+    <div className="signinpage">
+      <Backbutton trueState={setStakeholderState} falseState={setSignUpState} />
+      <form className="signup" onSubmit={handleSignUpSubmit}>
+        <h1>Sign Up</h1>
+        <div className="signupButtons">
+          <div id="googlesignin"></div>
+        </div>
+        <div className="or">
+          <hr />
+          <p>Or</p>
+          <hr />
+        </div>
+        <div className="inputs">
+          <input
+            onChange={(e) => handleSignUpInputChange(e)}
+            required
+            placeholder="Enter your name"
+            type="text"
+            name="name"
+            id=""
+          />
+          <input
+            onChange={(e) => handleSignUpInputChange(e)}
+            required
+            placeholder="Enter your email"
+            type="email"
+            name="email"
+            id=""
+          />
+          <input
+            onChange={(e) => handleSignUpInputChange(e)}
+            required
+            placeholder="Enter your password"
+            type="password"
+            name="password"
+            id=""
+          />
+        </div>
+
+        <button type="submit">Sign Up</button>
+      </form>
+
+      <div className="signupblue">
+        <div className="bluecontainer">
+          <h1>WELCOME BACK</h1>
+          <p>
+            To Keep connected With us Please login with you login credentials
+          </p>
+          <button onClick={handleSignInChange} type="submit">
+            Sign In
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+
+  const companyDetails = (
+    <div className="companyDetails">
+      <Backbutton
+        trueState={setSignUpState}
+        falseState={setCompanyDetailsState}
+      />
+      <form className="signup" onSubmit={handleCompanySubmit}>
+        <h2>{newUser?.stakeholder} Details</h2>
+
+        <div className="inputs">
+          <input
+            onChange={(e) => handleSignUpInputChange(e)}
+            required
+            placeholder={`${newUser?.stakeholder} name`}
+            type="text"
+            name="companyName"
+            id=""
+          />
+          <input
+            onChange={(e) => handleSignUpInputChange(e)}
+            required
+            placeholder="Tag Line"
+            type="text"
+            name="tagline"
+          />
+          {/* <div className="tag">
+            <input
+              placeholder="Tags"
+              type="text"
+              name="tags"
+              onChange={(e) => setTag(e.target.value)}
+              value={tag}
+            />
+            <button type="button" onClick={handleTagSubmit}>
+              {" "}
+              Add{" "}
+            </button>
+          </div> */}
+          {/* <input type="text" disabled value={tags} /> */}
+          <textarea
+            placeholder="Description"
+            name="description"
+            onChange={(e) => handleSignUpInputChange(e)}
+          />
+        </div>
+
+        <button type="submit">Next</button>
+      </form>
+
+      <div className="signup white">
+        <div className="upload">
+          <span>Profile Picture</span>
+          {/* <img src={upload} alt="" /> */}
+        </div>
+        <input
+          required
+          type="file"
+          className="imageupload"
+          name="filename"
+          onChange={(e) => setPfp(e.target.files[0])}
+        ></input>
+      </div>
+    </div>
+  );
+
+  const locationDetails = (
+    <div className="location">
+      <Backbutton
+        trueState={setCompanyDetailsState}
+        falseState={setLocationDetailsState}
+      />
+      <div className="signup white">
+        <div className="upload">
+          <span>Cover Photo</span>
+          <input
+            required
+            onChange={(e) => setCoverPic(e.target.files[0])}
+            type="file"
+            className="imageupload"
+            name="filename"
+          ></input>
+        </div>
+      </div>
+
+      <form className="signup" onSubmit={handleLocationSubmit}>
+        <h1>Address</h1>
+
+        <div className="inputs">
+          <input
+            onChange={(e) => handleSignUpInputChange(e)}
+            required
+            placeholder="Address 1"
+            type="text"
+            name="addressOne"
+            id=""
+          />
+          <input
+            onChange={(e) => handleSignUpInputChange(e)}
+            required
+            placeholder="Address 2"
+            type="text"
+            name="addressTwo"
+            id=""
+          />
+          <div className="pin">
+            <input
+              onChange={(e) => handleSignUpInputChange(e)}
+              required
+              placeholder="Pincode"
+              type="number"
+              name="pinCode"
+            />
+            <input
+              onChange={(e) => handleSignUpInputChange(e)}
+              required
+              placeholder="City"
+              type="text"
+              name="city"
+            />
+          </div>
+          <input
+            onChange={(e) => handleSignUpInputChange(e)}
+            required
+            type="text"
+            placeholder="State"
+            name="state"
+          />
+          <input
+            onChange={(e) => handleSignUpInputChange(e)}
+            required
+            type="number"
+            placeholder="Phone number"
+            name="phNum"
+          />
+        </div>
+
+        <button type="submit">Next</button>
+      </form>
+    </div>
+  );
+
+  const tagsPage = (
+    <>
+      <div onSubmit={handleFinalSubmit} className="tagsContainer">
+        {/* <Backbutton
+        trueState={setLocationDetailsState}
+        falseState={setTagsState}
+      /> */}
+        <img src={tagsImage} alt="enter your tags" />
+        <div className="tagsWrapper">
+          <form onSubmit={handleTagSubmit} className="tagsInput">
+            <h1>What type of collaborations are you looking for?</h1>
+            <input
+              value={tag}
+              onChange={(e) => setTag(e.target.value)}
+              type="text"
+              name=""
+              id=""
+              placeholder="Ex: Business"
+            />
+            <input type="submit" name="" id="" hidden />
+          </form>
+          <div className="tags">
+            {tags &&
+              tags.map((tag, index) => (
+                <div key={index} className="tag">
+                  <p>{tag}</p>
+                  <p className="x" onClick={() => removeTag(tag)}>
+                    X
+                  </p>
+                </div>
+              ))}
+          </div>
+          <button onClick={handleFinalSubmit}>Sign Up</button>
+        </div>
+      </div>
+    </>
+  );
+
   // return
   return (
     <div className="container">
@@ -555,6 +634,7 @@ const SignUp = () => {
       {signUpState && signUp}
       {companyDetailsState && companyDetails}
       {locationDetailsState && locationDetails}
+      {tagsState && tagsPage}
     </div>
   );
 };

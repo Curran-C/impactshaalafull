@@ -48,38 +48,11 @@ const Profile = () => {
     setFeedbackFrom(props);
   };
 
-  // const handleMessage = async () => {
-  //   try {
-  //     const findChat = await axios.get(
-  //       `${import.meta.env.VITE_BASE_URL}/api/chat/find/${id}/${
-  //         decodedToken?.id
-  //       }`
-  //     );
-  //     if (!findChat) {
-  //       try {
-  //         const chatRes = await axios.post(
-  //           `${import.meta.env.VITE_BASE_URL}/api/chat/`,
-  //           {
-  //             senderId: decodedToken?.id,
-  //             recieverId: id,
-  //           }
-  //         );
-  //       } catch (err) {
-  //         console.log(err);
-  //       }
-  //     }
-
-  //     navigate(`/chats/${decodedToken.id}`);
-  //   } catch (err) {
-  //     console.log(err);
-  //   }
-  // };
-
   return (
     <div className="companyProfile">
       {feedbackFrom && <FeedbackForm onCancel={handleFeedbackShow} />}
       <div className="profileContainer">
-        <ProfileLeft />
+        <ProfileLeft page={"profile"} />
         <div className="right">
           <div className="nameandfeedback">
             <NameDate name={user.name} date={date} />

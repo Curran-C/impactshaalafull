@@ -1,13 +1,8 @@
-import { useEffect, useState } from "react";
-import { corporate, location, nopfp } from "../../assets/profile";
-import Hex from "../Hex/Hex";
-import ProfileLinks from "../ProfileLinks/ProfileLinks";
-import Tile from "../Tile/Tile";
 import "./profileFeed.scss";
+import { useEffect, useState } from "react";
 import axios from "axios";
-import { useParams, useSearchParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import Posts from "../Posts/Posts";
-import Tags from "../Tags/tags";
 import ProfileHeader from "../ProfileHeader/ProfileHeader";
 
 const ProfileFeed = ({ user }) => {

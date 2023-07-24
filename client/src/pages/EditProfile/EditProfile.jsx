@@ -12,6 +12,7 @@ import TitleInput from "../../components/TitleInput/TitleInput";
 const EditProfile = () => {
   const [user, setUser] = useState();
   const { id } = useParams();
+  const [updateUser, setUpdateUser] = useState({});
 
   useEffect(() => {
     const getUser = async () => {
@@ -26,7 +27,7 @@ const EditProfile = () => {
     };
     getUser();
   }, []);
-
+  const handleUserUpdate = () => {};
   return (
     <div className="editProfile">
       <div className="left">
@@ -36,7 +37,47 @@ const EditProfile = () => {
         <NameDate name={user?.name} date={date} />
         <ProfileHeader user={user} pageName={"editProfile"} />
         <form action="" className="edits">
-          <TitleInput title={"Title"} text={"Text"} />
+          <TitleInput
+            onChange={handleUserUpdate}
+            title={user?.stakeholder}
+            text={user?.companyName}
+          />
+          <TitleInput
+            onChange={handleUserUpdate}
+            title={"Tag Line"}
+            text={user?.tagline}
+          />
+          <TitleInput
+            onChange={handleUserUpdate}
+            title={"Description"}
+            text={user?.description}
+          />
+          <TitleInput
+            onChange={handleUserUpdate}
+            title={"Email"}
+            text={user?.email}
+          />
+          <TitleInput
+            onChange={handleUserUpdate}
+            title={"Website"}
+            text={user?.website}
+          />
+          <TitleInput
+            onChange={handleUserUpdate}
+            title={"Address 1"}
+            text={user?.addressOne}
+          />
+          <TitleInput
+            onChange={setUpdateUser}
+            title={"Address 2"}
+            text={user?.addressTwo}
+          />
+          <TitleInput
+            onChange={setUpdateUser}
+            title={"Location"}
+            text={user?.city}
+          />
+          <button type="submit">Change</button>
         </form>
       </div>
     </div>

@@ -4,6 +4,7 @@ import {
   bookmark,
   bookmarkfilled,
   chatblue,
+  collaboration,
 } from "../../assets/home";
 
 import { corporate, location } from "../../assets/profile";
@@ -140,7 +141,12 @@ const Post = ({ post }) => {
           <p>{format(post?.createdAt)}</p>
           <div className="links">
             {id !== post?.createdById && (
-              <img src={chatblue} alt="" onClick={handleChatClick} />
+              <img
+                className="collabImage"
+                src={collaboration}
+                alt=""
+                onClick={handleChatClick}
+              />
             )}
             <img
               src={backblue}

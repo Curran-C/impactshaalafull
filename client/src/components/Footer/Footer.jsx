@@ -10,10 +10,13 @@ const Footer = () => {
           Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc
           vulputate libero e .
         </p>
-        <div className="email">
+        <a href="/signup">
+          <button>Get Started</button>
+        </a>
+        {/* <div className="email">
           <input type="text" placeholder="Enter your email" />
           <button>Subscribe</button>
-        </div>
+        </div> */}
         <div className="links">
           <a href="/terms-conditions">
             <div>

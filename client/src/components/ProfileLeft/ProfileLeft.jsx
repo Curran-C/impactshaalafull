@@ -9,6 +9,7 @@ import {
   feedback,
   home,
   logout,
+  profileIcon,
   savedposts,
   settings,
 } from "../../assets/profile";
@@ -47,25 +48,30 @@ const ProfileLeft = ({ page }) => {
         Create Post +
       </button>
       <ProfileLinks
-        highlighted={page === "chat" ? true : false}
-        img={chat}
-        linkText={"Chats"}
-      />
-      <ProfileLinks
         highlighted={page === "home" ? true : false}
         img={home}
         linkText={"Home"}
+      />
+      <ProfileLinks
+        highlighted={page === "profile" ? true : false}
+        img={profileIcon}
+        linkText={"Profile"}
+      />
+      <ProfileLinks
+        highlighted={page === "chat" ? true : false}
+        img={chat}
+        linkText={"Chats"}
       />
       <ProfileLinks
         highlighted={page === "savedPosts" ? true : false}
         img={savedposts}
         linkText={"Saved Posts"}
       />
-      <ProfileLinks
+      {/* <ProfileLinks
         highlighted={page === "feedback" ? true : false}
         img={feedback}
         linkText={"Feedbacks"}
-      />
+      /> */}
       <ProfileLinks
         highlighted={page === "settings" ? true : false}
         img={settings}

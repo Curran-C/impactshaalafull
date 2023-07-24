@@ -399,6 +399,77 @@
             }
         }
     }
+    .tagsContainer {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        img {
+            height: 350px;
+            width: 600px;
+        }
+        .tagsWrapper {
+            background-color: #cddded;
+            height: 300px;
+            width: 600px;
+            gap: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            border-radius: 25px;
+            padding: 20px;
+            h1 {
+                text-align: center;
+            }
+            .tagsInput {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                input {
+                    border-radius: 10px;
+                    height: 25px;
+                    width: 250px;
+                    padding: 10px 30px;
+                    outline: none;
+                    border: none;
+                    background-color: #ebebeb;
+                    letter-spacing: 1px;
+                    // color: #868686;                ;
+                    font-weight: 200;
+                    font-size: 15px;
+                }
+            }
+            .tags {
+                display: flex;
+                gap: 10px;
+                // overflow-x: scroll;
+                .tag {
+                    margin: 0;
+                    display: flex;
+                    align-items: center;
+                    gap: 15px;
+                    min-width: 50px;
+                    background: white;
+                    padding: 5px 20px;
+                    border-radius: 25px;
+                    font-size: 15px;
+                    p {
+                        margin: 0;
+                    }
+                    .x {
+                        background: #d9def2;
+                        border-radius: 100%;
+                        padding: 1px 5px;
+                        color: red;
+                        font-size: 10px;
+                        &:hover {
+                            cursor: pointer;
+                        }
+                    }
+                }
+            }
+        }
+    }
 }
 
 @media (max-width: 904px) {

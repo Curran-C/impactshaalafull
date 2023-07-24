@@ -11,6 +11,14 @@
         }
     }
     .middle {
-        // background: white;
+        background: white;
+        .edits {
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
+            align-items: start;
+            margin-left: 30px;
+            margin-top: 40px;
+        }
     }
 }

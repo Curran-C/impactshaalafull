@@ -3,7 +3,7 @@ import "./tags.scss";
 import { useEffect, useState } from "react";
 import jwtDecode from "jwt-decode";
 
-const Tags = ({ tags }) => {
+const Tags = ({ tags, page }) => {
   const [accessToken, setAccessToken] = useState();
   const [decodedToken, setDecodedToken] = useState();
   const [seenTags, setSeenTags] = useState();
@@ -67,14 +67,14 @@ const Tags = ({ tags }) => {
           ))}
         </div>
       )}
-      <div className="addTags">
+      {/* <form onSubmit={handleTagAdd} className="addTags">
         <input
           value={newTag}
           type="text"
           onChange={(e) => setNewTag(e.target.value)}
         />
-        <button onClick={handleTagAdd}>Add Tag</button>
-      </div>
+        <input type="submit" hidden />
+      </form> */}
     </div>
   );
 };

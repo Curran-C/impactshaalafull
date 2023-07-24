@@ -4,7 +4,7 @@ import "./preferences.scss";
 const Preferences = () => {
   return (
     <div className="preferences">
-      <h2>Your top Preferences</h2>
+      <h2>Your Collaboration Requests</h2>
       <MiniProfile />
     </div>
   );

@@ -4,6 +4,7 @@ import ProfileCard from "../ProfileCard/ProfileCard";
 import "./homeRight.scss";
 import ContactUs from "../ContactUs/ContactUs";
 import CreatePost from "../CreatePost/CreatePost";
+import Collab from "../Collab/Collab";
 
 const HomeRight = ({ user }) => {
   const [showEmailForm, setShowEmailForm] = useState(false);
@@ -13,8 +14,9 @@ const HomeRight = ({ user }) => {
       {showEmailForm && (
         <ContactUs email={user?.email} onCancel={setShowEmailForm} />
       )}
-      <ProfileCard user={user} />
+      {/* <ProfileCard user={user} /> */}
       <Preferences />
+      <Collab />
       <div className="getInTouch">
         <h4>Need help with collaborating?</h4>
         <button onClick={() => setShowEmailForm(true)}>Get in Touch</button>

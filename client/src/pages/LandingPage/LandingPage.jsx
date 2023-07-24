@@ -8,14 +8,12 @@ import {
   aboutus2,
   blob1,
   heroImage,
-  insta,
-  linkedin,
   tick,
 } from "../../assets/landingPage/index.js";
 import Card from "../../components/Card/Card";
 import {
-  beneficiaries,
   coreValues,
+  beneficiaries,
   corporates,
   educationalInstitutions,
   socialOrgos,

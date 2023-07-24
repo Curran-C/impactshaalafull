@@ -8,6 +8,7 @@ import location from "./location.svg";
 import settings from "./settings.svg";
 import hex from "./hex.png";
 import nopfp from "./nopfp.png";
+import profileIcon from './profileIcon.png'
 
 export {
   chat,
@@ -20,4 +21,5 @@ export {
   location,
   nopfp,
   settings,
+  profileIcon
 };
