@@ -9,9 +9,11 @@ import companyRoutes from "../api/routes/company.routes.js";
 import postRoutes from "../api/routes/post.routes.js";
 import chatRoutes from "../api/routes/chat.routes.js";
 import messageRoutes from "../api/routes/message.routes.js";
+import collabRoutes from "../api/routes/collaboration.routes.js";
 
 dotenv.config();
 const app = express();
+const PORT = 8000;
 
 const connect = async () => {
   try {
@@ -33,8 +35,9 @@ app.use("/api/company", companyRoutes);
 app.use("/api/post", postRoutes);
 app.use("/api/chat", chatRoutes);
 app.use("/api/message", messageRoutes);
+app.use("/api/collaboration", collabRoutes);
 
-app.listen(8000, () => {
+app.listen(PORT, () => {
   connect();
-  console.log("server started on post 8000");
+  console.log(`server started on port ${PORT}`);
 });

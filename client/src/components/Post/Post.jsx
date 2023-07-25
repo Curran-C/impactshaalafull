@@ -3,7 +3,6 @@ import {
   backblue,
   bookmark,
   bookmarkfilled,
-  chatblue,
   collaboration,
 } from "../../assets/home";
 
@@ -53,6 +52,7 @@ const Post = ({ post }) => {
   }, []);
 
   // function
+  // save and unsave collab posts
   const handleBookmark = async () => {
     setBookmarked(!bookmarked);
     // only works in reverse for some reason
@@ -84,6 +84,7 @@ const Post = ({ post }) => {
     }
   };
 
+  // ! implement somewhere else do not delete
   const handleChatClick = async () => {
     try {
       const findChat = await axios.get(
@@ -109,6 +110,88 @@ const Post = ({ post }) => {
       if (findChat?.data) {
         console.log("chat found");
         navigate(`/chats/${id}`);
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  // implement collaborations
+  const handleCollabClick = async () => {
+    // todo 0. get id of the user who created post and store in toId
+    // todo 1. get id of the current user and store in fromId
+    // todo 2. get post id and store in postId
+    const newCollab = {
+      toId: post?.createdById,
+      fromId: id,
+      postId: post?._id,
+    };
+    // todo 3. Check if collab exists
+    try {
+      // * get all collabs and check if postId in collabs is present in collaborationIds of user
+      //get logged in user
+      const user = await axios.get(
+        `${import.meta.env.VITE_BASE_URL}/api/company/getuser/${id}`
+      );
+      // check if user has started collabing
+
+      // todo 4. if collab exists - show popup saying 'you have already requested to collab with this person'
+      try {
+        //*check if user is toId
+        const isToId = await axios.get(
+          `${import.meta.env.VITE_BASE_URL}/api/collaboration/singletoId/${id}`
+        );
+        if (isToId?.data) {
+          alert("You have collab with this person");
+        } else {
+          // *check if user is fromId
+          try {
+            const isFromId = await axios.get(
+              `${
+                import.meta.env.VITE_BASE_URL
+              }/api/collaboration/singlefromId/${id}`
+            );
+            if (isFromId?.data) {
+              alert("You have collab with this person!");
+            } else {
+              // todo 5. if collab doesnt exist - create a new collab
+              try {
+                const resCollab = await axios.post(
+                  `${import.meta.env.VITE_BASE_URL}/api/collaboration/create`,
+                  {
+                    ...newCollab,
+                  }
+                );
+                //update logged in user
+                const resUpdateLoggedInUser = await axios.post(
+                  `${
+                    import.meta.env.VITE_BASE_URL
+                  }/api/company/updateuser/${id}`,
+                  {
+                    $push: { collaborationIds: resCollab?.data._id },
+                  }
+                );
+
+                //updated user who posted it
+                const resUpdatePostedInUser = await axios.post(
+                  `${import.meta.env.VITE_BASE_URL}/api/company/updateuser/${
+                    post?.createdById
+                  }`,
+                  {
+                    $push: { collaborationIds: resCollab?.data._id },
+                  }
+                );
+                console.log(resCollab.data);
+              } catch (err) {
+                console.log(err);
+              }
+            }
+          } catch (err) {
+            console.log(err);
+          }
+        }
+      } catch (err) {
+        console.log(err);
       }
     } catch (err) {
       console.log(err);
@@ -145,7 +228,7 @@ const Post = ({ post }) => {
                 className="collabImage"
                 src={collaboration}
                 alt=""
-                onClick={handleChatClick}
+                onClick={handleCollabClick}
               />
             )}
             <img

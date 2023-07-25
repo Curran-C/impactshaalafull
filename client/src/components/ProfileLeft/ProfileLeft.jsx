@@ -67,11 +67,11 @@ const ProfileLeft = ({ page }) => {
         img={savedposts}
         linkText={"Saved Posts"}
       />
-      {/* <ProfileLinks
-        highlighted={page === "feedback" ? true : false}
+      <ProfileLinks
+        highlighted={page === "collaborations" ? true : false}
         img={feedback}
-        linkText={"Feedbacks"}
-      /> */}
+        linkText={"Collaborations"}
+      />
       <ProfileLinks
         highlighted={page === "settings" ? true : false}
         img={settings}

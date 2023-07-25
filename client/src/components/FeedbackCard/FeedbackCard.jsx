@@ -4,22 +4,10 @@ import Tile from "../Tile/Tile";
 import "./feedbackCard.scss";
 import axios from "axios";
 
-const FeedbackCard = ({ feedback }) => {
-  const [user, setUser] = useState();
-
-  useEffect(() => {
-    const getUser = async () => {
-      try {
-        const res = await axios.get(
-          `${import.meta.env.VITE_BASE_URL}/api/company/getuser/${feedback.id}`
-        );
-        setUser(res.data);
-      } catch (err) {
-        console.log(err);
-      }
-    };
-    getUser();
-  }, []);
+const FeedbackCard = ({ user }) => {
+  const showCollab = () => {
+    
+  };
 
   return (
     <div className="feedbackCard">
@@ -30,9 +18,9 @@ const FeedbackCard = ({ feedback }) => {
           <Tile image={corporate} type={user?.stakeholder} />
         </div>
       </div>
-      <div className="feedbacktext">
-        <p>{feedback?.feedback}</p>
-      </div>
+      {/* <div className="feedbacktext"> */}
+      <button onClick={showCollab}>View Collaboration Details</button>
+      {/* </div> */}
     </div>
   );
 };

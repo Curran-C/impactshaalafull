@@ -103,6 +103,9 @@ const companySchema = new Schema(
     sector: {
       type: String,
     },
+    collaborationIds: {
+      type: Array,
+    },
   },
   {
     timestamps: true,

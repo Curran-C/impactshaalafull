@@ -10,7 +10,7 @@ import Home from "./pages/Home/Home";
 import SavedPosts from "./pages/SavedPosts/SavedPosts";
 import Chats from "./pages/Chat/Chats";
 import Settings from "./pages/Settings/Settings";
-import Feedback from "./pages/Feedback/Feedback";
+import Collaborations from "./pages/Collaborations/Collaborations";
 import AboutUs from "./pages/AboutUs/AboutUs";
 import TC from "./pages/TC/TC";
 import EditProfile from "./pages/EditProfile/EditProfile";
@@ -27,7 +27,7 @@ function App() {
         <Route path="/savedPosts/:id" element={<SavedPosts />} />
         <Route path="/chats/:id" element={<Chats />} />
         <Route path="/settings/:id" element={<Settings />} />
-        <Route path="/feedbacks/:id" element={<Feedback />} />
+        <Route path="/collaborations/:id" element={<Collaborations />} />
         <Route path="/aboutus/" element={<AboutUs />} />
         <Route path="/terms-conditions/" element={<TC />} />
         <Route path="/edit/:id" element={<EditProfile />} />
