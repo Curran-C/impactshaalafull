@@ -105,6 +105,15 @@ const companySchema = new Schema(
     },
     collaborationIds: {
       type: Array,
+      default: [],
+    },
+    collaborationIdsAccepted: {
+      type: Array,
+      default: [],
+    },
+    collaborationIdsDeclined: {
+      type: Array,
+      default: [],
     },
   },
   {

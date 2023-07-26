@@ -28,10 +28,35 @@
             align-items: center;
             // justify-content: center;
             height: 900px;
-            // overflow-y: scroll;
+            overflow-y: scroll;
             padding: 40px 50px;
             border-radius: 25px;
             background-color: #f5f7f6;
+            .postTitle {
+                display: flex;
+                gap: 20px;
+                align-items: center;
+                text-align: center;
+            }
+            h3 {
+                padding: 5px 20px;
+                border-radius: 25px;
+                &:hover {
+                    background-color: #b1becd;
+                    cursor: pointer;
+                    box-shadow: 1px 1px 5px lightgray;
+                }
+            }
+            .feedbacksContainer {
+                display: flex;
+                gap: 20px;
+                flex-wrap: wrap;
+            }
+            .selected {
+                background-color: white;
+                cursor: pointer;
+                box-shadow: 1px 1px 5px lightgray;
+            }
             .post-placeholder {
                 width: 850px;
                 border-radius: 20px;

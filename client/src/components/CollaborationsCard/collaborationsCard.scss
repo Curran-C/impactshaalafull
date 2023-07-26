@@ -1,16 +1,16 @@
-.feedbackCardAgain {
+.feedbackCard {
     background: white;
     width: 300px;
     padding: 20px;
     display: flex;
     flex-direction: column;
     gap: 30px;
-    // align-items: center;
+    align-items: center;
     margin-top: 20px;
     border-radius: 25px;
     .feedbackprofile {
         display: flex;
-        // flex-direction: column;
+        flex-direction: column;
         align-items: center;
         text-align: center;
         gap: 20px;
@@ -31,11 +31,24 @@
             }
         }
     }
-    .feedbacktext {
-        padding: 20px;
-        text-align: center;
-        background: #f5f7f6;
-        margin-top: 20px;
-        border-radius: 25px;
+    button {
+        background-color: #759bd3;
+        border: none;
+        border-radius: 20px;
+        padding: 15px 10px;
+        color: white;
+        letter-spacing: 1px;
+        font-size: 14px;
+        outline: none;
+        &:hover {
+            cursor: pointer;
+        }
     }
+    // .feedbacktext {
+    //     padding: 20px;
+    //     text-align: center;
+    //     background: #F5F7F6;
+    //     margin-top:  20px;
+    //     border-radius: 25px;
+    // }
 }

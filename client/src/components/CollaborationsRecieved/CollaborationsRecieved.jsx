@@ -1,13 +1,14 @@
 import { useParams } from "react-router-dom";
-import FeedbackCard from "../FeedbackCard/FeedbackCard";
 import "./collaborationsRecieved.scss";
 import { useEffect, useState } from "react";
 import axios from "axios";
+import CollaborationsCard from "../CollaborationsCard/CollaborationsCard";
 
 const CollaborationsRecieved = () => {
   const { id } = useParams();
   const [fromUsers, setFromUsers] = useState([]);
   const [collabs, setCollabs] = useState();
+  const [post, setPosts] = useState([]);
 
   useEffect(() => {
     const getUser = async () => {
@@ -25,6 +26,7 @@ const CollaborationsRecieved = () => {
               }`
             );
             setFromUsers((prev) => [...prev, resFromUser?.data]);
+            setPosts((prev) => [...prev, collab.postId]);
           } catch (err) {
             console.log(err);
           }
@@ -37,9 +39,14 @@ const CollaborationsRecieved = () => {
   }, []);
   return (
     <div className="collaborationsRecieved">
-      {console.log(fromUsers)}
       {fromUsers?.map((user, index) => (
-        <FeedbackCard key={index} user={user} />
+        <CollaborationsCard
+          key={index}
+          user={user}
+          post={post[index]}
+          collabId={collabs[index]._id}
+          page={"collabsRecieved"}
+        />
       ))}
     </div>
   );

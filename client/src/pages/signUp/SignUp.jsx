@@ -324,11 +324,27 @@ const SignUp = () => {
           required
           onChange={(e) => handleSignUpInputChange(e)}
           className="dropdown"
-          name={"type"}
+          name="sector"
           id=""
         >
           <option value="" disabled selected hidden>
-            Type
+            Type {/*!Previously known as sectors */}
+          </option>
+          {sectors.map((sector) => (
+            <option key={sector} value={sector}>
+              {sector}
+            </option>
+          ))}
+        </select>
+        <select
+          required
+          onChange={(e) => handleSignUpInputChange(e)}
+          className="dropdown"
+          name="type"
+          id=""
+        >
+          <option value="" disabled selected hidden>
+            Sub-type {/*!Previously known as type */}
           </option>
           {newUser?.stakeholder === "Educational Institution" &&
             educationalOptions.map((option) => (
@@ -366,7 +382,7 @@ const SignUp = () => {
             required
           />
         )}
-        {newUser?.stakeholder === "Educational Institution" && (
+        {/* {newUser?.stakeholder === "Educational Institution" && (
           <select
             required
             onChange={(e) => handleSignUpInputChange(e)}
@@ -383,7 +399,7 @@ const SignUp = () => {
               </option>
             ))}
           </select>
-        )}
+        )} */}
         <button type="submit">Next</button>
       </form>
     </div>

@@ -141,7 +141,13 @@ const Post = ({ post }) => {
         const isToId = await axios.get(
           `${import.meta.env.VITE_BASE_URL}/api/collaboration/singletoId/${id}`
         );
-        if (isToId?.data) {
+        const isFromId = await axios.get(
+          `${import.meta.env.VITE_BASE_URL}/api/collaboration/singlefromId/${
+            post?.createdById
+          }`
+        );
+        console.log(isToId?.data.length);
+        if (isToId?.data.length !== 0 && isFromId?.data.length !== 0) {
           alert("You have collab with this person");
         } else {
           // *check if user is fromId
@@ -151,7 +157,12 @@ const Post = ({ post }) => {
                 import.meta.env.VITE_BASE_URL
               }/api/collaboration/singlefromId/${id}`
             );
-            if (isFromId?.data) {
+            const isToId = await axios.get(
+              `${import.meta.env.VITE_BASE_URL}/api/collaboration/singletoId/${
+                post?.createdById
+              }`
+            );
+            if (isFromId?.data.length !== 0 && isToId?.data.length !== 0) {
               alert("You have collab with this person!");
             } else {
               // todo 5. if collab doesnt exist - create a new collab
@@ -181,7 +192,7 @@ const Post = ({ post }) => {
                     $push: { collaborationIds: resCollab?.data._id },
                   }
                 );
-                console.log(resCollab.data);
+                alert("Successfully sent Collaboration request");
               } catch (err) {
                 console.log(err);
               }

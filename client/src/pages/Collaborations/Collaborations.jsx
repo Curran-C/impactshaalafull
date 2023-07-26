@@ -11,7 +11,10 @@ import CollaborationsRecieved from "../../components/CollaborationsRecieved/Coll
 const Collaborations = () => {
   const { id } = useParams();
   const [user, setUser] = useState("");
-  const [feedbackRecieved, setFeedbackRecieved] = useState(true);
+  const [collabRecieved, setCollabRecieved] = useState(true);
+  const [collabSent, setCollabSent] = useState(false);
+  const [collabAccepted, setCollabAccepted] = useState(false);
+  const [collabDeclined, setCollabDeclined] = useState(false);
 
   useEffect(() => {
     const getUser = async () => {
@@ -27,6 +30,34 @@ const Collaborations = () => {
     getUser();
   }, []);
 
+  const handleCollabRecieved = () => {
+    setCollabRecieved(true);
+    setCollabSent(false);
+    setCollabAccepted(false);
+    setCollabDeclined(false);
+  };
+
+  const handleCollabSent = () => {
+    setCollabRecieved(false);
+    setCollabSent(true);
+    setCollabAccepted(false);
+    setCollabDeclined(false);
+  };
+
+  const handleCollabAccepted = () => {
+    setCollabRecieved(false);
+    setCollabSent(false);
+    setCollabAccepted(true);
+    setCollabDeclined(false);
+  };
+
+  const handleCollabDeclined = () => {
+    setCollabRecieved(false);
+    setCollabSent(false);
+    setCollabAccepted(false);
+    setCollabDeclined(true);
+  };
+
   return (
     <div className="collabs">
       <div className="left">
@@ -38,21 +69,33 @@ const Collaborations = () => {
         <div className="feedbacksContainer">
           <div className="buttons">
             <button
-              className={feedbackRecieved ? "bluebutton" : "whitebutton"}
-              onClick={() => setFeedbackRecieved(true)}
+              className={collabRecieved ? "bluebutton" : "whitebutton"}
+              onClick={handleCollabRecieved}
             >
-              Collaborations Recieved
+              Recieved
             </button>
             <button
-              className={feedbackRecieved ? "whitebutton" : "bluebutton"}
-              onClick={() => setFeedbackRecieved(false)}
+              className={collabSent ? "bluebutton" : "whitebutton"}
+              onClick={handleCollabSent}
             >
-              Collaborations Requested
+              Requested
+            </button>
+            <button
+              className={collabAccepted ? "bluebutton" : "whitebutton"}
+              onClick={handleCollabAccepted}
+            >
+              Accepted
+            </button>
+            <button
+              className={collabDeclined ? "bluebutton" : "whitebutton"}
+              onClick={handleCollabDeclined}
+            >
+              Declined
             </button>
           </div>
 
           <div className="feedbacksWrapper">
-            {feedbackRecieved ? (
+            {collabRecieved ? (
               <CollaborationsRecieved />
             ) : (
               <CollaborationsSent />

@@ -3,6 +3,7 @@ import {
   createPost,
   getAllPosts,
   getPostByUser,
+  getSinglePost,
   getSomePosts,
 } from "../controllers/post.controller.js";
 
@@ -12,5 +13,6 @@ router.post("/create", createPost);
 router.get("/getsavedposts/:id", getSomePosts);
 router.get("/getpost/:id", getPostByUser);
 router.get("/getposts", getAllPosts);
+router.get("/getsinglepost/:id", getSinglePost);
 
 export default router;

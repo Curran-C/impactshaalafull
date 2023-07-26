@@ -58,23 +58,25 @@ const Profile = () => {
             <NameDate name={user.name} date={date} />
             {decodedToken?.id !== id && (
               <>
-                <button
+                {/* <button
                   className="feedbackbutton"
                   onClick={() => handleFeedbackShow(true)}
                 >
                   Leave a feedback
-                </button>
+                </button> */}
                 {/* <button className="feedbackbutton" onClick={handleMessage}>
                   Message
                 </button> */}
               </>
             )}
-            <button
-              className="feedbackbutton"
-              onClick={() => navigate(`/edit/${decodedToken?.id}`)}
-            >
-              Edit Profile
-            </button>
+            {decodedToken?.id === id && (
+              <button
+                className="feedbackbutton"
+                onClick={() => navigate(`/edit/${decodedToken?.id}`)}
+              >
+                Edit Profile
+              </button>
+            )}
           </div>
           <ProfileFeed user={user} />
         </div>
