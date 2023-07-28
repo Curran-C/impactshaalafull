@@ -4,10 +4,16 @@ import Tile from "../Tile/Tile";
 import "./collaborationsCard.scss";
 import axios from "axios";
 import PostModal from "../PostModal/PostModal";
+import { useNavigate, useParams } from "react-router-dom";
+import GetCreditScore from "../GetCreditScore/GetCreditScore";
 
 const CollaborationsCard = ({ collabId, user, post, page }) => {
+  const navigate = useNavigate();
+  const { id } = useParams();
+
   const [Post, setPost] = useState();
   const [showPost, setShowPost] = useState(false);
+  const [showGetCreditScore, setShowGetCreditScore] = useState(false);
 
   const showCollab = async () => {
     try {
@@ -25,6 +31,9 @@ const CollaborationsCard = ({ collabId, user, post, page }) => {
 
   return (
     <div className="feedbackCard">
+      {showGetCreditScore && (
+        <GetCreditScore onCancel={setShowGetCreditScore} collabId={collabId} />
+      )}
       <div className="feedbackprofile">
         <img className="pfp" src={user?.pfp} alt="" />
         <div className="about">
@@ -34,6 +43,14 @@ const CollaborationsCard = ({ collabId, user, post, page }) => {
       </div>
       {/* <div className="feedbacktext"> */}
       <button onClick={showCollab}>View Collaboration Details</button>
+      {page === "collabsAccepted" && (
+        <div className="collabButtons">
+          <button onClick={() => navigate(`/chats/${id}`)}>Message</button>
+          <button onClick={() => setShowGetCreditScore(true)}>
+            Get Credit Score
+          </button>
+        </div>
+      )}
       {showPost && (
         <PostModal
           user={user}

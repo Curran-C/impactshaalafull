@@ -10,6 +10,7 @@ import postRoutes from "../api/routes/post.routes.js";
 import chatRoutes from "../api/routes/chat.routes.js";
 import messageRoutes from "../api/routes/message.routes.js";
 import collabRoutes from "../api/routes/collaboration.routes.js";
+import documentRoutes from "../api/routes/documents.routes.js";
 
 dotenv.config();
 const app = express();
@@ -36,6 +37,7 @@ app.use("/api/post", postRoutes);
 app.use("/api/chat", chatRoutes);
 app.use("/api/message", messageRoutes);
 app.use("/api/collaboration", collabRoutes);
+app.use("/api/documents", documentRoutes);
 
 app.listen(PORT, () => {
   connect();

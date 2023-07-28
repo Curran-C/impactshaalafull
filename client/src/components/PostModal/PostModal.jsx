@@ -48,10 +48,10 @@ const PostModal = ({ user, collabId, post, onCancel, page }) => {
         `${import.meta.env.VITE_BASE_URL}/api/company/updateuser/${otherUser}`,
         { $push: { collaborationIdsAccepted: collabId } }
       );
-      // const resToCurrentUserTwo = await axios.post(
-      //   `${import.meta.env.VITE_BASE_URL}/api/company/updateuser/${otherUser}`,
-      //   { $pull: { collaborationIds: collabId } }
-      // );
+      const resToCurrentUserTwo = await axios.post(
+        `${import.meta.env.VITE_BASE_URL}/api/company/updateuser/${otherUser}`,
+        { $pull: { collaborationIds: collabId } }
+      );
 
       //update user who posted the collaborating
       const resToOtherUserOne = await axios.post(
@@ -60,12 +60,12 @@ const PostModal = ({ user, collabId, post, onCancel, page }) => {
         }`,
         { $push: { collaborationIdsAccepted: collabId } }
       );
-      // const resToOtherUserTwo = await axios.post(
-      //   `${import.meta.env.VITE_BASE_URL}/api/company/updateuser/${
-      //     post?.createdById
-      //   }`,
-      //   { $pull: { collaborationIds: collabId } }
-      // );
+      const resToOtherUserTwo = await axios.post(
+        `${import.meta.env.VITE_BASE_URL}/api/company/updateuser/${
+          post?.createdById
+        }`,
+        { $pull: { collaborationIds: collabId } }
+      );
 
       handleChatClick();
     } catch (err) {
@@ -80,10 +80,10 @@ const PostModal = ({ user, collabId, post, onCancel, page }) => {
         `${import.meta.env.VITE_BASE_URL}/api/company/updateuser/${otherUser}`,
         { $push: { collaborationIdsDeclined: collabId } }
       );
-      // const resToCurrentUserTwo = await axios.post(
-      //   `${import.meta.env.VITE_BASE_URL}/api/company/updateuser/${otherUser}`,
-      //   { $pull: { collaborationIds: collabId } }
-      // );
+      const resToCurrentUserTwo = await axios.post(
+        `${import.meta.env.VITE_BASE_URL}/api/company/updateuser/${otherUser}`,
+        { $pull: { collaborationIds: collabId } }
+      );
 
       //update user who posted the collaborating
       const resToOtherUser = await axios.post(
@@ -92,12 +92,12 @@ const PostModal = ({ user, collabId, post, onCancel, page }) => {
         }`,
         { $push: { collaborationIdsDeclined: collabId } }
       );
-      // const resToOtherUserTwo = await axios.post(
-      //   `${import.meta.env.VITE_BASE_URL}/api/company/updateuser/${
-      //     post?.createdById
-      //   }`,
-      //   { $pull: { collaborationIds: collabId } }
-      // );
+      const resToOtherUserTwo = await axios.post(
+        `${import.meta.env.VITE_BASE_URL}/api/company/updateuser/${
+          post?.createdById
+        }`,
+        { $pull: { collaborationIds: collabId } }
+      );
 
       onCancel(false);
     } catch (err) {

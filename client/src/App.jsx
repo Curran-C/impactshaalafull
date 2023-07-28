@@ -14,6 +14,7 @@ import Collaborations from "./pages/Collaborations/Collaborations";
 import AboutUs from "./pages/AboutUs/AboutUs";
 import TC from "./pages/TC/TC";
 import EditProfile from "./pages/EditProfile/EditProfile";
+import { Dashboard, Login } from "./Admin/pages";
 
 function App() {
   return (
@@ -31,6 +32,8 @@ function App() {
         <Route path="/aboutus/" element={<AboutUs />} />
         <Route path="/terms-conditions/" element={<TC />} />
         <Route path="/edit/:id" element={<EditProfile />} />
+        <Route path="/admin" element={<Login />} />
+        <Route path="/admin/dashboard" element={<Dashboard />} />
       </Routes>
     </BrowserRouter>
   );

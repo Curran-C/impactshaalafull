@@ -598,7 +598,7 @@ const SignUp = () => {
             name="phNum"
           />
         </div>
-
+        <p>Use my current location</p>
         <button type="submit">Next</button>
       </form>
     </div>
@@ -645,12 +645,12 @@ const SignUp = () => {
   // return
   return (
     <div className="container">
-      {signInState && signIn}
+      {/* {signInState && signIn}
       {stakeholderState && stakeholder}
       {signUpState && signUp}
-      {companyDetailsState && companyDetails}
-      {locationDetailsState && locationDetails}
-      {tagsState && tagsPage}
+      {companyDetailsState && companyDetails} */}
+      {locationDetails}
+      {/* {tagsState && tagsPage} */}
     </div>
   );
 };

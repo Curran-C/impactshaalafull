@@ -31,6 +31,13 @@
             }
         }
     }
+    .collabButtons {
+        display: flex;
+        gap: 10px;
+        button {
+            padding: 10px 10px;
+        }
+    }
     button {
         background-color: #759bd3;
         border: none;

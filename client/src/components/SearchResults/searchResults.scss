@@ -8,7 +8,9 @@
     box-shadow: 1px 5px 10px gray;
     background: white;
     border-radius: 25px;
-    height: 200px;
+    height: 500px;
+    gap: 20px;
+    overflow-y: scroll;
     .searchResult {
         display: flex;
         align-items: center;
@@ -24,6 +26,47 @@
             width: 40px;
             border-radius: 100%;
             object-fit: cover;
+        }
+        .info {
+            display: flex;
+            flex-direction: column;
+            .searchAbout {
+                display: flex;
+                gap: 20px;
+                .tile {
+                    gap: 5px;
+                    .img {
+                        height: 18px;
+                        width: 18px;
+                    }
+                    .linkText {
+                        font-size: 12px;
+                    }
+                }
+            }
+        }
+        .tagsContainer {
+            .tagsWrapper {
+                background: none;
+                margin-top: -20px;
+                padding: 5px 0px;
+                gap: 5px;
+                width: 300px;
+                .tag {
+                    padding: 0px 0px;
+                    background: none;
+                    p {
+                        font-size: 14px;
+                        &:after {
+                            content: ", ";
+                            padding-left: 2px;
+                        }
+                    }
+                    .x {
+                        display: none;
+                    }
+                }
+            }
         }
     }
 }

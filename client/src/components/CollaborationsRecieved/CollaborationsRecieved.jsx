@@ -7,26 +7,36 @@ import CollaborationsCard from "../CollaborationsCard/CollaborationsCard";
 const CollaborationsRecieved = () => {
   const { id } = useParams();
   const [fromUsers, setFromUsers] = useState([]);
-  const [collabs, setCollabs] = useState();
+  const [collabIds, setCollabIds] = useState([]);
+  const [collabs, setCollabs] = useState([]);
   const [post, setPosts] = useState([]);
 
   useEffect(() => {
     const getUser = async () => {
       try {
         const resCollabGot = await axios.get(
-          `${import.meta.env.VITE_BASE_URL}/api/collaboration/singletoId/${id}`
+          `${import.meta.env.VITE_BASE_URL}/api/company/getuser/${id}`
         );
-        setCollabs(resCollabGot.data);
-        collabs?.map(async (collab) => {
-          console.log(collab.fromId);
+        setCollabIds(resCollabGot?.data.collaborationIds);
+        console.log(collabIds);
+        collabIds?.map(async (collabId) => {
+          console.log(collabId);
           try {
-            const resFromUser = await axios.get(
-              `${import.meta.env.VITE_BASE_URL}/api/company/getuser/${
-                collab.fromId
-              }`
+            const resCollab = await axios.get(
+              `${
+                import.meta.env.VITE_BASE_URL
+              }/api/collaboration/single/${collabId}`
             );
-            setFromUsers((prev) => [...prev, resFromUser?.data]);
-            setPosts((prev) => [...prev, collab.postId]);
+            setCollabs((prev) => [...prev, resCollab?.data]);
+            collabs?.map(async (collab) => {
+              const user = await axios.get(
+                `${import.meta.env.VITE_BASE_URL}/api/company/getuser/${
+                  collab.fromId
+                }`
+              );
+              setPosts((prev) => [...prev, collab.postId]);
+              setFromUsers((prev) => [...prev, user?.data]);
+            });
           } catch (err) {
             console.log(err);
           }

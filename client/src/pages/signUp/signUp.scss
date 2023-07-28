@@ -257,7 +257,7 @@
             height: 500px;
             box-shadow: 1px 2px 5px #868686;
             background-color: #cddded;
-
+            // gap: 10px;
             .inputs {
                 display: flex;
                 flex-direction: column;
@@ -304,6 +304,9 @@
                     cursor: pointer;
                     box-shadow: 0px 0px 5px 1px #1a7fe3;
                 }
+            }
+            p {
+                margin: 0;
             }
             a {
                 color: #868686;

@@ -7,6 +7,8 @@ import axios from "axios";
 import HomeRight from "../../components/HomeRight/HomeRight";
 import CollaborationsSent from "../../components/CollaborationsSent/CollaborationsSent.jsx";
 import CollaborationsRecieved from "../../components/CollaborationsRecieved/CollaborationsRecieved";
+import CollaborationsAccepted from "../../components/CollaborationsAccepted/CollaborationsAccepted/CollaborationsAccepted";
+import CollaborationsRejected from "../../components/CollaborationsRejected/CollaborationsRejected";
 
 const Collaborations = () => {
   const { id } = useParams();
@@ -95,11 +97,10 @@ const Collaborations = () => {
           </div>
 
           <div className="feedbacksWrapper">
-            {collabRecieved ? (
-              <CollaborationsRecieved />
-            ) : (
-              <CollaborationsSent />
-            )}
+            {collabRecieved && <CollaborationsRecieved />}
+            {collabSent && <CollaborationsSent />}
+            {collabAccepted && <CollaborationsAccepted />}
+            {collabDeclined && <CollaborationsRejected />}
           </div>
         </div>
       </div>
