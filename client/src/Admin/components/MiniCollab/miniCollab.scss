@@ -1,0 +1,33 @@
+.miniCollab {
+    display: flex;
+    gap: 70px;
+    align-items: center;
+.xContainer {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 5px;
+        .x {
+            margin: 0;
+            font-size: 13px;
+            font-weight: 700;
+        }
+        .status {
+            margin: 0;
+            background: #f0f2f5;
+            padding: 1px 8px;
+            text-align: center;
+            font-size: 13px;
+            border-radius: 25px;
+        }
+    }
+    .more {
+        background: #3290ff;
+        border: none;
+        font-size: 15px;
+        padding: 5px 20px;
+        border-radius: 25px;
+        color: white;
+    }
+}
