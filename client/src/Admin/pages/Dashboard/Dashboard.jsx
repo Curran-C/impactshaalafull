@@ -49,7 +49,7 @@ const Dashboard = () => {
                 <p>See all</p>
               </div>
               <div className="miniCollabContainer">
-                <MiniCollab status={"In progress"} />
+                <MiniCollab page={"dashboard"} status={"In progress"} />
               </div>
             </div>
           </div>

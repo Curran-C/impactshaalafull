@@ -14,7 +14,7 @@ import Collaborations from "./pages/Collaborations/Collaborations";
 import AboutUs from "./pages/AboutUs/AboutUs";
 import TC from "./pages/TC/TC";
 import EditProfile from "./pages/EditProfile/EditProfile";
-import { Dashboard, Login } from "./Admin/pages";
+import { CollabDetails, Dashboard, Login } from "./Admin/pages";
 
 function App() {
   return (
@@ -34,6 +34,7 @@ function App() {
         <Route path="/edit/:id" element={<EditProfile />} />
         <Route path="/admin" element={<Login />} />
         <Route path="/admin/dashboard" element={<Dashboard />} />
+        <Route path="/admin/collabdetails" element={<CollabDetails />} />
       </Routes>
     </BrowserRouter>
   );

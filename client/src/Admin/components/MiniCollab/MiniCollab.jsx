@@ -1,7 +1,10 @@
+import { useNavigate } from "react-router-dom";
 import MiniCollabProfile from "../MiniCollabProfile/MiniCollabProfile";
 import "./miniCollab.scss";
 
-const MiniCollab = ({ status }) => {
+const MiniCollab = ({ status, page }) => {
+  const navigate = useNavigate();
+
   return (
     <div className="miniCollab">
       <MiniCollabProfile name={"Lorem Ipsum"} stakeholder={"Institute"} />
@@ -14,7 +17,14 @@ const MiniCollab = ({ status }) => {
         stakeholder={"Institute"}
         reverse={"reverse"}
       />
-      <button className="more">View More</button>
+      {page === "dashboard" && (
+        <button
+          onClick={() => navigate("/admin/collabdetails")}
+          className="more"
+        >
+          View More
+        </button>
+      )}
     </div>
   );
 };
