@@ -2,7 +2,7 @@ import { useNavigate } from "react-router-dom";
 import MiniCollabProfile from "../MiniCollabProfile/MiniCollabProfile";
 import "./miniCollab.scss";
 
-const MiniCollab = ({ status, page }) => {
+const MiniCollab = ({ status, page, buttonText }) => {
   const navigate = useNavigate();
 
   return (
@@ -17,14 +17,24 @@ const MiniCollab = ({ status, page }) => {
         stakeholder={"Institute"}
         reverse={"reverse"}
       />
-      {page === "dashboard" && (
-        <button
-          onClick={() => navigate("/admin/collabdetails")}
-          className="more"
-        >
-          View More
-        </button>
-      )}
+      <div className="buttons">
+        {(page === "dashboard" || page === "collaborations") && (
+          <button
+            onClick={() => navigate("/admin/collabdetails")}
+            className="more"
+          >
+            View More
+          </button>
+        )}
+        {page === "collaborations" && buttonText !== "" && (
+          <button
+            onClick={() => navigate("/admin/givescore")}
+            className="more white"
+          >
+            {buttonText}
+          </button>
+        )}
+      </div>
     </div>
   );
 };

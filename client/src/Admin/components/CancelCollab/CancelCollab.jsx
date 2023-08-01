@@ -1,13 +1,13 @@
 import "./cancelCollab.scss";
 
-const CancelCollab = ({ onCancel }) => {
+const CancelCollab = ({ onCancel, title, button }) => {
   return (
     <div className="cancelCollab">
       <div className="blackbg" onClick={() => onCancel(false)}></div>
       <div className="wrapper">
-        <h1>Reason</h1>
+        <h1>{title}</h1>
         <textarea name="" id="" cols="30" rows="10"></textarea>
-        <button>Cancel Collaboration</button>
+        <button>{button}</button>
       </div>
     </div>
   );

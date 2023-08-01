@@ -1,0 +1,51 @@
+.adminCollaborations {
+    display: flex;
+    background: #f8f9fa;
+    .left {
+        width: 350px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        // height: 100vh;
+        background: #545bfc;
+        border-radius: 0px 25px 25px 0px;
+        .logo {
+            margin-left: 20px;
+            margin-top: 50px;
+        }
+    }
+    .right {
+        display: flex;
+        margin-left: 80px;
+        flex-direction: column;
+        gap: 30px;
+        .tabs {
+            display: flex;
+            gap: 80px;
+            h1 {
+                font-size: 18px;
+                letter-spacing: 1px;
+                font-weight: 200;
+                transition: font-weight ease-in-out;
+                padding: 5px 20px;
+                &:hover {
+                    cursor: pointer;
+                    font-weight: 600;
+                }
+            }
+            .highlighted {
+                font-weight: 600;
+            }
+        }
+        .collabContainer {
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
+            .miniCollab {
+                background: white;
+                padding: 20px;
+                border-radius: 25px;
+            }
+        }
+    }
+}

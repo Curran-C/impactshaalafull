@@ -1,26 +1,21 @@
-import { useNavigate } from "react-router-dom";
+import { useState } from "react";
+import "./giveScore.scss";
 import {
   AdminSearch,
-  CancelCollab,
+  GiveScoreModal,
   LeftNavigation,
   MiniCollab,
 } from "../../components";
-import "./collabDetails.scss";
-import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
-const CollabDetails = () => {
+const GiveScore = () => {
   const navigate = useNavigate();
-  const [showCancelCollab, setShowCancelCollab] = useState(false);
+
+  const [giveScore, setGiveScore] = useState(false);
 
   return (
     <div className="collabDetails">
-      {showCancelCollab && (
-        <CancelCollab
-          onCancel={setShowCancelCollab}
-          title={"Reason"}
-          button={"Cancel Collaboration"}
-        />
-      )}
+      {giveScore && <GiveScoreModal onCancel={setGiveScore} />}
       <div className="left">
         <LeftNavigation page="collaborations" />
       </div>
@@ -56,9 +51,7 @@ const CollabDetails = () => {
               >
                 Back home
               </button>
-              <button onClick={() => setShowCancelCollab(true)}>
-                Cancel Collaboration
-              </button>
+              <button onClick={() => setGiveScore(true)}>Give Score</button>
             </div>
           </div>
         </div>
@@ -67,4 +60,4 @@ const CollabDetails = () => {
   );
 };
 
-export default CollabDetails;
+export default GiveScore;

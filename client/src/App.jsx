@@ -14,7 +14,15 @@ import Collaborations from "./pages/Collaborations/Collaborations";
 import AboutUs from "./pages/AboutUs/AboutUs";
 import TC from "./pages/TC/TC";
 import EditProfile from "./pages/EditProfile/EditProfile";
-import { CollabDetails, Dashboard, Login } from "./Admin/pages";
+import {
+  CollabDetails,
+  Dashboard,
+  Login,
+  AdminCollaborations,
+  GiveScore,
+  UserActivity,
+  UserActivityDetails,
+} from "./Admin/pages";
 
 function App() {
   return (
@@ -35,6 +43,22 @@ function App() {
         <Route path="/admin" element={<Login />} />
         <Route path="/admin/dashboard" element={<Dashboard />} />
         <Route path="/admin/collabdetails" element={<CollabDetails />} />
+        <Route path="/admin/collaborations" element={<AdminCollaborations />} />
+        <Route path="/admin/givescore" element={<GiveScore />} />
+        <Route path="/admin/useractivity" element={<UserActivity />} />
+        <Route
+          path="/admin/useractivity/details"
+          element={
+            <UserActivityDetails
+              page={"details"}
+              buttonText={"Send Notification"}
+            />
+          }
+        />
+        <Route
+          path="/admin/useractivity/recoveraccount"
+          element={<UserActivityDetails buttonText={"Recover Account"} />}
+        />
       </Routes>
     </BrowserRouter>
   );

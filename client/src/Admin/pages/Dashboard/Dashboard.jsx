@@ -14,7 +14,7 @@ import {
   Stat,
 } from "../../components";
 import "./dashboard.scss";
-import Filter from "../../Filter/Filter";
+import Filter from "../../components/Filter/Filter";
 
 const Dashboard = () => {
   const [showFilter, setShowFilter] = useState(false);

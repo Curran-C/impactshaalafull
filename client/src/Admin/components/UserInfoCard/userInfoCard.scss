@@ -1,0 +1,42 @@
+.userInfoCard {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background: white;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    border-radius: 25px;
+    .cardContainer {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding-left: 30px;
+        .statContainer {
+            flex-direction: column-reverse;
+            background: none;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            width: 120px;
+            // padding: none;
+            p {
+                font-size: 14px;
+                font-weight: 300;
+            }
+        }
+    }
+    button {
+        background-color: #759bd3;
+        border: none;
+        border-radius: 20px;
+        padding: 5px 20px;
+        color: white;
+        letter-spacing: 1px;
+        font-size: 15px;
+        outline: none;
+        &:hover {
+            cursor: pointer;
+        }
+    }
+}

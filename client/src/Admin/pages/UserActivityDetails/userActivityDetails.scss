@@ -1,0 +1,120 @@
+.userActivityDetails {
+    display: flex;
+    .left {
+        width: 350px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        // height: 100vh;
+        background: #545bfc;
+        border-radius: 0px 25px 25px 0px;
+        .logo {
+            margin-left: 20px;
+            margin-top: 50px;
+        }
+    }
+    .right {
+        display: flex;
+        margin-left: 80px;
+        flex-direction: column;
+        gap: 30px;
+        .userDetailsContainer {
+            background-color: #eef6ff;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 50px 10px;
+            border-radius: 25px;
+            width: 800px;
+            gap: 10px;
+            .pfp {
+                height: 70px;
+                width: 70px;
+                border-radius: 100%;
+            }
+            h1 {
+                margin: 0;
+                font-weight: 500;
+                font-size: 25px;
+            }
+            p {
+                margin: 0;
+            }
+            .sidebyside {
+                display: flex;
+                align-items: center;
+                gap: 20px;
+                p {
+                    text-align: center;
+                    border-radius: 25px;
+                    padding: 5px 20px;
+                    background: #f0f2f5;
+                    color: #6a6a6a;
+                }
+                .location {
+                    display: flex;
+                    gap: 5px;
+                    align-items: center;
+                }
+            }
+            h5 {
+                margin: 0;
+                font-size: 15px;
+                font-weight: 200;
+            }
+            .tags {
+                display: flex;
+                gap: 40px;
+                p {
+                    text-align: center;
+                    border-radius: 25px;
+                    padding: 5px 10px;
+                    background: #f0f2f5;
+                    color: #6a6a6a;
+                }
+            }
+            .text {
+                text-align: center;
+                width: 80%;
+                padding: 50px;
+                background: white;
+                border-radius: 25px;
+                margin: 30px auto;
+            }
+            .stats {
+                display: flex;
+                gap: 40px;
+                .statContainer {
+                    flex-direction: column-reverse;
+                    background: #f0f2f5;
+                    p {
+                        font-size: 18px;
+                    }
+                }
+            }
+            .buttons {
+                display: flex;
+                gap: 20px;
+                button {
+                    background-color: #759bd3;
+                    border: none;
+                    border-radius: 20px;
+                    padding: 10px 25px;
+                    color: white;
+                    letter-spacing: 1px;
+                    font-size: 15px;
+                    outline: none;
+                    &:hover {
+                        cursor: pointer;
+                    }
+                }
+                .white {
+                    background: white;
+                    color: black;
+                    border: 1px solid black;
+                }
+            }
+        }
+    }
+}
