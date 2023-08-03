@@ -15,9 +15,14 @@ const UserInfoCard = () => {
         <Stat count={45} title={"Ongoing Projects"} />
         <Stat count={45} title={"Posts"} />
       </div>
-      <button onClick={() => navigate("/admin/useractivity/details")}>
-        View Details
-      </button>
+      <div className="buttons">
+        <button onClick={() => navigate("/admin/useractivity/details")}>
+          View Details
+        </button>
+        <button className="white" onClick={() => navigate("/admin/reviews")}>
+          Give Score
+        </button>
+      </div>
     </div>
   );
 };

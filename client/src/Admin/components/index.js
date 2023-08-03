@@ -7,6 +7,8 @@ import CancelCollab from "./CancelCollab/CancelCollab";
 import GiveScoreModal from "./GiveScoreModal/GiveScoreModal";
 import DocumentPreview from "./DocumentPreview/DocumentPreview";
 import UserInfoCard from "./UserInfoCard/UserInfoCard";
+import Review from "./Review/Review";
+import Complaint from "./Complaint/Complaint";
 
 export {
   UserInfoCard,
@@ -18,4 +20,6 @@ export {
   Stat,
   CancelCollab,
   MiniCollab,
+  Complaint,
+  Review,
 };

@@ -48,7 +48,7 @@ const LeftNavigation = ({ page }) => {
         highlighted={page === "complaints" ? true : false}
         img={complaints}
         linkText={"Complaints"}
-        navLink={complaints}
+        navLink={"complaints"}
       />
     </div>
   );

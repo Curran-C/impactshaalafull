@@ -22,6 +22,8 @@ import {
   GiveScore,
   UserActivity,
   UserActivityDetails,
+  Complaints,
+  Reviews,
 } from "./Admin/pages";
 
 function App() {
@@ -46,6 +48,7 @@ function App() {
         <Route path="/admin/collaborations" element={<AdminCollaborations />} />
         <Route path="/admin/givescore" element={<GiveScore />} />
         <Route path="/admin/useractivity" element={<UserActivity />} />
+        <Route path="/admin/reviews" element={<Reviews />} />
         <Route
           path="/admin/useractivity/details"
           element={
@@ -59,6 +62,7 @@ function App() {
           path="/admin/useractivity/recoveraccount"
           element={<UserActivityDetails buttonText={"Recover Account"} />}
         />
+        <Route path="/admin/complaints" element={<Complaints />} />
       </Routes>
     </BrowserRouter>
   );

@@ -645,12 +645,12 @@ const SignUp = () => {
   // return
   return (
     <div className="container">
-      {/* {signInState && signIn}
+      {signInState && signIn}
       {stakeholderState && stakeholder}
       {signUpState && signUp}
-      {companyDetailsState && companyDetails} */}
-      {locationDetails}
-      {/* {tagsState && tagsPage} */}
+      {companyDetailsState && companyDetails}
+      {locationDetailsState && locationDetails}
+      {tagsState && tagsPage}
     </div>
   );
 };

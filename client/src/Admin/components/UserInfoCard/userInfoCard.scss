@@ -1,7 +1,7 @@
 .userInfoCard {
     display: flex;
     flex-direction: column;
-    align-items: center;
+    align-items: end;
     justify-content: center;
     background: white;
     padding-top: 10px;
@@ -26,17 +26,28 @@
             }
         }
     }
-    button {
-        background-color: #759bd3;
-        border: none;
-        border-radius: 20px;
-        padding: 5px 20px;
-        color: white;
-        letter-spacing: 1px;
-        font-size: 15px;
-        outline: none;
-        &:hover {
-            cursor: pointer;
+    .buttons {
+        display: flex;
+        gap: 20px;
+        align-items: center;
+        button {
+            background-color: #759bd3;
+            border: none;
+            border-radius: 20px;
+            padding: 5px 20px;
+            color: white;
+            letter-spacing: 1px;
+            font-size: 15px;
+            outline: none;
+            &:hover {
+                cursor: pointer;
+            }
+        }
+        .white {
+            margin-right: 20px;
+            background: white;
+            color: black;
+            border: 1px solid black;
         }
     }
 }
