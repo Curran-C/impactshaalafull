@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { loginimg } from "../../../assets/adminLogin";
+import { loginimg } from "../adminLogin";
 import { useNavigate } from "react-router-dom";
 import "./Login.scss";
 

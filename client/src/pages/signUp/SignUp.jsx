@@ -14,7 +14,7 @@ import {
 } from "../../constants";
 import Backbutton from "../../components/Backbutton/Backbutton";
 import { tagsImage } from "../../assets/signUp";
-import Tags from "../../components/Tags/Tags";
+import { Circles } from "react-loader-spinner";
 
 const SignUp = () => {
   // states
@@ -31,6 +31,8 @@ const SignUp = () => {
   const [tagsState, setTagsState] = useState(false);
   const [tag, setTag] = useState("");
   const [tags, setTags] = useState([]);
+  const [newType, setNewType] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
   const [location, setLocation] = useState({
     city: "",
     state: "",
@@ -183,6 +185,7 @@ const SignUp = () => {
   };
   const handleSignIn = async (e) => {
     e?.preventDefault();
+    setIsLoading(true);
     try {
       const res = await axios.post(
         `${import.meta.env.VITE_BASE_URL}/api/company/login`,
@@ -190,7 +193,7 @@ const SignUp = () => {
           ...oldUser,
         }
       );
-      console.log(res.data);
+      res.data && setIsLoading(true);
       navigate(`/home/${res.data._id}`);
     } catch (err) {
       console.log(err);
@@ -209,6 +212,7 @@ const SignUp = () => {
 
   const handleFinalSubmit = async (e) => {
     e?.preventDefault();
+    setIsLoading(true);
     let pfpUrl, coverPicUrl;
     if (pfp) pfpUrl = await upload(pfp);
     if (coverPic) coverPicUrl = await upload(coverPic);
@@ -218,10 +222,12 @@ const SignUp = () => {
         {
           ...newUser,
           pfp: pfpUrl?.toString(),
+          type: newType !== "" ? newType : newUser.type,
           coverPic: coverPicUrl?.toString(),
           tags: tags,
         }
       );
+      console.log(res.data);
       try {
         const res = await axios.post(
           `${import.meta.env.VITE_BASE_URL}/api/company/login`,
@@ -230,6 +236,7 @@ const SignUp = () => {
             password: newUser.password,
           }
         );
+        res.data && setIsLoading(false);
         console.log(res.data);
         navigate(`/home/${res.data._id}`);
       } catch (err) {
@@ -292,7 +299,21 @@ const SignUp = () => {
         <p className="signupToggle" onClick={handleSwitch}>
           Sign up?
         </p>
-        <button type="submit">Sign In</button>
+        {isLoading ? (
+          <button>
+            <Circles
+              height="20"
+              width="80"
+              color="#fff"
+              ariaLabel="circles-loading"
+              wrapperStyle={{}}
+              wrapperClass=""
+              visible={true}
+            />
+          </button>
+        ) : (
+          <button type="submit">Sign In</button>
+        )}
       </form>
     </div>
   );
@@ -328,7 +349,7 @@ const SignUp = () => {
           id=""
         >
           <option value="" disabled selected hidden>
-            Type {/*!Previously known as sectors */}
+            Type {/*//!Previously known as sectors */}
           </option>
           {sectors.map((sector) => (
             <option key={sector} value={sector}>
@@ -344,7 +365,7 @@ const SignUp = () => {
           id=""
         >
           <option value="" disabled selected hidden>
-            Sub-type {/*!Previously known as type */}
+            Sub-type {/*//!Previously known as type */}
           </option>
           {newUser?.stakeholder === "Educational Institution" &&
             educationalOptions.map((option) => (
@@ -371,35 +392,17 @@ const SignUp = () => {
               </option>
             ))}
         </select>
-        {newUser?.type === "Other" && (
-          <input
-            className="otherInput"
-            onChange={(e) => handleSignInInputChange(e)}
-            name="type"
-            type="text"
-            placeholder="Enter Profession"
-            id=""
-            required
-          />
-        )}
-        {/* {newUser?.stakeholder === "Educational Institution" && (
-          <select
-            required
-            onChange={(e) => handleSignUpInputChange(e)}
-            className="dropdown"
-            name="sector"
-            id=""
-          >
-            <option value="" disabled selected hidden>
-              Sectors
-            </option>
-            {sectors.map((sector) => (
-              <option key={sector} value={sector}>
-                {sector}
-              </option>
-            ))}
-          </select>
-        )} */}
+        {newUser?.type === "Other" &&
+          newUser?.stakeholder === "Working Professional" && (
+            <input
+              className="otherInput"
+              onChange={(e) => setNewType(e.target.value)}
+              type="text"
+              placeholder="Enter Profession"
+              id=""
+              required
+            />
+          )}
         <button type="submit">Next</button>
       </form>
     </div>
@@ -488,20 +491,6 @@ const SignUp = () => {
             type="text"
             name="tagline"
           />
-          {/* <div className="tag">
-            <input
-              placeholder="Tags"
-              type="text"
-              name="tags"
-              onChange={(e) => setTag(e.target.value)}
-              value={tag}
-            />
-            <button type="button" onClick={handleTagSubmit}>
-              {" "}
-              Add{" "}
-            </button>
-          </div> */}
-          {/* <input type="text" disabled value={tags} /> */}
           <textarea
             placeholder="Description"
             name="description"
@@ -606,11 +595,11 @@ const SignUp = () => {
 
   const tagsPage = (
     <>
-      <div onSubmit={handleFinalSubmit} className="tagsContainer">
-        {/* <Backbutton
+      <Backbutton
         trueState={setLocationDetailsState}
         falseState={setTagsState}
-      /> */}
+      />
+      <div className="tagsContainer">
         <img src={tagsImage} alt="enter your tags" />
         <div className="tagsWrapper">
           <form onSubmit={handleTagSubmit} className="tagsInput">
@@ -636,7 +625,21 @@ const SignUp = () => {
                 </div>
               ))}
           </div>
-          <button onClick={handleFinalSubmit}>Sign Up</button>
+          {isLoading ? (
+            <button>
+              <Circles
+                height="20"
+                width="80"
+                color="#fff"
+                ariaLabel="circles-loading"
+                wrapperStyle={{}}
+                wrapperClass=""
+                visible={true}
+              />
+            </button>
+          ) : (
+            <button onClick={handleFinalSubmit}>Sign Up</button>
+          )}
         </div>
       </div>
     </>
@@ -654,5 +657,4 @@ const SignUp = () => {
     </div>
   );
 };
-
 export default SignUp;

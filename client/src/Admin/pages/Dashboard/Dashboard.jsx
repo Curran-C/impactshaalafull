@@ -6,7 +6,7 @@ import {
   filter,
   institutes,
   project,
-} from "../../../assets/adminDashboard";
+} from "../adminDashboard";
 import {
   AdminSearch,
   LeftNavigation,
@@ -41,7 +41,7 @@ const Dashboard = () => {
 
             <div className="collabContainer">
               <div className="titleForCollab">
-                <h3>All Completed Collaborations</h3>
+                <h3>All Collaborations</h3>
                 <div onClick={() => setShowFilter(true)} className="filter">
                   <img src={filter} alt="" />
                   <p>Filter</p>

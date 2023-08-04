@@ -19,9 +19,11 @@ const CollaborationsSent = () => {
           }/api/collaboration/singlefromId/${id}`
         );
         setCollabs(resCollabGot.data);
-        collabs?.map(async (collab) => {
-          console.log(collab.fromId);
+        console.log(resCollabGot.data);
+        console.log("first");
+        resCollabGot.data?.map(async (collab) => {
           try {
+            console.log(collab.fromId);
             const resFromUser = await axios.get(
               `${import.meta.env.VITE_BASE_URL}/api/company/getuser/${
                 collab.toId
@@ -41,9 +43,10 @@ const CollaborationsSent = () => {
   }, []);
   return (
     <div className="collaborationsSent">
-      {fromUsers?.map((user, index) => (
-        <CollaborationsCard key={index} user={user} post={post[index]} />
-      ))}
+      {fromUsers.length > 0 &&
+        fromUsers?.map((user, index) => (
+          <CollaborationsCard key={index} user={user} post={post[index]} />
+        ))}
     </div>
   );
 };

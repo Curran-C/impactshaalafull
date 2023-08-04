@@ -1,4 +1,4 @@
-import { trash } from "../../../assets/adminReviews";
+import { trash } from "../../pages/adminReviews";
 import "./review.scss";
 
 const Review = ({ name, institute, review }) => {

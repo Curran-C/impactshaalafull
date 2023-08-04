@@ -15,28 +15,21 @@ const CollaborationsRecieved = () => {
     const getUser = async () => {
       try {
         const resCollabGot = await axios.get(
-          `${import.meta.env.VITE_BASE_URL}/api/company/getuser/${id}`
+          `${import.meta.env.VITE_BASE_URL}/api/collaboration/singletoId/${id}`
         );
-        setCollabIds(resCollabGot?.data.collaborationIds);
-        console.log(collabIds);
-        collabIds?.map(async (collabId) => {
-          console.log(collabId);
+        setCollabs(resCollabGot.data);
+        console.log(resCollabGot.data);
+        console.log("first");
+        resCollabGot.data?.map(async (collab) => {
           try {
-            const resCollab = await axios.get(
-              `${
-                import.meta.env.VITE_BASE_URL
-              }/api/collaboration/single/${collabId}`
+            console.log(collab.fromId);
+            const resFromUser = await axios.get(
+              `${import.meta.env.VITE_BASE_URL}/api/company/getuser/${
+                collab.fromId
+              }`
             );
-            setCollabs((prev) => [...prev, resCollab?.data]);
-            collabs?.map(async (collab) => {
-              const user = await axios.get(
-                `${import.meta.env.VITE_BASE_URL}/api/company/getuser/${
-                  collab.fromId
-                }`
-              );
-              setPosts((prev) => [...prev, collab.postId]);
-              setFromUsers((prev) => [...prev, user?.data]);
-            });
+            setFromUsers((prev) => [...prev, resFromUser?.data]);
+            setPosts((prev) => [...prev, collab.postId]);
           } catch (err) {
             console.log(err);
           }

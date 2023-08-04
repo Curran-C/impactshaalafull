@@ -3,7 +3,7 @@ import {
   citizens,
   corporates,
   institutes,
-} from "../../../assets/adminDashboard";
+} from "../../pages/adminDashboard";
 import Tile from "../../../components/Tile/Tile";
 import "./adminPost.scss";
 

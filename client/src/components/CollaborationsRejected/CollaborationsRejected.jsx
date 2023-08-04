@@ -23,26 +23,22 @@ const CollaborationsRejected = () => {
         setCollabsRejectedIds(user?.data.collaborationIdsDeclined);
         console.log(collabsRejectedIds);
         //todo loop over collabids and then get the collab for each id
-        collabsRejectedIds?.map(async (collab) => {
+        user?.data.collaborationIdsDeclined.map(async (collab) => {
           const collabs = await axios.get(
             `${
               import.meta.env.VITE_BASE_URL
             }/api/collaboration/single/${collab}`
           );
-          setCollabsRejected((prev) => [...prev, collabs?.data]);
-          console.log(collabsRejected);
 
           //todo use the fromId: in collabs to get userdetails
-          collabsRejected?.map(async (collab) => {
-            const user = await axios.get(
-              `${import.meta.env.VITE_BASE_URL}/api/company/getuser/${
-                collab.fromId
-              }`
-            );
-            console.log(user.data);
-            setPosts((prev) => [...prev, collab.postId]);
-            setFromUsers((prev) => [...prev, user?.data]);
-          });
+          const user = await axios.get(
+            `${import.meta.env.VITE_BASE_URL}/api/company/getuser/${
+              collabs?.data.fromId
+            }`
+          );
+          console.log(user.data);
+          setPosts((prev) => [...prev, collab.postId]);
+          setFromUsers((prev) => [...prev, user?.data]);
         });
       } catch (err) {
         console.log(err);
@@ -59,7 +55,7 @@ const CollaborationsRejected = () => {
           key={index}
           user={user}
           post={Posts[index]}
-          collabId={collabsRejected[index]._id}
+          collabId={collabsRejected[index]?._id}
         />
       ))}
     </div>

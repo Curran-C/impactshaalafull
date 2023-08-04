@@ -28,7 +28,11 @@ const MiniCollab = ({ status, page, buttonText }) => {
         )}
         {page === "collaborations" && buttonText !== "" && (
           <button
-            onClick={() => navigate("/admin/givescore")}
+            onClick={() =>
+              buttonText === "Approve"
+                ? navigate("/admin/approvecollaboration")
+                : navigate("/admin/givescore")
+            }
             className="more white"
           >
             {buttonText}

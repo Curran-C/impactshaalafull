@@ -24,6 +24,7 @@ import {
   UserActivityDetails,
   Complaints,
   Reviews,
+  ApproveCollab,
 } from "./Admin/pages";
 
 function App() {
@@ -63,6 +64,7 @@ function App() {
           element={<UserActivityDetails buttonText={"Recover Account"} />}
         />
         <Route path="/admin/complaints" element={<Complaints />} />
+        <Route path="/admin/approvecollaboration" element={<ApproveCollab />} />
       </Routes>
     </BrowserRouter>
   );

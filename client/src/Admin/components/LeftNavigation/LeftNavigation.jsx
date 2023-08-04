@@ -6,7 +6,7 @@ import {
   requests,
   subscription,
   userActivity,
-} from "../../../assets/adminDashboard";
+} from "../../pages/adminDashboard";
 import Links from "../Links/Links";
 import "./leftNavigation.scss";
 

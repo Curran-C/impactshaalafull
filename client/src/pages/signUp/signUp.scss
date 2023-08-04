@@ -442,6 +442,19 @@
                     font-size: 15px;
                 }
             }
+            button {
+                background-color: #87ceeb;
+                padding: 10px 30px;
+                border: none;
+                border-radius: 10px;
+                font-weight: 600;
+                letter-spacing: 1px;
+                font-size: 16px;
+                &:hover {
+                    cursor: pointer;
+                    box-shadow: 0px 0px 5px 1px #1a7fe3;
+                }
+            }
             .tags {
                 display: flex;
                 gap: 10px;
