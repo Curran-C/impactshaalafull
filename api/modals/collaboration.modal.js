@@ -14,8 +14,8 @@ const collaborationSchema = new Schema(
       type: String,
     },
     completed: {
-      type: Boolean,
-      default: false,
+      type: String,
+      default: "requested",
     },
   },
   {

@@ -65,3 +65,44 @@ export const getCollabWithFromId = async (req, res) => {
     res.status(500).send(err);
   }
 };
+
+//Admin
+
+//get all collabs
+export const getCollabs = async (req, res) => {
+  try {
+    const {dateFilter, status, from, to} = req.query;
+    let query = {};
+    if (dateFilter) {
+      let startDate, endDate;
+      const currentDate = new Date();
+      if (dateFilter === 'thisMonth') {
+        startDate = new Date(currentDate.getFullYear(), currentDate.getMonth(), 1);
+        endDate = new Date(currentDate.getFullYear(), currentDate.getMonth() + 1, 0);
+      } else if (dateFilter === 'lastMonth') {
+        startDate = new Date(currentDate.getFullYear(), currentDate.getMonth() - 1, 1);
+        endDate = new Date(currentDate.getFullYear(), currentDate.getMonth(), 0);
+      } else if (dateFilter === 'lastThreeMonths') {
+        startDate = new Date(currentDate.getFullYear(), currentDate.getMonth() - 3, 1);
+        endDate = new Date(currentDate.getFullYear(), currentDate.getMonth() + 1, 0);
+      }
+      query.createdAt = {
+        $gt: startDate,
+        $lt: endDate,
+      };
+    }
+    if (status) {
+      query.completed = status;
+    }
+    if (from && to) {
+      query.createdAt = {
+        $gt: from,
+        $lt: to,
+      };
+    }
+    const collab = await Collaboration.find(query);
+    res.status(200).send(collab);
+  } catch (err) {
+    res.status.send(err);
+  }
+};

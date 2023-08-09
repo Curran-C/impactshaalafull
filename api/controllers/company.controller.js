@@ -1,4 +1,5 @@
 import Company from "../modals/company.modal.js";
+import Collaboration from "../modals/collaboration.modal.js";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 
@@ -137,5 +138,52 @@ export const findUserByName = async (req, res) => {
     res.status(200).send(user);
   } catch (err) {
     res.status(500).send("user not present");
+  }
+};
+
+//Admin
+
+//get no of stakeholders
+export const getNoOfStakeholders = async (req, res) => {
+  try {
+    const ngos = await Company.countDocuments({ stakeholder: 'NGO' });
+    const corporates = await Company.countDocuments({ stakeholder: 'Corporate' });
+    const educationalInstitutions = await Company.countDocuments({ stakeholder: 'Educational Institution' });
+    const workingProfessional = await Company.countDocuments({ stakeholder: 'Working Professional' });
+    const totalUsers = await Company.countDocuments();
+    const totalProjects = await Collaboration.countDocuments({ completed: 'ongoing' })
+    res.status(200).send({ngos, corporates, educationalInstitutions, workingProfessional, totalUsers, totalProjects});
+  } catch (err) {
+    res.status(500).send(err);
+  }
+};
+
+
+//get user activity
+export const getUserActivity = async (req, res) => {
+  try {
+    const userStatus = req.params.userstatus;
+    if (userStatus === 'allusers') {
+      const users = await Company.find();
+      res.status(200).send(users);
+    } else if (userStatus === 'notactive') {
+      const twoMonthsAgo = new Date();
+      twoMonthsAgo.setMonth(twoMonthsAgo.getMonth() - 2);
+      const notActiveUsers = await Company.aggregate([
+        {
+          $lookup: {
+            from: 'Post',
+            localField: '_id',
+            foreignField: 'createdById',
+            as: 'posts',
+          },
+        },
+      ]);
+      res.status(200).send(notActiveUsers);
+    } else {
+
+    }
+  } catch (err) {
+    res.status(500).send(err);
   }
 };

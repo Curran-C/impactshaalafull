@@ -6,6 +6,7 @@ import {
   getCollabWithToId,
   getSingleCollab,
   updateCollab,
+  getCollabs,
 } from "../controllers/collaborations.controller.js";
 
 const router = express.Router();
@@ -16,5 +17,8 @@ router.get("/all", getAllCollab);
 router.get("/single/:id", getSingleCollab);
 router.get("/singletoId/:id", getCollabWithToId);
 router.get("/singlefromId/:id", getCollabWithFromId);
+
+//Admin
+router.get("/getallcollab", getCollabs)
 
 export default router;

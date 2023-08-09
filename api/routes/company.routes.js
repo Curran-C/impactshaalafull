@@ -8,6 +8,8 @@ import {
   login,
   logout,
   register,
+  getNoOfStakeholders,
+  getUserActivity,
 } from "../controllers/company.controller.js";
 
 const router = express.Router();
@@ -21,5 +23,9 @@ router.post("/login", login);
 router.post("/verifyuser", getUserFromEmail);
 router.post("/updateuser/:id", findUserAndUpdate);
 router.post("/getuserfromname", findUserByName);
+
+//Admin
+router.get("/getstats", getNoOfStakeholders);
+router.get("/getuseractivity/:userstatus", getUserActivity);
 
 export default router;
