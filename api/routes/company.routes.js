@@ -10,6 +10,8 @@ import {
   register,
   getNoOfStakeholders,
   getUserActivity,
+  sendNotification,
+  removeUser,
 } from "../controllers/company.controller.js";
 
 const router = express.Router();
@@ -27,5 +29,7 @@ router.post("/getuserfromname", findUserByName);
 //Admin
 router.get("/getstats", getNoOfStakeholders);
 router.get("/getuseractivity/:userstatus", getUserActivity);
+router.post("/send/:id", sendNotification);
+router.post("/remove/:id", removeUser);
 
 export default router;

@@ -1,5 +1,7 @@
 import Company from "../modals/company.modal.js";
 import Collaboration from "../modals/collaboration.modal.js";
+import Post from "../modals/post.modal.js";
+import { sendMail } from "../utils/mailHelper.js";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 
@@ -29,7 +31,7 @@ export const register = async (req, res) => {
 //login
 export const login = async (req, res) => {
   try {
-    const user = await Company.findOne({ email: req.body.email });
+    const user = await Company.findOne({ email: req.body.email, status: "active"});
     if (!user) {
       res.status(404).send("Email doesnt exist");
     } else {
@@ -152,12 +154,11 @@ export const getNoOfStakeholders = async (req, res) => {
     const workingProfessional = await Company.countDocuments({ stakeholder: 'Working Professional' });
     const totalUsers = await Company.countDocuments();
     const totalProjects = await Collaboration.countDocuments({ completed: 'ongoing' })
-    res.status(200).send({ngos, corporates, educationalInstitutions, workingProfessional, totalUsers, totalProjects});
+    res.status(200).send({ ngos, corporates, educationalInstitutions, workingProfessional, totalUsers, totalProjects });
   } catch (err) {
     res.status(500).send(err);
   }
 };
-
 
 //get user activity
 export const getUserActivity = async (req, res) => {
@@ -169,20 +170,50 @@ export const getUserActivity = async (req, res) => {
     } else if (userStatus === 'notactive') {
       const twoMonthsAgo = new Date();
       twoMonthsAgo.setMonth(twoMonthsAgo.getMonth() - 2);
-      const notActiveUsers = await Company.aggregate([
-        {
-          $lookup: {
-            from: 'Post',
-            localField: '_id',
-            foreignField: 'createdById',
-            as: 'posts',
-          },
-        },
-      ]);
-      res.status(200).send(notActiveUsers);
+      const allPosts = await Post.find();
+      const twoMonthsAgoPosts = await Post.find({ createdAt: { $lt: twoMonthsAgo } });
+      const userWithNoPosts = await Company.find({
+        _id: { $nin: [...new Set(allPosts.map(post => post.createdById).flat())] },
+        createdAt: { $lte: twoMonthsAgo }
+      });
+      const userWithPostTwoMonthsAgo = await Company.find({ 
+        _id: { $in: [...new Set(twoMonthsAgoPosts.map(post => post.createdById).flat())] } 
+      });
+      res.status(200).send({
+        userWithNoPosts,
+        userWithPostTwoMonthsAgo
+      });
+    } else if (userStatus === 'removed') {
+      const removedUser = await Company.find({ status: 'inactive' });
+      res.status(200).send(removedUser);
     } else {
-
+      res.status(500).send("Invalid Status");
     }
+  } catch (err) {
+    res.status(500).send(err);
+  }
+};
+
+//send warning notification to inactive user 
+export const sendNotification = async (req, res) => {
+  try {
+    const { name, email, subject, message } = req.body;
+    const response = await sendMail(name, email, subject, message);
+    res.status(200).send(response);
+  } catch (err) {
+    res.status(500).send(err);
+  }
+};
+
+//remove inactive user
+export const removeUser = async (req, res) => {
+  try {
+    const { reason } = req.body;
+    const subject = "Account has been removed"
+    const user = await Company.findByIdAndUpdate(req.params.id, { status: 'inactive' });
+    console.log(user);
+    await sendMail(user.name, user.email, subject, reason);
+    res.status(200).send(user);
   } catch (err) {
     res.status(500).send(err);
   }

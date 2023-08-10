@@ -71,7 +71,7 @@ export const getCollabWithFromId = async (req, res) => {
 //get all collabs
 export const getCollabs = async (req, res) => {
   try {
-    const {dateFilter, status, from, to} = req.query;
+    const { dateFilter, status, from, to } = req.query;
     let query = {};
     if (dateFilter) {
       let startDate, endDate;
