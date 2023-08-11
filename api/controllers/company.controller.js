@@ -179,10 +179,10 @@ export const getUserActivity = async (req, res) => {
       const userWithPostTwoMonthsAgo = await Company.find({ 
         _id: { $in: [...new Set(twoMonthsAgoPosts.map(post => post.createdById).flat())] } 
       });
-      res.status(200).send({
-        userWithNoPosts,
-        userWithPostTwoMonthsAgo
-      });
+      res.status(200).send([
+        ...userWithNoPosts,
+        ...userWithPostTwoMonthsAgo
+      ]);
     } else if (userStatus === 'removed') {
       const removedUser = await Company.find({ status: 'inactive' });
       res.status(200).send(removedUser);
@@ -218,3 +218,35 @@ export const removeUser = async (req, res) => {
     res.status(500).send(err);
   }
 };
+
+// set score to stakeholder
+export const addScore = async (req, res) => {
+  try {
+    const user = await Company.findById(req.params.id);
+    user.score += req.body.score;
+    user.save();
+    res.status(200).send(user);
+  } catch (err) {
+    res.status(500).send(err);
+  }
+}
+
+export const getUserStat = async (req, res) => {
+  try {
+    const user = await Company.findById(req.params.id);
+    const collabs = await Collaboration.countDocuments({ fromId: req.params.id });
+    const posts = await Post.countDocuments({ createdById: req.params.id });
+    const ongoingProjects = await Collaboration.countDocuments({ 
+      $or: [{ fromId: req.params.id }, { toId: req.params.id }],
+      completed: 'ongoing'  
+    })
+    res.status(200).send({
+      "userScore": user.score,
+      collabs,
+      posts,
+      ongoingProjects
+    });
+  } catch (err) {
+    res.status(500).send(err);
+  }
+}
