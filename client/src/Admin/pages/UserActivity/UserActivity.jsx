@@ -1,4 +1,5 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import axios from "axios";
 import { AdminSearch, LeftNavigation, UserInfoCard } from "../../components";
 import "./userActivity.scss";
 
@@ -6,20 +7,43 @@ const UserActivity = () => {
   const [showUsers, setShowUsers] = useState(true);
   const [showRemovedUsers, setShowRemovedUsers] = useState(false);
   const [showInactiveUsers, setShowInactiveUsers] = useState(false);
-
+  const [userStatus, setUserStatus] = useState("allusers");
+  const [users, setUsers] = useState([]);
   const setAllFalse = () => {
     setShowUsers(false);
-    setShowInactiveUsers(false);
     setShowRemovedUsers(false);
+    setShowInactiveUsers(false);
+    setUserStatus("");
   };
 
   const handleClick = (tab) => {
     setAllFalse();
-    if (tab === "all") setShowUsers(true);
-    if (tab === "remove") setShowRemovedUsers(true);
-    if (tab === "inactive") setShowInactiveUsers(true);
+    if (tab === "all") {
+      setShowUsers(true);
+      setUserStatus("allusers");
+    }
+    if (tab === "remove") {
+      setShowRemovedUsers(true);
+      setUserStatus("removed");
+    }
+    if (tab === "inactive") {
+      setShowInactiveUsers(true);
+      setUserStatus("notactive");
+    }
   };
-
+  useEffect(() => {
+    const getUser = async () => {
+      try {
+        const res = await axios.get(
+          `${import.meta.env.VITE_BASE_URL}/api/company/getuseractivity/${userStatus}`
+        );
+        setUsers(res.data);
+      } catch (err) {
+        console.log(err);
+      }
+    };
+    getUser();
+  }, [userStatus]); 
   return (
     <div className="userActivity">
       <div className="left">
@@ -56,10 +80,17 @@ const UserActivity = () => {
           </div>
 
           <div className="activity">
+            {users.map(user => (
+              // eslint-disable-next-line react/jsx-key
+              <UserInfoCard 
+                userId={user._id}
+                name={user.companyName}
+                stakeholder={user.stakeholder}
+              />
+            ))}
+            {/* <UserInfoCard />
             <UserInfoCard />
-            <UserInfoCard />
-            <UserInfoCard />
-            <UserInfoCard />
+            <UserInfoCard /> */}
           </div>
         </div>
       </div>

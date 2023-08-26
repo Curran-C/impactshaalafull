@@ -115,6 +115,14 @@ const companySchema = new Schema(
       type: Array,
       default: [],
     },
+    status: {
+      type: String,
+      default: 'active'
+    },
+    score: {
+      type: Number,
+      default: 0,
+    },
   },
   {
     timestamps: true,

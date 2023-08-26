@@ -11,6 +11,9 @@ import chatRoutes from "../api/routes/chat.routes.js";
 import messageRoutes from "../api/routes/message.routes.js";
 import collabRoutes from "../api/routes/collaboration.routes.js";
 import documentRoutes from "../api/routes/documents.routes.js";
+import notificationRoutes from "../api/routes/notification.routes.js"
+import feedbackRoutes from "../api/routes/feedback.routes.js"
+import invitationRoutes from "../api/routes/invitation.routes.js"
 
 dotenv.config();
 const app = express();
@@ -38,6 +41,9 @@ app.use("/api/chat", chatRoutes);
 app.use("/api/message", messageRoutes);
 app.use("/api/collaboration", collabRoutes);
 app.use("/api/documents", documentRoutes);
+app.use("/api/notification", notificationRoutes);
+app.use("/api/feedback", feedbackRoutes);
+app.use("/api/invitation", invitationRoutes);
 
 app.listen(PORT, () => {
   connect();

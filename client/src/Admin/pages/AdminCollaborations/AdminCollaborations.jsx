@@ -1,4 +1,5 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import axios from "axios";
 import {
   AdminSearch,
   DocumentPreview,
@@ -12,30 +13,45 @@ const AdminCollaborations = () => {
   const [ongoingState, setOngoingState] = useState(false);
   const [completedState, setCompletedState] = useState(false);
   const [canceledState, setCanceledState] = useState(false);
-  const [collabState, setCollabState] = useState("");
-  const [buttonText, setButtonText] = useState("");
+  const [collabState, setCollabState] = useState("requested");
+  const [buttonText, setButtonText] = useState("Approve");
+  const [collaborations, setCollaborations] = useState([]);
 
   const setStateToTrue = (state) => {
-    setPendingState(state === "pending" ? true : false);
+    setPendingState(state === "requested" ? true : false);
     setOngoingState(state === "ongoing" ? true : false);
     setCompletedState(state === "completed" ? true : false);
-    setCanceledState(state === "canceled" ? true : false);
+    setCanceledState(state === "declined" ? true : false);
 
     setButtonText("");
 
     if (pendingState) {
-      setCollabState("pending");
+      setCollabState("requested");
       setButtonText("Approve");
-    }
-    if (ongoingState) setCollabState("ongoing");
-    if (completedState) {
+    } else if (ongoingState) 
+      setCollabState("ongoing");
+    else if (completedState) {
       setCollabState("completed");
       setButtonText("Give Score");
     }
-    if (canceledState) {
-      setCollabState("canceled");
+    else if (canceledState) {
+      setCollabState("declined");
     }
   };
+
+  useEffect(() => {
+    const getCollab = async () => {
+      try {
+        const res = await axios.get(
+          `${import.meta.env.VITE_BASE_URL}/api/collaboration/getallcollab?status=${collabState}`
+        );
+        setCollaborations(res.data);
+      } catch (err) {
+        console.log(err);
+      }
+    };
+    getCollab();
+  }, [collabState]);
 
   return (
     <div className="adminCollaborations">
@@ -48,7 +64,7 @@ const AdminCollaborations = () => {
         <div className="tabs">
           <h1
             className={`${pendingState && "highlighted"}`}
-            onClick={() => setStateToTrue("pending")}
+            onClick={() => setStateToTrue("requested")}
           >
             Pending
           </h1>
@@ -66,37 +82,23 @@ const AdminCollaborations = () => {
           </h1>
           <h1
             className={`${canceledState && "highlighted"}`}
-            onClick={() => setStateToTrue("canceled")}
+            onClick={() => setStateToTrue("declined")}
           >
             Canceled
           </h1>
         </div>
         <div className="collabContainer">
-          <MiniCollab
-            status={collabState}
-            page={"collaborations"}
-            buttonText={buttonText}
-          />
-          <MiniCollab
-            status={collabState}
-            page={"collaborations"}
-            buttonText={buttonText}
-          />
-          <MiniCollab
-            status={collabState}
-            page={"collaborations"}
-            buttonText={buttonText}
-          />
-          <MiniCollab
-            status={collabState}
-            page={"collaborations"}
-            buttonText={buttonText}
-          />
-          <MiniCollab
-            status={collabState}
-            page={"collaborations"}
-            buttonText={buttonText}
-          />
+          
+          {collaborations.map(collab => (
+            <MiniCollab
+              key={collab._id}
+              status={collabState}
+              page={"collaborations"}
+              buttonText={buttonText}
+              fromId={collab.fromId}
+              toId={collab.toId}
+            />
+          ))}
         </div>
       </div>
     </div>

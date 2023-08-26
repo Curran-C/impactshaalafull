@@ -1,12 +1,12 @@
 import "./miniCOllabProfile.scss";
 
-const MiniCollabProfile = ({ reverse, name, stakeholder }) => {
+const MiniCollabProfile = ({ reverse, name, stakeholder, profileImage }) => {
   return (
     <div className={`miniCollabProfile ${reverse}`}>
-      <img src="https://picsum.photos/200" alt="" />
+      <img src={profileImage || "https://picsum.photos/200"} alt="" />
       <div className="about">
-        <span>Lorem ipsum</span>
-        <p>Institute</p>
+        <span>{name}</span>
+        <p>{stakeholder}</p>
       </div>
     </div>
   );
