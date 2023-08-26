@@ -1,0 +1,64 @@
+.partnerCard {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    .cardItems {
+        border-radius: 25px;
+        background-color: #444B61;
+        display: flex;
+        flex-direction: column;
+        gap: 30px;
+        padding: 50px 50px;
+        span {
+            color: white;
+        }
+    }
+    .cardTitle {
+        display: flex;
+        justify-content: center;
+        border-radius: 25px;
+        align-items: center;
+        padding: 20px 30px;
+        background-color:  #DDDDDD;
+        
+        span {
+            font-weight: 500;
+            font-size: 20px;
+        }
+    }
+}
+
+@media (max-width: 1024px) {
+    .partnerCard{
+        margin: 0px 10px;
+        .cardItems {
+            gap: 20px;
+            padding: 50px 20px;
+            height: 200px;
+        }
+        .cardTitle {
+            span {
+                font-size: 18px;
+            }
+        }
+    }
+}
+
+@media (max-width: 768px) {
+    .partnerCard{
+        margin: 0px 10px;
+        gap: 10px;
+        align-items: center;
+        .cardItems {
+            gap: 10px;
+            padding: 50px 20px;
+            height: 200px;
+            width: 200px;
+        }
+        .cardTitle {
+            span {
+                font-size: 18px;
+            }
+        }
+    }
+}

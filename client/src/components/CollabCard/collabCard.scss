@@ -1,0 +1,43 @@
+.collabCard {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    width: 100px;
+    padding: 30px 20px;
+    background: white;
+    border-radius: 25px;
+    flex: 0 0 250px;
+    align-items: center;
+    box-shadow: 1px 1px 5px lightgray;
+    .companyName {
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+        align-items: center;
+        // justify-content: center;
+        img {
+            border-radius: 50px;
+            height: 45px;
+        }
+        h2 {
+            font-weight: 400;
+            margin: 0;
+            font-size: 18px;
+        }
+    }
+    .about {
+        text-align: center;
+    }
+    .message {
+        background-color: #759bd3;
+        border: none;
+        border-radius: 20px;
+        padding: 15px 25px;
+        // margin-top: -600px;
+        width: 70%;
+        color: white;
+        letter-spacing: 1px;
+        font-size: 15px;
+        outline: none;
+    }
+}

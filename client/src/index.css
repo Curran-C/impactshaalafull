@@ -1,0 +1,42 @@
+html {
+  scroll-behavior: smooth;
+  overflow-x: hidden;
+  position: relative;
+}
+
+body {
+  font-family: "Poppins", sans-serif;
+  color: #2f2d38;
+  overflow-x: hidden;
+  margin: 0px;
+  position: relative;
+  /* display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center; */
+}
+
+button,
+input,
+textarea {
+  font-family: "Poppins", sans-serif;
+}
+
+button:hover {
+  cursor: pointer;
+}
+p:hover,
+h1:hover,
+h2:hover,
+h3:hover {
+  cursor: default;
+}
+
+.carousel-root .carousel {
+  height: 500px;
+  object-fit: contain;
+}
+
+.slider .animated {
+  /* height: 500px; */
+}

@@ -1,0 +1,106 @@
+.collabDetails {
+    display: flex;
+    .left {
+        width: 350px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        // height: 100vh;
+        background: #545bfc;
+        border-radius: 0px 25px 25px 0px;
+        .logo {
+            margin-left: 20px;
+            margin-top: 50px;
+        }
+    }
+    .right {
+        display: flex;
+        flex-direction: column;
+        margin-left: 80px;
+        .collabDetailsContainer {
+            margin-top: 60px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            background: #eef6ff;
+            width: 800px;
+            padding: 50px 20px;
+            border-radius: 25px;
+            gap: 15px;
+            span,
+            h5,
+            p {
+                margin: 0;
+            }
+
+            span {
+                font-size: 14px;
+            }
+            h5 {
+                letter-spacing: 0.8px;
+            }
+            a {
+                color: #6a6a6a;
+                font-size: 13px;
+            }
+            .duration {
+                font-size: 13px;
+                background: #6a6a6a;
+                padding: 5px 10px;
+                border-radius: 25px;
+                color: white;
+            }
+
+            .text {
+                background: white;
+                padding: 20px;
+                text-align: center;
+                border-radius: 25px;
+                display: flex;
+                align-items: center;
+                flex-direction: column;
+                gap: 20px;
+                .tags {
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    gap: 20px;
+                    p {
+                        padding: 5px 15px;
+                        letter-spacing: 0.5px;
+                        border-radius: 25px;
+                        font-size: 13px;
+                        background: #f0f2f5;
+                        color: #6a6a6a;
+                    }
+                }
+                .actualText {
+                    width: 80%;
+                }
+            }
+            .buttons {
+                display: flex;
+                gap: 20px;
+                button {
+                    background-color: #759bd3;
+                    border: none;
+                    border-radius: 20px;
+                    padding: 10px 25px;
+                    color: white;
+                    letter-spacing: 1px;
+                    font-size: 15px;
+                    outline: none;
+                    &:hover {
+                        cursor: pointer;
+                    }
+                }
+                .white {
+                    background: white;
+                    color: black;
+                    border: 1px solid black;
+                }
+            }
+        }
+    }
+}

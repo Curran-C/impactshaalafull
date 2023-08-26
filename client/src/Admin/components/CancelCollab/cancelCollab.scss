@@ -1,0 +1,61 @@
+.cancelCollab {
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    position: fixed;
+    .blackbg {
+        // position: absolute;
+        background: #000;
+        height: 100vh;
+        width: 100%;
+        opacity: 0.2;
+        z-index: -10;
+        top: 0;
+    }
+    .wrapper {
+        background-color: #fff;
+        border-radius: 25px;
+        padding: 30px 60px;
+        position: absolute;
+        top: 0;
+        display: flex;
+        flex-direction: column;
+        right: 0;
+        left: 0;
+        justify-content: center;
+        align-items: center;
+        top: 0;
+        bottom: 0;
+        height: 45%;
+        width: 30%;
+        margin: auto;
+        gap: 30px;
+        h1 {
+            margin: 0;
+            padding: 0px 0px;
+        }
+        textarea {
+            border: none;
+            width: 400px;
+            background-color: #f0f2f5;
+            border-radius: 25px;
+            padding: 25px;
+            outline: none;
+        }
+        button {
+            background-color: #759bd3;
+            border: none;
+            border-radius: 20px;
+            padding: 10px 25px;
+            color: white;
+            letter-spacing: 1px;
+            font-size: 15px;
+            outline: none;
+            &:hover {
+                cursor: pointer;
+            }
+        }
+    }
+}

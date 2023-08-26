@@ -1,0 +1,31 @@
+.header {
+    width: 100%;
+    overflow-x: hidden;
+    .dot {
+        height: 1000px;
+        width: 2300px;
+        position: absolute;
+        top: -350px;
+        left: -350px;
+        z-index: -10;
+        border-radius: 45% 55% 35% 65% / 41% 23% 77% 59%;
+        overflow-x: hidden;
+        background-color: #cddded;
+    }
+    .blob1 {
+        position: absolute;
+        height: 800px;
+        z-index: -9;
+        right: -200px;
+        rotate: -10deg;
+        top: -300px;
+    }
+}
+
+@media (max-width: 426px) {
+    .header {
+        .dot {
+            height: 850px;
+        }
+    }
+}

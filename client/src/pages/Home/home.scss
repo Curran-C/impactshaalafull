@@ -1,0 +1,28 @@
+.homePage {
+    display: flex;
+    flex-direction: row;
+    // align-items: center;
+    justify-content: space-evenly;
+    width: 100%;
+
+    background-color: #D9DEF2;
+    .profileLeft{
+        width: 250px;
+        margin-top: 320px;
+        .createpost {
+            margin-top: 0;
+        }
+    }
+    .left{
+        width: 20%;
+    }
+    .center {
+        width: 50%;
+    }
+    .right {
+        width: 25%;
+        margin-top: 320px;
+
+    }
+
+}

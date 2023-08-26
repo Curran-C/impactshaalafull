@@ -1,0 +1,61 @@
+.settings {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    width: 100%;
+    background-color: #D9DEF2;
+    .profileLeft{
+        width: 250px;
+        margin-top: 320px;
+        .createpost {
+            margin-top: 0;
+        }
+    }
+    .left{
+        width: 20%;
+    }
+    .center {
+        width: 50%;
+        .settingsContainer {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            h1 {
+                margin-top: 50px;
+            }
+            .settingsWrapper {
+                display: flex;
+                flex-direction: column;
+                background: #F5F7F6;
+                padding: 20px 50px;
+                border-radius: 25px;
+                gap: 20px;
+                .setting {
+                    display: flex;
+                    gap: 10px;
+                    align-items: center;
+                    font-size: 17px;
+                    padding: 10px 20px;
+                    background: white;
+                    width: 230px;
+                    border-radius: 25px;
+                    margin: 0;
+                    &:hover {
+                        cursor: pointer;
+                        background-color: #759BD3;
+                        // color: white;
+                    }
+                    img {
+                        height: 30px;
+                    }
+                    
+                }
+            }
+        }
+    }
+    .right {
+        width: 25%;
+        margin-top: 320px;
+
+    }
+}

@@ -1,0 +1,28 @@
+.savedPosts {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    width: 100%;
+
+    background-color: #D9DEF2;
+    .profileLeft{
+        width: 250px;
+        margin-top: 270px;
+
+        .createpost {
+            margin-top: 0;
+        }
+    }
+    .left{
+        width: 20%;
+    }
+    .center {
+        width: 50%;
+        display: flex;
+        flex-direction: column;
+    }
+    .right {
+        width: 25%;
+        margin-top: 265px;
+    }
+}

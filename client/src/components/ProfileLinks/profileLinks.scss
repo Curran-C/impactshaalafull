@@ -1,0 +1,27 @@
+.profileLinks {
+    display: flex;
+    align-items: center;
+    justify-content: start;
+    gap: 50px;
+    margin-left: 60px;
+    padding: 20px 30px;
+    width: 200px;
+
+    .img {
+        height: 30px;
+    }
+    .linkText {
+        text-align: center;
+    }
+    &:hover {
+        cursor: pointer;
+    }
+    &:hover {
+        background: white;
+        border-radius: 25px;
+    }
+}
+.highlighted {
+    background: white;
+    border-radius: 25px;
+}

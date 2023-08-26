@@ -1,0 +1,21 @@
+.titleInput {
+    display: flex;
+    flex-direction: column;
+    width: 500px;
+    gap: 15px;
+    h3 {
+        margin: 0;
+    }
+    input {
+        border-radius: 10px;
+        height: 25px;
+        width: 300px;
+        padding: 10px 30px;
+        outline: none;
+        border: none;
+        background-color: #ebebeb;
+        letter-spacing: 1px;
+        font-weight: 400;
+        font-size: 15px;
+    }
+}

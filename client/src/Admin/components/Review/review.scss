@@ -1,0 +1,47 @@
+.review {
+    display: flex;
+    flex-direction: column;
+    background: #f5f7f6;
+    // background: red;
+    width: 800px;
+    padding: 20px;
+    border-radius: 25px;
+    align-items: start;
+    .user {
+        display: flex;
+        align-items: center;
+        width: 100%;
+        justify-content: space-between;
+        .miniprofile {
+            display: flex;
+            gap: 20px;
+            align-items: center;
+            img {
+                height: 50px;
+                border-radius: 25px;
+            }
+            .about {
+                display: flex;
+                flex-direction: column;
+                h2,
+                p {
+                    margin: 0;
+                }
+                h2 {
+                    font-size: 18px;
+                }
+            }
+        }
+        .reviewcollabs {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+    }
+    .text {
+        background: white;
+        padding: 20px;
+        border-radius: 25px;
+        margin-top: 20px;
+    }
+}

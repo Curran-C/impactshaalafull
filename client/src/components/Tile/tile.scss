@@ -1,0 +1,14 @@
+.tile {
+    display: flex;
+    align-items: center;
+    justify-content: start;
+    gap: 10px;
+    // width: 200px;
+    .img {
+        height: 20px;
+    }
+    .linkText {
+        text-align: center;
+        font-size: 15px;
+    }
+}

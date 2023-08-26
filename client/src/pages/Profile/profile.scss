@@ -1,0 +1,22 @@
+.companyProfile {
+    background-color: #D9DEF2;
+    .profileContainer {
+        display: flex;
+        gap: 50px;
+        .right {
+            .nameandfeedback{
+                display: flex;
+                align-items: center;
+                gap: 50px;
+                .feedbackbutton {
+                    padding:10px 20px;
+                    background-color: #759BD3;
+                    border: none;
+                    border-radius: 25px;
+                    color: white;
+                }
+            }
+        }
+    }
+}
+

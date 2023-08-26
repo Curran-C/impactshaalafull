@@ -1,0 +1,43 @@
+.complaints {
+    display: flex;
+    background: #f8f9fa;
+    .left {
+        width: 350px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        min-height: 100vh;
+        background: #545bfc;
+        border-radius: 0px 25px 25px 0px;
+        .logo {
+            margin-left: 20px;
+            margin-top: 50px;
+        }
+    }
+    .right {
+        display: flex;
+        margin-left: 80px;
+        flex-direction: column;
+        gap: 30px;
+        .stakeholders {
+            display: flex;
+            justify-content: space-evenly;
+            p {
+                font-size: 12px;
+                margin: 0;
+                background: white;
+                padding: 5px;
+                border-radius: 25px;
+                margin-top: 20px;
+                &:hover {
+                    cursor: pointer;
+                }
+            }
+        }
+        .complainsContainer {
+            display: flex;
+            flex-direction: column;
+            gap: 50px;
+        }
+    }
+}
