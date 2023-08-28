@@ -7,11 +7,44 @@ import {
 } from "../../components";
 import "./collabDetails.scss";
 import { useState } from "react";
+import { useLocation } from 'react-router-dom';
+import { useEffect } from 'react';
+import axios from "axios";
 
 const CollabDetails = () => {
   const navigate = useNavigate();
   const [showCancelCollab, setShowCancelCollab] = useState(false);
-
+  const location = useLocation();
+  const queryParams = new URLSearchParams(location.search);
+  const collabId = queryParams.get('collabId');
+  const [collab, setCollab] = useState([]);
+  const [post, setPost] = useState([]);
+  const [startDate, setStartDate] = useState("");
+  const [user, setUser] = useState({});
+  useEffect(() => {
+    const getCollab = async () => {
+      try {
+        const collabRequest = await axios.get(
+          `${import.meta.env.VITE_BASE_URL}/api/collaboration/single/${collabId}`
+        );
+        setCollab(collabRequest.data);
+        const postRequest = await axios.get(
+          `${import.meta.env.VITE_BASE_URL}/api/post/getsinglepost/${collabRequest.data.postId}`
+        );
+        setPost(postRequest.data);
+        setStartDate(new Date(postRequest.data.createdAt).toISOString().split('T')[0]);
+        const res = await axios.get(
+          `${import.meta.env.VITE_BASE_URL}/api/company/getuser/${postRequest.data.createdById}`
+        );
+        setUser(res.data);
+      } catch (err) {
+        console.log(err);
+      }
+    };
+    getCollab();
+  }, [collabId]);
+   
+  
   return (
     <div className="collabDetails">
       {showCancelCollab && (
@@ -19,6 +52,7 @@ const CollabDetails = () => {
           onCancel={setShowCancelCollab}
           title={"Reason"}
           button={"Cancel Collaboration"}
+          collabId= {collabId}
         />
       )}
       <div className="left">
@@ -27,11 +61,15 @@ const CollabDetails = () => {
       <div className="right">
         <AdminSearch />
         <div className="collabDetailsContainer">
-          <MiniCollab status={"completed"} />
+          <MiniCollab 
+          status={collab?.completed} 
+          fromId={collab.fromId}
+          toId={collab.toId}
+          />
           <span>Posted by</span>
-          <h5>Institute Name</h5>
+          <h5>{user.companyName}</h5>
           <p className="duration">
-            12-03-23 &nbsp;&nbsp; - &nbsp;&nbsp; 12-04-23
+            {startDate} &nbsp;&nbsp; - &nbsp;&nbsp; 12-04-23
           </p>
           <div className="text">
             <div className="tags">
@@ -41,11 +79,7 @@ const CollabDetails = () => {
               <p>tag</p>
             </div>
             <p className="actualText">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc
-              vulputate libero et velit interdum, ac aliquet odio mattis. Class
-              aptent taciti sociosqu ad litora torquent per conubia nostra, per
-              inceptos himenaeos. Curabitur tempus urna at turpis condimentum
-              lobortis. Ut commodo efficitur neque.
+              {post.posDetails}
             </p>
             <a href="">See Documentation</a>
 

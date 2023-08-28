@@ -92,6 +92,7 @@ const AdminCollaborations = () => {
           {collaborations.map(collab => (
             <MiniCollab
               key={collab._id}
+              collabId={collab._id}
               status={collabState}
               page={"collaborations"}
               buttonText={buttonText}

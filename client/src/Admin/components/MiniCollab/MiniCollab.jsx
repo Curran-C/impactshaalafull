@@ -4,7 +4,7 @@ import axios from "axios";
 import MiniCollabProfile from "../MiniCollabProfile/MiniCollabProfile";
 import "./miniCollab.scss";
 
-const MiniCollab = ({ status, page, buttonText, fromId, toId }) => {
+const MiniCollab = ({ collabId, status, page, buttonText, fromId, toId }) => {
   const navigate = useNavigate();
   const [fromUser, setFromUser] = useState({});
   const [toUser, setToUser] = useState({});
@@ -60,7 +60,7 @@ const MiniCollab = ({ status, page, buttonText, fromId, toId }) => {
       <div className="buttons">
         {(page === "dashboard" || page === "collaborations") && (
           <button
-            onClick={() => navigate("/admin/collabdetails")}
+            onClick={() => navigate(`/admin/collabdetails?collabId=${collabId}`)}
             className="more"
           >
             View More

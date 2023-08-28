@@ -92,6 +92,7 @@ const Dashboard = () => {
                 <div className="miniCollabContainer">
                   {/* <MiniCollab page={"dashboard"} status={"In progress"} /> */}
                   <MiniCollab
+                    collabId={collab._id}
                     status={collab.completed}
                     page={"dashboard"}
                     fromId={collab.fromId}

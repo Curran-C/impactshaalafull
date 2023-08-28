@@ -1,32 +1,56 @@
-import { useContext, useState } from "react";
+import { useContext, useState, useEffect } from "react";
 import axios from "axios";
 import { UserContext } from "../../pages/Home/Home";
 import "./createPost.scss";
 import { calender, clock, location } from "../../assets/createpost";
+import { useParams } from "react-router-dom";
 
 const CreatePost = ({ onCancel }) => {
   const date = new Date();
-
+  const { id } = useParams();
+  console.log("Hello",id);
   //states
-  const [post, setPost] = useState({});
+  const [post, setPost] = useState({
+    date: date.toISOString().slice(0, 10),
+    time: date.toTimeString().slice(0, 5),
+  });
+  const [userDetails, setUserDetails] = useState([]);
   const userId = useContext(UserContext);
-
   const handleInputChange = (e) => {
     setPost((prev) => {
       return { ...prev, [e.target.name]: e.target.value };
     });
   };
 
-  const handleCreatePost = async () => {
+  useEffect(() => {
+    const getUserDetails = async () => {
+      try {
+        const res = await axios.get(
+          `${import.meta.env.VITE_BASE_URL}/api/company/getuser/${id}`
+        );
+        console.log(res.data);
+        setUserDetails(res.data);
+      } catch (err) {
+        console.log(err);
+      }
+    };
+    getUserDetails();
+  });
+
+  const handleCreatePost = async (e) => {
+    e.preventDefault(); 
+    console.log(post);
     try {
       const res = await axios.post(
         `${import.meta.env.VITE_BASE_URL}/api/post/create`,
         {
           ...post,
           createdById: userId,
+          location: userDetails.city
         }
       );
       console.log(res.data);
+      onCancel(false);
     } catch (err) {
       console.log(err);
     }
@@ -43,19 +67,11 @@ const CreatePost = ({ onCancel }) => {
             <input
               onChange={handleInputChange}
               type="text"
-              placeholder="objective"
+              placeholder="Objective"
               name="title"
+              value={post.title || ""}
             />
           </div>
-          {/* <div className="input">
-            <h2>Position Name</h2>
-            <input
-              onChange={handleInputChange}
-              type="text"
-              placeholder="Position Name"
-              name="posName"
-            />
-          </div> */}
 
           <div className="input">
             <h2>Write a few details</h2>
@@ -65,20 +81,22 @@ const CreatePost = ({ onCancel }) => {
               placeholder="Position Details"
               type="text"
               name="posDetails"
+              value={post.posDetails || ""}
             />
           </div>
+
           <div className="times">
             <div className="time">
               <p>Date</p>
               <div className="img">
                 <img src={calender} alt="" />
                 <input
+                  onChange={handleInputChange}
                   type="date"
-                  name=""
-                  id=""
-                  value={date.toISOString().slice(0, 10)}
+                  name="date"
+                  id="date"
+                  value={post.date || ""}
                 />
-                {/* <span>{date.toDateString()}</span> */}
               </div>
             </div>
             <div className="time">
@@ -87,21 +105,22 @@ const CreatePost = ({ onCancel }) => {
                 <img src={clock} alt="" />
                 <input
                   type="time"
-                  name=""
-                  id=""
-                  value={date.toTimeString().slice(0, 5)}
+                  name="time"
+                  id="time"
+                  onChange={handleInputChange}
+                  value={post.time || ""}
                 />
-                {/* <span>{date.toDateString()}</span> */}
               </div>
             </div>
             <div className="time">
-              <p>Date</p>
+              <p>Location</p>
               <div className="img">
                 <img src={location} alt="" />
-                <span>{"Bangalore"}</span>
+                <span>{userDetails.city}</span>
               </div>
             </div>
           </div>
+
           <div className="buttons">
             <button
               className="cancel"

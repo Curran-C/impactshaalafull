@@ -15,6 +15,7 @@ const createPost = async (req, res) => {
       await newPost.save();
       res.status(200).send(newPost);
     } catch (err) {
+      console.log(err);
       res.status(500).send(err);
     }
   }

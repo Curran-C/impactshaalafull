@@ -52,6 +52,7 @@ const UserActivityDetails = ({ buttonText, page }) => {
           onCancel={setShowNotificatonDialog}
           title={"Notification Text"}
           button={"Send Notification"}
+          userId={userId}
         />
       )}
 
@@ -60,6 +61,7 @@ const UserActivityDetails = ({ buttonText, page }) => {
           onCancel={setShowRemoveAccountDialog}
           title={"Reason"}
           button={"Remove account"}
+          userId={userId}
         />
       )}
 

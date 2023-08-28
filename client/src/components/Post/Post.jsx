@@ -231,6 +231,8 @@ const Post = ({ post }) => {
       </div>
       <div className="container">
         <p>{post.posDetails}</p>
+        {/* <p>{"Date: " +post.date }</p> */}
+        {/* <p>{"Time: " +post.time}</p> */}
         <div className="containerFooter">
           <p>{format(post?.createdAt)}</p>
           <div className="links">
