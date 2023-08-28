@@ -38,7 +38,7 @@ const Complaint = ({ userId, complaint, id }) => {
   return (
     <div className="complaint">
       {showReply && (
-        <CancelCollab title={"Reply"} onCancel={setShowReply} button={"Send"} />
+        <CancelCollab title={"Reply"} onCancel={setShowReply} button={"Send"} feedbackId={id}/>
       )}
       <div className="userProfile">
         <div className="pfp">

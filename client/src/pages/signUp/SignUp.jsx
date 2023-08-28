@@ -130,6 +130,24 @@ const SignUp = () => {
     getLocation();
   }, []);
 
+  const getCurrentLocation = async () => { 
+    try {
+      navigator.geolocation.getCurrentPosition((position) => {
+        const latitude = position.coords.latitude;
+        const longitude = position.coords.longitude;
+        console.log(latitude, longitude);
+        const geoUrl = `https://maps.googleapis.com/maps/api/geocode/json?latlng=${latitude},${longitude}&key=AIzaSyAphv25nyRmd3k1SbgHW4gcymZSIqdXS_U`;
+        fetch(geoUrl)
+        .then(res => res.json())
+        .then(data => {
+          console.log(data);
+        })
+      });
+    } catch(err) {
+      console.log(err);
+    }
+  }
+
   // function
   const handleTagSubmit = (e) => {
     e.preventDefault();
@@ -587,7 +605,7 @@ const SignUp = () => {
             name="phNum"
           />
         </div>
-        <p>Use my current location</p>
+        <p onClick={getCurrentLocation}>Use my current location</p>
         <button type="submit">Next</button>
       </form>
     </div>

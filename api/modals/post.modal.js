@@ -10,7 +10,7 @@ const postSchema = new Schema(
     },
     posName: {
       type: String,
-      required: true,
+      // required: true,  
     },
     posDetails: {
       type: String,
@@ -20,6 +20,18 @@ const postSchema = new Schema(
       type: String,
       required: true,
     },
+    date: {
+      type: Date,
+      required: true,
+    },
+    time: {
+      type: String,
+      required: true,
+    },
+    location: {
+      type: String,
+      required: true,
+    }
   },
   {
     timestamps: true,
