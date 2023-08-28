@@ -2,8 +2,11 @@ import { useContext, useState } from "react";
 import axios from "axios";
 import { UserContext } from "../../pages/Home/Home";
 import "./createPost.scss";
+import { calender, clock, location } from "../../assets/createpost";
 
 const CreatePost = ({ onCancel }) => {
+  const date = new Date();
+
   //states
   const [post, setPost] = useState({});
   const userId = useContext(UserContext);
@@ -36,15 +39,15 @@ const CreatePost = ({ onCancel }) => {
         <form onSubmit={handleCreatePost} className="wrapper">
           <h1>New Post</h1>
           <div className="input">
-            <h2>Title</h2>
+            <h2>Objective</h2>
             <input
               onChange={handleInputChange}
               type="text"
-              placeholder="Title"
+              placeholder="objective"
               name="title"
             />
           </div>
-          <div className="input">
+          {/* <div className="input">
             <h2>Position Name</h2>
             <input
               onChange={handleInputChange}
@@ -52,9 +55,10 @@ const CreatePost = ({ onCancel }) => {
               placeholder="Position Name"
               name="posName"
             />
-          </div>
+          </div> */}
+
           <div className="input">
-            <h2>Position Details</h2>
+            <h2>Write a few details</h2>
             <textarea
               onChange={handleInputChange}
               rows={10}
@@ -62,6 +66,41 @@ const CreatePost = ({ onCancel }) => {
               type="text"
               name="posDetails"
             />
+          </div>
+          <div className="times">
+            <div className="time">
+              <p>Date</p>
+              <div className="img">
+                <img src={calender} alt="" />
+                <input
+                  type="date"
+                  name=""
+                  id=""
+                  value={date.toISOString().slice(0, 10)}
+                />
+                {/* <span>{date.toDateString()}</span> */}
+              </div>
+            </div>
+            <div className="time">
+              <p>Time</p>
+              <div className="img">
+                <img src={clock} alt="" />
+                <input
+                  type="time"
+                  name=""
+                  id=""
+                  value={date.toTimeString().slice(0, 5)}
+                />
+                {/* <span>{date.toDateString()}</span> */}
+              </div>
+            </div>
+            <div className="time">
+              <p>Date</p>
+              <div className="img">
+                <img src={location} alt="" />
+                <span>{"Bangalore"}</span>
+              </div>
+            </div>
           </div>
           <div className="buttons">
             <button

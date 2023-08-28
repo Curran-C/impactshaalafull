@@ -12,6 +12,8 @@ const ProfileFeed = ({ user }) => {
   // states
   const [showPosts, setShowPosts] = useState(true);
   const [showFeedbacks, setShowFeedbacks] = useState(false);
+  const [showProjectAccomplishments, setShowProjectAccomplishments] =
+    useState(false);
   const [posts, setPosts] = useState();
   const [feedbacks, setFeedbacks] = useState();
 
@@ -33,11 +35,19 @@ const ProfileFeed = ({ user }) => {
   const handleShowPosts = () => {
     setShowPosts(true);
     setShowFeedbacks(false);
+    setShowProjectAccomplishments(false);
   };
 
   const handleShowFeedbacks = () => {
     setShowFeedbacks(true);
     setShowPosts(false);
+    setShowProjectAccomplishments(false);
+  };
+
+  const handleShowProjectAccomplishments = () => {
+    setShowPosts(false);
+    setShowFeedbacks(false);
+    setShowProjectAccomplishments(true);
   };
 
   return (
@@ -68,6 +78,12 @@ const ProfileFeed = ({ user }) => {
               onClick={handleShowFeedbacks}
             >
               Feedbacks
+            </h3>
+            <h3
+              className={showProjectAccomplishments ? "selected" : ""}
+              onClick={handleShowProjectAccomplishments}
+            >
+              Project Accomplishments
             </h3>
           </div>
           {showPosts && <Posts posts={posts} />}
