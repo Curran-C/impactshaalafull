@@ -10,7 +10,7 @@
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "description": "",
+"description": "",
   "dependencies": {
     "@emailjs/nodejs": "^2.2.0",
     "bcrypt": "^5.1.0",
