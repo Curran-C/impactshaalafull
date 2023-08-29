@@ -18,19 +18,19 @@ const postSchema = new Schema(
     },
     createdById: {
       type: String,
-      required: true,
+      // required: true,
     },
     date: {
       type: Date,
-      required: true,
+      // required: true,  
     },
     time: {
       type: String,
-      required: true,
+      // required: true,
     },
     location: {
       type: String,
-      required: true,
+      // required: true,
     }
   },
   {

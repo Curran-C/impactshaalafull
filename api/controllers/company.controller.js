@@ -277,3 +277,14 @@ export const getUserStat = async (req, res) => {
     res.status(500).send(err);
   }
 };
+
+//get company from stakeholder
+export const getAllUsersByStakeholder = async (req, res) => {
+  try {
+    const {stakeholder} = req.params;
+    const user = await Company.find({stakeholder});
+    res.send(user);
+  } catch (err) {
+    res.status(500).send("Something went wrong");
+  }
+};

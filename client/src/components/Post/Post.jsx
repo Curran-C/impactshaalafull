@@ -27,8 +27,7 @@ const Post = ({ post }) => {
       try {
         // getting post of the user
         const res = await axios.get(
-          `${import.meta.env.VITE_BASE_URL}/api/company/getuser/${
-            post.createdById
+          `${import.meta.env.VITE_BASE_URL}/api/company/getuser/${post.createdById
           }`
         );
         setUser(res.data);
@@ -88,8 +87,7 @@ const Post = ({ post }) => {
   const handleChatClick = async () => {
     try {
       const findChat = await axios.get(
-        `${import.meta.env.VITE_BASE_URL}/api/chat/find/${id}/${
-          post?.createdById
+        `${import.meta.env.VITE_BASE_URL}/api/chat/find/${id}/${post?.createdById
         }`
       );
       if (!findChat?.data) {
@@ -142,8 +140,7 @@ const Post = ({ post }) => {
           `${import.meta.env.VITE_BASE_URL}/api/collaboration/singletoId/${id}`
         );
         const isFromId = await axios.get(
-          `${import.meta.env.VITE_BASE_URL}/api/collaboration/singlefromId/${
-            post?.createdById
+          `${import.meta.env.VITE_BASE_URL}/api/collaboration/singlefromId/${post?.createdById
           }`
         );
         console.log(isToId?.data.length);
@@ -153,13 +150,11 @@ const Post = ({ post }) => {
           // *check if user is fromId
           try {
             const isFromId = await axios.get(
-              `${
-                import.meta.env.VITE_BASE_URL
+              `${import.meta.env.VITE_BASE_URL
               }/api/collaboration/singlefromId/${id}`
             );
             const isToId = await axios.get(
-              `${import.meta.env.VITE_BASE_URL}/api/collaboration/singletoId/${
-                post?.createdById
+              `${import.meta.env.VITE_BASE_URL}/api/collaboration/singletoId/${post?.createdById
               }`
             );
             if (isFromId?.data.length !== 0 && isToId?.data.length !== 0) {
@@ -175,8 +170,7 @@ const Post = ({ post }) => {
                 );
                 //update logged in user
                 const resUpdateLoggedInUser = await axios.post(
-                  `${
-                    import.meta.env.VITE_BASE_URL
+                  `${import.meta.env.VITE_BASE_URL
                   }/api/company/updateuser/${id}`,
                   {
                     $push: { collaborationIds: resCollab?.data._id },
@@ -185,13 +179,20 @@ const Post = ({ post }) => {
 
                 //updated user who posted it
                 const resUpdatePostedInUser = await axios.post(
-                  `${import.meta.env.VITE_BASE_URL}/api/company/updateuser/${
-                    post?.createdById
+                  `${import.meta.env.VITE_BASE_URL}/api/company/updateuser/${post?.createdById
                   }`,
                   {
                     $push: { collaborationIds: resCollab?.data._id },
                   }
                 );
+                await axios.post(`${import.meta.env.VITE_BASE_URL}/api/notification/create`,
+                  {
+                    fromId: newCollab.fromId,
+                    toId: newCollab.toId,
+                    title: "New Collab Request",
+                    message: "New Collab Request"
+                  }
+                )
                 alert("Successfully sent Collaboration request");
               } catch (err) {
                 console.log(err);
@@ -215,10 +216,16 @@ const Post = ({ post }) => {
         <div className="userAboutContainer">
           <img src={user?.pfp} alt="" className="pfp" />
           <div className="userAbout">
-            <h2>{user?.name}</h2>
+            <h2>{user?.name || "ImpactShaala"}</h2>
             <div className="tilesContainer">
+            {post?.createdById ? (
+              <>
               <Tile image={corporate} type={user?.stakeholder} />
               <Tile image={location} type={user?.city} />
+              </>
+              ) : (
+                null
+              )}
             </div>
           </div>
         </div>
@@ -236,7 +243,7 @@ const Post = ({ post }) => {
         <div className="containerFooter">
           <p>{format(post?.createdAt)}</p>
           <div className="links">
-            {id !== post?.createdById && (
+            {post?.createdById && id !== post.createdById && (
               <img
                 className="collabImage"
                 src={collaboration}
@@ -244,11 +251,16 @@ const Post = ({ post }) => {
                 onClick={handleCollabClick}
               />
             )}
-            <img
-              src={backblue}
-              alt=""
-              onClick={() => navigate(`/profile/${post.createdById}`)}
-            />
+            {post?.createdById ? (
+              <img
+                src={backblue}
+                alt=""
+                onClick={() => navigate(`/profile/${post.createdById}`)}
+              />
+            ) : (
+              null
+            )}
+
           </div>
         </div>
       </div>
