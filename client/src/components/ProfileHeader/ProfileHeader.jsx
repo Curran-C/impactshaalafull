@@ -1,6 +1,6 @@
 import { corporate, location, nopfp } from "../../assets/profile";
 import Hex from "../Hex/Hex";
-import Tags from "../Tags/tags";
+import Tags from "../Tags/Tags";
 import Tile from "../Tile/Tile";
 import "./profileHeader.scss";
 

@@ -2,7 +2,7 @@ import { useNavigate } from "react-router-dom";
 import "./searchResults.scss";
 import Tile from "../Tile/Tile";
 import { corporate, nopfp } from "../../assets/profile";
-import Tags from "../Tags/tags";
+import Tags from "../Tags/Tags";
 
 const SearchResults = ({ users }) => {
   const navigate = useNavigate();

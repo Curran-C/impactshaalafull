@@ -1,4 +1,4 @@
-import heroImage from "./heroImage.png";
+import heroImage from "./heroimage.png";
 import corevalue1 from "./corevalue1.png";
 import corevalue2 from "./corevalue2.png";
 import corevalue3 from "./corevalue3.png";

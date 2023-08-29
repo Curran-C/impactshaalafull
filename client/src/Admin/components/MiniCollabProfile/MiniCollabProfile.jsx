@@ -1,4 +1,4 @@
-import "./miniCOllabProfile.scss";
+import "./miniCollabProfile.scss";
 
 const MiniCollabProfile = ({ reverse, name, stakeholder, profileImage }) => {
   return (
