@@ -31,21 +31,10 @@ const AdminPost = ({ onCancel }) => {
       <div className="blackbg" onClick={() => onCancel(false)}></div>
       <div className="container">
         <form className="wrapper">
-          <h1>Lorem ipsum dolor sit amet, consectetur adipiscing</h1>
+          <h1>Content to Notify / Post</h1>
           <div className="inputs">
-            <input
-              placeholder="EX : Lorem ipsum dolor sit amet consectetur"
-              type="text"
-              name=""
-              id=""
-            />
-            <textarea
-              name=""
-              id=""
-              cols="30"
-              rows="10"
-              placeholder="EX : Lorem ipsum dolor sit amet consectetur"
-            />
+            <input placeholder="Subject" type="text" name="" id="" />
+            <textarea name="" id="" cols="30" rows="10" placeholder="Message" />
           </div>
           <div className="stakeholders">
             <Tile
