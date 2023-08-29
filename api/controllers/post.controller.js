@@ -6,7 +6,7 @@ const createPost = async (req, res) => {
   // const token = req.cookies.accessToken;
   // if (!token) res.status(401).send("You are not authenticated");
   // else {
-  const { id } = jwt.decode(token);
+  // const { id } = jwt.decode(token);
   try {
     const newPost = new Post({
       ...req.body,
