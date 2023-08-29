@@ -18,6 +18,9 @@ const notificationSchema = new Schema(
     message: {
       type: String,
     },
+    stakeholderType: {
+      type: String,
+    },
     status: {
       type: String,
       default: 'unread',

@@ -57,10 +57,10 @@ const Notifications = () => {
           <div className="leftn">
             <div className="about">
               <div className="pfp">
-                <img className="pic" src={notification.fromId.pfp || "https://picsum.photos/200"} alt="" />
+                <img className="pic" src={notification.fromId?.pfp || "https://picsum.photos/200"} alt="" />
                 <div className="details">
-                  <span>{notification.fromId.name || "ImpactShaala"}</span>
-                  <Tile image={corporate} type={notification.fromId.stakeholder || "Admin"} />
+                  <span>{notification.fromId?.name || "ImpactShaala"}</span>
+                  <Tile image={corporate} type={notification.fromId?.stakeholder || "Admin"} />
                 </div>
               </div>
             </div>

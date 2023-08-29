@@ -14,6 +14,7 @@ import {
   removeUser,
   addScore,
   getUserStat,
+  getAllUsersByStakeholder,
 } from "../controllers/company.controller.js";
 
 const router = express.Router();
@@ -35,5 +36,7 @@ router.post("/send/:id", sendNotification);
 router.post("/remove/:id", removeUser);
 router.post("/score/:id", addScore);
 router.get("/stats/:id", getUserStat);
+
+router.get("/getAllUsersByStakeholder/:stakeholder", getAllUsersByStakeholder);
 
 export default router;

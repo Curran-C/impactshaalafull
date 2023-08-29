@@ -45,7 +45,7 @@ const CreatePost = ({ onCancel }) => {
         `${import.meta.env.VITE_BASE_URL}/api/post/create`,
         {
           ...post,
-          createdById: userId,
+          createdById: id,
           location: userDetails.city
         }
       );
