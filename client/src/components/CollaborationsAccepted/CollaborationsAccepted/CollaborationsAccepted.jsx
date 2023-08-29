@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import "./collaborationsAccepted.scss";
+import "./CollaborationsAccepted.scss";
 import axios from "axios";
 import { useParams } from "react-router-dom";
 import CollaborationsCard from "../../CollaborationsCard/CollaborationsCard";
