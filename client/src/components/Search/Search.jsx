@@ -6,13 +6,18 @@ import NameDate from "../NameDate/NameDate";
 import { useEffect, useRef, useState } from "react";
 import axios from "axios";
 import SearchResults from "../SearchResults/SearchResults";
+import Notifications from "../Notifications/Notifications";
+import { useNavigate, useParams } from "react-router-dom";
 
 const Search = ({ userName }) => {
   const [search, setSearch] = useState("");
   const [searchResults, setSearchResults] = useState([]);
+  const [shownotifications, setShownotifications] = useState(false);
   const [allUsers, setAllUsers] = useState();
 
   const ref = useRef();
+  const navigate = useNavigate();
+  const { id } = useParams();
 
   useEffect(() => {
     // check if clicked outside
@@ -57,12 +62,23 @@ const Search = ({ userName }) => {
 
   return (
     <div ref={ref} className="search">
+      {shownotifications && <Notifications />}
       <div className="title">
         <NameDate name={userName} date={date} />
         <div className="icons"></div>
         <div className="imgs">
-          <img src={bell} alt="notifications" />
-          <img src={chat} alt="chat" />
+          <img
+            onClick={() => setShownotifications(!shownotifications)}
+            src={bell}
+            alt="notifications"
+            style={{ cursor: "pointer" }}
+          />
+          <img
+            onClick={() => navigate(`/chats/${id}`)}
+            style={{ cursor: "pointer" }}
+            src={chat}
+            alt="chat"
+          />
         </div>
       </div>
       <form onSubmit={handleSearch} className="inputContainer">
