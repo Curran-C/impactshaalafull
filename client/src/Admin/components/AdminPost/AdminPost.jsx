@@ -73,10 +73,10 @@ const AdminPost = ({ onCancel }) => {
       <div className="blackbg" onClick={() => onCancel(false)}></div>
       <div className="container">
         <form className="wrapper" onSubmit={sendNotifications}>
-          <h1>Lorem ipsum dolor sit amet, consectetur adipiscing</h1>
+          <h1>Content to Notify / Post</h1>
           <div className="inputs">
             <input
-              placeholder="EX : Lorem ipsum dolor sit amet consectetur"
+              placeholder="Subject"
               type="text"
               name="title"
               id="title"
@@ -88,7 +88,7 @@ const AdminPost = ({ onCancel }) => {
               id=""
               cols="30"
               rows="10"
-              placeholder="EX : Lorem ipsum dolor sit amet consectetur"
+              placeholder="Message"
               value={message}
               onChange={(e) => setMessage(e.target.value)}
             />
