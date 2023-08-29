@@ -40,7 +40,7 @@ const Profile = () => {
         console.log(err);
       }
     };
-    getCookie();
+    // getCookie();
     getUser();
   }, [accessToken]);
 

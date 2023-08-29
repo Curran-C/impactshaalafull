@@ -1,7 +1,7 @@
 const io = require("socket.io")(8800, {
   cors: {
-    // origin: "http://localhost:5173",
-    origin: "http://impactsalla-frontend.s3-website-us-east-1.amazonaws.com",
+    origin: "http://localhost:5173",
+    // origin: "http://impactsalla-frontend.s3-website-us-east-1.amazonaws.com",
   },
 });
 
