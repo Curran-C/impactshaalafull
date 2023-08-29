@@ -58,7 +58,7 @@ const CollaborationsAccepted = () => {
           collabId={collabsAccepted[index]?._id}
           page={"collabsAccepted"}
         />
-      ))}
+      ))} 
     </div>
   );
 };

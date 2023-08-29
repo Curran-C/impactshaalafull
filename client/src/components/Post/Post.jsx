@@ -192,6 +192,14 @@ const Post = ({ post }) => {
                     $push: { collaborationIds: resCollab?.data._id },
                   }
                 );
+                await axios.post(`${import.meta.env.VITE_BASE_URL}/api/notification/create`,
+                  {
+                    fromId: newCollab.fromId,
+                    toId: newCollab.toId,
+                    title: "New Collab Request",
+                    message: "New Collab Request"
+                  }
+                )
                 alert("Successfully sent Collaboration request");
               } catch (err) {
                 console.log(err);

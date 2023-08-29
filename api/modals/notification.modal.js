@@ -5,9 +5,14 @@ const { Schema } = mongoose;
 const notificationSchema = new Schema(
   {
     fromId: {
-      type: String,
+      type:  Schema.Types.ObjectId,
+      ref: "Company",
     },
     toId: {
+      type:  Schema.Types.ObjectId,
+      ref: "Company",
+    },
+    title: {
       type: String,
     },
     message: {

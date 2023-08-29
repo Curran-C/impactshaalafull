@@ -29,10 +29,30 @@ export const getNotificationByUser = async (req, res) => {
   if (!token) res.status(401).send("You are not authenticated");
   else {
     try {
-      const notification = await Notification.find({ toId: req.params.id, status: 'unread' });
+      const notification = await Notification.find({ toId: req.params.id})
+      .populate('fromId', 'name stakeholder pfp')
+      .sort({ createdAt: -1 });
       res.status(200).send(notification);
     } catch (err) {
+      console.log(err);
       res.status(500).send(err);
     }
+  }
+};
+
+export const markAsReadNotification = async (req, res) => {
+  try {
+    const {notificationId} = req.params
+    const notification = await Notification.findByIdAndUpdate(notificationId, {
+      status: "read"
+    },
+    {
+      new: true,
+    }
+    );
+    res.status(200).send(notification);
+  }catch (err) {
+    console.log(err);
+    res.status(500).send(err);
   }
 };
