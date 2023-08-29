@@ -11,9 +11,9 @@ import chatRoutes from "../api/routes/chat.routes.js";
 import messageRoutes from "../api/routes/message.routes.js";
 import collabRoutes from "../api/routes/collaboration.routes.js";
 import documentRoutes from "../api/routes/documents.routes.js";
-import notificationRoutes from "../api/routes/notification.routes.js"
-import feedbackRoutes from "../api/routes/feedback.routes.js"
-import invitationRoutes from "../api/routes/invitation.routes.js"
+import notificationRoutes from "../api/routes/notification.routes.js";
+import feedbackRoutes from "../api/routes/feedback.routes.js";
+import invitationRoutes from "../api/routes/invitation.routes.js";
 
 dotenv.config();
 const app = express();
@@ -31,8 +31,13 @@ const connect = async () => {
 //middleware
 app.use(express.json());
 app.use(cookieParser());
-app.use(cors({ origin: "http://localhost:5173", credentials: true }));
-// app.use(cors({ origin: "https://impact-shaala.web.app", credentials: true }));
+// app.use(cors({ origin: "http://localhost:5173", credentials: true }));
+app.use(
+  cors({
+    origin: "http://impactsalla-frontend.s3-website-us-east-1.amazonaws.com/",
+    credentials: true,
+  })
+);
 
 //routes
 app.use("/api/company", companyRoutes);
