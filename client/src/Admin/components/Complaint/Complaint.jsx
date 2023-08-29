@@ -52,7 +52,7 @@ const Complaint = ({ userId, complaint, id }) => {
         <p>{complaint}</p>
         <div className="buttons">
           <button className="red" onClick={handleDeleteComplaint}>Delete</button>
-          <button className="white" onClick={() => navigate("/admin/useractivity/details", { state: {userId: userDetails._id } })}>
+          <button className="white" onClick={() => navigate(`/profile/${userDetails._id }`)}>
             View Profile
           </button>
           <button onClick={() => setShowReply(true)} className="blue">

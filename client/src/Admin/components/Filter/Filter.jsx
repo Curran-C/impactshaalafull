@@ -1,6 +1,41 @@
 import "./filter.scss";
+import { useState } from "react";
 
-const Filter = ({ onCancel }) => {
+const Filter = ({ onCancel, onFilterChange }) => {
+  const [selectedFilters, setSelectedFilters] = useState({
+    from: "",
+    to: "",
+    dateFilter: "",
+    stakeholder: "",
+  });
+
+  const handleDateFilterChange = (event) => {
+    const { name, value } = event.target;
+    setSelectedFilters((prevFilters) => ({
+      ...prevFilters,
+      [name]: value,
+    }));
+  };
+
+  const handleTimeFilterClick = (value) => {
+    setSelectedFilters((prevFilters) => ({
+      ...prevFilters,
+      dateFilter: value,
+    }));
+  };
+
+  const handleStakeHolderFilterClick = (value) => {
+    setSelectedFilters((prevFilters) => ({
+      ...prevFilters,
+      stakeholder: value,
+    }));
+  };
+
+  const applyFilters = () => {
+    onFilterChange(selectedFilters);
+    onCancel(false);
+  };
+
   return (
     <div className="filterModal">
       <div className="blackbg" onClick={() => onCancel(false)}></div>
@@ -8,23 +43,26 @@ const Filter = ({ onCancel }) => {
         <div className="wrapper">
           <span>Recently</span>
           <div className="times">
-            <p>In this month</p>
-            <p>Last month</p>
-            <p>Last 3 months</p>
+            <p onClick={() => handleTimeFilterClick("thisMonth")}>In this month</p>
+            <p onClick={() => handleTimeFilterClick("lastMonth")}>Last month</p>
+            <p onClick={() => handleTimeFilterClick("lastThreeMonths")}>Last 3 months</p>
           </div>
 
           <span>Custom</span>
           <div className="times">
-            <input type="date" />
-            <input type="date" />
-            <button>Select</button>
+            <input type="date" name="from" onChange={handleDateFilterChange}/>
+            <input type="date" name="to" onChange={handleDateFilterChange}/>
+           
           </div>
 
           <div className="times">
-            <p>Citizens</p>
-            <p>NGOs</p>
-            <p>Corporates</p>
-            <p>Institution</p>
+            <p onClick={() => handleStakeHolderFilterClick("Working Professional")}>Professional</p>
+            <p onClick={() => handleStakeHolderFilterClick("NGO")}>NGOs</p>
+            <p onClick={() => handleStakeHolderFilterClick("Corporate")}>Corporates</p>
+            <p onClick={() => handleStakeHolderFilterClick("Educational Institution")}>Institution</p>
+          </div>
+          <div className="times">
+          <button onClick={applyFilters}>Select</button>
           </div>
         </div>
       </div>

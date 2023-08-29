@@ -21,7 +21,15 @@ const Dashboard = () => {
   const [showFilter, setShowFilter] = useState(false);
   const [stat, setStat] = useState();
   const [collabs, setCollab] = useState([]);
+  const [filterValues, setFilterValues] = useState({
+    from: "",
+    to: "",
+    dateFilter: "",
+    stakeholder: "",
+  });
+
   useEffect(() => {
+    console.log(filterValues);
     const getStat = async () => {
       try {
         const res = await axios.get(
@@ -37,7 +45,10 @@ const Dashboard = () => {
     const getCollab = async () => {
       try {
         const res = await axios.get(
-          `${import.meta.env.VITE_BASE_URL}/api/collaboration/getallcollab`
+          `${import.meta.env.VITE_BASE_URL}/api/collaboration/getallcollab`,
+          {
+            params: filterValues,
+          }
         );
         setCollab(res.data);
       } catch (err) {
@@ -45,10 +56,27 @@ const Dashboard = () => {
       }
     };
     getCollab();
-  }, []);
+  }, [filterValues]);
+
+  const handleFilterChange = (selectedFilters) => {
+    setFilterValues((prevFilterValues) => ({
+      ...prevFilterValues,
+      ...selectedFilters,
+    }));
+  };
+
+  const handleClearFilter = () => {
+    setFilterValues({
+      from: "",
+      to: "",
+      dateFilter: "",
+      stakeholder: "",
+    });
+  };
+
   return (
     <div className="adminDashboard">
-      {showFilter && <Filter onCancel={setShowFilter} />}
+      {showFilter && <Filter onCancel={setShowFilter} onFilterChange={handleFilterChange}/>}
       <div className="left">
         <LeftNavigation page={"dashboard"} />
       </div>
@@ -85,7 +113,7 @@ const Dashboard = () => {
                   <img src={filter} alt="" />
                   <p>Filter</p>
                 </div>
-                <p>See all</p>
+                <p onClick={handleClearFilter}>See all</p>
               </div>
               {collabs.map((collab) => (
                 // eslint-disable-next-line react/jsx-key

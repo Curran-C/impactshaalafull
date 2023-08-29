@@ -1,4 +1,5 @@
 import Collaboration from "../modals/collaboration.modal.js";
+import Company from "../modals/company.modal.js";
 
 //*Create collab
 export const createCollab = async (req, res) => {
@@ -71,7 +72,7 @@ export const getCollabWithFromId = async (req, res) => {
 //get all collabs
 export const getCollabs = async (req, res) => {
   try {
-    const { dateFilter, status, from, to } = req.query;
+    const { dateFilter, status, from, to, stakeholder } = req.query;
     let query = {};
     if (dateFilter) {
       let startDate, endDate;
@@ -100,9 +101,16 @@ export const getCollabs = async (req, res) => {
         $lt: to,
       };
     }
+    if (stakeholder) {
+      const companies = await Company.find({ stakeholder });
+      const companyIds = companies.map(company => company._id);
+      query.$or = [{ toId: { $in: companyIds } }, { fromId: { $in: companyIds } }];
+    }
+
     const collab = await Collaboration.find(query);
     res.status(200).send(collab);
   } catch (err) {
+    console.log(err);
     res.status.send(err);
   }
 };
