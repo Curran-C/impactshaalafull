@@ -8,7 +8,7 @@ import { useParams } from "react-router-dom";
 const CreatePost = ({ onCancel }) => {
   const date = new Date();
   const { id } = useParams();
-  console.log("Hello",id);
+  console.log("Hello", id);
   //states
   const [post, setPost] = useState({
     date: date.toISOString().slice(0, 10),
@@ -35,10 +35,10 @@ const CreatePost = ({ onCancel }) => {
       }
     };
     getUserDetails();
-  });
+  }, []);
 
   const handleCreatePost = async (e) => {
-    e.preventDefault(); 
+    e.preventDefault();
     console.log(post);
     try {
       const res = await axios.post(
@@ -46,7 +46,7 @@ const CreatePost = ({ onCancel }) => {
         {
           ...post,
           createdById: id,
-          location: userDetails.city
+          location: userDetails.city,
         }
       );
       console.log(res.data);
