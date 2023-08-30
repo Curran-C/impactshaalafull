@@ -19,6 +19,7 @@ const AdminPost = ({ onCancel }) => {
   const [stakeholders, selectedStakeholders] = useState("");
   const [notificationTitle, setNotificationTitle] = useState(""); 
   const [message, setMessage] = useState("");
+  const [companies, setCompanies] = useState([]);
 
   const setAllStates = (stakeholder) => {
     setCorporate(stakeholder === "Corporate" ? true : false);
@@ -37,11 +38,13 @@ const AdminPost = ({ onCancel }) => {
     try {
       e.preventDefault(); 
       if (notifyChecked) {
-        console.log(stakeholders);
-        const response = await axios.get(`${import.meta.env.VITE_BASE_URL}/api/company/getAllUsersByStakeholder/${stakeholders}`);
-        const companies = response.data;
-        console.log("Users fetched:", companies)
-
+        if (stakeholders) {
+          const response = await axios.get(`${import.meta.env.VITE_BASE_URL}/api/company/getAllUsersByStakeholder/${stakeholders}`);
+          setCompanies(response.data);
+        } else {
+          const response = await axios.get(`${import.meta.env.VITE_BASE_URL}/api/company/getallusers`);
+          setCompanies(response.data);
+        }
         for (const company of companies) {
           await axios.post(`${import.meta.env.VITE_BASE_URL}/api/notification/create`, {
             toId: company._id,
@@ -49,11 +52,10 @@ const AdminPost = ({ onCancel }) => {
             message: message,
           });
         }
-
-        alert(`Notifications sent to ${stakeholders}s`);
-      } else if (postChecked) {
-        //post checked
-        alert("post");
+        alert(`Notifications sent`);
+        onCancel(false);
+      } 
+      if (postChecked) {
         const res = await axios.post(
           `${import.meta.env.VITE_BASE_URL}/api/post/create`,
           {
@@ -61,7 +63,8 @@ const AdminPost = ({ onCancel }) => {
             posDetails: message  
           }
         );
-        console.log(res);
+        alert("Posted");
+        onCancel(false);
       }
     } catch (error) {
       alert(`Error sending notifications to ${stakeholders}s: ${error.message}`);
