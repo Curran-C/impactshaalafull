@@ -42,7 +42,7 @@ const getAllPosts = async (req, res) => {
   if (!token) res.status(401).send("You are not authenticated");
   else {
     try {
-      const post = await Post.find();
+      const post = await Post.find().sort({ createdAt: -1 });;
       res.status(200).send(post);
     } catch (err) {
       res.status(500).send(err);
