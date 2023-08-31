@@ -19,30 +19,34 @@ const Profile = () => {
   const navigate = useNavigate();
   const { id } = useParams();
 
-  const getCookie = () => {
-    const cookie = document.cookie;
-    const cookies = cookie.split("; ");
-    for (let i = 0; i < cookies.length; i++) {
-      const cookie = cookies[i].split("=");
-      setAccessToken(decodeURIComponent(cookie[1]));
-      accessToken && setDecodedToken(jwtDecode(accessToken));
-    }
-  };
+  // const getCookie = () => {
+  //   const cookie = document.cookie;
+  //   const cookies = cookie.split("; ");
+  //   for (let i = 0; i < cookies.length; i++) {
+  //     const cookie = cookies[i].split("=");
+  //     setAccessToken(decodeURIComponent(cookie[1]));
+  //     accessToken && setDecodedToken(jwtDecode(accessToken));
+  //   }
+  // };
 
   useEffect(() => {
     const getUser = async () => {
       try {
-        const res = await axios.get(
+        const res = await fetch(
           `${import.meta.env.VITE_BASE_URL}/api/company/getuser/${id}`
         );
+        // const res = await axios.get(
+        //   `${import.meta.env.VITE_BASE_URL}/api/company/getuser/${id}`
+        // );
         setUser(res.data);
       } catch (err) {
         console.log(err);
       }
     };
     // getCookie();
+    // console.log(accessToken);
     getUser();
-  }, [accessToken]);
+  }, []);
 
   const handleFeedbackShow = (props) => {
     setFeedbackFrom(props);

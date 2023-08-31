@@ -130,7 +130,7 @@ const SignUp = () => {
     getLocation();
   }, []);
 
-  const getCurrentLocation = async () => { 
+  const getCurrentLocation = async () => {
     try {
       navigator.geolocation.getCurrentPosition((position) => {
         const latitude = position.coords.latitude;
@@ -138,15 +138,15 @@ const SignUp = () => {
         console.log(latitude, longitude);
         const geoUrl = `https://maps.googleapis.com/maps/api/geocode/json?latlng=${latitude},${longitude}&key=AIzaSyAphv25nyRmd3k1SbgHW4gcymZSIqdXS_U`;
         fetch(geoUrl)
-        .then(res => res.json())
-        .then(data => {
-          console.log(data);
-        })
+          .then((res) => res.json())
+          .then((data) => {
+            console.log(data);
+          });
       });
-    } catch(err) {
+    } catch (err) {
       console.log(err);
     }
-  }
+  };
 
   // function
   const handleTagSubmit = (e) => {
@@ -234,17 +234,34 @@ const SignUp = () => {
     let pfpUrl, coverPicUrl;
     if (pfp) pfpUrl = await upload(pfp);
     if (coverPic) coverPicUrl = await upload(coverPic);
+
+    const registerUrl = `${import.meta.env.VITE_BASE_URL}/api/company/register`;
+    const requestBody = {
+      ...newUser,
+      pfp: pfpUrl?.toString(),
+      type: newType !== "" ? newType : newUser.type,
+      coverPic: coverPicUrl?.toString(),
+      tags: tags,
+    };
+
     try {
-      const res = await axios.post(
-        `${import.meta.env.VITE_BASE_URL}/api/company/register`,
-        {
-          ...newUser,
-          pfp: pfpUrl?.toString(),
-          type: newType !== "" ? newType : newUser.type,
-          coverPic: coverPicUrl?.toString(),
-          tags: tags,
-        }
-      );
+      // const res = await axios.post(
+      //   `${import.meta.env.VITE_BASE_URL}/api/company/register`,
+      //   {
+      //     ...newUser,
+      //     pfp: pfpUrl?.toString(),
+      //     type: newType !== "" ? newType : newUser.type,
+      //     coverPic: coverPicUrl?.toString(),
+      //     tags: tags,
+      //   }
+      // );
+      const res = await fetch(registerUrl, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(requestBody),
+      });
       console.log(res.data);
       try {
         const res = await axios.post(
