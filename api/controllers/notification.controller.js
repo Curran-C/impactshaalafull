@@ -1,4 +1,4 @@
-import Notification from "../modals/notification.modal.js"
+import Notification from "../modals/notification.modal.js";
 
 //create notification
 export const createNotification = async (req, res) => {
@@ -29,9 +29,9 @@ export const getNotificationByUser = async (req, res) => {
   if (!token) res.status(401).send("You are not authenticated");
   else {
     try {
-      const notification = await Notification.find({ toId: req.params.id})
-      .populate('fromId', 'name stakeholder pfp')
-      .sort({ createdAt: -1 });
+      const notification = await Notification.find({ toId: req.params.id })
+        .populate('fromId', 'name stakeholder pfp')
+        .sort({ createdAt: -1 });
       res.status(200).send(notification);
     } catch (err) {
       console.log(err);
@@ -42,16 +42,16 @@ export const getNotificationByUser = async (req, res) => {
 
 export const markAsReadNotification = async (req, res) => {
   try {
-    const {notificationId} = req.params
+    const { notificationId } = req.params
     const notification = await Notification.findByIdAndUpdate(notificationId, {
       status: "read"
     },
-    {
-      new: true,
-    }
+      {
+        new: true,
+      }
     );
     res.status(200).send(notification);
-  }catch (err) {
+  } catch (err) {
     console.log(err);
     res.status(500).send(err);
   }

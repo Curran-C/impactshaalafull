@@ -46,7 +46,7 @@ const Notifications = () => {
   };
 
   const handleNotificationClick = (notification) => {
-    if (notification.title === "New Collab Request") {
+    if (notification.title === "New Collab Request" || notification.title === "Collab Request Declined" || notification.title === "Collab Request Accepted") {
       navigate(`/collaborations/${id}`);
     }
   };
