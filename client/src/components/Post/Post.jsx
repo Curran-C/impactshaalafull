@@ -224,7 +224,7 @@ const Post = ({ post }) => {
   };
 
   return (
-    <div className="post">
+    <div className={user?.name ? "post" : "post bgblue"}>
       <div className="user">
         <div className="userAboutContainer">
           <img src={user?.pfp || nopfp} alt="" className="pfp" />
