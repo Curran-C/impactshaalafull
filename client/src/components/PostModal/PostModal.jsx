@@ -66,7 +66,17 @@ const PostModal = ({ user, collabId, post, onCancel, page }) => {
         }`,
         { $pull: { collaborationIds: collabId } }
       );
-
+      const updateCollabs = await axios.post(
+        `${import.meta.env.VITE_BASE_URL}/api/collaboration/update/${collabId}`,
+        {
+          completed: "ongoing"
+        }
+      );
+      await axios.post(`${import.meta.env.VITE_BASE_URL}/api/notification/create`, {
+        toId: otherUser,
+        title: "Collab Request Accepted",
+        message: "Collab Request Accepted",
+      });
       handleChatClick();
     } catch (err) {
       console.log(err);
@@ -97,6 +107,12 @@ const PostModal = ({ user, collabId, post, onCancel, page }) => {
           post?.createdById
         }`,
         { $pull: { collaborationIds: collabId } }
+      );
+      const updateCollabs = await axios.post(
+        `${import.meta.env.VITE_BASE_URL}/api/collaboration/update/${collabId}`,
+        {
+          completed: "declined"
+        }
       );
 
       onCancel(false);

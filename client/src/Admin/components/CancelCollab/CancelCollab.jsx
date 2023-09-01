@@ -34,7 +34,7 @@ const CancelCollab = ({ onCancel, title, button, userId, collabId, feedbackId })
         const res = await axios.post(
           `${import.meta.env.VITE_BASE_URL}/api/company/remove/${userId}`, requestbody
         );
-        if(res.status === 200) {
+        if (res.status === 200) {
           alert("Account Removed")
           onCancel(false);
         }
@@ -47,6 +47,43 @@ const CancelCollab = ({ onCancel, title, button, userId, collabId, feedbackId })
         const res = await axios.post(
           `${import.meta.env.VITE_BASE_URL}/api/collaboration/update/${collabId}`, requestBody
         );
+        console.log(res.data);
+        await axios.post(`${import.meta.env.VITE_BASE_URL}/api/notification/create`, {
+          toId: res.data.fromId,
+          title: "Collab Request Declined",
+          message: message,
+        });
+
+        const resToCurrentUser = await axios.post(
+          `${import.meta.env.VITE_BASE_URL}/api/company/updateuser/${res.data.fromId}`,
+          {
+            $push: { collaborationIdsDeclined: collabId },
+            $pull: {
+              collaborationIds: collabId,
+              collaborationIdsAccepted: collabId
+            }
+          }
+        );
+
+        //update user who posted the collaborating
+        const resToOtherUser = await axios.post(
+          `${import.meta.env.VITE_BASE_URL}/api/company/updateuser/${res.data.toId}`,
+          {
+            $push: { collaborationIdsDeclined: collabId },
+            $pull: {
+              collaborationIds: collabId,
+              collaborationIdsAccepted: collabId
+            }
+          }
+        );
+        await axios.post(
+          `${import.meta.env.VITE_BASE_URL}/api/company/send/${resToCurrentUser.data._id}`, {
+          name: resToCurrentUser.data.name,
+          email: resToCurrentUser.data.email,
+          subject: "Collab Request Declined",
+          message: message
+        }
+        )
         if (res.status === 200) {
           alert("Collabaration Cancelled");
           onCancel(false);
@@ -64,7 +101,7 @@ const CancelCollab = ({ onCancel, title, button, userId, collabId, feedbackId })
         }
       }
     }
-      catch (err) {
+    catch (err) {
       console.log(err);
     }
   }
