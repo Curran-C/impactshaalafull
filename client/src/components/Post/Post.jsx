@@ -32,7 +32,7 @@ const Post = ({ post }) => {
         // getting post of the user
         const res = await axios.get(
           `${import.meta.env.VITE_BASE_URL}/api/company/getuser/${
-            post.createdById
+            post?.createdById
           }`
         );
         console.log(res.data);

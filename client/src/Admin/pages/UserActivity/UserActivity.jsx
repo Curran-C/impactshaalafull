@@ -9,25 +9,28 @@ const UserActivity = () => {
   const [showInactiveUsers, setShowInactiveUsers] = useState(false);
   const [userStatus, setUserStatus] = useState("allusers");
   const [users, setUsers] = useState([]);
-  const setAllFalse = () => {
-    setShowUsers(false);
-    setShowRemovedUsers(false);
-    setShowInactiveUsers(false);
+  const setAllUsers = (user) => {
+    setShowUsers(users === "allusers" ? true : false);
+    setShowRemovedUsers(users === "removed" ? true : false);
+    setShowInactiveUsers(users === "nonactive" ? true : false);
     setUserStatus("");
   };
 
   const handleClick = (tab) => {
-    setAllFalse();
+    // setAllFalse();
     if (tab === "all") {
-      setShowUsers(true);
+      setAllUsers("allusers");
+      // setShowUsers(true);
       setUserStatus("allusers");
     }
     if (tab === "remove") {
-      setShowRemovedUsers(true);
+      setAllUsers("removed");
+      // setShowRemovedUsers(true);
       setUserStatus("removed");
     }
     if (tab === "inactive") {
-      setShowInactiveUsers(true);
+      setAllUsers("nonactive");
+      // setShowInactiveUsers(true);
       setUserStatus("notactive");
     }
   };

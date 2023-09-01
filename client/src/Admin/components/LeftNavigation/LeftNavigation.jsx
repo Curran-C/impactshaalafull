@@ -38,17 +38,17 @@ const LeftNavigation = ({ page }) => {
         linkText={"User Activity"}
         navLink={"useractivity"}
       />
-      <Links
+      {/* <Links
         highlighted={page === "subscriptions" ? true : false}
         img={subscription}
         linkText={"Subscriptions"}
         navLink={"subsciptions"}
-      />
+      /> */}
       <Links
         highlighted={page === "complaints" ? true : false}
         img={complaints}
-        linkText={"Complaints"}
-        navLink={"complaints"}
+        linkText={"Feedback"}
+        navLink={"feedback"}
       />
     </div>
   );

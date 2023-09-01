@@ -63,7 +63,7 @@ function App() {
           path="/admin/useractivity/recoveraccount"
           element={<UserActivityDetails buttonText={"Recover Account"} />}
         />
-        <Route path="/admin/complaints" element={<Complaints />} />
+        <Route path="/admin/feedback" element={<Complaints />} />
         <Route path="/admin/approvecollaboration" element={<ApproveCollab />} />
       </Routes>
     </BrowserRouter>
