@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { corporate } from "../../assets/profile";
+import { corporate, nopfp } from "../../assets/profile";
 import Tile from "../Tile/Tile";
 import "./Notifications.scss";
 import { useParams, useNavigate } from "react-router-dom";
@@ -46,7 +46,11 @@ const Notifications = () => {
   };
 
   const handleNotificationClick = (notification) => {
-    if (notification.title === "New Collab Request" || notification.title === "Collab Request Declined" || notification.title === "Collab Request Accepted") {
+    if (
+      notification.title === "New Collab Request" ||
+      notification.title === "Collab Request Declined" ||
+      notification.title === "Collab Request Accepted"
+    ) {
       navigate(`/collaborations/${id}`);
     }
   };
@@ -68,7 +72,7 @@ const Notifications = () => {
               <div className="pfp">
                 <img
                   className="pic"
-                  src={notification.fromId?.pfp || "https://picsum.photos/200"}
+                  src={notification.fromId?.pfp || nopfp}
                   alt=""
                 />
                 <div className="details">
