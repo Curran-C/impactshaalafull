@@ -56,3 +56,14 @@ export const markAsReadNotification = async (req, res) => {
     res.status(500).send(err);
   }
 };
+
+export const getNotificationCount = async (req, res) => {
+  try {
+    const {userId} = req.params;
+    const notificationCount = await Notification.countDocuments({toId: userId});
+    res.status(200).send({count : notificationCount});
+  } catch (error) {
+    console.log(err);
+    res.status(500).send(err);
+  }
+}

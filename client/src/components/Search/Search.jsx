@@ -16,13 +16,25 @@ const Search = ({ userName }) => {
   const [allUsers, setAllUsers] = useState();
   const [notifCount, setNotifCount] = useState(100);
 
-  if (notifCount >= 100) setNotifCount("99+");
-
   const ref = useRef();
   const navigate = useNavigate();
   const { id } = useParams();
 
   useEffect(() => {
+    const fetchNotificationCount = async () => {
+      try {
+        const response = await axios.get(
+          `${import.meta.env.VITE_BASE_URL}/api/notification/getCount/${id}`
+        );
+        if(response.data.count >= 100) setNotifCount("99+");
+        else setNotifCount(response.data.count);  
+       } catch (err) {
+        console.error(err);
+      }
+    };
+
+    // Fetch notification count when component mounts
+    fetchNotificationCount();
     // check if clicked outside
     function handleClickOutside(event) {
       if (ref.current && !ref.current.contains(event.target)) {

@@ -19,6 +19,12 @@ const CancelCollab = ({ onCancel, title, button, userId, collabId, feedbackId })
         const res = await axios.post(
           `${import.meta.env.VITE_BASE_URL}/api/company/send/${userId}`, requestbody
         );
+        await axios.post(`${import.meta.env.VITE_BASE_URL}/api/notification/create`, {
+          toId: userId,
+           // title: "Important Notification from ImpactShaala",
+          title: message,
+          message: message,
+        });
         if (res.data.status === 200) {
           alert("Notification Sent");
           onCancel(false);
@@ -48,8 +54,16 @@ const CancelCollab = ({ onCancel, title, button, userId, collabId, feedbackId })
           `${import.meta.env.VITE_BASE_URL}/api/collaboration/update/${collabId}`, requestBody
         );
         console.log(res.data);
+
+        //send notification to both users
         await axios.post(`${import.meta.env.VITE_BASE_URL}/api/notification/create`, {
           toId: res.data.fromId,
+          title: "Collab Request Declined",
+          message: message,
+        });
+
+        await axios.post(`${import.meta.env.VITE_BASE_URL}/api/notification/create`, {
+          toId: res.data.toId,
           title: "Collab Request Declined",
           message: message,
         });
@@ -65,7 +79,6 @@ const CancelCollab = ({ onCancel, title, button, userId, collabId, feedbackId })
           }
         );
 
-        //update user who posted the collaborating
         const resToOtherUser = await axios.post(
           `${import.meta.env.VITE_BASE_URL}/api/company/updateuser/${res.data.toId}`,
           {
@@ -76,10 +89,19 @@ const CancelCollab = ({ onCancel, title, button, userId, collabId, feedbackId })
             }
           }
         );
+        //send mail to both users
         await axios.post(
           `${import.meta.env.VITE_BASE_URL}/api/company/send/${resToCurrentUser.data._id}`, {
           name: resToCurrentUser.data.name,
           email: resToCurrentUser.data.email,
+          subject: "Collab Request Declined",
+          message: message
+        }
+        )
+        await axios.post(
+          `${import.meta.env.VITE_BASE_URL}/api/company/send/${resToOtherUser.data._id}`, {
+          name: resToOtherUser.data.name,
+          email: resToOtherUser.data.email,
           subject: "Collab Request Declined",
           message: message
         }
@@ -95,6 +117,12 @@ const CancelCollab = ({ onCancel, title, button, userId, collabId, feedbackId })
         const res = await axios.post(
           `${import.meta.env.VITE_BASE_URL}/api/feedback/replay/${feedbackId}`, requestBody
         );
+        await axios.post(`${import.meta.env.VITE_BASE_URL}/api/notification/create`, {
+          toId: res.data.userId,
+          // title: "Replay for your feedback",
+          title: message,
+          message: message,
+        });
         if (res.status === 200) {
           alert("Replay Sent");
           onCancel(false);
