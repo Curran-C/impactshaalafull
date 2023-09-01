@@ -3,21 +3,20 @@ import jwt from "jsonwebtoken";
 
 //create feedback
 export const createFeedback = async (req, res) => {
-  const token = req.cookies.accessToken;
-  if (!token) res.status(401).send("You are not authenticated");
-  else {
-    const { id } = jwt.decode(token);
+  // const token = req.cookies.accessToken;
+  // if (!token) res.status(401).send("You are not authenticated");
+  // else {
+    // const { id } = jwt.decode(token);
     try {
       const feedback = new Feedback({
         ...req.body,
-        userId: id,
       });
       await feedback.save();
       res.status(200).send(feedback);
     } catch (err) {
       res.status(500).send(err);
     }
-  }
+  // }
 };
 
 //get all feedback
