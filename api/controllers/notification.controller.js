@@ -11,7 +11,7 @@ export const createNotification = async (req, res) => {
   } catch (err) {
     res.status(500).send(err);
   }
-}
+};
 
 //get all notification
 export const getAllNotification = async (req, res) => {
@@ -30,7 +30,7 @@ export const getNotificationByUser = async (req, res) => {
   else {
     try {
       const notification = await Notification.find({ toId: req.params.id })
-        .populate('fromId', 'name stakeholder pfp')
+        .populate("fromId", "name stakeholder pfp")
         .sort({ createdAt: -1 });
       res.status(200).send(notification);
     } catch (err) {
@@ -42,10 +42,12 @@ export const getNotificationByUser = async (req, res) => {
 
 export const markAsReadNotification = async (req, res) => {
   try {
-    const { notificationId } = req.params
-    const notification = await Notification.findByIdAndUpdate(notificationId, {
-      status: "read"
-    },
+    const { notificationId } = req.params;
+    const notification = await Notification.findByIdAndUpdate(
+      notificationId,
+      {
+        status: "read",
+      },
       {
         new: true,
       }
@@ -59,11 +61,14 @@ export const markAsReadNotification = async (req, res) => {
 
 export const getNotificationCount = async (req, res) => {
   try {
-    const {userId} = req.params;
-    const notificationCount = await Notification.countDocuments({toId: userId});
-    res.status(200).send({count : notificationCount});
+    const { userId } = req.params;
+    const notificationCount = await Notification.countDocuments({
+      toId: userId,
+      status: "unread",
+    });
+    res.status(200).send({ count: notificationCount });
   } catch (error) {
     console.log(err);
     res.status(500).send(err);
   }
-}
+};
