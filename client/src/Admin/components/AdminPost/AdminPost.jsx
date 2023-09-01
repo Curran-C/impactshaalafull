@@ -39,35 +39,47 @@ const AdminPost = ({ onCancel }) => {
       e.preventDefault(); 
       if (notifyChecked) {
         if (stakeholders) {
+          console.log(stakeholders);
           const response = await axios.get(`${import.meta.env.VITE_BASE_URL}/api/company/getAllUsersByStakeholder/${stakeholders}`);
           setCompanies(response.data);
+          console.log(response.data);
+          for (const company of response.data) {
+            await axios.post(`${import.meta.env.VITE_BASE_URL}/api/notification/create`, {
+              toId: company._id,
+              title: notificationTitle,
+              message: message,
+            });
+          }
+          alert(`Notifications sent`);
+          onCancel(false);
         } else {
           const response = await axios.get(`${import.meta.env.VITE_BASE_URL}/api/company/getallusers`);
           setCompanies(response.data);
+          for (const company of response.data) {
+            await axios.post(`${import.meta.env.VITE_BASE_URL}/api/notification/create`, {
+              toId: company._id,
+              title: notificationTitle,
+              message: message,
+            });
+          }
+          alert(`Notifications sent`);
+          onCancel(false);
         }
-        for (const company of companies) {
-          await axios.post(`${import.meta.env.VITE_BASE_URL}/api/notification/create`, {
-            toId: company._id,
-            title: notificationTitle,
-            message: message,
-          });
-        }
-        alert(`Notifications sent`);
-        onCancel(false);
       } 
       if (postChecked) {
         const res = await axios.post(
           `${import.meta.env.VITE_BASE_URL}/api/post/create`,
           {
             title: notificationTitle,
-            posDetails: message  
+            posDetails: message ,
+            date: new Date()
           }
         );
         alert("Posted");
         onCancel(false);
       }
     } catch (error) {
-      alert(`Error sending notifications to ${stakeholders}s: ${error.message}`);
+      alert(`Error: ${error.message}`);
     }
   };
 
