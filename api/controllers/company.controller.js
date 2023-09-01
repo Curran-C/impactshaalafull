@@ -75,8 +75,9 @@ export const getuser = async (req, res) => {
     res.send(user);
   } catch (err) {
     res.status(500).send("Something went wrong");
+
+    // }
   }
-  // }
 };
 
 export const getAllUsers = async (req, res) => {
