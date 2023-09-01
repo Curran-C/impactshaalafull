@@ -6,7 +6,7 @@ import {
   collaboration,
 } from "../../assets/home";
 
-import { corporate, location } from "../../assets/profile";
+import { corporate, location, nopfp } from "../../assets/profile";
 
 import "./post.scss";
 import Tile from "../Tile/Tile";
@@ -21,16 +21,15 @@ const Post = ({ post }) => {
   const { id } = useParams();
   const navigate = useNavigate();
 
+  // consts
+  const date = new Date(post?.date);
+  console.log(date.toDateString());
+
   // side effects
   useEffect(() => {
     const getUser = async () => {
       try {
         // getting post of the user
-        // const res = await fetch(
-        //   `${import.meta.env.VITE_BASE_URL}/api/company/getuser/${
-        //     post.createdById
-        //   }`
-        // );
         const res = await axios.get(
           `${import.meta.env.VITE_BASE_URL}/api/company/getuser/${
             post.createdById
@@ -228,7 +227,7 @@ const Post = ({ post }) => {
     <div className="post">
       <div className="user">
         <div className="userAboutContainer">
-          <img src={user?.pfp} alt="" className="pfp" />
+          <img src={user?.pfp || nopfp} alt="" className="pfp" />
           <div className="userAbout">
             <h2>{user?.name || "ImpactShaala"}</h2>
             <div className="tilesContainer">
@@ -249,9 +248,11 @@ const Post = ({ post }) => {
         />
       </div>
       <div className="container">
-        <p>{post.posDetails}</p>
-        {/* <p>{"Date: " +post.date }</p> */}
-        {/* <p>{"Time: " +post.time}</p> */}
+        <p className="postDetails">{post?.posDetails}</p>
+        <div className="dateandtime">
+          <p>{date.toDateString()}</p>
+          <p>{post?.time}</p>
+        </div>
         <div className="containerFooter">
           <p>{format(post?.createdAt)}</p>
           <div className="links">

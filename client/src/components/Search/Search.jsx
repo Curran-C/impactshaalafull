@@ -14,6 +14,7 @@ const Search = ({ userName }) => {
   const [searchResults, setSearchResults] = useState([]);
   const [shownotifications, setShownotifications] = useState(false);
   const [allUsers, setAllUsers] = useState();
+  const [notifCount, setNotifCount] = useState(0);
 
   const ref = useRef();
   const navigate = useNavigate();
@@ -73,6 +74,7 @@ const Search = ({ userName }) => {
             alt="notifications"
             style={{ cursor: "pointer" }}
           />
+          <div className="notifcount">{notifCount}</div>
           <img
             onClick={() => navigate(`/chats/${id}`)}
             style={{ cursor: "pointer" }}

@@ -34,7 +34,9 @@
                     display: flex;
                     gap: 10px;
                     .pic {
+                        object-fit: cover;
                         height: 50px;
+                        width: 50px;
                         border-radius: 50%;
                     }
                     .details {

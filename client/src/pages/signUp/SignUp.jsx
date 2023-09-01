@@ -235,33 +235,24 @@ const SignUp = () => {
     if (pfp) pfpUrl = await upload(pfp);
     if (coverPic) coverPicUrl = await upload(coverPic);
 
-    const registerUrl = `${import.meta.env.VITE_BASE_URL}/api/company/register`;
-    const requestBody = {
-      ...newUser,
-      pfp: pfpUrl?.toString(),
-      type: newType !== "" ? newType : newUser.type,
-      coverPic: coverPicUrl?.toString(),
-      tags: tags,
-    };
-
     try {
-      // const res = await axios.post(
-      //   `${import.meta.env.VITE_BASE_URL}/api/company/register`,
-      //   {
-      //     ...newUser,
-      //     pfp: pfpUrl?.toString(),
-      //     type: newType !== "" ? newType : newUser.type,
-      //     coverPic: coverPicUrl?.toString(),
-      //     tags: tags,
-      //   }
-      // );
-      const res = await fetch(registerUrl, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(requestBody),
-      });
+      const res = await axios.post(
+        `${import.meta.env.VITE_BASE_URL}/api/company/register`,
+        {
+          ...newUser,
+          pfp: pfpUrl?.toString(),
+          type: newType !== "" ? newType : newUser.type,
+          coverPic: coverPicUrl?.toString(),
+          tags: tags,
+        }
+      );
+      // const res = await fetch(registerUrl, {
+      //   method: "POST",
+      //   headers: {
+      //     "Content-Type": "application/json",
+      //   },
+      //   body: JSON.stringify(requestBody),
+      // });
       console.log(res.data);
       try {
         const res = await axios.post(
@@ -637,7 +628,7 @@ const SignUp = () => {
       <div className="tagsContainer">
         <img src={tagsImage} alt="enter your tags" />
         <div className="tagsWrapper">
-          <form onSubmit={handleTagSubmit} className="tagsInput">
+          <form className="tagsInput">
             <h1>What type of collaborations are you looking for?</h1>
             <input
               value={tag}
@@ -647,7 +638,13 @@ const SignUp = () => {
               id=""
               placeholder="Ex: Business"
             />
-            <input type="submit" name="" id="" hidden />
+            <input
+              onClick={handleTagSubmit}
+              type="submit"
+              name=""
+              id=""
+              hidden
+            />
           </form>
           <div className="tags">
             {tags &&

@@ -66,17 +66,17 @@ export const login = async (req, res) => {
 };
 
 export const getuser = async (req, res) => {
-  // const token = req.cookies.accessToken;
-  // if (!token) res.status(401).send("You are not authenticated");
-  // else {
-  try {
-    // find user
-    const user = await Company.findById(req.params.id);
-    res.send(user);
-  } catch (err) {
-    res.status(500).send("Something went wrong");
+  const token = req.cookies.accessToken;
+  if (!token) res.status(401).send("You are not authenticated");
+  else {
+    try {
+      // find user
+      const user = await Company.findById(req.params.id);
+      res.send(user);
+    } catch (err) {
+      res.status(500).send("Something went wrong");
+    }
   }
-  // }
 };
 
 export const getAllUsers = async (req, res) => {
@@ -281,8 +281,8 @@ export const getUserStat = async (req, res) => {
 //get company from stakeholder
 export const getAllUsersByStakeholder = async (req, res) => {
   try {
-    const {stakeholder} = req.params;
-    const user = await Company.find({stakeholder});
+    const { stakeholder } = req.params;
+    const user = await Company.find({ stakeholder });
     res.send(user);
   } catch (err) {
     res.status(500).send("Something went wrong");

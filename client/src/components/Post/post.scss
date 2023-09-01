@@ -48,6 +48,21 @@
         height: 200px;
         width: 550px;
         border-radius: 25px;
+        .postDetails {
+            background-color: #fff;
+            padding: 20px;
+            width: 90%;
+            text-align: center;
+            border-radius: 25px;
+        }
+        .dateandtime {
+            display: flex;
+            justify-content: space-between;
+            width: 100%;
+            p {
+                font-size: 12px;
+            }
+        }
         .containerFooter {
             align-items: center;
             justify-content: center;

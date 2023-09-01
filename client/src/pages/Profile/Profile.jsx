@@ -32,12 +32,12 @@ const Profile = () => {
   useEffect(() => {
     const getUser = async () => {
       try {
-        const res = await fetch(
-          `${import.meta.env.VITE_BASE_URL}/api/company/getuser/${id}`
-        );
-        // const res = await axios.get(
+        // const res = await fetch(
         //   `${import.meta.env.VITE_BASE_URL}/api/company/getuser/${id}`
         // );
+        const res = await axios.get(
+          `${import.meta.env.VITE_BASE_URL}/api/company/getuser/${id}`
+        );
         setUser(res.data);
       } catch (err) {
         console.log(err);
@@ -59,7 +59,7 @@ const Profile = () => {
         <ProfileLeft page={"profile"} />
         <div className="right">
           <div className="nameandfeedback">
-            <NameDate name={user.name} date={date} />
+            <NameDate name={user?.name} date={date} />
             {decodedToken?.id !== id && (
               <>
                 {/* <button

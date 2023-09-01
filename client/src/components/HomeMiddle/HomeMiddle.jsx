@@ -30,7 +30,6 @@ const HomeMiddle = () => {
       <Search userName={user?.name} />
       <h1 className="title">Recent Posts</h1>
       <Posts posts={posts} />
-      {/* <Posts /> */}
     </div>
   );
 };
