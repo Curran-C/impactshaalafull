@@ -14,7 +14,9 @@ const Search = ({ userName }) => {
   const [searchResults, setSearchResults] = useState([]);
   const [shownotifications, setShownotifications] = useState(false);
   const [allUsers, setAllUsers] = useState();
-  const [notifCount, setNotifCount] = useState(0);
+  const [notifCount, setNotifCount] = useState(100);
+
+  if (notifCount >= 100) setNotifCount("99+");
 
   const ref = useRef();
   const navigate = useNavigate();
