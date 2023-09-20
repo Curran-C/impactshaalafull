@@ -22,25 +22,36 @@ const PORT = 8000;
 const connect = async () => {
   try {
     await mongoose.connect(process.env.MONGO_URI);
-    console.log("connected to mongodb server");
+    console.log("connected to MongoDB server");
   } catch (err) {
-    console.log(err);
+    console.error(err);
   }
 };
 
-// Define a CORS configuration object
-const corsOptions = {
-  origin: "http://localhost:5173", // Replace with the origin of your client app
-  credentials: true, // Allow credentials (cookies)
-};
+// Define a middleware function to set CORS headers
+app.use((req, res, next) => {
+  // Replace 'http://localhost:5173' with the actual origin of your frontend
+  res.header("Access-Control-Allow-Origin", "http://localhost:5173");
+  res.header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
+  res.header(
+    "Access-Control-Allow-Headers",
+    "Origin, X-Requested-With, Content-Type, Accept, Authorization"
+  );
+  res.header("Access-Control-Allow-Credentials", "true");
 
-app.use(cors(corsOptions));
+  // Handle preflight requests
+  if (req.method === "OPTIONS") {
+    res.sendStatus(200);
+  } else {
+    next();
+  }
+});
 
-//middleware
+// Middleware
 app.use(express.json());
 app.use(cookieParser());
 
-//routes
+// Routes
 app.use("/api/company", companyRoutes);
 app.use("/api/post", postRoutes);
 app.use("/api/chat", chatRoutes);
@@ -53,5 +64,5 @@ app.use("/api/invitation", invitationRoutes);
 
 app.listen(PORT, () => {
   connect();
-  console.log(`server started on port ${PORT}`);
+  console.log(`Server started on port ${PORT}`);
 });
