@@ -22,36 +22,25 @@ const PORT = 8000;
 const connect = async () => {
   try {
     await mongoose.connect(process.env.MONGO_URI);
-    console.log("connected to MongoDB server");
+    console.log("connected to mongodb server");
   } catch (err) {
-    console.error(err);
+    console.log(err);
   }
 };
 
-// Define a middleware function to set CORS headers
-app.use((req, res, next) => {
-  // Replace 'http://localhost:5173' with the actual origin of your frontend
-  res.header("Access-Control-Allow-Origin", "http://localhost:5173");
-  res.header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
-  res.header(
-    "Access-Control-Allow-Headers",
-    "Origin, X-Requested-With, Content-Type, Accept, Authorization"
-  );
-  res.header("Access-Control-Allow-Credentials", "true");
+// Define a CORS configuration object
+const corsOptions = {
+  origin: "http://localhost:5173",
+  credentials: true,
+};
 
-  // Handle preflight requests
-  if (req.method === "OPTIONS") {
-    res.sendStatus(200);
-  } else {
-    next();
-  }
-});
+app.use(cors(corsOptions));
 
-// Middleware
+//middleware
 app.use(express.json());
 app.use(cookieParser());
 
-// Routes
+//routes
 app.use("/api/company", companyRoutes);
 app.use("/api/post", postRoutes);
 app.use("/api/chat", chatRoutes);
@@ -64,5 +53,5 @@ app.use("/api/invitation", invitationRoutes);
 
 app.listen(PORT, () => {
   connect();
-  console.log(`Server started on port ${PORT}`);
+  console.log(`server started on port ${PORT}`);
 });
