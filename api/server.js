@@ -28,12 +28,13 @@ const connect = async () => {
   }
 };
 
-app.use(
-  cors({
-    origin: "http://localhost:5173",
-    credentials: true,
-  })
-);
+// Define a CORS configuration object
+const corsOptions = {
+  origin: "http://localhost:5173", // Replace with the origin of your client app
+  credentials: true, // Allow credentials (cookies)
+};
+
+app.use(cors(corsOptions));
 
 //middleware
 app.use(express.json());
