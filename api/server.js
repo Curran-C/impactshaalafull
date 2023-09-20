@@ -30,7 +30,7 @@ const connect = async () => {
 
 app.use(
   cors({
-    origin: ["http://localhost:5173", "http://impactshaala-testsite.tech"],
+    origin: "*",
     credentials: true,
   })
 );
