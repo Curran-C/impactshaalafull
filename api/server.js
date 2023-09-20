@@ -28,23 +28,16 @@ const connect = async () => {
   }
 };
 
-//middleware
-app.use(express.json());
-app.use(cookieParser());
-
 app.use(
   cors({
     origin: ["http://localhost:5173", "http://impactshaala-testsite.tech"],
     credentials: true,
   })
 );
-// app.use(cors({ origin: "https://impact-shaala.web.app", credentials: true }));
-// app.use(
-//   cors({
-//     origin: "http://impactsalla-frontend.s3-website-us-east-1.amazonaws.com",
-//     credentials: true,
-//   })
-// );
+
+//middleware
+app.use(express.json());
+app.use(cookieParser());
 
 //routes
 app.use("/api/company", companyRoutes);
