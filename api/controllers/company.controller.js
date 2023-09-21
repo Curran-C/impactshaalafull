@@ -53,7 +53,9 @@ export const login = async (req, res, next) => {
       );
       const { password, ...info } = user._doc;
       // localStorage.setItem("Savedtoken", token);
-      res.cookie("accessToken", token).status(200).send(info);
+      res
+        .cookie("accessToken", token, { httpOnly: true, path: "/" })
+        .send(info);
     }
   } catch (err) {
     console.log(err);
