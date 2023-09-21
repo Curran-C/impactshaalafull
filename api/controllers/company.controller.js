@@ -57,7 +57,7 @@ export const login = async (req, res) => {
         .cookie("accessToken", token, {
           httpOnly: true,
           // Set the domain to match your online environment's domain.
-          // domain: "impactshaala-testsite.tech", // Replace with your actual domain.
+          domain: "impactshaala-testsite.tech", // Replace with your actual domain.
           // Set the 'secure' flag to true if your backend is hosted over HTTPS.
           // secure: true,
           // Set the path to '/' to make the cookie accessible on all paths.
