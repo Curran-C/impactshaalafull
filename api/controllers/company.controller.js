@@ -29,7 +29,7 @@ export const register = async (req, res) => {
 };
 
 //login
-export const login = async (req, res) => {
+export const login = async (req, res, next) => {
   try {
     const user = await Company.findOne({
       email: req.body.email,
@@ -55,12 +55,7 @@ export const login = async (req, res) => {
       // localStorage.setItem("Savedtoken", token);
       res
         .cookie("accessToken", token, {
-          httpOnly: true,
-          // Set the domain to match your online environment's domain.
-          domain: "impactshaala-testsite.tech", // Replace with your actual domain.
-          // Set the 'secure' flag to true if your backend is hosted over HTTPS.
-          // secure: true,
-          // Set the path to '/' to make the cookie accessible on all paths.
+          // httpOnly: true,
           path: "/",
         })
         .status(200)
