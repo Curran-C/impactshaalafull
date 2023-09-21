@@ -263,7 +263,6 @@ const SignUp = () => {
           }
         );
         res.data && setIsLoading(false);
-        console.log(res.data);
         navigate(`/home/${res.data._id}`);
       } catch (err) {
         console.log(err);
