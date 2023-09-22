@@ -213,7 +213,7 @@ const SignUp = () => {
         }
       );
       Cookies.set("accessToken", res.data.token, {
-        domain: ".impactshaala-testsite.tech",
+        domain: `.${import.meta.env.VITE_CLIENT_URL}`,
         expires: 7000,
         sameSite: "Lax",
       });
@@ -269,7 +269,7 @@ const SignUp = () => {
           }
         );
         Cookies.set("accessToken", res.data.token, {
-          domain: ".impactshaala-testsite.tech",
+          domain: `.${import.meta.env.VITE_CLIENT_URL}`,
           expires: 7000,
           sameSite: "Lax",
         });
