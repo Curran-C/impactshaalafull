@@ -68,7 +68,7 @@ export const getNotificationCount = async (req, res) => {
     });
     res.status(200).send({ count: notificationCount });
   } catch (error) {
-    console.log(err);
+    console.log(error);
     res.status(500).send(err);
   }
 };

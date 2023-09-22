@@ -38,7 +38,6 @@ const getPostByUser = async (req, res) => {
 };
 
 const getAllPosts = async (req, res) => {
-  console.log("get all posts route");
   const token = req.cookies.accessToken;
   if (!token) res.status(401).send("You are not authenticated");
   else {
