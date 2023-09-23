@@ -1,8 +1,11 @@
 import { useState } from "react";
 import "./contactUs.scss";
 import emailjs from "@emailjs/browser";
+import axios from "axios";
+import { useParams } from "react-router-dom";
 
 const ContactUs = ({ onCancel, email }) => {
+  const { id } = useParams();
   const [form, setForm] = useState({
     name: "",
     email: "",
@@ -38,6 +41,11 @@ const ContactUs = ({ onCancel, email }) => {
           alert("Something went wrong");
         }
       );
+
+      axios.post(`${import.meta.env.VITE_BASE_URL}/api/feedback/create`, {
+        userId: id,
+        text: form.message,
+      });
   };
 
   return (

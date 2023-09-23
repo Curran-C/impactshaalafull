@@ -64,11 +64,11 @@ const socialOrgos = [
 ];
 
 const educationalOptions = [
-  "High school",
+  "Secondary School (Grade 1 to 10)",
+  "Senior Secondary School (Grade 11 & 12)",
   "K - 12 school",
-  "Pre -University",
-  "Undergraduation",
-  "Post - Graduation",
+  "Undergraduate College",
+  "Postgraduate College",
 ];
 
 const corporateOptions = [
@@ -103,7 +103,18 @@ const corporateOptions = [
   "Textiles and Apparales",
 ];
 
-const ngoOptions = ["ngo1", "ngo2", "ngo3"];
+const ngoOptions = [
+  "Community-based NGO",
+  "City-level NGO",
+  "National level NGO",
+  "International NGO",
+  "Charitable trusts",
+  "Advocacy NGO",
+  "Service-oriented NGO",
+  "Participatory NGO",
+  "Empowering NGO"
+];
+
 const citizenOptions = [
   "Product Manager",
   "Investment Banker",

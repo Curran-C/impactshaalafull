@@ -73,6 +73,7 @@ const PostModal = ({ user, collabId, post, onCancel, page }) => {
         }
       );
       await axios.post(`${import.meta.env.VITE_BASE_URL}/api/notification/create`, {
+        fromId: post?.createdById,
         toId: otherUser,
         title: "Collab Request Accepted",
         message: "Collab Request Accepted",

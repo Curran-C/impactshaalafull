@@ -96,10 +96,12 @@ const CreatePost = ({ onCancel }) => {
                   id="timeline"
                   value={post?.timeline || ""}
                 >
-                  <option value="1">1 Month</option>
-                  <option value="2">2 Month</option>
-                  <option value="3">3 Month</option>
-                  <option value="4">4 Month</option>
+                  <option value="Micro Projects: (1 to 3 days)">Micro Projects: (1 to 3 days)</option>
+                  <option value="Week-Long Projects: (4 to 7 days)">Week-Long Projects: (4 to 7 days)</option>
+                  <option value="Month-long projects: (25 to 31 days)">Month-long projects: (25 to 31 days)</option>
+                  <option value="Quarterly Projects: (3 months)">Quarterly Projects: (3 months)</option>
+                  <option value="Semester Projects: (4 to 6 months)">Semester Projects: (4 to 6 months)</option>
+                  <option value="Year-Long Projects: (12 months)">Year-Long Projects: (12 months)</option>
                 </select>
               </div>
             </div>

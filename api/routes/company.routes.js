@@ -15,6 +15,7 @@ import {
   addScore,
   getUserStat,
   getAllUsersByStakeholder,
+  getAddress,
 } from "../controllers/company.controller.js";
 
 const router = express.Router();
@@ -38,5 +39,6 @@ router.post("/score/:id", addScore);
 router.get("/stats/:id", getUserStat);
 
 router.get("/getAllUsersByStakeholder/:stakeholder", getAllUsersByStakeholder);
+router.get("/getAddress/:pincode", getAddress);
 
 export default router;
