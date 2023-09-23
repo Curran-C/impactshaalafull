@@ -19,7 +19,10 @@ const Home = () => {
     const getUser = async () => {
       try {
         const res = await axios.get(
-          `${import.meta.env.VITE_BASE_URL}/api/company/getuser/${id}`
+          `${import.meta.env.VITE_BASE_URL}/api/company/getuser/${id}`,
+          {
+            withCredentials: true, // This ensures that cookies are sent with the request
+          }
         );
         setUser(res.data);
       } catch (err) {

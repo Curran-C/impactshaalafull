@@ -29,7 +29,7 @@ export const register = async (req, res) => {
 };
 
 //login
-export const login = async (req, res) => {
+export const login = async (req, res, next) => {
   try {
     const user = await Company.findOne({
       email: req.body.email,
@@ -52,15 +52,13 @@ export const login = async (req, res) => {
         process.env.JWT_KEY
       );
       const { password, ...info } = user._doc;
-      // localStorage.setItem("Savedtoken", token);
-      res
-        .cookie("accessToken", token, {
-          //httpOnly: true, //generates cookie with accessToken as it's name and token variable as its value with httpOnly rule
-        })
-        .status(200)
-        .send(info);
+      res.json({
+        token,
+        info,
+      });
     }
   } catch (err) {
+    console.log(err);
     res.status(500).send("Something went wrong");
   }
 };
@@ -114,12 +112,7 @@ export const getUserFromEmail = async (req, res) => {
       );
 
       const { ...info } = user._doc;
-      res
-        .cookie("accessToken", token, {
-          //httpOnly: true, //generates cookie with accessToken as it's name and token variable as its value with httpOnly rule
-        })
-        .status(200)
-        .send(info);
+      res.cookie("accessToken", token).status(200).send(info);
     }
   } catch (err) {
     res.status(500).send(err);

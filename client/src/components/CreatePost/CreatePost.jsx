@@ -87,6 +87,23 @@ const CreatePost = ({ onCancel }) => {
 
           <div className="times">
             <div className="time">
+              <p>Timeline</p>
+              <div className="img">
+                <img src={calender} alt="" />
+                <select
+                  onChange={handleInputChange}
+                  name="timeline"
+                  id="timeline"
+                  value={post?.timeline || ""}
+                >
+                  <option value="1">1 Month</option>
+                  <option value="2">2 Month</option>
+                  <option value="3">3 Month</option>
+                  <option value="4">4 Month</option>
+                </select>
+              </div>
+            </div>
+            <div className="time">
               <p>Date</p>
               <div className="img">
                 <img src={calender} alt="" />

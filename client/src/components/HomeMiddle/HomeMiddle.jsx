@@ -15,7 +15,10 @@ const HomeMiddle = () => {
     const getPosts = async () => {
       try {
         const res = await axios.get(
-          `${import.meta.env.VITE_BASE_URL}/api/post/getposts`
+          `${import.meta.env.VITE_BASE_URL}/api/post/getposts`,
+          {
+            withCredentials: true,
+          }
         );
         setPosts(res.data);
       } catch (err) {

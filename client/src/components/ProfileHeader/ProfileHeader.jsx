@@ -3,6 +3,7 @@ import Hex from "../Hex/Hex";
 import Tags from "../Tags/Tags";
 import Tile from "../Tile/Tile";
 import "./profileHeader.scss";
+import moment from "moment";
 
 const ProfileHeader = ({ user, pageName }) => {
   return (
@@ -20,6 +21,7 @@ const ProfileHeader = ({ user, pageName }) => {
               <Tile image={location} type={user?.city} />
             </div>
             <div className="company-about">
+              <p>Joined On {moment(user?.createdAt).format("ll")}</p>
               <p>{user?.description}</p>
             </div>
             <Tags tags={user?.tags} />

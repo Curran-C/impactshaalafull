@@ -15,6 +15,7 @@ import {
 import Backbutton from "../../components/Backbutton/Backbutton";
 import { tagsImage } from "../../assets/signUp";
 import { Circles } from "react-loader-spinner";
+import Cookies from "js-cookie";
 
 const SignUp = () => {
   // states
@@ -211,8 +212,13 @@ const SignUp = () => {
           ...oldUser,
         }
       );
-      res.data && setIsLoading(true);
-      navigate(`/home/${res.data._id}`);
+      Cookies.set("accessToken", res.data.token, {
+        domain: `.${import.meta.env.VITE_CLIENT_URL}`,
+        expires: 7000,
+        sameSite: "Lax",
+      });
+      res.data.info && setIsLoading(true);
+      navigate(`/home/${res.data.info._id}`);
     } catch (err) {
       console.log(err);
     }
@@ -262,9 +268,13 @@ const SignUp = () => {
             password: newUser.password,
           }
         );
-        res.data && setIsLoading(false);
-        console.log(res.data);
-        navigate(`/home/${res.data._id}`);
+        Cookies.set("accessToken", res.data.token, {
+          domain: `.${import.meta.env.VITE_CLIENT_URL}`,
+          expires: 7000,
+          sameSite: "Lax",
+        });
+        res.data.info && setIsLoading(false);
+        navigate(`/home/${res.data.info._id}`);
       } catch (err) {
         console.log(err);
       }
