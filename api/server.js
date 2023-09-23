@@ -30,7 +30,8 @@ const connect = async () => {
 
 // Define a CORS configuration object
 const corsOptions = {
-  origin: ["http://impactshaala-testsite.tech", "http://localhost:5173"],
+  // origin: ["http://impactshaala-testsite.tech", "http://localhost:5173"],
+  origin: "*",
   credentials: true,
 };
 
