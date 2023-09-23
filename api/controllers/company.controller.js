@@ -44,7 +44,7 @@ export const login = async (req, res, next) => {
         user.password
       );
       if (!isCorrectPassword)
-        return next(createError(400, "Wrong password or Email!"));
+        return res.status(400).send("Wrong password or Email!");
       // generates token than will then then be passed as cookie
       const token = jwt.sign(
         {
@@ -287,11 +287,12 @@ export const getAllUsersByStakeholder = async (req, res) => {
 export const getAddress = async (req, res) => {
   try {
     const { pincode } = req.params;
-    const response = await axios.get(`https://api.postalpincode.in/pincode/${pincode}`);
+    const response = await axios.get(
+      `https://api.postalpincode.in/pincode/${pincode}`
+    );
     res.json(response.data);
   } catch (err) {
     console.log(err);
     res.status(500).send("Something went wrong");
   }
 };
-
