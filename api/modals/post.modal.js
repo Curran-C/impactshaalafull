@@ -31,7 +31,10 @@ const postSchema = new Schema(
     location: {
       type: String,
       // required: true,
-    }
+    },
+    timeline: {
+      type: String,
+    },
   },
   {
     timestamps: true,
