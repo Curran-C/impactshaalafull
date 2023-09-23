@@ -4,6 +4,7 @@ import Post from "../modals/post.modal.js";
 import { sendMail } from "../utils/mailHelper.js";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
+import axios from "axios";
 
 // register company
 export const register = async (req, res) => {
@@ -282,3 +283,15 @@ export const getAllUsersByStakeholder = async (req, res) => {
     res.status(500).send("Something went wrong");
   }
 };
+
+export const getAddress = async (req, res) => {
+  try {
+    const { pincode } = req.params;
+    const response = await axios.get(`https://api.postalpincode.in/pincode/${pincode}`);
+    res.json(response.data);
+  } catch (err) {
+    console.log(err);
+    res.status(500).send("Something went wrong");
+  }
+};
+

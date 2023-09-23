@@ -3,8 +3,10 @@
     justify-content: center;
     align-items: center;
     height: 95vh;
+
     .signinpage {
         display: flex;
+
         .signupblue {
             display: flex;
             flex-direction: column;
@@ -24,9 +26,11 @@
                 align-items: center;
                 justify-content: center;
                 gap: 10px;
+
                 .signinToggle {
                     display: none;
                 }
+
                 h1 {
                     margin-bottom: 0;
                     color: black;
@@ -37,6 +41,7 @@
                     text-align: center;
                     color: #646464;
                 }
+
                 button {
                     background-color: #87ceeb;
                     padding: 10px 30px;
@@ -45,6 +50,7 @@
                     font-weight: 600;
                     letter-spacing: 1px;
                     font-size: 16px;
+
                     &:hover {
                         cursor: pointer;
                         box-shadow: 0px 0px 5px 1px #1a7fe3;
@@ -52,6 +58,7 @@
                 }
             }
         }
+
         .signup {
             display: flex;
             flex-direction: column;
@@ -63,18 +70,22 @@
             border-radius: 10px;
             height: 500px;
             box-shadow: 1px 2px 5px #868686;
+
             .signupToggle {
                 display: none;
             }
+
             .signupButtons {
                 display: flex;
                 // flex-direction: column;
                 align-items: center;
                 justify-content: center;
                 gap: 5px;
+
                 img {
                     height: 60px;
                 }
+
                 button {
                     margin-top: 0;
                     padding: 10px 30px;
@@ -83,20 +94,24 @@
                     border-radius: 50px;
                 }
             }
+
             .or {
-                margin-bottom: 30px;
+                // margin-bottom: 30px;
                 display: flex;
                 width: 50%;
                 align-items: center;
                 // gap: 30px;
                 justify-content: space-evenly;
+
                 hr {
                     width: 25%;
                 }
+
                 p {
                     color: #868686;
                 }
             }
+
             .inputs {
                 display: flex;
                 flex-direction: column;
@@ -105,6 +120,7 @@
                 align-items: center;
                 align-items: center;
                 margin-bottom: 20px;
+
                 input {
                     border-radius: 10px;
                     height: 25px;
@@ -119,6 +135,7 @@
                     font-size: 15px;
                 }
             }
+
             button {
                 background-color: #87ceeb;
                 padding: 10px 30px;
@@ -128,25 +145,36 @@
                 letter-spacing: 1px;
                 font-size: 16px;
                 margin-top: 30px;
+
                 &:hover {
                     cursor: pointer;
                     box-shadow: 0px 0px 5px 1px #1a7fe3;
                 }
             }
+
             a {
                 color: #868686;
                 font-size: 12px;
+
                 &:hover {
                     cursor: pointer;
                 }
             }
+
+            .warning-message {
+                margin-top: 0px;
+                color: red;
+            }
+
         }
     }
+
     .companyDetails {
         display: flex;
         justify-content: center;
         align-items: center;
         height: 95vh;
+
         .signup {
             display: flex;
             flex-direction: column;
@@ -159,9 +187,11 @@
             height: 500px;
             box-shadow: 1px 2px 5px #868686;
             background-color: #cddded;
+
             h2 {
                 text-align: center;
             }
+
             .inputs {
                 display: flex;
                 flex-direction: column;
@@ -169,6 +199,7 @@
                 width: 80%;
                 align-items: center;
                 align-items: center;
+
                 // margin-bottom: 10px;
                 input,
                 textarea {
@@ -184,20 +215,24 @@
                     font-weight: 200;
                     font-size: 15px;
                 }
+
                 textarea {
                     height: 100px;
                 }
+
                 .tag {
                     display: flex;
                     align-items: center;
                     justify-content: center;
                     width: 300px;
                     gap: 10px;
+
                     button {
                         margin-top: 0;
                     }
                 }
             }
+
             button {
                 background-color: #87ceeb;
                 padding: 10px 30px;
@@ -206,45 +241,60 @@
                 font-weight: 600;
                 letter-spacing: 1px;
                 font-size: 16px;
-                margin-top: 30px;
+
+                // margin-top: 30px;
                 &:hover {
                     cursor: pointer;
                     box-shadow: 0px 0px 5px 1px #1a7fe3;
                 }
             }
+
             a {
                 color: #868686;
                 font-size: 12px;
+
                 &:hover {
                     cursor: pointer;
                 }
             }
+
             .upload {
                 display: flex;
                 gap: 10px;
+
                 span {
                     font-weight: 600;
                     font-size: 30px;
                 }
+
                 img {
                     height: 20px;
                 }
             }
+
             .imageupload {
                 margin-top: 30px;
                 margin-left: 80px;
                 font-family: "Poppins", sans-serif;
             }
+
+            .warning-message {
+                margin-top: 0;
+                color: red;
+            }
         }
+
         .white {
             background-color: #fff;
         }
     }
+
     .location {
         display: flex;
         justify-content: center;
         align-items: center;
         height: 95vh;
+
         .signup {
             display: flex;
             flex-direction: column;
@@ -257,6 +307,7 @@
             height: 500px;
             box-shadow: 1px 2px 5px #868686;
             background-color: #cddded;
+
             // gap: 10px;
             .inputs {
                 display: flex;
@@ -266,14 +317,17 @@
                 align-items: center;
                 align-items: center;
                 margin-bottom: 20px;
+
                 .pin {
                     display: flex;
                     align-items: center;
                     gap: 10px;
+
                     input {
                         width: 90px;
                     }
                 }
+
                 input {
                     border-radius: 10px;
                     height: 25px;
@@ -287,10 +341,12 @@
                     font-weight: 200;
                     font-size: 15px;
                 }
+
                 textarea {
                     height: 100px;
                 }
             }
+
             button {
                 background-color: #87ceeb;
                 padding: 10px 30px;
@@ -300,35 +356,43 @@
                 letter-spacing: 1px;
                 font-size: 16px;
                 margin-top: 30px;
+
                 &:hover {
                     cursor: pointer;
                     box-shadow: 0px 0px 5px 1px #1a7fe3;
                 }
             }
+
             p {
                 margin: 0;
             }
+
             a {
                 color: #868686;
                 font-size: 12px;
+
                 &:hover {
                     cursor: pointer;
                 }
             }
+
             .upload {
                 display: flex;
                 flex-direction: column;
                 align-items: center;
                 gap: 10px;
+
                 span {
                     font-weight: 600;
                     font-size: 30px;
                 }
+
                 p {
                     text-align: center;
                     width: 100%;
                     color: #646464;
                 }
+
                 .imageupload {
                     margin-top: 30px;
                     margin-left: 80px;
@@ -336,10 +400,12 @@
                 }
             }
         }
+
         .white {
             background-color: #fff;
         }
     }
+
     .stakeholderCategory {
         display: flex;
         flex-direction: column;
@@ -350,15 +416,18 @@
         align-content: center;
         height: 500px;
         border-radius: 25px;
+
         h1 {
             margin-bottom: 30px;
         }
+
         .stakeholderContainer {
             display: flex;
             align-items: center;
             justify-content: center;
             flex-direction: column;
             gap: 20px;
+
             .otherInput {
                 border-radius: 10px;
                 height: 25px;
@@ -372,6 +441,7 @@
                 font-weight: 100;
                 font-size: 15px;
             }
+
             .dropdown {
                 border-radius: 10px;
                 // height: 25px;
@@ -386,6 +456,7 @@
                 font-weight: 100;
                 font-size: 15px;
             }
+
             button {
                 background-color: #87ceeb;
                 padding: 10px 30px;
@@ -395,6 +466,7 @@
                 letter-spacing: 1px;
                 font-size: 16px;
                 margin-top: 30px;
+
                 &:hover {
                     cursor: pointer;
                     box-shadow: 0px 0px 5px 1px #1a7fe3;
@@ -402,14 +474,17 @@
             }
         }
     }
+
     .tagsContainer {
         display: flex;
         flex-direction: column;
         align-items: center;
+
         img {
             height: 350px;
             width: 600px;
         }
+
         .tagsWrapper {
             background-color: #cddded;
             height: 300px;
@@ -421,13 +496,16 @@
             justify-content: center;
             border-radius: 25px;
             padding: 20px;
+
             h1 {
                 text-align: center;
             }
+
             .tagsInput {
                 display: flex;
                 flex-direction: column;
                 align-items: center;
+
                 input {
                     border-radius: 10px;
                     height: 25px;
@@ -441,7 +519,18 @@
                     font-weight: 200;
                     font-size: 15px;
                 }
+
+                .inputs {
+                    display: flex;
+                    flex-direction: row;
+                }
+
+                .warning-message {
+                    margin-top: 0;
+                    color: red;
+                }
             }
+
             button {
                 background-color: #87ceeb;
                 padding: 10px 30px;
@@ -450,14 +539,17 @@
                 font-weight: 600;
                 letter-spacing: 1px;
                 font-size: 16px;
+
                 &:hover {
                     cursor: pointer;
                     box-shadow: 0px 0px 5px 1px #1a7fe3;
                 }
             }
+
             .tags {
                 display: flex;
                 gap: 10px;
+
                 // overflow-x: scroll;
                 .tag {
                     margin: 0;
@@ -469,15 +561,18 @@
                     padding: 5px 20px;
                     border-radius: 25px;
                     font-size: 15px;
+
                     p {
                         margin: 0;
                     }
+
                     .x {
                         background: #d9def2;
                         border-radius: 100%;
                         padding: 1px 5px;
                         color: red;
                         font-size: 10px;
+
                         &:hover {
                             cursor: pointer;
                         }
@@ -493,32 +588,39 @@
         .signinpage {
             .signupblue {
                 display: none;
+
                 .bluecontainer {
                     .signinToggle {
                         display: block;
                     }
                 }
             }
+
             .hidden {
                 display: none;
             }
+
             .visible {
                 display: flex;
             }
+
             .signup {
                 .signupToggle {
                     display: block;
                     font-size: 12px;
+
                     &:hover {
                         cursor: pointer;
                     }
                 }
             }
         }
+
         .companyDetails {
             flex-direction: column;
             gap: 10px;
         }
+
         .location {
             flex-direction: column-reverse;
             gap: 10px;
@@ -533,6 +635,7 @@
                 width: 200px;
                 height: 500px;
             }
+
             .signup {
                 width: 200px;
                 height: 500px;

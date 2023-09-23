@@ -88,6 +88,12 @@ const companySchema = new Schema(
       // required: true,
       // default: "",
     },
+    communicationEmail: {
+      type: String,
+    },
+    websiteLink: {
+      type: String,
+    },
     bookmarkedPosts: {
       type: Array,
       default: [],
@@ -125,7 +131,7 @@ const companySchema = new Schema(
     },
   },
   {
-    timestamps: true,
+      stamps: true,
   }
 );
 
