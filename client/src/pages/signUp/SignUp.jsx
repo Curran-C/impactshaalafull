@@ -168,17 +168,43 @@ const SignUp = () => {
     setStakeholderState(true);
   };
 
+  const [passwordMissmatch, setPasswordMissmatch] = useState(null);
+
   const handleSignUpSubmit = (e) => {
     e.preventDefault();
-    setSignInState(false);
-    setSignUpState(false);
-    setCompanyDetailsState(true);
+    if (newUser?.cpassword) {
+      if (newUser.password !== newUser.cpassword) {
+        // alert("Password Missmatch");
+        setPasswordMissmatch("Password Missmatch");
+      } else {
+        setSignInState(false);
+        setSignUpState(false);
+        setCompanyDetailsState(true);
+      }
+    }
   };
 
+  const [taglineWordLengthWarning, setTaglineWordLengthWarning] = useState(null);
+  const [descriptionWordLengthWarning, setDescriptionWordLengthWarning] = useState(null);
   const handleCompanySubmit = (e) => {
     e.preventDefault();
-    setCompanyDetailsState(false);
-    setLocationDetailsState(true);
+    const taglineWordLength = newUser.tagline.split(/\s+/).length;
+    const descriptionWordLength = newUser.description.split(/\s+/).length;
+    if (taglineWordLength < 15) {
+      setTaglineWordLengthWarning("Tag line should be minimum 15 words");
+    } else {
+      setTaglineWordLengthWarning("");
+    }
+    if (descriptionWordLength < 50) {
+      setDescriptionWordLengthWarning("Description should be minimum 50 words");
+    } else {
+      setDescriptionWordLengthWarning("");
+    }
+    if (taglineWordLength >= 15 && descriptionWordLength >= 50) {
+      setCompanyDetailsState(false);
+      setLocationDetailsState(true);
+    }
+
   };
 
   const handleStakeholderSubmit = (e) => {
@@ -234,54 +260,80 @@ const SignUp = () => {
     setTags(newTags);
   };
 
+  const [tagLineWaring, setTagLineWaring] = useState(null);
   const handleFinalSubmit = async (e) => {
     e?.preventDefault();
-    setIsLoading(true);
-    let pfpUrl, coverPicUrl;
-    if (pfp) pfpUrl = await upload(pfp);
-    if (coverPic) coverPicUrl = await upload(coverPic);
+    if (tags.length < 5) {
+      setTagLineWaring("Minimum of 5 keywords");
+    } else {
+      setIsLoading(true);
+      let pfpUrl, coverPicUrl;
+      if (pfp) pfpUrl = await upload(pfp);
+      if (coverPic) coverPicUrl = await upload(coverPic);
 
-    try {
-      const res = await axios.post(
-        `${import.meta.env.VITE_BASE_URL}/api/company/register`,
-        {
-          ...newUser,
-          pfp: pfpUrl?.toString(),
-          type: newType !== "" ? newType : newUser.type,
-          coverPic: coverPicUrl?.toString(),
-          tags: tags,
-        }
-      );
-      // const res = await fetch(registerUrl, {
-      //   method: "POST",
-      //   headers: {
-      //     "Content-Type": "application/json",
-      //   },
-      //   body: JSON.stringify(requestBody),
-      // });
-      console.log(res.data);
       try {
         const res = await axios.post(
-          `${import.meta.env.VITE_BASE_URL}/api/company/login`,
+          `${import.meta.env.VITE_BASE_URL}/api/company/register`,
           {
-            email: newUser.email,
-            password: newUser.password,
+            ...newUser,
+            pfp: pfpUrl?.toString(),
+            type: newType !== "" ? newType : newUser.type,
+            coverPic: coverPicUrl?.toString(),
+            tags: tags,
           }
         );
-        Cookies.set("accessToken", res.data.token, {
-          domain: `.${import.meta.env.VITE_CLIENT_URL}`,
-          expires: 7000,
-          sameSite: "Lax",
-        });
-        res.data.info && setIsLoading(false);
-        navigate(`/home/${res.data.info._id}`);
+        // const res = await fetch(registerUrl, {
+        //   method: "POST",
+        //   headers: {
+        //     "Content-Type": "application/json",
+        //   },
+        //   body: JSON.stringify(requestBody),
+        // });
+        console.log(res.data);
+        try {
+          const res = await axios.post(
+            `${import.meta.env.VITE_BASE_URL}/api/company/login`,
+            {
+              email: newUser.email,
+              password: newUser.password,
+            }
+          );
+          Cookies.set("accessToken", res.data.token, {
+            domain: `.${import.meta.env.VITE_CLIENT_URL}`,
+            expires: 7000,
+            sameSite: "Lax",
+          });
+          res.data.info && setIsLoading(false);
+          // navigate(`/home/${res.data.info._id}`);
+          alert("Sign Up successfull");
+          navigate(`/signup`);
+          setTagsState(false);
+          setSignInState(true);
+        } catch (err) {
+          console.log(err);
+        }
       } catch (err) {
         console.log(err);
       }
-    } catch (err) {
-      console.log(err);
     }
+
   };
+
+  const handlePincode = async () => {
+    console.log(newUser.pinCode);
+    const { data: response } = await axios.get(
+      `${import.meta.env.VITE_BASE_URL}/api/company/getAddress/${newUser.pinCode}`
+    );
+    // const data = response.data;
+    const city = response[0].PostOffice[0].Division;
+    const state = response[0].PostOffice[0].State;
+    setNewUser(
+      {
+        city: city,
+        state: state
+      }
+    )
+  }
 
   // constants
 
@@ -458,6 +510,9 @@ const SignUp = () => {
           <p>Or</p>
           <hr />
         </div>
+        <div className="warning-message">
+          <p>{passwordMissmatch}</p>
+        </div>
         <div className="inputs">
           <input
             onChange={(e) => handleSignUpInputChange(e)}
@@ -481,6 +536,14 @@ const SignUp = () => {
             placeholder="Enter your password"
             type="password"
             name="password"
+            id=""
+          />
+          <input
+            onChange={(e) => handleSignUpInputChange(e)}
+            required
+            placeholder="Enter Confirm password"
+            type="password"
+            name="cpassword"
             id=""
           />
         </div>
@@ -510,6 +573,10 @@ const SignUp = () => {
       />
       <form className="signup" onSubmit={handleCompanySubmit}>
         <h2>{newUser?.stakeholder} Details</h2>
+        <div className="warning-message">
+          <p>{descriptionWordLengthWarning}</p>
+          <p>{taglineWordLengthWarning}</p>
+        </div>
 
         <div className="inputs">
           <input
@@ -595,6 +662,7 @@ const SignUp = () => {
           <div className="pin">
             <input
               onChange={(e) => handleSignUpInputChange(e)}
+              onBlur={handlePincode}
               required
               placeholder="Pincode"
               type="number"
@@ -606,6 +674,7 @@ const SignUp = () => {
               placeholder="City"
               type="text"
               name="city"
+              value={newUser.city}
             />
           </div>
           <input
@@ -614,6 +683,7 @@ const SignUp = () => {
             type="text"
             placeholder="State"
             name="state"
+            value={newUser.state}
           />
           <input
             onChange={(e) => handleSignUpInputChange(e)}
@@ -621,6 +691,22 @@ const SignUp = () => {
             type="number"
             placeholder="Phone number"
             name="phNum"
+          />
+          <input
+            onChange={(e) => handleSignUpInputChange(e)}
+            required
+            placeholder="Communication Email"
+            type="email"
+            name="communicationEmail"
+            id=""
+          />
+          <input
+            onChange={(e) => handleSignUpInputChange(e)}
+            required
+            placeholder="Website Link"
+            type="text"
+            name="websiteLink"
+            id=""
           />
         </div>
         <p onClick={getCurrentLocation}>Use my current location</p>
@@ -640,21 +726,27 @@ const SignUp = () => {
         <div className="tagsWrapper">
           <form className="tagsInput">
             <h1>What type of collaborations are you looking for?</h1>
-            <input
-              value={tag}
-              onChange={(e) => setTag(e.target.value)}
-              type="text"
-              name=""
-              id=""
-              placeholder="Ex: Business"
-            />
-            <input
-              onClick={handleTagSubmit}
-              type="submit"
-              name=""
-              id=""
-              hidden
-            />
+            <div className="warning-message">
+              <p>{tagLineWaring}</p>
+            </div>
+            <div className="inputs">
+              <input
+                value={tag}
+                onChange={(e) => setTag(e.target.value)}
+                type="text"
+                name=""
+                id=""
+                placeholder="Ex: Business"
+              />
+              <button
+                onClick={handleTagSubmit}
+                type="submit"
+                name=""
+                id=""
+              // hidden
+              > Add </button>
+            </div>
+
           </form>
           <div className="tags">
             {tags &&

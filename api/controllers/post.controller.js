@@ -3,7 +3,7 @@ import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 
 const createPost = async (req, res) => {
-  try {
+  try { 
     const newPost = new Post({
       ...req.body,
     });
