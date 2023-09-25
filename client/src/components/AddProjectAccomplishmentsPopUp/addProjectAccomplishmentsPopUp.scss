@@ -1,0 +1,20 @@
+/* PopupModal.scss */
+
+/* Styling for the modal background overlay */
+.modal.show {
+    background-color: rgba(0, 0, 0, 0.5);
+  }
+  
+  /* Styling for the modal dialog */
+  .modal-dialog {
+    &.modal-dialog-centered {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    //   min-height: 10vh;
+   max-width: 100%;
+    }
+  }
+  
+  /* Additional custom styling can be added as needed */
+  
