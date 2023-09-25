@@ -77,7 +77,7 @@ const CreatePost = ({ onCancel }) => {
             <h2>Write a few details</h2>
             <textarea
               onChange={handleInputChange}
-              rows={10}
+              rows={7}
               placeholder="Position Details"
               type="text"
               name="posDetails"

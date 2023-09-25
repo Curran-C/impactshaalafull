@@ -1,9 +1,9 @@
-import React from "react";
+import "./NameDate.scss";
 
 const NameDate = ({ name, date }) => {
   return (
     <div className="intro">
-      <h1>Hello, {name}</h1>
+      <h2>Hello, {name}</h2>
       <p>Today is {date}</p>
     </div>
   );

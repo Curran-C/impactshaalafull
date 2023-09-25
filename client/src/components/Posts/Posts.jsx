@@ -1,8 +1,6 @@
 import "./posts.scss";
 
 import Post from "../Post/Post";
-import { useEffect, useState } from "react";
-import axios from "axios";
 
 const Posts = ({ posts }) => {
   return (

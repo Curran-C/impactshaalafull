@@ -7,7 +7,7 @@ const Tile = ({ image, type, selected, onClicked }) => {
       className={selected ? "highlighted tile" : "tile"}
       onClick={onClicked}
     >
-      <img className="img" src={image} alt="" />
+      <img className="img" src={image} alt="tile" />
       <span className="linkText">{type}</span>
     </div>
   );
