@@ -9,6 +9,7 @@ import NameDate from "../../components/NameDate/NameDate";
 import { date } from "../../utils/date";
 import jwtDecode from "jwt-decode";
 import FeedbackForm from "../../components/FeedbackForm/FeedbackForm";
+import HomeRight from "../../components/HomeRight/HomeRight";
 
 const Profile = () => {
   // states
@@ -57,7 +58,7 @@ const Profile = () => {
       {feedbackFrom && <FeedbackForm onCancel={handleFeedbackShow} />}
       <div className="profileContainer">
         <ProfileLeft page={"profile"} />
-        <div className="right">
+        <div className="profileDetails">
           <div className="nameandfeedback">
             <NameDate name={user?.name} date={date} />
             {decodedToken?.id !== id && (
@@ -83,6 +84,9 @@ const Profile = () => {
             )}
           </div>
           <ProfileFeed user={user} />
+        </div>
+        <div className="right">
+          <HomeRight user={user} />
         </div>
       </div>
     </div>

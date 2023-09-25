@@ -17,8 +17,10 @@ const ProfileHeader = ({ user, pageName }) => {
             <img className="pfp" src={user?.pfp || nopfp} alt="" />
             <div className="company-info">
               <h3>{user?.companyName}</h3>
-              <Tile image={corporate} type={user?.stakeholder} />
-              <Tile image={location} type={user?.city} />
+              <div className="company-info-tiles">
+                <Tile image={corporate} type={user?.stakeholder} />
+                <Tile image={location} type={user?.city} />
+              </div>
             </div>
             <div className="company-about">
               <p>Joined On {moment(user?.createdAt).format("ll")}</p>
