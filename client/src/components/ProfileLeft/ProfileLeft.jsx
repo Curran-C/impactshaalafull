@@ -78,7 +78,7 @@ const ProfileLeft = ({ page }) => {
         linkText={"Settings"}
       />
       <button onClick={handleLogout} className="logout">
-        <img src={logout} alt="" />
+        <img src={logout} alt="logout" />
         <span>Logout</span>
       </button>
     </div>

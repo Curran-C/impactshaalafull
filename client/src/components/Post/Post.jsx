@@ -23,7 +23,6 @@ const Post = ({ post }) => {
 
   // consts
   const date = new Date(post?.date);
-  console.log(date.toDateString());
 
   // side effects
   useEffect(() => {
@@ -35,7 +34,6 @@ const Post = ({ post }) => {
             post?.createdById
           }`
         );
-        console.log(res.data);
         setUser(res.data);
         // checking if user has bookmarked post and setting bookmarked state
         try {
@@ -229,7 +227,7 @@ const Post = ({ post }) => {
         <div className="userAboutContainer">
           <img src={user?.pfp || nopfp} alt="" className="pfp" />
           <div className="userAbout">
-            <h2>{user?.name || "ImpactShaala"}</h2>
+            <h3>{user?.name || "ImpactShaala"}</h3>
             <div className="tilesContainer">
               {post?.createdById ? (
                 <>

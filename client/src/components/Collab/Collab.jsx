@@ -4,7 +4,7 @@ import "./collab.scss";
 const Collab = () => {
   return (
     <div className="collab">
-      <h1>Looking for Collaborations?</h1>
+      <h3>Looking for Collaborations?</h3>
       <div className="companyNames">
         <CollabCard />
         <CollabCard />

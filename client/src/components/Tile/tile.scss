@@ -1,19 +1,19 @@
 .tile {
-    display: flex;
-    align-items: center;
-    justify-content: start;
-    gap: 10px;
-    padding: 5px 20px;
-    // width: 200px;
-    .img {
-        height: 20px;
-    }
-    .linkText {
-        text-align: center;
-        font-size: 15px;
-    }
+  display: flex;
+  align-items: center;
+  justify-content: start;
+  gap: 10px;
+  //   padding: 5px 20px;
+  // width: 200px;
+  .img {
+    height: 17px;
+  }
+  .linkText {
+    text-align: center;
+    font-size: 13px;
+  }
 }
 
 .highlighted {
-    border: 1px solid black;
+  border: 1px solid black;
 }
