@@ -100,35 +100,38 @@ const SignUp = () => {
   };
   useEffect(() => {
     /* global google */
-    google.accounts.id.initialize({
+    window.google.accounts.id.initialize({
       client_id:
         "363281034776-lth0a4mj6bjjatfnaa7q5akbj2tr7s7h.apps.googleusercontent.com",
       callback: handleGoogleCallback,
     });
-    google.accounts.id.renderButton(document.getElementById("googlesignin"), {
-      theme: "filled_blue",
-      shape: "circle",
-      ux_mode: "popup",
-      text: "continue_with",
-      size: "large",
-    });
-    const getLocation = async () => {
-      try {
-        const { data } = await axios.get("https://ipapi.co/json/", {
-          withCredentials: false,
-        });
-        const { latitude, longitude } = data;
-        setLocation({ city: data.city, state: data.region });
-        const locationFromGoogle = await axios.get(
-          `https://maps.googleapis.com/maps/api/geocode/json?latlng=${latitude},${longitude}&key=AIzaSyAphv25nyRmd3k1SbgHW4gcymZSIqdXS_U`,
-          { withCredentials: false }
-        );
-        console.log(locationFromGoogle);
-      } catch (err) {
-        console.log(err);
+    window.google.accounts.id.renderButton(
+      document.getElementById("googlesignin"),
+      {
+        theme: "filled_blue",
+        shape: "circle",
+        ux_mode: "popup",
+        text: "continue_with",
+        size: "large",
       }
-    };
-    getLocation();
+    );
+    // const getLocation = async () => {
+    //   try {
+    //     const { data } = await axios.get("https://ipapi.co/json/", {
+    //       withCredentials: false,
+    //     });
+    //     const { latitude, longitude } = data;
+    //     setLocation({ city: data.city, state: data.region });
+    //     const locationFromGoogle = await axios.get(
+    //       `https://maps.googleapis.com/maps/api/geocode/json?latlng=${latitude},${longitude}&key=AIzaSyAphv25nyRmd3k1SbgHW4gcymZSIqdXS_U`,
+    //       { withCredentials: false }
+    //     );
+    //     console.log(locationFromGoogle);
+    //   } catch (err) {
+    //     console.log(err);
+    //   }
+    // };
+    // getLocation();
   }, []);
 
   const getCurrentLocation = async () => {
@@ -184,8 +187,10 @@ const SignUp = () => {
     }
   };
 
-  const [taglineWordLengthWarning, setTaglineWordLengthWarning] = useState(null);
-  const [descriptionWordLengthWarning, setDescriptionWordLengthWarning] = useState(null);
+  const [taglineWordLengthWarning, setTaglineWordLengthWarning] =
+    useState(null);
+  const [descriptionWordLengthWarning, setDescriptionWordLengthWarning] =
+    useState(null);
   const handleCompanySubmit = (e) => {
     e.preventDefault();
     const taglineWordLength = newUser.tagline.split(/\s+/).length;
@@ -204,7 +209,6 @@ const SignUp = () => {
       setCompanyDetailsState(false);
       setLocationDetailsState(true);
     }
-
   };
 
   const handleStakeholderSubmit = (e) => {
@@ -316,24 +320,23 @@ const SignUp = () => {
         console.log(err);
       }
     }
-
   };
 
   const handlePincode = async () => {
     console.log(newUser.pinCode);
     const { data: response } = await axios.get(
-      `${import.meta.env.VITE_BASE_URL}/api/company/getAddress/${newUser.pinCode}`
+      `${import.meta.env.VITE_BASE_URL}/api/company/getAddress/${
+        newUser.pinCode
+      }`
     );
     // const data = response.data;
     const city = response[0].PostOffice[0].Division;
     const state = response[0].PostOffice[0].State;
-    setNewUser(
-      {
-        city: city,
-        state: state
-      }
-    )
-  }
+    setNewUser({
+      city: city,
+      state: state,
+    });
+  };
 
   // constants
 
@@ -743,10 +746,12 @@ const SignUp = () => {
                 type="submit"
                 name=""
                 id=""
-              // hidden
-              > Add </button>
+                // hidden
+              >
+                {" "}
+                Add{" "}
+              </button>
             </div>
-
           </form>
           <div className="tags">
             {tags &&
