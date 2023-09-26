@@ -1,86 +1,70 @@
-/* PopupModal.scss */
+.add-project-acc-container {
+  min-width: 40vw;
 
-/* Styling for the modal background overlay */
-.modal.show {
-    background-color:#b1becd;
-    width: 500px;
-padding: 30px;
-margin-top: 10px;  
-}
-  
-  /* Styling for the modal dialog */
-  .modal-dialog {
-    &.modal-dialog-centered {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    //   min-height: 10vh;
-   max-width: 100%;
-    }
-    .buttons {
-        margin-top: 20px;
-        display: flex;
-        gap: 10px;
-     
-    }
-   
-    textarea {
-        padding: 10px 20px;
-        border: none;
-        outline: none;
-        background: #F5F7F6;
-        border-radius: 5px;
-        font-size: 15px;
-    }
-    .form-label{
-font-size: 15px;
-padding-left:1px;   
-font-family: Poppins;
-padding-top: 10px;
+  .title {
+    text-align: center;
+    padding-bottom: 15px;
+    border-bottom: rgb(241, 241, 241) 2px solid;
+  }
 
- }
- .form-control, .form-control-file{
-    margin: 10px 20px;
-    padding: 5px;
+  textarea {
+    padding: 10px 20px;
     border: none;
     outline: none;
-    background: #F5F7F6;
-    border-radius: 5px;
-    // font-size: 15px;
-    
-    align-items: end;
- }
- 
- .submitbutton{
-    margin: 10px 20px;
-    padding: 5px;
-    border: none;
-    outline: none;
-    background: #F5F7F6;
+    background: #f5f7f6;
     border-radius: 5px;
     font-size: 15px;
-    &:hover {
-        background-color: #ffffff;}
-        width: 90%;
-
-
- }
- .data_input{
-display: flex;
-justify-content: space-between;
-
- }
- .modal-footer, .modal-header{
-display: flex;
-justify-content: center;
- }
- .data_file{
-    display: flex;
-    justify-content: center;
-     
- }
-
   }
-  
-  /* Additional custom styling can be added as needed */
-  
+  .form-label {
+    font-size: 15px;
+    padding-left: 1px;
+    font-family: Poppins;
+    padding-top: 10px;
+    width: 35%;
+  }
+  .form-control,
+  .form-control-file {
+    margin: 10px 20px;
+    padding: 5px;
+    border: none;
+    outline: none;
+    background: #f5f7f6;
+    border-radius: 5px;
+    flex-grow: 1;
+    align-items: end;
+  }
+
+  .data_input,
+  .data_file {
+    display: flex;
+    justify-content: space-between;
+    align-items: start;
+  }
+
+  .footer-buttons {
+    display: flex;
+    justify-content: end;
+    button {
+      border: none;
+      padding: 10px 15px;
+      color: white;
+      border-radius: 15px;
+      margin: 10px;
+      &:hover {
+        color: black;
+        box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+      }
+      &:active {
+        box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px inset;
+      }
+    }
+
+    .cancel-button {
+      background-color: #d37580;
+    }
+
+    .submit-button {
+      background-color: #759bd3;
+    }
+  }
+}

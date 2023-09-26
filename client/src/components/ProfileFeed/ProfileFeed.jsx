@@ -5,8 +5,8 @@ import { useParams } from "react-router-dom";
 import Posts from "../Posts/Posts";
 import ProfileHeader from "../ProfileHeader/ProfileHeader";
 import FeedbackCard from "../FeedbackCard/FeedbackCard";
-import AddProjectAccomplishmentsPopUp from "../AddProjectAccomplishmentsPopUp/AddProjectAccomplishmentsPopUp"
-
+import AddProjectAccomplishmentsPopUp from "../AddProjectAccomplishmentsPopUp/AddProjectAccomplishmentsPopUp";
+import Modal from "../Modal/Modal";
 
 const ProfileFeed = ({ user }) => {
   const { id } = useParams();
@@ -18,11 +18,13 @@ const ProfileFeed = ({ user }) => {
     useState(false);
   const [posts, setPosts] = useState();
   const [feedbacks, setFeedbacks] = useState();
-  const [isOpen, setIsOpen] = useState(false);
+  const [showNewProjectAcc, setShowNewProjectAcc] = useState(false);
+  const [showNewFeedback, setShowNewFeedback] = useState(false);
 
   const handleChildValue = (value) => {
-  setIsOpen(value)
-  }
+    setShowNewProjectAcc(value);
+  };
+
   useEffect(() => {
     const getPosts = async () => {
       try {
@@ -56,6 +58,14 @@ const ProfileFeed = ({ user }) => {
     setShowProjectAccomplishments(true);
   };
 
+  const AddFeedBackPopup = ({ showModal }) => {
+    return <Modal>
+      <form className="">
+
+      </form>
+    </Modal>;
+  };
+
   return (
     <div className="profile">
       <ProfileHeader user={user} pageName={"profile"} />
@@ -73,37 +83,57 @@ const ProfileFeed = ({ user }) => {
 
         <div className="posts">
           <div className="postTitle">
-            <h3
+            <h4
               className={showPosts ? "selected" : ""}
               onClick={handleShowPosts}
             >
               Posts
-            </h3>
-            <h3
+            </h4>
+            <h4
               className={showFeedbacks ? "selected" : ""}
               onClick={handleShowFeedbacks}
             >
               Feedbacks
-            </h3>
-            <h3
+            </h4>
+            <h4
               className={showProjectAccomplishments ? "selected" : ""}
               onClick={handleShowProjectAccomplishments}
             >
               Project Accomplishments
-            </h3>
+            </h4>
           </div>
-          {showPosts &&  <Posts posts={posts} />}
+          {showPosts && <Posts posts={posts} />}
           <div className="feedbacksContainer">
+            {showFeedbacks && (
+              <button
+                className="btn-add-feedback"
+                onClick={() => setShowNewFeedback(true)}
+              >
+                <h4>Add a feedback</h4>
+              </button>
+            )}
             {showFeedbacks &&
               feedbacks?.map((feedback, index) => (
                 <FeedbackCard key={index} feedback={feedback} />
               ))}
-             
+            {/* {showNewFeedback && (
+              <AddFeedBackPopup showModal={setShowNewFeedback} />
+            )} */}
           </div>
-{showProjectAccomplishments?<button className=" AddProjectAccomplishments" onClick={()=>setIsOpen(true)}>
-  <h4>Add An Project Accomplishments</h4>
-  </button>:"" }             
-             {isOpen? <AddProjectAccomplishmentsPopUp onValueChange={handleChildValue}/>:""}
+          {showProjectAccomplishments && (
+            <div className="project-accomplishments">
+              <button
+                className="btn-add-project-acc"
+                onClick={() => setShowNewProjectAcc(true)}
+              >
+                <h4>Add a Project Accomplishment</h4>
+              </button>
+              {/* show rest of accomplishments here */}
+            </div>
+          )}
+          {showNewProjectAcc && (
+            <AddProjectAccomplishmentsPopUp onValueChange={handleChildValue} />
+          )}
         </div>
       </div>
     </div>

@@ -1,4 +1,3 @@
-import React from "react";
 import Navbar from "../../components/Navbar/Navbar";
 import "./landingPage.scss";
 import "react-responsive-carousel/lib/styles/carousel.min.css";
@@ -64,13 +63,24 @@ const LandingPage = () => {
           <div className="titleContainer">
             <Title text="Core Values" />
             <span className="subTitle">
-             <h4>Collaboration</h4>
-             <p> We believe in the power of working together, breaking down silos, and fostering connections that transcend boundaries</p>
-             <h4>Empathy</h4>
-             <p>We approach our work with empathy, understanding the diverse needs and perspectives of the people, organizations and communities we serve.
-</p>
-<h4>Lasting Impact</h4>
-<p>We are driven by a commitment to creating change that endures, leaving a positive mark on society that extends far into the future</p>
+              <h4>Collaboration</h4>
+              <p>
+                {" "}
+                We believe in the power of working together, breaking down
+                silos, and fostering connections that transcend boundaries
+              </p>
+              <h4>Empathy</h4>
+              <p>
+                We approach our work with empathy, understanding the diverse
+                needs and perspectives of the people, organizations and
+                communities we serve.
+              </p>
+              <h4>Lasting Impact</h4>
+              <p>
+                We are driven by a commitment to creating change that endures,
+                leaving a positive mark on society that extends far into the
+                future
+              </p>
             </span>
           </div>
 
@@ -134,15 +144,38 @@ const LandingPage = () => {
                 saw the need for a more inclusive and responsive education
                 system that could support the development of a stronger and more
                 equitable society
-            <h2>Our Purpose</h2>
-            <p>In 2022, we founded Impactshaala with a simple yet profound mission: "Bringing people together for the greater and common good." We are passionate believers in the power of collaboration as the solution to society's challenges. We are not just building a company, We are attempting to build a good and better world through our initative. </p>
-            <p>Our purpose is to serve as a catalyst for positive change. We strive to create a world where collaboration knows no bounds, where educational knowledge and resources are shared generously, and where every individual, community, and organization is empowered to make a lasting impact on society. We are dedicated to nurturing a culture of responsibility, empathy, and innovation, to build a brighter, more equitable future for all.</p>
-            <h2>Our Vision</h2>
-            <p>To create a world with less problems
-</p>
-<h2>Our mission</h2>
-<p>To create a world of limitless collaboration and equitable education by empowering individuals, organizations and communities to create a lasting societal impact. 
-</p>
+                <h2>Our Purpose</h2>
+                <p>
+                  In 2022, we founded Impactshaala with a simple yet profound
+                  mission: "Bringing people together for the greater and common
+                  good." We are passionate believers in the power of
+                  collaboration as the solution to society's challenges. We are
+                  not just building a company, We are attempting to build a good
+                  and better world through our initative.{" "}
+                </p>
+                <p>
+                  Our purpose is to serve as a catalyst for positive change. We
+                  strive to create a world where collaboration knows no bounds,
+                  where educational knowledge and resources are shared
+                  generously, and where every individual, community, and
+                  organization is empowered to make a lasting impact on society.
+                  We are dedicated to nurturing a culture of responsibility,
+                  empathy, and innovation, to build a brighter, more equitable
+                  future for all.
+                </p>
+                <h2>Our Vision</h2>
+                <p>To create a world with less problems</p>
+                <h2>Our mission</h2>
+                <p>
+                  To create a world of limitless collaboration and equitable
+                  education by empowering individuals, organizations and
+                  communities to create a lasting societal impact.
+                </p>
+                <p className="highlighted-about-us">
+                  We are more than just a platform; we are a catalyst for
+                  change, a hub for collaboration, and a gateway to a world of
+                  possibilities.
+                </p>
               </div>
             </div>
           </div>
@@ -209,9 +242,8 @@ const LandingPage = () => {
             <Title text={"Blog"} />
             <div className="textContainer">
               <div>
-                <p > How Impactshaala Works - How to use it efficiently </p>
-                <p>Credit Score Detailing
-</p>
+                <p> How Impactshaala Works - How to use it efficiently </p>
+                <p>Credit Score Detailing</p>
               </div>
             </div>
           </div>
