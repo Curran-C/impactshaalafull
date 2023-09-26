@@ -68,6 +68,23 @@
         height: 467px;
         flex-shrink: 0;
       }
+.AddProjectAccomplishments{
+  // border: none;
+  background: white;
+  color: inherit;
+  text-decoration: none;
+  padding: 10px;
+  border-radius: 50px;
+  padding-left: 25px;
+  padding-right: 25px;
+
+  &:hover {
+    background-color: #b1becd;}
+}
+
+
+
+
     }
   }
 }

@@ -1,0 +1,86 @@
+/* PopupModal.scss */
+
+/* Styling for the modal background overlay */
+.modal.show {
+    background-color:#b1becd;
+    width: 500px;
+padding: 30px;
+margin-top: 10px;  
+}
+  
+  /* Styling for the modal dialog */
+  .modal-dialog {
+    &.modal-dialog-centered {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    //   min-height: 10vh;
+   max-width: 100%;
+    }
+    .buttons {
+        margin-top: 20px;
+        display: flex;
+        gap: 10px;
+     
+    }
+   
+    textarea {
+        padding: 10px 20px;
+        border: none;
+        outline: none;
+        background: #F5F7F6;
+        border-radius: 5px;
+        font-size: 15px;
+    }
+    .form-label{
+font-size: 15px;
+padding-left:1px;   
+font-family: Poppins;
+padding-top: 10px;
+
+ }
+ .form-control, .form-control-file{
+    margin: 10px 20px;
+    padding: 5px;
+    border: none;
+    outline: none;
+    background: #F5F7F6;
+    border-radius: 5px;
+    // font-size: 15px;
+    
+    align-items: end;
+ }
+ 
+ .submitbutton{
+    margin: 10px 20px;
+    padding: 5px;
+    border: none;
+    outline: none;
+    background: #F5F7F6;
+    border-radius: 5px;
+    font-size: 15px;
+    &:hover {
+        background-color: #ffffff;}
+        width: 90%;
+
+
+ }
+ .data_input{
+display: flex;
+justify-content: space-between;
+
+ }
+ .modal-footer, .modal-header{
+display: flex;
+justify-content: center;
+ }
+ .data_file{
+    display: flex;
+    justify-content: center;
+     
+ }
+
+  }
+  
+  /* Additional custom styling can be added as needed */
+  
