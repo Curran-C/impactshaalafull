@@ -4,8 +4,19 @@ const { Schema } = mongoose;
 
 const feedbackSchema = new Schema(
   {
-    userId: {
-      type: String,
+    author: {
+      type: Schema.Types.ObjectId,
+      ref: "Company",
+      required: true,
+    },
+    target: {
+      type: Schema.Types.ObjectId,
+      ref: "Company",
+      required: true,
+    },
+    date: {
+      type: Date,
+      default: Date.now,
       required: true,
     },
     text: {

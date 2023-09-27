@@ -7,6 +7,8 @@ import ProfileHeader from "../ProfileHeader/ProfileHeader";
 import FeedbackCard from "../FeedbackCard/FeedbackCard";
 import AddProjectAccomplishmentsPopUp from "../AddProjectAccomplishmentsPopUp/AddProjectAccomplishmentsPopUp";
 import AddFeedbackPopup from "../AddFeedbackPopup/AddFeedbackPopup";
+import { fetchAllFeedbacksAPI, newFeedbackAPI } from "../../api/feedback";
+import { toast } from "react-toastify";
 
 const ProfileFeed = ({ user }) => {
   const { id } = useParams();
@@ -17,9 +19,18 @@ const ProfileFeed = ({ user }) => {
   const [showProjectAccomplishments, setShowProjectAccomplishments] =
     useState(false);
   const [posts, setPosts] = useState();
-  const [feedbacks, setFeedbacks] = useState();
+  const [feedbacks, setFeedbacks] = useState([]);
   const [showNewProjectAcc, setShowNewProjectAcc] = useState(false);
   const [showNewFeedback, setShowNewFeedback] = useState(false);
+
+  const fetchFeedbacks = async () => {
+    try {
+      const response = await fetchAllFeedbacksAPI(id);
+      setFeedbacks(response.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   useEffect(() => {
     const getPosts = async () => {
@@ -32,7 +43,7 @@ const ProfileFeed = ({ user }) => {
         console.log(err);
       }
     };
-    setFeedbacks(user?.feedbacksRecieved);
+    fetchFeedbacks();
     getPosts();
   }, []);
 
@@ -52,6 +63,15 @@ const ProfileFeed = ({ user }) => {
     setShowPosts(false);
     setShowFeedbacks(false);
     setShowProjectAccomplishments(true);
+  };
+
+  const submitNewFeedback = async (formData) => {
+    const response = await newFeedbackAPI({
+      target: id,
+      ...formData,
+    });
+    await fetchFeedbacks();
+    toast.success(response.message);
   };
 
   return (
@@ -100,12 +120,22 @@ const ProfileFeed = ({ user }) => {
                 <h4>Add a feedback</h4>
               </button>
             )}
-            {showFeedbacks &&
-              feedbacks?.map((feedback, index) => (
-                <FeedbackCard key={index} feedback={feedback} />
-              ))}
+            {showFeedbacks && (
+              <div className="feedbacks">
+                {feedbacks?.length ? (
+                  feedbacks.map((feedback, index) => (
+                    <FeedbackCard key={index} feedback={feedback} />
+                  ))
+                ) : (
+                  <h4>No feedbacks yet.</h4>
+                )}
+              </div>
+            )}
             {showNewFeedback && (
-              <AddFeedbackPopup toggleModal={setShowNewFeedback} />
+              <AddFeedbackPopup
+                toggleModal={setShowNewFeedback}
+                onSubmit={submitNewFeedback}
+              />
             )}
           </div>
           {showProjectAccomplishments && (
@@ -120,7 +150,9 @@ const ProfileFeed = ({ user }) => {
             </div>
           )}
           {showNewProjectAcc && (
-            <AddProjectAccomplishmentsPopUp toggleModal={setShowNewProjectAcc} />
+            <AddProjectAccomplishmentsPopUp
+              toggleModal={setShowNewProjectAcc}
+            />
           )}
         </div>
       </div>

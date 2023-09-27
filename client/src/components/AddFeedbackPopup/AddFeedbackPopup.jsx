@@ -2,11 +2,11 @@ import { useState } from "react";
 import Modal from "../Modal/Modal";
 import "./AddFeedbackPopup.scss";
 
-const AddFeedbackPopup = ({ toggleModal }) => {
+const AddFeedbackPopup = ({ toggleModal, onSubmit }) => {
   const [formData, setFormData] = useState({
-    title: "",
-    description: "",
+    text: "",
   });
+  const [submitting, setSubmitting] = useState(false);
 
   const onChangeHandler = (event) => {
     const { name, value } = event.target;
@@ -15,17 +15,29 @@ const AddFeedbackPopup = ({ toggleModal }) => {
       [name]: value,
     }));
   };
-  const formSubmitHandler = (event) => {
+  const formSubmitHandler = async (event) => {
     event.preventDefault();
-    console.log(formData);
-    toggleModal(false)
+    if (!formData.text.trim()) {
+      return setFormData({
+        text: "",
+      });
+    }
+    setSubmitting(true);
+    try {
+      await onSubmit({ text: formData.text.trim() });
+      toggleModal(false);
+    } catch (error) {
+      console.error("Error creating new feedback : ", error);
+    } finally {
+      setSubmitting(false);
+    }
   };
 
   return (
     <Modal>
       <form className="add-feedback-form" onSubmit={formSubmitHandler}>
         <h3 className="modal-title">Add Feedback</h3>
-        <div className="data_input">
+        {/* <div className="data_input">
           <label htmlFor="title" className="form-label">
             Title
           </label>
@@ -37,16 +49,16 @@ const AddFeedbackPopup = ({ toggleModal }) => {
             value={formData.projectName}
             onChange={onChangeHandler}
           />
-        </div>
+        </div> */}
         <div className="data_input">
           <label htmlFor="description" className="form-label">
-            Description
+            Feedback
           </label>
           <textarea
             className="form-control"
-            id="description"
-            name="description"
-            value={formData.description}
+            id="text"
+            name="text"
+            value={formData.text}
             onChange={onChangeHandler}
             rows="4"
           ></textarea>
@@ -59,8 +71,8 @@ const AddFeedbackPopup = ({ toggleModal }) => {
           >
             Cancel
           </button>
-          <button type="submit" className="submit-button">
-            Submit
+          <button type="submit" className="submit-button" disabled={submitting}>
+            {!submitting ? "Submit" : "Submitting..."}
           </button>
         </div>
       </form>
