@@ -37,9 +37,9 @@ h3:hover {
   object-fit: contain;
 }
 
-.slider .animated {
-  /* height: 500px; */
-}
+/* .slider .animated {
+  height: 500px; 
+} */
 
 /* width */
 ::-webkit-scrollbar {
