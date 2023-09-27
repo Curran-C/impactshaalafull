@@ -1,82 +1,81 @@
-.contactUs {
-    position: absolute;
-    top: 0;
-    left: 0;
-    bottom: 0;
-    right: 0;
-    // height: 100%;
-    // width: 100%;
-    position: fixed;
-    .blackbg {
-        // position: absolute;
-        background: #000;
-        height: 100vh;
-        width: 100%;
-        opacity: 0.2;
-        z-index: -10;
-        top: 0;
-    }
-    .container {
+.contactus-wrapper {
+  width: 40vw;
+
+  .inputs-container {
+    display: flex;
+    flex-direction: column;
+    height: 60vh;
+    overflow-y: scroll;
+
+    .input {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      .checkbox-container {
         display: flex;
-        align-items: center;
-        justify-content: center;
-        .wrapper {
-            background-color: #fff;
-            border-radius: 25px;
-            padding: 20px 60px;
-            position: absolute;
-            top: 0;
-            display: flex;
-            flex-direction: column;
-            // gap: 30px;
-            right: 0;
-            left: 0;
-            top: 0;
-            bottom: 0;
-            height: 85%;
-            width: 40%;
-            margin: auto;
-            h1 {
-                margin-bottom: 15px;
-            }
-            .input {
-                display: flex;
-                flex-direction: column;
-                gap: 10px;
-                h2 {
-                    margin: 0;
-                    font-weight: 600;
-                    font-size: 18px;
-                    margin-top: 10px;
-                }
-                input,
-                textarea {
-                    padding: 10px 20px;
-                    border: none;
-                    outline: none;
-                    background: #f5f7f6;
-                    border-radius: 5px;
-                    font-size: 15px;
-                }
-            }
-            .buttons {
-                margin-top: 20px;
-                display: flex;
-                gap: 10px;
-                button {
-                    background-color: #759bd3;
-                    border: none;
-                    border-radius: 20px;
-                    padding: 15px 25px;
-                    color: white;
-                    letter-spacing: 1px;
-                    font-size: 15px;
-                    outline: none;
-                }
-                .cancel {
-                    background-color: #d37580;
-                }
-            }
+        flex-wrap: wrap;
+        gap: 15px;
+        background: #f5f7f6;
+        border-radius: 5px;
+        font-size: 15px;
+        padding: 10px 20px;
+        label {
+          width: 45%;
         }
+
+        input[type="checkbox"] {
+          margin: 5px 10px;
+        }
+      }
+
+      .start-end-dates {
+        display: flex;
+        gap: 20px;
+      }
+
+      h4 {
+        font-weight: 400;
+        font-size: 14px;
+        margin-top: 10px;
+        margin-bottom: 0px;
+        padding: 0;
+      }
+      input,
+      textarea,
+      select {
+        padding: 10px 20px;
+        border: none;
+        outline: none;
+        background: #f5f7f6;
+        border-radius: 5px;
+        font-size: 15px;
+      }
     }
+  }
+  .footer-buttons {
+    display: flex;
+    justify-content: end;
+    button {
+      border: none;
+      padding: 10px 15px;
+      color: white;
+      border-radius: 15px;
+      margin: 10px;
+      &:hover {
+        color: black;
+        box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+      }
+      &:active {
+        box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px inset;
+      }
+    }
+
+    .cancel-button {
+      background-color: #d37580;
+    }
+
+    .submit-button {
+      background-color: #759bd3;
+    }
+  }
 }

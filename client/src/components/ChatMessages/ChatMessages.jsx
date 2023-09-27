@@ -20,9 +20,8 @@ const ChatMessages = ({
 
   // SETTING RECIEVED MESSAGE
   useEffect(() => {
-    console.log(recieveMessage);
     if (recieveMessage !== null && recieveMessage?.chatId === chat?._id) {
-      setMessages([...messages, recieveMessage?.text]);
+      setMessages([...messages, recieveMessage]);
     }
   }, [recieveMessage]);
 

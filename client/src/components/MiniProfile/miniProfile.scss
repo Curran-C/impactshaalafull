@@ -1,26 +1,26 @@
 .miniProfile {
+  display: flex;
+  border-radius: 25px;
+  background-color: #f5f7f6;
+  min-height: 80px;
+  //   justify-content: center;
+  padding: 0 15px;
+  align-items: center;
+  .minicontainer {
     display: flex;
-    border-radius: 25px;
-    background-color: #F5F7F6;
-    height: 100px;
-    justify-content: center;
+    gap: 20px;
     align-items: center;
-    .minicontainer {
-        display: flex;
-        gap: 20px;
-        .pfp {
-            height: 50px;
-            border-radius: 100%;
-            
-        }
-        .about {
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-            h4{
-                margin: 0;
-            }
-        }
+    .pfp {
+      height: 50px;
+      border-radius: 100%;
     }
-    
+    .about {
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+      h4 {
+        margin: 0;
+      }
+    }
+  }
 }
