@@ -16,7 +16,14 @@ const ProfileHeader = ({ user, pageName }) => {
           <div className="pfp-text">
             <img className="pfp" src={user?.pfp || nopfp} alt="" />
             <div className="company-info">
-              <h3>{user?.companyName}</h3>
+              <div className="header">
+                <h3>{user?.companyName}</h3>
+                {pageName !== "editProfile" && (
+                  <div className="stats">
+                    <Hex />
+                  </div>
+                )}
+              </div>
               <p className="description">{user?.description}</p>
               <div className="company-info-tiles">
                 <Tile
@@ -42,11 +49,6 @@ const ProfileHeader = ({ user, pageName }) => {
             </div>
             <Tags tags={user?.tags} />
           </div>
-          {pageName !== "editProfile" && (
-            <div className="stats">
-              <Hex />
-            </div>
-          )}
         </div>
       </div>
     </div>
