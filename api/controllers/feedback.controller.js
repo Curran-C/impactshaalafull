@@ -3,10 +3,13 @@ import jwt from "jsonwebtoken";
 
 //create feedback
 export const createFeedback = async (req, res) => {
-  // const token = req.cookies.accessToken;
-  // if (!token) res.status(401).send("You are not authenticated");
-  // else {
-    // const { id } = jwt.decode(token);
+  const token = req.cookies.accessToken;
+  if (!token)
+    res.status(401).send({
+      message: "You are not authenticated",
+    });
+  else {
+    const { id } = jwt.decode(token);
     try {
       const feedback = new Feedback({
         ...req.body,
@@ -16,7 +19,7 @@ export const createFeedback = async (req, res) => {
     } catch (err) {
       res.status(500).send(err);
     }
-  // }
+  }
 };
 
 //get all feedback
@@ -37,7 +40,7 @@ export const getSingleFeedback = async (req, res) => {
   } catch (err) {
     res.status(500).send(err);
   }
-} 
+};
 
 //send Admin replay to feedback
 export const sendAdminReplay = async (req, res) => {
@@ -49,7 +52,7 @@ export const sendAdminReplay = async (req, res) => {
   } catch (err) {
     res.status(500).send(err);
   }
-}
+};
 
 //delete feedback
 export const deleteFeedback = async (req, res) => {
