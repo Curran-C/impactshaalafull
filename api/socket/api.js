@@ -5,9 +5,14 @@ export const socketAPI = () => {
   io.on("connection", (socket) => {
     // ADD NEW USER IN SOCKET SERVER
     socket.on("new-user-add", (newUserId) => {
-      // IF USER IS NOT ADDED PREVIOUSLY
+      console.log("New", newUserId);
       if (newUserId !== null) {
-        if (!activeUsers.some((user) => user.userId === newUserId)) {
+        const existingUserIndex = activeUsers.findIndex(
+          (user) => user.userId === newUserId
+        );
+        if (existingUserIndex !== -1) {
+          activeUsers[existingUserIndex].socketId = socket.id;
+        } else {
           activeUsers.push({
             userId: newUserId,
             socketId: socket.id,

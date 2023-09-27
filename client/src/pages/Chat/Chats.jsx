@@ -100,7 +100,6 @@ const Chats = () => {
           </div>
         </div>
         <div className="right">
-          {console.log(recieveMessage)}
           {currentChat ? (
             <ChatMessages
               chat={currentChat}
