@@ -6,7 +6,7 @@ import Posts from "../Posts/Posts";
 import ProfileHeader from "../ProfileHeader/ProfileHeader";
 import FeedbackCard from "../FeedbackCard/FeedbackCard";
 import AddProjectAccomplishmentsPopUp from "../AddProjectAccomplishmentsPopUp/AddProjectAccomplishmentsPopUp";
-import Modal from "../Modal/Modal";
+import AddFeedbackPopup from "../AddFeedbackPopup/AddFeedbackPopup";
 
 const ProfileFeed = ({ user }) => {
   const { id } = useParams();
@@ -20,10 +20,6 @@ const ProfileFeed = ({ user }) => {
   const [feedbacks, setFeedbacks] = useState();
   const [showNewProjectAcc, setShowNewProjectAcc] = useState(false);
   const [showNewFeedback, setShowNewFeedback] = useState(false);
-
-  const handleChildValue = (value) => {
-    setShowNewProjectAcc(value);
-  };
 
   useEffect(() => {
     const getPosts = async () => {
@@ -56,14 +52,6 @@ const ProfileFeed = ({ user }) => {
     setShowPosts(false);
     setShowFeedbacks(false);
     setShowProjectAccomplishments(true);
-  };
-
-  const AddFeedBackPopup = ({ showModal }) => {
-    return <Modal>
-      <form className="">
-
-      </form>
-    </Modal>;
   };
 
   return (
@@ -116,9 +104,9 @@ const ProfileFeed = ({ user }) => {
               feedbacks?.map((feedback, index) => (
                 <FeedbackCard key={index} feedback={feedback} />
               ))}
-            {/* {showNewFeedback && (
-              <AddFeedBackPopup showModal={setShowNewFeedback} />
-            )} */}
+            {showNewFeedback && (
+              <AddFeedbackPopup toggleModal={setShowNewFeedback} />
+            )}
           </div>
           {showProjectAccomplishments && (
             <div className="project-accomplishments">
@@ -132,7 +120,7 @@ const ProfileFeed = ({ user }) => {
             </div>
           )}
           {showNewProjectAcc && (
-            <AddProjectAccomplishmentsPopUp onValueChange={handleChildValue} />
+            <AddProjectAccomplishmentsPopUp toggleModal={setShowNewProjectAcc} />
           )}
         </div>
       </div>

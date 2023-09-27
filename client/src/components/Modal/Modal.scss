@@ -28,5 +28,11 @@
     border-radius: 25px;
     padding: 20px 40px;
     position: absolute;
+
+    .modal-title {
+      text-align: center;
+      padding-bottom: 15px;
+      border-bottom: rgb(241, 241, 241) 2px solid;
+    }
   }
 }

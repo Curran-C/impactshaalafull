@@ -3,7 +3,7 @@ import "./addProjectAccomplishmentsPopUp.scss";
 
 import Modal from "../Modal/Modal";
 
-function AddProjectAccomplishmentsPopUp({ onValueChange }) {
+function AddProjectAccomplishmentsPopUp({ toggleModal }) {
   const [formData, setFormData] = useState({
     projectName: "",
     startDate: "",
@@ -13,7 +13,7 @@ function AddProjectAccomplishmentsPopUp({ onValueChange }) {
     attachments: null,
   });
 
-  const handleChange = (e) => {
+  const onChangeHandler = (e) => {
     const { name, value, type, files } = e.target;
     setFormData({
       ...formData,
@@ -24,7 +24,7 @@ function AddProjectAccomplishmentsPopUp({ onValueChange }) {
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log(formData); // api call here
-    onValueChange(false);
+    toggleModal(false);
   };
 
   return (
@@ -41,7 +41,7 @@ function AddProjectAccomplishmentsPopUp({ onValueChange }) {
             id="projectName"
             name="projectName"
             value={formData.projectName}
-            onChange={handleChange}
+            onChange={onChangeHandler}
           />
         </div>
         <div className="data_input">
@@ -54,7 +54,7 @@ function AddProjectAccomplishmentsPopUp({ onValueChange }) {
             id="startDate"
             name="startDate"
             value={formData.startDate}
-            onChange={handleChange}
+            onChange={onChangeHandler}
           />
         </div>
         <div className="data_input">
@@ -67,7 +67,7 @@ function AddProjectAccomplishmentsPopUp({ onValueChange }) {
             id="endDate"
             name="endDate"
             value={formData.endDate}
-            onChange={handleChange}
+            onChange={onChangeHandler}
           />
         </div>
         <div className="data_input">
@@ -79,7 +79,7 @@ function AddProjectAccomplishmentsPopUp({ onValueChange }) {
             id="beneficiaries"
             name="beneficiaries"
             value={formData.beneficiaries}
-            onChange={handleChange}
+            onChange={onChangeHandler}
             rows="4"
           ></textarea>
         </div>
@@ -93,7 +93,7 @@ function AddProjectAccomplishmentsPopUp({ onValueChange }) {
             id="projectLocation"
             name="projectLocation"
             value={formData.projectLocation}
-            onChange={handleChange}
+            onChange={onChangeHandler}
           />
         </div>
         <div className="data_file">
@@ -103,14 +103,14 @@ function AddProjectAccomplishmentsPopUp({ onValueChange }) {
             className="form-control-file"
             id="attachments"
             name="attachments"
-            onChange={handleChange}
+            onChange={onChangeHandler}
           />
         </div>
         <div className="footer-buttons">
           <button
             type="reset"
             className="cancel-button"
-            onClick={() => onValueChange(false)}
+            onClick={() => toggleModal(false)}
           >
             Cancel
           </button>
