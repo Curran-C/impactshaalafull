@@ -22,7 +22,7 @@ const PORT = 8000;
 const connect = async () => {
   try {
     await mongoose.connect(process.env.MONGO_URI);
-    console.log("connected to mongodb server");
+    console.log("Database Connected");
   } catch (err) {
     console.log(err);
   }
@@ -52,7 +52,14 @@ app.use("/api/notification", notificationRoutes);
 app.use("/api/feedback", feedbackRoutes);
 app.use("/api/invitation", invitationRoutes);
 
-app.listen(PORT, () => {
+const server = app.listen(PORT, () => {
   connect();
-  console.log(`server started on port ${PORT}`);
+  console.log(`Listening on ${PORT}`);
 });
+
+// Socket.io
+import { socketAPI } from "./socket/api.js";
+import { io } from "./socket/server.js";
+
+io.attach(server);
+socketAPI();

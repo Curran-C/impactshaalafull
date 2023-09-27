@@ -25,7 +25,7 @@ const Chats = () => {
 
   //SOCKET IO
   useEffect(() => {
-    socket.current = io("http://localhost:8800");
+    socket.current = io(import.meta.env.VITE_BASE_URL);
     socket.current.emit("new-user-add", loggedInUser?.data._id);
     socket.current.on("get-users", (users) => {
       setOnlineUsers(users);
