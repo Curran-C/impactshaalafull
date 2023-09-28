@@ -102,7 +102,7 @@ const ChatMessages = ({
     <div className="chatMessages">
       <div className="name">
         <img src={userData?.data.pfp} alt="name" className="pfp" />
-        <h2>{userData?.data.name}</h2>
+        <h3>{userData?.data.name}</h3>
       </div>
       <hr />
       <div className="chats">
