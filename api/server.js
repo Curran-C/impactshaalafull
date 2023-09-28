@@ -14,6 +14,7 @@ import documentRoutes from "../api/routes/documents.routes.js";
 import notificationRoutes from "../api/routes/notification.routes.js";
 import feedbackRoutes from "../api/routes/feedback.routes.js";
 import invitationRoutes from "../api/routes/invitation.routes.js";
+import accomplishmentRoutes from "../api/routes/accomplishment.routes.js";
 
 dotenv.config();
 const app = express();
@@ -38,7 +39,7 @@ const corsOptions = {
 app.use(cors(corsOptions));
 
 //middleware
-app.use(express.json());
+app.use(express.json({ limit: "10mb" }));
 app.use(cookieParser());
 
 //routes
@@ -51,6 +52,7 @@ app.use("/api/documents", documentRoutes);
 app.use("/api/notification", notificationRoutes);
 app.use("/api/feedback", feedbackRoutes);
 app.use("/api/invitation", invitationRoutes);
+app.use("/api/accomplishment", accomplishmentRoutes);
 
 const server = app.listen(PORT, () => {
   connect();

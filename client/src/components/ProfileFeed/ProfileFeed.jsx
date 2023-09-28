@@ -9,6 +9,10 @@ import AddProjectAccomplishmentsPopUp from "../AddProjectAccomplishmentsPopUp/Ad
 import AddFeedbackPopup from "../AddFeedbackPopup/AddFeedbackPopup";
 import { fetchAllFeedbacksAPI, newFeedbackAPI } from "../../api/feedback";
 import { toast } from "react-toastify";
+import {
+  fetchAccomplishmentAPI,
+  newProjectAccomplishmentAPI,
+} from "../../api/projectAccomplishment";
 
 const ProfileFeed = ({ user }) => {
   const { id } = useParams();
@@ -22,11 +26,21 @@ const ProfileFeed = ({ user }) => {
   const [feedbacks, setFeedbacks] = useState([]);
   const [showNewProjectAcc, setShowNewProjectAcc] = useState(false);
   const [showNewFeedback, setShowNewFeedback] = useState(false);
+  const [accomplishments, setAccomplishments] = useState([]);
 
   const fetchFeedbacks = async () => {
     try {
       const response = await fetchAllFeedbacksAPI(id);
       setFeedbacks(response.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const fetchAccomplishments = async () => {
+    try {
+      const response = await fetchAccomplishmentAPI(id);
+      setAccomplishments(response.data);
     } catch (error) {
       console.log(error);
     }
@@ -45,6 +59,7 @@ const ProfileFeed = ({ user }) => {
     };
     fetchFeedbacks();
     getPosts();
+    fetchAccomplishments();
   }, []);
 
   const handleShowPosts = () => {
@@ -74,13 +89,19 @@ const ProfileFeed = ({ user }) => {
     toast.success(response.message);
   };
 
+  const submitNewAccomplishment = async (formData) => {
+    const response = await newProjectAccomplishmentAPI(formData);
+    await fetchAccomplishments();
+    toast.success(response.message);
+  };
+
   return (
     <div className="profile">
       <ProfileHeader user={user} pageName={"profile"} />
 
       <div className="feed">
         <div className="achievements">
-          <h2>Achieviements</h2>
+          <h2>Highlights</h2>
           <div className="achievements-container">
             <div className="placeholder"></div>
             <div className="placeholder"></div>
@@ -112,7 +133,7 @@ const ProfileFeed = ({ user }) => {
           </div>
           {showPosts && <Posts posts={posts} />}
           <div className="feedbacksContainer">
-            {showFeedbacks && (
+            {showFeedbacks && id !== user?._id && (
               <button
                 className="btn-add-feedback"
                 onClick={() => setShowNewFeedback(true)}
@@ -138,22 +159,42 @@ const ProfileFeed = ({ user }) => {
               />
             )}
           </div>
-          {showProjectAccomplishments && (
-            <div className="project-accomplishments">
+
+          <div className="project-accomplishments">
+            {showProjectAccomplishments && id === user?._id && (
               <button
                 className="btn-add-project-acc"
                 onClick={() => setShowNewProjectAcc(true)}
               >
                 <h4>Add a Project Accomplishment</h4>
               </button>
-              {/* show rest of accomplishments here */}
-            </div>
-          )}
-          {showNewProjectAcc && (
-            <AddProjectAccomplishmentsPopUp
-              toggleModal={setShowNewProjectAcc}
-            />
-          )}
+            )}
+            {showProjectAccomplishments && (
+              <div className="accomplishments">
+                {accomplishments?.length ? (
+                  accomplishments.map((accomplishment, index) => (
+                    <p
+                      style={{
+                        background: "lightgrey",
+                        padding: "10px",
+                      }}
+                    >
+                      Project Name : {accomplishment?.projectName} {"  "}
+                      Project Location : {accomplishment?.projectLocation}
+                    </p>
+                  ))
+                ) : (
+                  <h4>No accomplishments yet.</h4>
+                )}
+              </div>
+            )}
+            {showNewProjectAcc && (
+              <AddProjectAccomplishmentsPopUp
+                toggleModal={setShowNewProjectAcc}
+                onSubmit={submitNewAccomplishment}
+              />
+            )}
+          </div>
         </div>
       </div>
     </div>
