@@ -99,23 +99,25 @@ const SignUp = () => {
     }
   };
   useEffect(() => {
-    if (window.google && window.google.accounts) {
-      window.google.accounts.id.initialize({
-        client_id:
-          "363281034776-lth0a4mj6bjjatfnaa7q5akbj2tr7s7h.apps.googleusercontent.com",
-        callback: handleGoogleCallback,
-      });
-      window.google.accounts.id.renderButton(
-        document.getElementById("googlesignin"),
-        {
-          theme: "filled_blue",
-          shape: "circle",
-          ux_mode: "popup",
-          text: "continue_with",
-          size: "large",
-        }
-      );
-    }
+    window.onload = function () {
+      if (window.google && window.google.accounts) {
+        window.google.accounts.id.initialize({
+          client_id:
+            "363281034776-lth0a4mj6bjjatfnaa7q5akbj2tr7s7h.apps.googleusercontent.com",
+          callback: handleGoogleCallback,
+        });
+        window.google.accounts.id.renderButton(
+          document.getElementById("googlesignin"),
+          {
+            theme: "filled_blue",
+            shape: "circle",
+            ux_mode: "popup",
+            text: "continue_with",
+            size: "large",
+          }
+        );
+      }
+    };
     // const getLocation = async () => {
     //   try {
     //     const { data } = await axios.get("https://ipapi.co/json/", {
