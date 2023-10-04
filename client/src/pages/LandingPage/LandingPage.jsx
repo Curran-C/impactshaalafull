@@ -140,10 +140,10 @@ const LandingPage = () => {
             </div>
             <div className="textContainer">
               <div>
-                Impactshaala was founded by Pratap Sonkar in the year 2022, who
+                {/* Impactshaala was founded by Pratap Sonkar in the year 2022, who
                 saw the need for a more inclusive and responsive education
                 system that could support the development of a stronger and more
-                equitable society
+                equitable society */}
                 <h2>Our Purpose</h2>
                 <p>
                   In 2022, we founded Impactshaala with a simple yet profound

@@ -180,8 +180,7 @@ const SignUp = () => {
     e.preventDefault();
     if (newUser?.cpassword) {
       if (newUser.password !== newUser.cpassword) {
-        // alert("Password Missmatch");
-        setPasswordMissmatch("Password Missmatch");
+        setPasswordMissmatch("Password Mismatch");
       } else {
         setSignInState(false);
         setSignUpState(false);
@@ -198,17 +197,17 @@ const SignUp = () => {
     e.preventDefault();
     const taglineWordLength = newUser.tagline.split(/\s+/).length;
     const descriptionWordLength = newUser.description.split(/\s+/).length;
-    if (taglineWordLength < 15) {
-      setTaglineWordLengthWarning("Tag line should be minimum 15 words");
+    if (taglineWordLength > 15) {
+      setTaglineWordLengthWarning("Tag line should be maximum 15 words");
     } else {
       setTaglineWordLengthWarning("");
     }
-    if (descriptionWordLength < 50) {
-      setDescriptionWordLengthWarning("Description should be minimum 50 words");
+    if (descriptionWordLength > 50) {
+      setDescriptionWordLengthWarning("Description should be maximum 50 words");
     } else {
       setDescriptionWordLengthWarning("");
     }
-    if (taglineWordLength >= 15 && descriptionWordLength >= 50) {
+    if (taglineWordLength <= 15 && descriptionWordLength <= 50) {
       setCompanyDetailsState(false);
       setLocationDetailsState(true);
     }
@@ -513,13 +512,10 @@ const SignUp = () => {
         </div>
         <div className="or">
           <hr />
-          <p>Or</p>
+          <p>OR</p>
           <hr />
         </div>
-        <div className="warning-message">
-          <p>{passwordMissmatch}</p>
-        </div>
-        <div className="inputs">
+        <div className="inputs ">
           <input
             onChange={(e) => handleSignUpInputChange(e)}
             required
@@ -553,7 +549,9 @@ const SignUp = () => {
             id=""
           />
         </div>
-
+        <div className="warning-message">
+          <p>{passwordMissmatch}</p>
+        </div>
         <button type="submit">Sign Up</button>
       </form>
 
@@ -573,17 +571,12 @@ const SignUp = () => {
 
   const companyDetails = (
     <div className="companyDetails">
-      <Backbutton
-        trueState={setSignUpState}
-        falseState={setCompanyDetailsState}
-      />
       <form className="signup" onSubmit={handleCompanySubmit}>
+        <Backbutton
+          trueState={setSignUpState}
+          falseState={setCompanyDetailsState}
+        />
         <h2>{newUser?.stakeholder} Details</h2>
-        <div className="warning-message">
-          <p>{descriptionWordLengthWarning}</p>
-          <p>{taglineWordLengthWarning}</p>
-        </div>
-
         <div className="inputs">
           <input
             onChange={(e) => handleSignUpInputChange(e)}
@@ -604,9 +597,14 @@ const SignUp = () => {
             placeholder="Description"
             name="description"
             onChange={(e) => handleSignUpInputChange(e)}
+            required
+            rows={3}
           />
+          <div className="warning-message">
+            <p>{taglineWordLengthWarning}</p>
+            <p>{descriptionWordLengthWarning}</p>
+          </div>
         </div>
-
         <button type="submit">Next</button>
       </form>
 
