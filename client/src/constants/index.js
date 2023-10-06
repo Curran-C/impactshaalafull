@@ -162,6 +162,37 @@ const citizenOptions = [
 
 const sectors = ["Private", "Public"];
 
+const yesNo = ["Yes", "No"];
+
+const focusAreaNGO = [
+  "SDG 1 - No Poverty",
+  "SDG 2 - Zero Hunger",
+  "SDG 3 - Good Health and Well-being",
+  "SDG 4 - Quality Education",
+  "SDG 5 - Gender Equality",
+  "SDG 6 - Clean Water and Sanitation",
+  "SDG 7 - Affordable and Clean Energy",
+  "SDG 8 - Decent Work and Economic Growth",
+  "SDG 9 - Industry, Innovation, and Infrastructure",
+  "SDG 10 - Reduced Inequalities",
+  "SDG 11 - Sustainable Cities and Communities",
+  "SDG 12 - Responsible Consumption and Production",
+  "SDG 13 - Climate Action",
+  "SDG 14 - Life Below Water",
+  "SDG 15 - Life On Land",
+  "SDG 16 - Peace, Justice, and Strong Institutions",
+  "SDG 17 - Partnerships for the Goals Other",
+];
+
+const expInYears = [
+  "0-2 years",
+  "3-5 years",
+  "6-10 years",
+  "11-15 years",
+  "16-20 years",
+  "20+ years",
+];
+
 export {
   text1,
   text2,
@@ -178,4 +209,7 @@ export {
   ngoOptions,
   citizenOptions,
   sectors,
+  yesNo,
+  focusAreaNGO,
+  expInYears,
 };

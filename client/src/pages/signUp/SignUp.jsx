@@ -9,8 +9,11 @@ import {
   citizenOptions,
   corporateOptions,
   educationalOptions,
+  expInYears,
+  focusAreaNGO,
   ngoOptions,
   sectors,
+  yesNo,
 } from "../../constants";
 import Backbutton from "../../components/Backbutton/Backbutton";
 import { tagsImage } from "../../assets/signUp";
@@ -340,8 +343,6 @@ const SignUp = () => {
     });
   };
 
-  // constants
-
   // signin
   const signIn = (
     <div className="signinpage">
@@ -438,52 +439,62 @@ const SignUp = () => {
           required
           onChange={(e) => handleSignUpInputChange(e)}
           className="dropdown"
-          name="sector"
-          id=""
-        >
-          <option value="" disabled selected hidden>
-            Type {/*//!Previously known as sectors */}
-          </option>
-          {sectors.map((sector) => (
-            <option key={sector} value={sector}>
-              {sector}
-            </option>
-          ))}
-        </select>
-        <select
-          required
-          onChange={(e) => handleSignUpInputChange(e)}
-          className="dropdown"
           name="type"
           id=""
         >
-          <option value="" disabled selected hidden>
-            Sub-type {/*//!Previously known as type */}
-          </option>
-          {newUser?.stakeholder === "Educational Institution" &&
-            educationalOptions.map((option) => (
-              <option key={option} value={option}>
-                {option}
+          {!newUser?.stakeholder && (
+            <option value="" disabled selected hidden>
+              Choose Stakeholder
+            </option>
+          )}
+          {newUser?.stakeholder === "Educational Institution" && (
+            <>
+              <option value="" disabled selected hidden>
+                Select your institution's type
               </option>
-            ))}
-          {newUser?.stakeholder === "NGO" &&
-            ngoOptions.map((option) => (
-              <option key={option} value={option}>
-                {option}
+              {educationalOptions.map((option) => (
+                <option key={option} value={option}>
+                  {option}
+                </option>
+              ))}
+            </>
+          )}
+          {newUser?.stakeholder === "NGO" && (
+            <>
+              <option value="" disabled selected hidden>
+                Select your NGO type
               </option>
-            ))}
-          {newUser?.stakeholder === "Corporate" &&
-            corporateOptions.map((option) => (
-              <option key={option} value={option}>
-                {option}
+              {ngoOptions.map((option) => (
+                <option key={option} value={option}>
+                  {option}
+                </option>
+              ))}
+            </>
+          )}
+          {newUser?.stakeholder === "Corporate" && (
+            <>
+              <option value="" disabled selected hidden>
+                Select your Industry
               </option>
-            ))}
-          {newUser?.stakeholder === "Working Professional" &&
-            citizenOptions.map((option) => (
-              <option key={option} value={option}>
-                {option}
+              {corporateOptions.map((option) => (
+                <option key={option} value={option}>
+                  {option}
+                </option>
+              ))}
+            </>
+          )}
+          {newUser?.stakeholder === "Working Professional" && (
+            <>
+              <option value="" disabled selected hidden>
+                Select your Profession
               </option>
-            ))}
+              {citizenOptions.map((option) => (
+                <option key={option} value={option}>
+                  {option}
+                </option>
+              ))}
+            </>
+          )}
         </select>
         {newUser?.type === "Other" &&
           newUser?.stakeholder === "Working Professional" && (
@@ -496,6 +507,67 @@ const SignUp = () => {
               required
             />
           )}
+        <select
+          required
+          onChange={(e) => handleSignUpInputChange(e)}
+          className="dropdown"
+          name="sector"
+          id=""
+        >
+          {!newUser?.stakeholder && (
+            <option value="" disabled selected hidden>
+              Choose Stakeholder
+            </option>
+          )}
+          {newUser?.stakeholder === "Educational Institution" && (
+            <>
+              <option value="" disabled selected hidden>
+                Select your institution's nature
+              </option>
+              {sectors.map((option) => (
+                <option key={option} value={option}>
+                  {option}
+                </option>
+              ))}
+            </>
+          )}
+          {newUser?.stakeholder === "NGO" && (
+            <>
+              <option value="" disabled selected hidden>
+                Select your focus area
+              </option>
+              {focusAreaNGO.map((option) => (
+                <option key={option} value={option}>
+                  {option}
+                </option>
+              ))}
+            </>
+          )}
+          {newUser?.stakeholder === "Corporate" && (
+            <>
+              <option value="" disabled selected hidden>
+                CSR department ?
+              </option>
+              {yesNo.map((option) => (
+                <option key={option} value={option}>
+                  {option}
+                </option>
+              ))}
+            </>
+          )}
+          {newUser?.stakeholder === "Working Professional" && (
+            <>
+              <option value="" disabled selected hidden>
+                Years of experience
+              </option>
+              {expInYears.map((option) => (
+                <option key={option} value={option}>
+                  {option}
+                </option>
+              ))}
+            </>
+          )}
+        </select>
         <button type="submit">Next</button>
       </form>
     </div>
