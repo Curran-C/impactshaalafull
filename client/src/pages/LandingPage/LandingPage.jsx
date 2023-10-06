@@ -13,17 +13,12 @@ import Card from "../../components/Card/Card";
 import {
   coreValues,
   beneficiaries,
-  corporates,
-  educationalInstitutions,
-  socialOrgos,
-  students,
   text1,
   text2,
   text3,
   text4,
 } from "../../constants";
 import PartnerCard from "../../components/PartnerCard/PartnerCard";
-import { Carousel } from "react-responsive-carousel";
 import Header from "../../components/Header/Header";
 import Footer from "../../components/Footer/Footer";
 import TextAndImage from "../../components/TextAndImage/TextAndImage";
@@ -51,11 +46,48 @@ const LandingPage = () => {
             </span>
           </div>
           <div className="right">
-            <img src={heroImage} alt="" />
+            <img src={heroImage} alt="hero" />
           </div>
         </div>
       </div>
 
+      {/* How impactshaala Works */}
+      <section className="how-works">
+        <div className="title-container">
+          <Title text="How Impactshaala works ?" />
+        </div>
+        <div className="bullets">
+          <div className="bullet">
+            <h3>Sign Up and Profile Creation</h3>
+            <p>
+              Get started by signing up and creating a detailed profile to
+              showcase your expertise and interests.
+            </p>
+          </div>
+          <div className="bullet">
+            <h3>Explore the Platform</h3>
+            <p>
+              Discover a diverse ecosystem of resources and opportunities
+              tailored to your needs and interests.
+            </p>
+          </div>
+          <div className="bullet">
+            <h3>Connect Seamlessly</h3>
+            <p>
+              Connect and collaborate with various stakeholders. Educational
+              institutions can partner with corporations, NGOs, and
+              professionals.
+            </p>
+          </div>
+          <div className="bullet">
+            <h3>Earn Credits and Recognition</h3>
+            <p>
+              Accumulate credits for your contributions and gain recognition for
+              your impact.
+            </p>
+          </div>
+        </div>
+      </section>
       {/* core values */}
       <div className="coreValues">
         <div className="coreValuesContainer">
@@ -63,9 +95,8 @@ const LandingPage = () => {
           <div className="titleContainer">
             <Title text="Core Values" />
             <span className="subTitle">
-              <h4>Collaboration</h4>
+              {/* <h4>Collaboration</h4>
               <p>
-                {" "}
                 We believe in the power of working together, breaking down
                 silos, and fostering connections that transcend boundaries
               </p>
@@ -80,7 +111,7 @@ const LandingPage = () => {
                 We are driven by a commitment to creating change that endures,
                 leaving a positive mark on society that extends far into the
                 future
-              </p>
+              </p> */}
             </span>
           </div>
 
@@ -144,16 +175,16 @@ const LandingPage = () => {
                 saw the need for a more inclusive and responsive education
                 system that could support the development of a stronger and more
                 equitable society */}
-                <h2>Our Purpose</h2>
                 <p>
                   In 2022, we founded Impactshaala with a simple yet profound
                   mission: "Bringing people together for the greater and common
                   good." We are passionate believers in the power of
                   collaboration as the solution to society's challenges. We are
                   not just building a company, We are attempting to build a good
-                  and better world through our initative.{" "}
+                  and better world through our initative.
                 </p>
-                <p>
+                {/* <h2>Our Purpose</h2> */}
+                {/* <p>
                   Our purpose is to serve as a catalyst for positive change. We
                   strive to create a world where collaboration knows no bounds,
                   where educational knowledge and resources are shared
@@ -170,7 +201,7 @@ const LandingPage = () => {
                   To create a world of limitless collaboration and equitable
                   education by empowering individuals, organizations and
                   communities to create a lasting societal impact.
-                </p>
+                </p> */}
                 <p className="highlighted-about-us">
                   We are more than just a platform; we are a catalyst for
                   change, a hub for collaboration, and a gateway to a world of
@@ -181,9 +212,27 @@ const LandingPage = () => {
           </div>
 
           <div className="threequestions">
-            <Question question={"What are we?"} position={"start"} />
-            <Question question={"Who are we?"} position={"middle"} />
-            <Question question={"How?"} position={"end"} />
+            <Question
+              question={"Our Purpose"}
+              description="To serve as a catalyst for positive change. We
+                  strive to create a world where collaboration knows no bounds,
+                  where educational knowledge and resources are shared
+                  generously, and where every individual, community, and
+                  organization is empowered to make a lasting impact on society.
+                  We are dedicated to nurturing a culture of responsibility,
+                  empathy, and innovation, to build a brighter, more equitable
+                  future for all."
+            />
+            <Question
+              question={"Our Vision"}
+              description="To create a world with less problems"
+            />
+            <Question
+              question={"Our mission"}
+              description="To create a world of limitless collaboration and equitable
+                  education by empowering individuals, organizations and
+                  communities to create a lasting societal impact."
+            />
           </div>
         </div>
       </div>
@@ -192,21 +241,24 @@ const LandingPage = () => {
       <div className="beneficiaries" id="benificiariesandpartners">
         <div className="beneficiariesContainer">
           <div className="titleContainer">
-            <Title text="Beneficiaries" />
-            <div className="textContainer">
+            <Title text="Key benefits for stakeholders on our platform" />
+            {/* <div className="textContainer">
               <span>
                 Lorem ipsum dolor sit amet consectetur,Qorem ipsum dolor sit
                 amet consectetur
               </span>
-            </div>
+            </div> */}
           </div>
 
           {/* checks */}
           <div className="benificiaryNamesContainer">
             {beneficiaries.map((beneficiary) => (
               <div className="beneficiaryNames" key={beneficiary}>
-                <img src={tick} alt="" />
-                <span>{beneficiary}</span>
+                <div className="title">
+                  <img src={tick} alt="tick" />
+                  <span>{beneficiary.title}</span>
+                </div>
+                <PartnerCard list={beneficiary.points} />
               </div>
             ))}
           </div>
@@ -214,7 +266,7 @@ const LandingPage = () => {
       </div>
 
       {/* partners */}
-      <div className="partners">
+      {/* <div className="partners">
         <div className="partnersContainer">
           <div className="titleContainer">
             <div className="titleWrapper">
@@ -233,7 +285,7 @@ const LandingPage = () => {
             <PartnerCard list={socialOrgos} title="Social Organisations" />
           </div>
         </div>
-      </div>
+      </div> */}
 
       {/* blog */}
       <div className="blog" id="blog">
@@ -247,7 +299,7 @@ const LandingPage = () => {
               </div>
             </div>
           </div>
-          <div className="carouselContainer">
+          {/* <div className="carouselContainer">
             <div className="carouselWrapper">
               <Carousel className="carousel" autoPlay>
                 <div>
@@ -261,7 +313,7 @@ const LandingPage = () => {
                 </div>
               </Carousel>
             </div>
-          </div>
+          </div> */}
         </div>
       </div>
 

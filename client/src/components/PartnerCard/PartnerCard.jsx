@@ -1,5 +1,3 @@
-import React from "react";
-
 import "./partnerCard.scss";
 
 const PartnerCard = (props) => {
@@ -10,9 +8,11 @@ const PartnerCard = (props) => {
           <span key={listItem}>{listItem}</span>
         ))}
       </div>
-      <div className="cardTitle">
-        <span>{props.title}</span>
-      </div>
+      {props.title && (
+        <div className="cardTitle">
+          <span>{props.title}</span>
+        </div>
+      )}
     </div>
   );
 };

@@ -10,50 +10,84 @@ const text4 =
   "To provide equal access to quality education, resources and opportunities to students from all background through their educational institutions.";
 
 const coreValues = [
+  // {
+  //   img: corevalue1,
+  //   title: "Bridging Educational Skill Gap",
+  //   text: "Lorem ipsum dolor sit amet consectetur,Qorem ipsum dolor sit amet consectetur",
+  // },
+  // {
+  //   img: corevalue2,
+  //   title: "Youth Empowerment",
+  //   text: "Lorem ipsum dolor sit amet consectetur,Qorem ipsum dolor sit amet consectetur",
+  // },
+  // {
+  //   img: corevalue3,
+  //   title: "Individual Social Responsibility",
+  //   text: "Lorem ipsum dolor sit amet consectetur,Qorem ipsum dolor sit amet consectetur",
+  // },
   {
     img: corevalue1,
-    title: "Bridging Educational Skill Gap",
-    text: "Lorem ipsum dolor sit amet consectetur,Qorem ipsum dolor sit amet consectetur",
+    title: "Collaboration",
+    text: "We believe in the power of working together, breaking down silos, and fostering connections that transcend boundaries",
   },
   {
     img: corevalue2,
-    title: "Youth Empowerment",
-    text: "Lorem ipsum dolor sit amet consectetur,Qorem ipsum dolor sit amet consectetur",
+    title: "Empathy",
+    text: "We approach our work with empathy, understanding the diverse needs and perspectives of the people, organizations and communities we serve.",
   },
   {
     img: corevalue3,
-    title: "Individual Social Responsibility",
-    text: "Lorem ipsum dolor sit amet consectetur,Qorem ipsum dolor sit amet consectetur",
+    title: "Lasting Impact",
+    text: "We are driven by a commitment to creating change that endures, leaving a positive mark on society that extends far into the future",
   },
 ];
 
-const beneficiaries = [
-  "Educational Institutions",
-  "Social Organisation",
-  "Students",
-  "Local Citizens",
-  "Corporates",
-];
-
 const educationalInstitutions = [
-  "Quality Education",
-  "Employability Skills",
-  "Individual Learning",
-  "Real-Time Learning",
+  "Exporsure-Based Learning for Students",
+  "Quality Eduacation Support",
+  "Basic Educational Resources",
+  "Institutional Growth Assistance",
+  "Reputation Enhancement",
 ];
 
 const students = [
-  "Life Readiness",
-  "Social Awareness",
-  "Fresher Job Opportunities",
-  "Individual Social Responsibility",
+  "Community Service Opportunities",
+  "Career Exploration",
+  "Passion-Based Learning",
+  "Access to Skill Development Resources",
+  "Performance Showcase and Progress Tracking",
 ];
 
 const corporates = [
-  "Brand Promotion",
-  "Educational Impact",
-  "CSR Project Assistance",
-  "Skilled Human Resource",
+  "Employee Volunteering Programs",
+  "Stakeholder Relationship Building",
+  "Reputation Enhancement",
+  "CSR Project Support",
+  "Skilled Workforce Recruitment",
+];
+
+const ngos = [
+  "Enhanced Advocacy Reach",
+  "NGO Branding Support",
+  "Corporate Partnerships",
+  "Resource Mobilization Assistance",
+  "Volunteer Engagement Opportunities",
+];
+
+const citizenPartners = [
+  "Leadership Roles in Problem Solving",
+  "Civic Engagement Initiatives",
+  "Expertise Contribution",
+  "Networking for Social Impact",
+  "Credibility Score Enhancement",
+];
+
+const beneficiaries = [
+  { title: "Educational Institutions", points: educationalInstitutions },
+  { title: "Students", points: students },
+  { title: "Corporations", points: corporates },
+  { title: "NGOs", points: ngos },
+  { title: " Citizen Partners", points: citizenPartners },
 ];
 
 const socialOrgos = [
@@ -112,7 +146,7 @@ const ngoOptions = [
   "Advocacy NGO",
   "Service-oriented NGO",
   "Participatory NGO",
-  "Empowering NGO"
+  "Empowering NGO",
 ];
 
 const citizenOptions = [

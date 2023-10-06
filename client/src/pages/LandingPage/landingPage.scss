@@ -17,7 +17,7 @@
   }
   .rightblob2 {
     width: 800px;
-    top: 5500px;
+    top: 4500px;
   }
   .hero {
     width: 100%;
@@ -115,6 +115,40 @@
     }
   }
 
+  .how-works {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    margin-top: 30px;
+    .title-container {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      margin-bottom: 10px;
+      .titleWrapper {
+        margin: 0 auto;
+      }
+    }
+
+    .bullets {
+      display: flex;
+      flex-direction: column;
+      width: 75%;
+      margin: 0 auto;
+      gap: 20px;
+
+      @media (max-width: 768px) {
+        width: 90%;
+      }
+      .bullet {
+        h3,
+        p {
+          margin: 0;
+        }
+      }
+    }
+  }
+
   .beforeAboutUs {
     width: 100%;
     display: flex;
@@ -161,15 +195,20 @@
       }
       .threequestions {
         display: flex;
-        flex-direction: column;
         margin: 40px 50px 80px 50px;
-        gap: 50px;
+        justify-content: center;
+        gap: 30px;
+
+        @media (max-width: 768px) {
+          flex-direction: column;
+        }
       }
     }
   }
 
   .beneficiaries {
     width: 100%;
+
     .beneficiariesContainer {
       display: flex;
       flex-direction: column;
@@ -190,21 +229,51 @@
         }
       }
       .benificiaryNamesContainer {
-        margin-top: 50px;
         display: flex;
-        width: 600px;
-        flex-direction: column;
+        flex-wrap: wrap;
+        margin-right: -15px;
+        margin-left: -15px;
+        justify-content: center;
+        // gap: 20px;
+
+        & > * {
+          padding-right: 15px;
+          padding-left: 15px;
+          box-sizing: border-box;
+        }
+
+        @media (max-width: 420px) {
+          flex-direction: column;
+          margin: 0;
+        }
         .beneficiaryNames {
-          display: flex;
-          gap: 15px;
-          align-items: center;
-          margin-top: 10px;
-          // justify-content: center;
-          img {
-            height: 40px;
+          flex: 0 0 calc(33.3333% - 15px); /* Adjust the width as needed */
+          max-width: calc(33.3333% - 15px); /* Adjust the max-width as needed */
+          margin-right: 15px; /* Adjust the margin as needed */
+          box-sizing: border-box;
+
+          @media (max-width: 992px) {
+            flex: 0 0 100%;
+            max-width: 100%;
+            margin-right: 0;
           }
-          span {
-            font-size: 18px;
+
+          display: flex;
+          flex-direction: column;
+          gap: 15px;
+          padding: 20px;
+          .title {
+            display: flex;
+            gap: 15px;
+            align-items: center;
+            margin-top: 10px;
+            // justify-content: center;
+            img {
+              height: 40px;
+            }
+            span {
+              font-size: 18px;
+            }
           }
         }
       }

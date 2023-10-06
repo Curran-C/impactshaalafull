@@ -4,7 +4,8 @@ html {
   position: relative;
 }
 
-body,#root {
+body,
+#root {
   font-family: "Poppins", sans-serif;
   color: #2f2d38;
   overflow-x: hidden;
@@ -61,4 +62,9 @@ h3:hover {
 /* Handle on hover */
 ::-webkit-scrollbar-thumb:hover {
   background: #555;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
 }
