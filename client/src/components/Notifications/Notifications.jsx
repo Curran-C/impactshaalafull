@@ -2,12 +2,13 @@ import { useEffect, useState } from "react";
 import { corporate, nopfp } from "../../assets/profile";
 import Tile from "../Tile/Tile";
 import "./Notifications.scss";
-import { useParams, useNavigate } from "react-router-dom";
+import { useNavigate, useOutletContext } from "react-router-dom";
 import axios from "axios";
 
 const Notifications = () => {
+  const { user } = useOutletContext();
+  const id = user?._id;
   const [highlighted, setHighlighted] = useState(true);
-  const { id } = useParams();
   const navigate = useNavigate();
   console.log("Id", id);
   const [notifications, setNotifications] = useState([]);

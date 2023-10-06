@@ -253,7 +253,8 @@ const SignUp = () => {
         sameSite: "Lax",
       });
       res.data.info && setIsLoading(true);
-      navigate(`/home/${res.data.info._id}`);
+      localStorage.setItem("IsUser", JSON.stringify(res.data.info));
+      navigate(`/home`);
     } catch (err) {
       console.log(err);
     }

@@ -28,6 +28,7 @@ import {
 } from "./Admin/pages";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import PrivateRoutes from "./utils/PrivateRoutes/PrivateRoutes";
 
 function App() {
   return (
@@ -35,16 +36,22 @@ function App() {
       <Routes>
         <Route path="/" element={<LandingPage />} />
         <Route path="/signup" element={<SignUp />} />
-        <Route path="/profile/:id" element={<Profile />} />
         <Route path="/googlesignup/:id" element={<GoogleSignUp />} />
-        <Route path="/home/:id" element={<Home />} />
-        <Route path="/savedPosts/:id" element={<SavedPosts />} />
-        <Route path="/chats/:id" element={<Chats />} />
-        <Route path="/settings/:id" element={<Settings />} />
-        <Route path="/collaborations/:id" element={<Collaborations />} />
         <Route path="/aboutus/" element={<AboutUs />} />
         <Route path="/terms-conditions/" element={<TC />} />
-        <Route path="/edit/:id" element={<EditProfile />} />
+
+        <Route element={<PrivateRoutes />}>
+          <Route path="/home" element={<Home />} />
+          <Route path="/chats" element={<Chats />} />
+          <Route path="/profile/edit" element={<EditProfile />} />
+
+          {/* Pending Pages below */}
+          <Route path="/profile/:id" element={<Profile />} />
+          <Route path="/savedPosts/:id" element={<SavedPosts />} />
+          <Route path="/settings/:id" element={<Settings />} />
+          <Route path="/collaborations/:id" element={<Collaborations />} />
+        </Route>
+
         <Route path="/admin" element={<Login />} />
         <Route path="/admin/dashboard" element={<Dashboard />} />
         <Route path="/admin/collabdetails" element={<CollabDetails />} />

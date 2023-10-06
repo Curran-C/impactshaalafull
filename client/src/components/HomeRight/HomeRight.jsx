@@ -3,18 +3,19 @@ import Preferences from "../Preferences/Preferences";
 import ProfileCard from "../ProfileCard/ProfileCard";
 import "./homeRight.scss";
 import ContactUs from "../ContactUs/ContactUs";
-import CreatePost from "../CreatePost/CreatePost";
 import Collab from "../Collab/Collab";
+import { useOutletContext } from "react-router-dom";
 
-const HomeRight = ({ user }) => {
+const HomeRight = () => {
   const [showEmailForm, setShowEmailForm] = useState(false);
+  const { user } = useOutletContext();
 
   return (
     <div className="homeRight">
       {showEmailForm && (
         <ContactUs email={user?.email} onCancel={setShowEmailForm} />
       )}
-      {/* <ProfileCard user={user} /> */}
+      <ProfileCard />
       <Preferences />
       <Collab />
       <div className="getInTouch">

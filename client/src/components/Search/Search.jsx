@@ -7,7 +7,7 @@ import { useEffect, useRef, useState } from "react";
 import axios from "axios";
 import SearchResults from "../SearchResults/SearchResults";
 import Notifications from "../Notifications/Notifications";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useOutletContext } from "react-router-dom";
 
 const Search = ({ userName }) => {
   const [search, setSearch] = useState("");
@@ -15,20 +15,22 @@ const Search = ({ userName }) => {
   const [shownotifications, setShownotifications] = useState(false);
   const [allUsers, setAllUsers] = useState();
   const [notifCount, setNotifCount] = useState(100);
+  const { user } = useOutletContext();
 
   const ref = useRef();
   const navigate = useNavigate();
-  const { id } = useParams();
 
   useEffect(() => {
     const fetchNotificationCount = async () => {
       try {
         const response = await axios.get(
-          `${import.meta.env.VITE_BASE_URL}/api/notification/getCount/${id}`
+          `${import.meta.env.VITE_BASE_URL}/api/notification/getCount/${
+            user?._id
+          }`
         );
-        if(response.data.count >= 100) setNotifCount("99+");
-        else setNotifCount(response.data.count);  
-       } catch (err) {
+        if (response.data.count >= 100) setNotifCount("99+");
+        else setNotifCount(response.data.count);
+      } catch (err) {
         console.error(err);
       }
     };
@@ -90,7 +92,7 @@ const Search = ({ userName }) => {
           />
           <div className="notifcount">{notifCount}</div>
           <img
-            onClick={() => navigate(`/chats/${id}`)}
+            onClick={() => navigate(`/chats/${user?._id}`)}
             style={{ cursor: "pointer" }}
             src={chat}
             alt="chat"

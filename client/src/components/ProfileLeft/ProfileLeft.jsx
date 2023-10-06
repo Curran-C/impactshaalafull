@@ -1,7 +1,6 @@
 import "./profileLeft.scss";
 
 import ProfileLinks from "../ProfileLinks/ProfileLinks";
-import axios from "axios";
 import CreatePost from "../CreatePost/CreatePost";
 
 import {
@@ -15,24 +14,20 @@ import {
 } from "../../assets/profile";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
+import Cookies from "js-cookie";
 
 // functional component
 const ProfileLeft = ({ page }) => {
-  // states
   const navigate = useNavigate();
   const [showCreatePost, setShowCreatePost] = useState(false);
 
   // functions
   const handleLogout = async () => {
-    try {
-      const res = await axios.get(
-        `${import.meta.env.VITE_BASE_URL}/api/company/logout`
-      );
-      navigate("/");
-    } catch (err) {
-      console.log(err);
-    }
+    localStorage.removeItem("IsUser");
+    Cookies.remove("accessToken");
+    navigate("/");
   };
+
   const handleCancel = (prop) => {
     setShowCreatePost(prop);
   };
@@ -51,6 +46,7 @@ const ProfileLeft = ({ page }) => {
         highlighted={page === "home" ? true : false}
         img={home}
         linkText={"Home"}
+        to="/home"
       />
       <ProfileLinks
         highlighted={page === "profile" ? true : false}

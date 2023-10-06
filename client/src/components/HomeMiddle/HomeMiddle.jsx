@@ -3,29 +3,25 @@ import "./homeMiddle.scss";
 import Search from "../Search/Search";
 import Posts from "../Posts/Posts";
 import Collab from "../Collab/Collab";
-import { useContext, useEffect, useState } from "react";
-import axios from "axios";
-import { UserContext } from "../../pages/Home/Home";
+import { useEffect, useState } from "react";
+import { useOutletContext } from "react-router-dom";
+import { getAllPostsAPI } from "../../api/post";
 
 const HomeMiddle = () => {
   const [posts, setPosts] = useState([]);
-  const user = useContext(UserContext);
+  const { user } = useOutletContext();
+
+  const fetchPosts = async () => {
+    try {
+      const data = await getAllPostsAPI();
+      setPosts(data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   useEffect(() => {
-    const getPosts = async () => {
-      try {
-        const res = await axios.get(
-          `${import.meta.env.VITE_BASE_URL}/api/post/getposts`,
-          {
-            withCredentials: true,
-          }
-        );
-        setPosts(res.data);
-      } catch (err) {
-        console.log(err);
-      }
-    };
-    getPosts();
+    fetchPosts();
   }, []);
 
   return (

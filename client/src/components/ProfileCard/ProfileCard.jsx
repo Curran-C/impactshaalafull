@@ -1,22 +1,18 @@
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useOutletContext } from "react-router-dom";
 import { edit } from "../../assets/home";
 import { corporate } from "../../assets/profile";
 import Tile from "../Tile/Tile";
 import "./profileCard.scss";
-import { useContext, useEffect, useState } from "react";
-import axios from "axios";
-import { UserContext } from "../../pages/Home/Home";
 
-const ProfileCard = ({ user }) => {
-  // states
-
+const ProfileCard = () => {
   const navigate = useNavigate();
+  const { user } = useOutletContext();
 
   return (
     <div className="profileCard">
       <div className="header">
         <h2>Profile</h2>
-        <img src={edit} alt="" />
+        {/* <img src={edit} alt="" /> */}
       </div>
       <div className="profileInfo">
         <img className="profilepic" src={user?.pfp} alt="" />

@@ -1,9 +1,9 @@
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import "./profileLinks.scss";
 import { useEffect, useState } from "react";
 import jwtDecode from "jwt-decode";
 
-const ProfileLinks = ({ img, linkText, highlighted }) => {
+const ProfileLinks = ({ img, linkText, highlighted, to }) => {
   // states
   const navigate = useNavigate();
   const [accessToken, setAccessToken] = useState();
@@ -11,7 +11,6 @@ const ProfileLinks = ({ img, linkText, highlighted }) => {
 
   useEffect(() => {
     const cookie = document.cookie;
-    console.log(111, document.cookie);
     const cookies = cookie.split("; ");
     for (let i = 0; i < cookies.length; i++) {
       const cookie = cookies[i].split("=");
@@ -27,7 +26,7 @@ const ProfileLinks = ({ img, linkText, highlighted }) => {
   // return
   return (
     <div
-      onClick={() => navigate(`/${navLink}/${decodedToken.id}`)}
+      onClick={() => navigate(to ? to : `/${navLink}/${decodedToken.id}`)}
       className={`profileLinks ${highlighted ? "highlighted" : ""}`}
     >
       <img className="img" src={img} alt="" />

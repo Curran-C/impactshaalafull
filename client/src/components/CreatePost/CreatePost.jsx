@@ -1,41 +1,26 @@
-import { useContext, useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import axios from "axios";
-import { UserContext } from "../../pages/Home/Home";
 import "./createPost.scss";
 import { calender, clock, location } from "../../assets/createpost";
-import { useParams } from "react-router-dom";
+import { useOutletContext } from "react-router-dom";
 
 const CreatePost = ({ onCancel }) => {
   const date = new Date();
-  const { id } = useParams();
-  console.log("Hello", id);
+  const { user } = useOutletContext();
+  const id = user._id;
+  const userDetails = user;
+
   //states
   const [post, setPost] = useState({
     date: date.toISOString().slice(0, 10),
     time: date.toTimeString().slice(0, 5),
   });
-  const [userDetails, setUserDetails] = useState([]);
-  const userId = useContext(UserContext);
+
   const handleInputChange = (e) => {
     setPost((prev) => {
       return { ...prev, [e.target.name]: e.target.value };
     });
   };
-
-  useEffect(() => {
-    const getUserDetails = async () => {
-      try {
-        const res = await axios.get(
-          `${import.meta.env.VITE_BASE_URL}/api/company/getuser/${id}`
-        );
-        console.log(res.data);
-        setUserDetails(res.data);
-      } catch (err) {
-        console.log(err);
-      }
-    };
-    getUserDetails();
-  }, []);
 
   const handleCreatePost = async (e) => {
     e.preventDefault();
@@ -96,12 +81,24 @@ const CreatePost = ({ onCancel }) => {
                   id="timeline"
                   value={post?.timeline || ""}
                 >
-                  <option value="Micro Projects: (1 to 3 days)">Micro Projects: (1 to 3 days)</option>
-                  <option value="Week-Long Projects: (4 to 7 days)">Week-Long Projects: (4 to 7 days)</option>
-                  <option value="Month-long projects: (25 to 31 days)">Month-long projects: (25 to 31 days)</option>
-                  <option value="Quarterly Projects: (3 months)">Quarterly Projects: (3 months)</option>
-                  <option value="Semester Projects: (4 to 6 months)">Semester Projects: (4 to 6 months)</option>
-                  <option value="Year-Long Projects: (12 months)">Year-Long Projects: (12 months)</option>
+                  <option value="Micro Projects: (1 to 3 days)">
+                    Micro Projects: (1 to 3 days)
+                  </option>
+                  <option value="Week-Long Projects: (4 to 7 days)">
+                    Week-Long Projects: (4 to 7 days)
+                  </option>
+                  <option value="Month-long projects: (25 to 31 days)">
+                    Month-long projects: (25 to 31 days)
+                  </option>
+                  <option value="Quarterly Projects: (3 months)">
+                    Quarterly Projects: (3 months)
+                  </option>
+                  <option value="Semester Projects: (4 to 6 months)">
+                    Semester Projects: (4 to 6 months)
+                  </option>
+                  <option value="Year-Long Projects: (12 months)">
+                    Year-Long Projects: (12 months)
+                  </option>
                 </select>
               </div>
             </div>
