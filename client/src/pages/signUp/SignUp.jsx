@@ -19,6 +19,7 @@ import Backbutton from "../../components/Backbutton/Backbutton";
 import { tagsImage } from "../../assets/signUp";
 import { Circles } from "react-loader-spinner";
 import Cookies from "js-cookie";
+import ForgotPasswordPopup from "../../components/ForgotPasswordPopup/ForgotPasswordPopup";
 
 const SignUp = () => {
   // states
@@ -345,6 +346,7 @@ const SignUp = () => {
   };
 
   // signin
+  const [showForgotPasswordPopup, setShowForgotPasswordPopup] = useState(false);
   const signIn = (
     <div className="signinpage">
       <div className={`signupblue ${hidden ? "visible" : "hidden"}`}>
@@ -390,7 +392,12 @@ const SignUp = () => {
             id=""
           />
         </div>
-        <a>Forgot your password?</a>
+        <span className="forgot-password-container">
+          <p onClick={() => setShowForgotPasswordPopup((prev) => !prev)}>
+            Forgot your password ?
+          </p>
+          {showForgotPasswordPopup && <ForgotPasswordPopup showPopup={setShowForgotPasswordPopup}/>}
+        </span>
         <p className="signupToggle" onClick={handleSwitch}>
           Sign up?
         </p>
