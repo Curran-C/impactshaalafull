@@ -1,0 +1,22 @@
+.modal-footer {
+  .cancel_button {
+    border-radius: 131px;
+    border: 1px solid #fd5901;
+    color: #fd5901;
+    &:hover {
+      border: 1px solid #fd5901;
+      color: white;
+      background-color: #fd5901;
+    }
+  }
+  .submit_button {
+    border-radius: 131px;
+    color: white;
+    background-color: #fd5901;
+    &:hover {
+      border: 1px solid #fd5901;
+      background-color: white;
+      color: #fd5901;
+    }
+  }
+}
