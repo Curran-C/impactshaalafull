@@ -1,18 +1,18 @@
 .homePage {
+  box-sizing: border-box;
   display: flex;
-  flex-direction: row;
-  justify-content: space-around;
+  justify-content: center;
   gap: 20px;
-  width: 100%;
 
   background-color: #d9def2;
+
   .profileLeft {
-    // max-width: 200px;
     margin-top: 225px;
     .createpost {
       margin-top: 0;
     }
   }
+
   .left {
     // width: 17%;
   }
@@ -22,8 +22,23 @@
   }
   .right {
     width: auto;
-    // min-width: 250px;
     max-width: 420px;
     margin-top: 225px;
+  }
+}
+
+@media (min-width: 1025px) {
+  .homePage {
+    justify-content: center;
+
+    .left { 
+      width: 18vw;
+    }
+    .center {
+      width: 49vw;
+    }
+    .right {
+      width: 32vw;
+    }
   }
 }
