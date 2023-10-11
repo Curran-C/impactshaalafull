@@ -32,7 +32,7 @@ const SignUp = () => {
 
   const [signUpState, setSignUpState] = useState(false);
   const [stakeholderState, setStakeholderState] = useState(false);
-  const [locationDetailsState, setLocationDetailsState] = useState(true);
+  const [locationDetailsState, setLocationDetailsState] = useState(false);
   const [tagsState, setTagsState] = useState(false);
   const [companyDetailsState, setCompanyDetailsState] = useState(false);
 
