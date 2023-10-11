@@ -135,6 +135,7 @@ const corporateOptions = [
   "Sports",
   "Telecommunications",
   "Textiles and Apparales",
+  "Others",
 ];
 
 const ngoOptions = [
