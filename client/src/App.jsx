@@ -29,6 +29,7 @@ import {
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import PrivateRoutes from "./utils/PrivateRoutes/PrivateRoutes";
+import ResetPassword from "./pages/ResetPassword/ResetPassword";
 
 function App() {
   return (
@@ -37,6 +38,7 @@ function App() {
         <Route path="/" element={<LandingPage />} />
         <Route path="/signup" element={<SignUp />} />
         <Route path="/googlesignup/:id" element={<GoogleSignUp />} />
+        <Route path="/reset-password" element={<ResetPassword />} />
         <Route path="/aboutus/" element={<AboutUs />} />
         <Route path="/terms-conditions/" element={<TC />} />
 

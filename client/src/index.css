@@ -68,3 +68,11 @@ a {
   text-decoration: none;
   color: inherit;
 }
+
+.text-danger {
+  color: red;
+}
+
+.fs-12 {
+  font-size: 12px;
+}
