@@ -1,9 +1,11 @@
-import { Navigate, useLocation } from "react-router-dom";
+import { Navigate, useLocation, useNavigate } from "react-router-dom";
 import Footer from "../../components/Footer/Footer";
 import Header from "../../components/Header/Header";
 import Navbar from "../../components/Navbar/Navbar";
 import "./ResetPassword.scss";
 import { useState } from "react";
+import { resetPasswordAPI } from "../../api/company";
+import { toast } from "react-toastify";
 
 function ResetPassword() {
   const location = useLocation();
@@ -15,6 +17,7 @@ function ResetPassword() {
   });
   const [passwordError, setPasswordError] = useState(false);
   const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
 
   if (!token) return <Navigate to="/" replace />;
 
@@ -27,7 +30,7 @@ function ResetPassword() {
     });
   };
 
-  const handleOnSubmit = (e) => {
+  const handleOnSubmit = async (e) => {
     setLoading(true);
     setPasswordError(false);
     e.preventDefault();
@@ -37,7 +40,16 @@ function ResetPassword() {
     if (formData.newPassword.length < 8) {
       return setPasswordError("Passwords must be longer that 8 characters");
     }
-    console.log(formData);
+    try {
+      const response = await resetPasswordAPI({ ...formData, token });
+      toast.success(response.message);
+      navigate("/signUp", {
+        replace: true,
+      });
+    } catch (error) {
+      setLoading(false);
+      console.log("Error resetting password: ", error);
+    }
   };
 
   return (

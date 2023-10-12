@@ -332,8 +332,8 @@ export const forgotPassword = async (req, res) => {
       email: existingUser?.email,
       // email: "muhammedshahabas22@gmail.com",
       subject: "Password Reset Request | Impactshaala",
-      // message: resetPasswordMessage,
-      message: resetLink,
+      message: resetPasswordMessage,
+      // message: resetLink,
     });
 
     if (response.status === 200) {
@@ -342,6 +342,28 @@ export const forgotPassword = async (req, res) => {
     return res.status(500).send("Error sending password reset email");
   } catch (error) {
     console.log("Error in forgot password : ", error);
+    res.status(500).send("Something went wrong");
+  }
+};
+
+export const resetPassword = async (req, res) => {
+  try {
+    const token = req?.body?.token;
+    const userId = jwt.decode(token)?.userId;
+    if (!token || !userId) {
+      return res.status(401).send({
+        message: "You are not authenticated",
+      });
+    }
+    const newPassword = bcrypt.hashSync(req.body.newPassword, 5);
+    await Company.findByIdAndUpdate(userId, {
+      password: newPassword,
+    });
+    res.send({
+      message: "Password Updated Successfully",
+    });
+  } catch (error) {
+    console.log("Error in reset password : ", error);
     res.status(500).send("Something went wrong");
   }
 };
