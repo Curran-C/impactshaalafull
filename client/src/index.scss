@@ -76,3 +76,22 @@ a {
 .fs-12 {
   font-size: 12px;
 }
+
+.btn {
+  border: none;
+  padding: 10px 15px;
+  color: white;
+  border-radius: 15px;
+  margin: 10px;
+  &:hover {
+    color: black;
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+  }
+  &:active {
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px inset;
+  }
+  &:disabled {
+    opacity: 0.8;
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px inset;
+  }
+}
