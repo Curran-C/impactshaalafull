@@ -330,10 +330,8 @@ export const forgotPassword = async (req, res) => {
     const response = await sendMail({
       name: existingUser?.name,
       email: existingUser?.email,
-      // email: "muhammedshahabas22@gmail.com",
       subject: "Password Reset Request | Impactshaala",
       message: resetPasswordMessage,
-      // message: resetLink,
     });
 
     if (response.status === 200) {
