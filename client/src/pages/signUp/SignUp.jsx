@@ -230,7 +230,7 @@ const SignUp = () => {
   const handleLocationSubmit = async (e) => {
     e.preventDefault();
     setLocationDetailsState(false);
-    setSignUpState(true);
+    setTagsState(true);
   };
 
   const handleSignUpSubmit = async (e) => {
