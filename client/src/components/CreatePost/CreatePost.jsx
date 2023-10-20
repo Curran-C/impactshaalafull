@@ -60,7 +60,7 @@ const CreatePost = ({ onCancel }) => {
               type="text"
               placeholder="Seperate using space"
               name="keywords"
-              value={post.words || ""}
+              value={post.keywords}
               required
             />
           </div>
