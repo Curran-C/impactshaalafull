@@ -22,11 +22,11 @@ const ProfileLeft = ({ page }) => {
   const [showCreatePost, setShowCreatePost] = useState(false);
 
   // functions
-  const handleLogout = async () => {
-    localStorage.removeItem("IsUser");
-    Cookies.remove("accessToken");
-    navigate("/");
-  };
+  // const handleLogout = async () => {
+  //   localStorage.removeItem("IsUser");
+  //   Cookies.remove("accessToken");
+  //   navigate("/");
+  // };
 
   const handleCancel = (prop) => {
     setShowCreatePost(prop);
@@ -75,10 +75,10 @@ const ProfileLeft = ({ page }) => {
         img={settings}
         linkText={"Settings"}
       />
-      <button onClick={handleLogout} className="logout">
+      {/* <button onClick={handleLogout} className="logout">
         <img src={logout} alt="logout" />
         <span>Logout</span>
-      </button>
+      </button> */}
     </div>
   );
 };
