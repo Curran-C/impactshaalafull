@@ -1,6 +1,6 @@
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { Route, Routes } from "react-router-dom";
 
-import "./index.css";
+import "./index.scss";
 
 import LandingPage from "./pages/LandingPage/LandingPage";
 import SignUp from "./pages/signUp/SignUp";
@@ -26,23 +26,34 @@ import {
   Reviews,
   ApproveCollab,
 } from "./Admin/pages";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import PrivateRoutes from "./utils/PrivateRoutes/PrivateRoutes";
+import ResetPassword from "./pages/ResetPassword/ResetPassword";
 
 function App() {
   return (
-    <BrowserRouter>
+    <>
       <Routes>
         <Route path="/" element={<LandingPage />} />
         <Route path="/signup" element={<SignUp />} />
-        <Route path="/profile/:id" element={<Profile />} />
         <Route path="/googlesignup/:id" element={<GoogleSignUp />} />
-        <Route path="/home/:id" element={<Home />} />
-        <Route path="/savedPosts/:id" element={<SavedPosts />} />
-        <Route path="/chats/:id" element={<Chats />} />
-        <Route path="/settings/:id" element={<Settings />} />
-        <Route path="/collaborations/:id" element={<Collaborations />} />
+        <Route path="/reset-password" element={<ResetPassword />} />
         <Route path="/aboutus/" element={<AboutUs />} />
         <Route path="/terms-conditions/" element={<TC />} />
-        <Route path="/edit/:id" element={<EditProfile />} />
+
+        <Route element={<PrivateRoutes />}>
+          <Route path="/home" element={<Home />} />
+          <Route path="/chats" element={<Chats />} />
+          <Route path="/profile/edit" element={<EditProfile />} />
+          <Route path="/savedPosts" element={<SavedPosts />} />
+
+          {/* Pending Pages below */}
+          <Route path="/profile/:id" element={<Profile />} />
+          <Route path="/settings/:id" element={<Settings />} />
+          <Route path="/collaborations/:id" element={<Collaborations />} />
+        </Route>
+
         <Route path="/admin" element={<Login />} />
         <Route path="/admin/dashboard" element={<Dashboard />} />
         <Route path="/admin/collabdetails" element={<CollabDetails />} />
@@ -66,7 +77,18 @@ function App() {
         <Route path="/admin/feedback" element={<Complaints />} />
         <Route path="/admin/approvecollaboration" element={<ApproveCollab />} />
       </Routes>
-    </BrowserRouter>
+      <ToastContainer
+        position="top-right"
+        autoClose={1500}
+        hideProgressBar={true}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+      />
+    </>
   );
 }
 

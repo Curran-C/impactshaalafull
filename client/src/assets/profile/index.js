@@ -6,9 +6,10 @@ import savedposts from "./savedposts.svg";
 import corporate from "./corporate.svg";
 import location from "./location.svg";
 import settings from "./settings.svg";
-import hex from "./hex.png";
+import hex from "./hex.svg";
 import nopfp from "./nopfp.png";
-import profileIcon from './profileIcon.png'
+import profileIcon from "./profileIcon.png";
+import linkIcon from "./link.svg";
 
 export {
   chat,
@@ -21,5 +22,6 @@ export {
   location,
   nopfp,
   settings,
-  profileIcon
+  profileIcon,
+  linkIcon,
 };

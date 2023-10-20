@@ -296,3 +296,72 @@ export const getAddress = async (req, res) => {
     res.status(500).send("Something went wrong");
   }
 };
+
+export const forgotPassword = async (req, res) => {
+  try {
+    const existingUser = await Company.findOne({ email: req.body?.email });
+    if (!existingUser) {
+      return res.status(404).send({
+        message: "User not found",
+      });
+    }
+    const payload = {
+      userId: existingUser._id.toString(),
+    };
+    const resetToken = jwt.sign(payload, process.env.JWT_KEY, {
+      expiresIn: "1h",
+    });
+    const resetLink = `${process.env.CLIENT_URL}/reset-password?token=${resetToken}`;
+    const resetPasswordMessage = `
+   <p>You've requested to reset your password. If you didn't make this request, please ignore this email.</p>
+
+   <p>To reset your password, click the button below:</p>
+   <p style="text-align: center;"> 
+   <a href="${resetLink}" style="display: inline-block; padding: 10px 20px; background-color: #007bff; color: #fff; text-decoration: none; border-radius: 5px;">Reset Password</a>
+ </p>
+   <p>If the above button doesn't work, copy and paste the following URL into your browser:</p>
+   <p>${resetLink}</p>
+ 
+   <p>This link will expire in 1 hour for security reasons.</p>
+ 
+   <p>If you have any questions or need further assistance, please contact our support team.</p>  
+    <p>Regards,<br>Impactshaala</p>
+  `;
+    const response = await sendMail({
+      name: existingUser?.name,
+      email: existingUser?.email,
+      subject: "Password Reset Request | Impactshaala",
+      message: resetPasswordMessage,
+    });
+
+    if (response.status === 200) {
+      return res.send("Password reset email sent successfully");
+    }
+    return res.status(500).send("Error sending password reset email");
+  } catch (error) {
+    console.log("Error in forgot password : ", error);
+    res.status(500).send("Something went wrong");
+  }
+};
+
+export const resetPassword = async (req, res) => {
+  try {
+    const token = req?.body?.token;
+    const userId = jwt.decode(token)?.userId;
+    if (!token || !userId) {
+      return res.status(401).send({
+        message: "You are not authenticated",
+      });
+    }
+    const newPassword = bcrypt.hashSync(req.body.newPassword, 5);
+    await Company.findByIdAndUpdate(userId, {
+      password: newPassword,
+    });
+    res.send({
+      message: "Password Updated Successfully",
+    });
+  } catch (error) {
+    console.log("Error in reset password : ", error);
+    res.status(500).send("Something went wrong");
+  }
+};

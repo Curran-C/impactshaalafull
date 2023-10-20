@@ -1,7 +1,7 @@
 import axios from "axios";
 import ProfileFeed from "../../components/ProfileFeed/ProfileFeed";
 import { useState, useEffect } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useOutletContext, useParams } from "react-router-dom";
 
 import "./profile.scss";
 import ProfileLeft from "../../components/ProfileLeft/ProfileLeft";
@@ -12,6 +12,7 @@ import FeedbackForm from "../../components/FeedbackForm/FeedbackForm";
 import HomeRight from "../../components/HomeRight/HomeRight";
 
 const Profile = () => {
+  const { user: authUser } = useOutletContext();
   // states
   const [user, setUser] = useState({});
   const [accessToken, setAccessToken] = useState();
@@ -60,7 +61,7 @@ const Profile = () => {
         <ProfileLeft page={"profile"} />
         <div className="profileDetails">
           <div className="nameandfeedback">
-            <NameDate name={user?.name} date={date} />
+            <NameDate name={authUser?.name} date={date} />
             {decodedToken?.id !== id && (
               <>
                 {/* <button
@@ -77,7 +78,7 @@ const Profile = () => {
             {decodedToken?.id === id && (
               <button
                 className="feedbackbutton"
-                onClick={() => navigate(`/edit/${decodedToken?.id}`)}
+                onClick={() => navigate(`/profile/edit`)}
               >
                 Edit Profile
               </button>
@@ -86,7 +87,7 @@ const Profile = () => {
           <ProfileFeed user={user} />
         </div>
         <div className="right">
-          <HomeRight user={user} />
+          <HomeRight />
         </div>
       </div>
     </div>

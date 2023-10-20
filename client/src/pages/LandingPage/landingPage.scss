@@ -1,530 +1,606 @@
-    .landingPage {
+.landingPage {
+  width: 100%;
+  .leftblob {
+    position: absolute;
+    height: 800px;
+    top: 1500px;
+    left: -250px;
+    z-index: -10;
+  }
+  .rightblob,
+  .rightblob2 {
+    position: absolute;
+    height: 800px;
+    top: 2500px;
+    right: -250px;
+    z-index: -10;
+  }
+  .rightblob2 {
+    width: 800px;
+    top: 4500px;
+  }
+  .hero {
     width: 100%;
-    .leftblob {
-        position: absolute;
-        height: 800px;
-        top: 1500px;
-        z-index: -10;
-    }
-    .rightblob,
-    .rightblob2 {
-        position: absolute;
-        height: 800px;
-        top: 2500px;
-        right: 0;
-        z-index: -10;
-    }
-    .rightblob2 {
-        width: 800px;
-        top: 4600px;
-    }
-    .hero {
-        width: 100%;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        .heroContainer {
-            display: flex;
-            justify-content: space-between;
-            width: 80%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    .heroContainer {
+      display: flex;
+      justify-content: space-between;
+      width: 80%;
 
-            .left {
-                padding-left: 100px;
-                width: 50%;
-                text-align: center;
-                display: flex;
-                align-items: center;
-                span {
-                    font-size: 40px;
-                    font-weight: 700;
-                    color: #2f2d38;
-                }
-            }
-            .right {
-                display: flex;
-                position: relative;
-                align-items: center;
-                justify-content: center;
-                width: 50%;
-                img {
-                    padding-top: 30px;
-                    width: 500px;
-                }
-            }
+      .left {
+        padding-left: 100px;
+        width: 50%;
+        text-align: center;
+        display: flex;
+        align-items: center;
+        span {
+          font-size: 40px;
+          font-weight: 700;
+          color: #2f2d38;
         }
-    }
-
-    .coreValues {
+      }
+      .right {
         display: flex;
-        width: 100%;
+        position: relative;
         align-items: center;
         justify-content: center;
-        margin-top: 80px;
-        .coreValuesContainer {
-            display: flex;
-            flex-direction: column;
-            width: 90%;
-            justify-content: center;
-            .titleContainer {
-                display: flex;
-                flex-direction: column;
-                align-items: center;
-                justify-content: center;
-                gap: 12px;
-                .subTitle {
-                    font-weight: 400;
-                    font-size: 23px;
-                }
-            }
-            .cardContainer {
-                display: flex;
-                justify-content: space-around;
-                margin-top: 60px;
-            }
+        width: 50%;
+        img {
+          padding-top: 30px;
+          width: 500px;
         }
+      }
     }
+  }
 
-    .videoSection {
+  .coreValues {
+    display: flex;
+    width: 100%;
+    align-items: center;
+    justify-content: center;
+    margin-top: 80px;
+    .coreValuesContainer {
+      display: flex;
+      flex-direction: column;
+      width: 90%;
+      justify-content: center;
+      .titleContainer {
         display: flex;
-        width: 100%;
+        flex-direction: column;
         align-items: center;
         justify-content: center;
-        margin-top: 100px;
-        .videoSectionContainer {
+        gap: 12px;
+        .subTitle {
+          font-weight: 400;
+          font-size: 23px;
+        }
+      }
+      .cardContainer {
+        display: flex;
+        justify-content: space-around;
+        margin-top: 60px;
+      }
+    }
+  }
+
+  .videoSection {
+    display: flex;
+    width: 100%;
+    align-items: center;
+    justify-content: center;
+    margin-top: 100px;
+    .videoSectionContainer {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      width: 90%;
+      .titleContainer {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 12px;
+        width: 950px;
+      }
+      .videoPlaceholder {
+        background-color: #d9d9d9;
+        margin-top: 50px;
+        border-radius: 25px;
+        height: 500px;
+        width: 1000px;
+      }
+    }
+  }
+
+  .how-works {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    margin-top: 30px;
+    .title-container {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      margin-bottom: 10px;
+      .titleWrapper {
+        margin: 0 auto;
+      }
+    }
+
+    .bullets {
+      display: flex;
+      flex-direction: column;
+      width: 75%;
+      margin: 0 auto;
+      gap: 20px;
+
+      @media (max-width: 768px) {
+        width: 90%;
+      }
+      .bullet {
+        h3,
+        p {
+          margin: 0;
+        }
+      }
+    }
+  }
+
+  .beforeAboutUs {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    margin-top: 100px;
+    .beforeAboutUsContainer {
+      display: flex;
+      width: 90%;
+      gap: 80px;
+      justify-content: center;
+      flex-direction: column;
+      align-items: center;
+    }
+  }
+
+  .aboutus {
+    width: 100%;
+    margin-top: 100px;
+    .aboutusContainer {
+      display: flex;
+      flex-direction: column;
+      // align-items: center;
+      // justify-content: center;
+      .titleContainer {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        .textContainer {
+          width: 900px;
+          display: flex;
+          margin-top: 30px;
+          span {
+            line-height: 30px;
+            font-size: 18px;
+            text-align: center;
+          }
+          .highlighted-about-us {
+            margin: 30px 0;
+            text-align: center;
+            letter-spacing: 1px;
+            font-size: 18px;
+          }
+        }
+      }
+      .threequestions {
+        display: flex;
+        margin: 40px 50px 80px 50px;
+        justify-content: center;
+        gap: 30px;
+
+        @media (max-width: 768px) {
+          flex-direction: column;
+        }
+      }
+    }
+  }
+
+  .beneficiaries {
+    width: 100%;
+
+    .beneficiariesContainer {
+      display: flex;
+      flex-direction: column;
+      padding: 10px 80px;
+      .titleContainer {
+        display: flex;
+        flex-direction: column;
+        align-items: start;
+        .textContainer {
+          width: 600px;
+          display: flex;
+          margin-top: 30px;
+          span {
+            line-height: 30px;
+            font-size: 18px;
+            text-align: left;
+          }
+        }
+      }
+      .benificiaryNamesContainer {
+        display: flex;
+        flex-wrap: wrap;
+        margin-right: -15px;
+        margin-left: -15px;
+        justify-content: center;
+        // gap: 20px;
+
+        & > * {
+          padding-right: 15px;
+          padding-left: 15px;
+          box-sizing: border-box;
+        }
+
+        @media (max-width: 420px) {
+          flex-direction: column;
+          margin: 0;
+        }
+        .beneficiaryNames {
+          flex: 0 0 calc(33.3333% - 15px); /* Adjust the width as needed */
+          max-width: calc(33.3333% - 15px); /* Adjust the max-width as needed */
+          margin-right: 15px; /* Adjust the margin as needed */
+          box-sizing: border-box;
+
+          @media (max-width: 992px) {
+            flex: 0 0 100%;
+            max-width: 100%;
+            margin-right: 0;
+          }
+
+          display: flex;
+          flex-direction: column;
+          gap: 15px;
+          padding: 20px;
+          .title {
             display: flex;
-            flex-direction: column;
+            gap: 15px;
             align-items: center;
-            justify-content: center;
-            width: 90%;
-            .titleContainer {
-                display: flex;
-                flex-direction: column;
-                align-items: center;
-                justify-content: center;
-                gap: 12px;
-                width: 950px;
-            }
-            .videoPlaceholder {
-                background-color: #d9d9d9;
-                margin-top: 50px;
-                border-radius: 25px;
-                height: 500px;
-                width: 1000px;
-            }
-        }
-    }
-
-    .beforeAboutUs {
-        width: 100%;
-        display: flex;
-        justify-content: center;
-        margin-top: 100px;
-        .beforeAboutUsContainer {
-            display: flex;
-            width: 90%;
-            gap: 80px;
-            justify-content: center;
-            flex-direction: column;
-            align-items: center;
-        }
-    }
-
-    .aboutus {
-        width: 100%;
-        margin-top: 100px;
-        .aboutusContainer {
-            display: flex;
-            flex-direction: column;
-            // align-items: center;
+            margin-top: 10px;
             // justify-content: center;
-            .titleContainer {
-                display: flex;
-                flex-direction: column;
-                align-items: center;
-                .textContainer {
-                    width: 900px;
-                    display: flex;
-                    margin-top: 30px;
-                    span {
-                        line-height: 30px;
-                        font-size: 18px;
-                        text-align: center;
-                    }
-                }
+            img {
+              height: 40px;
             }
-            .threequestions {
-                display: flex;
-                flex-direction: column;
-                margin: 40px 50px 80px 50px;
-                gap: 50px;
+            span {
+              font-size: 18px;
             }
+          }
         }
+      }
     }
+  }
 
-    .beneficiaries {
+  .partners {
+    width: 100%;
+    .partnersContainer {
+      display: flex;
+      flex-direction: column;
+      padding: 10px 80px;
+      .titleContainer {
+        display: flex;
+        flex-direction: column;
+        align-items: end;
+      }
+      .partnerCardContainer {
+        display: flex;
         width: 100%;
-        .beneficiariesContainer {
-            display: flex;
-            flex-direction: column;
-            padding: 10px 80px;
-            .titleContainer {
-                display: flex;
-                flex-direction: column;
-                align-items: start;
-                .textContainer {
-                    width: 600px;
-                    display: flex;
-                    margin-top: 30px;
-                    span {
-                        line-height: 30px;
-                        font-size: 18px;
-                        text-align: left;
-                    }
-                }
-            }
-            .benificiaryNamesContainer {
-                margin-top: 50px;
-                display: flex;
-                width: 600px;
-                flex-direction: column;
-                .beneficiaryNames {
-                    display: flex;
-                    gap: 15px;
-                    align-items: center;
-                    margin-top: 10px;
-                    // justify-content: center;
-                    img {
-                        height: 40px;
-                    }
-                    span {
-                        font-size: 18px;
-                    }
-                }
-            }
-        }
-    }
-
-    .partners {
-        width: 100%;
-        .partnersContainer {
-            display: flex;
-            flex-direction: column;
-            padding: 10px 80px;
-            .titleContainer {
-                display: flex;
-                flex-direction: column;
-                align-items: end;
-            }
-            .partnerCardContainer {
-                display: flex;
-                width: 100%;
-                justify-content: space-evenly;
-                align-items: center;
-                margin-top: 80px;
-            }
-        }
-    }
-
-    .blog {
-        width: 100%;
+        justify-content: space-evenly;
+        align-items: center;
         margin-top: 80px;
-        .blogContainer {
-            display: flex;
-            flex-direction: column;
-        }
-        .titleContainer {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            .textContainer {
-                width: 900px;
-                display: flex;
-                margin-top: 25px;
-                span {
-                    line-height: 40px;
-                    font-size: 18px;
-                    text-align: center;
-                }
-            }
-        }
-        .carouselContainer {
-            display: flex;
-            justify-content: center;
-            width: 100%;
-            .carouselWrapper {
-                // height: 500px;
-                width: 60%;
-                display: flex;
-                justify-content: center;
-                align-items: center;
-                background-color: #d9def2;
-                padding-bottom: -50px;
-                padding-top: 50px;
-                padding-right: 80px;
-                padding-left: 80px;
-
-                border-radius: 25px;
-                margin-top: 30px;
-
-                .carousel {
-                    display: flex;
-                    flex-direction: column;
-                    align-items: center;
-                    justify-content: center;
-                    height: 800px;
-                    margin-bottom: -80px;
-                }
-            }
-        }
+      }
     }
+  }
+
+  .blog {
+    width: 100%;
+    margin-top: 80px;
+    .blogContainer {
+      display: flex;
+      flex-direction: column;
+    }
+    .titleContainer {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      .textContainer {
+        width: 900px;
+        display: flex;
+        margin-top: 25px;
+        span {
+          line-height: 40px;
+          font-size: 18px;
+          text-align: center;
+        }
+      }
+    }
+    .carouselContainer {
+      display: flex;
+      justify-content: center;
+      width: 100%;
+      .carouselWrapper {
+        // height: 500px;
+        width: 60%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-color: #d9def2;
+        padding-bottom: -50px;
+        padding-top: 50px;
+        padding-right: 80px;
+        padding-left: 80px;
+
+        border-radius: 25px;
+        margin-top: 30px;
+
+        .carousel {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          justify-content: center;
+          height: 800px;
+          margin-bottom: -80px;
+        }
+      }
+    }
+  }
 }
 
 @media (max-width: 1024px) {
-    .landingPage {
-        .hero {
-            .heroContainer {
-                width: 90%;
-                .left {
-                    font-size: 35px;
-                    padding-left: 0px;
-                }
-                .right {
-                    img {
-                        width: 390px;
-                    }
-                }
-            }
+  .landingPage {
+    .hero {
+      .heroContainer {
+        width: 90%;
+        .left {
+          font-size: 35px;
+          padding-left: 0px;
         }
-        .videoSection {
-            .videoSectionContainer {
-                .videoPlaceholder {
-                    width: 900px;
-                }
-            }
+        .right {
+          img {
+            width: 390px;
+          }
         }
-        .aboutus {
-            .aboutusContainer {
-                .textContainer {
-                    font-size: 30px;
-                }
-            }
-        }
-        .partners {
-            .partnersContainer {
-                width: 100%;
-                padding: 0px 0px;
-                .partnerCardContainer {
-                    align-items: flex-start;
-                    justify-content: flex-start;
-                    gap: 20px;
-                }
-            }
-        }
+      }
     }
+    .videoSection {
+      .videoSectionContainer {
+        .videoPlaceholder {
+          width: 900px;
+        }
+      }
+    }
+    .aboutus {
+      .aboutusContainer {
+        .textContainer {
+          font-size: 30px;
+        }
+      }
+    }
+    .partners {
+      .partnersContainer {
+        width: 100%;
+        padding: 0px 0px;
+        .partnerCardContainer {
+          align-items: flex-start;
+          justify-content: flex-start;
+          gap: 20px;
+        }
+      }
+    }
+  }
 }
 
 @media (max-width: 768px) {
-    .landingPage {
-        .hero {
-            .heroContainer {
-                width: 90%;
-                .left {
-                    padding-left: 0px;
-                    span {
-                        font-size: 33px;
-                    }
-                }
-                .right {
-                    img {
-                        width: 350px;
-                    }
-                }
-            }
+  .landingPage {
+    .hero {
+      .heroContainer {
+        width: 90%;
+        .left {
+          padding-left: 0px;
+          span {
+            font-size: 33px;
+          }
         }
-        .coreValues {
-            .coreValuesContainer {
-                .titleContainer {
-                    .subTitle {
-                        font-size: 18px;
-                        text-align: center;
-                    }
-                }
-            }
+        .right {
+          img {
+            width: 350px;
+          }
         }
-        .videoSection {
-            .videoSectionContainer {
-                .titleContainer {
-                    width: 600px;
-                }
-                .videoPlaceholder {
-                    width: 700px;
-                }
-            }
-        }
-        .aboutus {
-            .aboutusContainer {
-                .titleContainer {
-                    .textContainer {
-                        width: 700px;
-                        font-size: 30px;
-                    }
-                }
-            }
-        }
-        .partners {
-            .partnersContainer {
-                width: 100%;
-                padding: 0px 0px;
-                align-items: center;
-                .partnerCardContainer {
-                    align-items: center;
-                    justify-content: center;
-                    gap: 10px;
-                    flex-wrap: wrap;
-                }
-            }
-        }
-        .blog {
-            .blogContainer {
-                .titleContainer {
-                    .textContainer {
-                        width: 700px;
-                    }
-                }
-            }
-        }
+      }
     }
+    .coreValues {
+      .coreValuesContainer {
+        .titleContainer {
+          .subTitle {
+            font-size: 18px;
+            text-align: center;
+          }
+        }
+      }
+    }
+    .videoSection {
+      .videoSectionContainer {
+        .titleContainer {
+          width: 600px;
+        }
+        .videoPlaceholder {
+          width: 700px;
+        }
+      }
+    }
+    .aboutus {
+      .aboutusContainer {
+        .titleContainer {
+          .textContainer {
+            width: 700px;
+            font-size: 30px;
+          }
+        }
+      }
+    }
+    .partners {
+      .partnersContainer {
+        width: 100%;
+        padding: 0px 0px;
+        align-items: center;
+        .partnerCardContainer {
+          align-items: center;
+          justify-content: center;
+          gap: 10px;
+          flex-wrap: wrap;
+        }
+      }
+    }
+    .blog {
+      .blogContainer {
+        .titleContainer {
+          .textContainer {
+            width: 700px;
+          }
+        }
+      }
+    }
+  }
 }
 
 @media (max-width: 426px) {
-    .landingPage {
-        width: 100%;
-        overflow-x: hidden;
-        .leftblob {
-            height: 400px;
-        }
-        .hero {
-            .heroContainer {
-                width: 90%;
-                .left {
-                    padding-left: 0px;
-                    span {
-                        font-size: 23px;
-                    }
-                }
-                .right {
-                    img {
-                        width: 200px;
-                    }
-                }
-            }
-        }
-        .coreValues {
-            .coreValuesContainer {
-                .titleContainer {
-                    .subTitle {
-                        font-size: 18px;
-                        text-align: center;
-                    }
-                }
-                .cardContainer {
-                    flex-wrap: wrap;
-                    justify-content: space-evenly;
-                    gap: 30px;
-                }
-            }
-        }
-        .videoSection {
-            .videoSectionContainer {
-                .titleContainer {
-                    width: 300px;
-                }
-                .videoPlaceholder {
-                    width: 350px;
-                    height: 300px;
-                }
-            }
-        }
-        .aboutus {
-            .aboutusContainer {
-                .titleContainer {
-                    .textContainer {
-                        width: 350px;
-                        font-size: 30px;
-                        margin-top: 20px;
-                        span {
-                            font-size: 16px;
-                        }
-                    }
-                }
-            }
-        }
-        .beneficiaries {
-            margin-left: -60px;
-            .beneficiariesContainer {
-                justify-content: flex-start;
-                .titleContainer {
-                    .textContainer {
-                        width: 350px;
-                        margin-top: 20px;
-                        span {
-                            font-size: 16px;
-                        }
-                    }
-                }
-                .benificiaryNamesContainer {
-                    width: 350px;
-                    .beneficiaryNames {
-                        justify-content: start;
-                    }
-                }
-            }
-        }
-        .partners {
-            .partnersContainer {
-                width: 100%;
-                padding: 0px 0px;
-                align-items: center;
-                .partnerCardContainer {
-                    align-items: center;
-                    justify-content: center;
-                    gap: 10px;
-                    flex-wrap: wrap;
-                }
-            }
-        }
-        .blog {
-            .blogContainer {
-                .titleContainer {
-                    .textContainer {
-                        width: 350px;
-                        margin-top: 20px;
-                        span {
-                            font-size: 15px;
-                            line-height: 28px;
-                        }
-                    }
-                }
-            }
-        }
+  .landingPage {
+    width: 100%;
+    overflow-x: hidden;
+    .leftblob {
+      height: 400px;
     }
+    .hero {
+      .heroContainer {
+        width: 90%;
+        .left {
+          padding-left: 0px;
+          span {
+            font-size: 23px;
+          }
+        }
+        .right {
+          img {
+            width: 200px;
+          }
+        }
+      }
+    }
+    .coreValues {
+      .coreValuesContainer {
+        .titleContainer {
+          .subTitle {
+            font-size: 18px;
+            text-align: center;
+          }
+        }
+        .cardContainer {
+          flex-wrap: wrap;
+          justify-content: space-evenly;
+          gap: 30px;
+        }
+      }
+    }
+    .videoSection {
+      .videoSectionContainer {
+        .titleContainer {
+          width: 300px;
+        }
+        .videoPlaceholder {
+          width: 350px;
+          height: 300px;
+        }
+      }
+    }
+    .aboutus {
+      .aboutusContainer {
+        .titleContainer {
+          .textContainer {
+            width: 350px;
+            font-size: 30px;
+            margin-top: 20px;
+            span {
+              font-size: 16px;
+            }
+          }
+        }
+      }
+    }
+    .beneficiaries {
+      margin-left: -60px;
+      .beneficiariesContainer {
+        justify-content: flex-start;
+        .titleContainer {
+          .textContainer {
+            width: 350px;
+            margin-top: 20px;
+            span {
+              font-size: 16px;
+            }
+          }
+        }
+        .benificiaryNamesContainer {
+          width: 350px;
+          .beneficiaryNames {
+            justify-content: start;
+          }
+        }
+      }
+    }
+    .partners {
+      .partnersContainer {
+        width: 100%;
+        padding: 0px 0px;
+        align-items: center;
+        .partnerCardContainer {
+          align-items: center;
+          justify-content: center;
+          gap: 10px;
+          flex-wrap: wrap;
+        }
+      }
+    }
+    .blog {
+      .blogContainer {
+        .titleContainer {
+          .textContainer {
+            width: 350px;
+            margin-top: 20px;
+            span {
+              font-size: 15px;
+              line-height: 28px;
+            }
+          }
+        }
+      }
+    }
+  }
 }
 
 @media (max-width: 376px) {
-    .landingPage {
-        .hero {
-            .heroContainer {
-                .left {
-                    span {
-                        font-size: 20px;
-                    }
-                }
-                .right {
-                    img {
-                        width: 200px;
-                    }
-                }
-            }
+  .landingPage {
+    .hero {
+      .heroContainer {
+        .left {
+          span {
+            font-size: 20px;
+          }
         }
+        .right {
+          img {
+            width: 200px;
+          }
+        }
+      }
     }
+  }
 }

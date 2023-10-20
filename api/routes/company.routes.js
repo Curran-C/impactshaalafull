@@ -16,9 +16,14 @@ import {
   getUserStat,
   getAllUsersByStakeholder,
   getAddress,
+  forgotPassword,
+  resetPassword,
 } from "../controllers/company.controller.js";
 
 const router = express.Router();
+
+router.post("/forgot-password", forgotPassword);
+router.post("/reset-password", resetPassword);
 
 router.get("/getuser/:id", getuser);
 router.get("/logout", logout);

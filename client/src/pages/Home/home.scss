@@ -1,26 +1,44 @@
 .homePage {
+  box-sizing: border-box;
   display: flex;
-  flex-direction: row;
-  // align-items: center;
-  justify-content: space-evenly;
-  width: 100%;
+  justify-content: center;
+  gap: 20px;
 
   background-color: #d9def2;
+
   .profileLeft {
-    width: 200px;
     margin-top: 225px;
     .createpost {
       margin-top: 0;
     }
   }
+
   .left {
-    width: 17%;
+    // width: 17%;
   }
   .center {
-    width: 53%;
+    flex-grow: 1;
+    max-width: 750px;
   }
   .right {
-    width: 25%;
+    width: auto;
+    max-width: 420px;
     margin-top: 225px;
+  }
+}
+
+@media (min-width: 1025px) {
+  .homePage {
+    justify-content: center;
+
+    .left { 
+      width: 18vw;
+    }
+    .center {
+      width: 49vw;
+    }
+    .right {
+      width: 32vw;
+    }
   }
 }

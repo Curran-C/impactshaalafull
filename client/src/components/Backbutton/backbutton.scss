@@ -1,14 +1,14 @@
 .backButton {
-    position: absolute;
-    left: 320px;
-    top: 130px;
-    &:hover {
-        cursor: pointer;
-    }
-    img {
-        height: 20px;
-        background-color: #ebebeb;
-        border-radius: 100%;
-        padding: 15px 10px;
-    }
+  position: absolute;
+  left: 320px;
+  top: 130px;
+  &:hover {
+    cursor: pointer;
+  }
+  img {
+    height: 20px;
+    background-color: #ebebeb;
+    border-radius: 100%;
+    padding: 15px 10px;
+  }
 }

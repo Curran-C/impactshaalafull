@@ -1,41 +1,44 @@
 .feedbackCardAgain {
-    background: white;
-    width: 300px;
-    padding: 20px;
+  background: white;
+  width: 300px;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  border-radius: 20px;
+  min-height: 250px;
+
+  .feedbackprofile {
     display: flex;
-    flex-direction: column;
-    gap: 30px;
-    // align-items: center;
-    margin-top: 20px;
-    border-radius: 25px;
-    .feedbackprofile {
-        display: flex;
-        // flex-direction: column;
-        align-items: center;
-        text-align: center;
-        gap: 20px;
-        .pfp {
-            height: 50px;
-            width: 50px;
-            object-fit: cover;
-            border-radius: 100%;
-        }
-        .about {
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-            h4 {
-                margin: 0;
-                font-size: 18px;
-                letter-spacing: 1px;
-            }
-        }
+    // flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 20px;
+    .pfp {
+      height: 50px;
+      width: 50px;
+      object-fit: cover;
+      border-radius: 100%;
     }
-    .feedbacktext {
-        padding: 20px;
-        text-align: center;
-        background: #f5f7f6;
-        margin-top: 20px;
-        border-radius: 25px;
+    .about {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      h4 {
+        margin: 0;
+        font-size: 18px;
+        font-weight: 500;
+        letter-spacing: 2px;
+        text-align: start;
+      }
     }
+  }
+
+  .feedbacktext {
+    padding: 20px;
+    background: #f5f7f6;
+    border-radius: 20px;
+    text-align: center;
+    flex-grow: 1;
+  }
 }

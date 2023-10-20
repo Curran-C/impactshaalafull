@@ -5,8 +5,14 @@ import { useParams } from "react-router-dom";
 import Posts from "../Posts/Posts";
 import ProfileHeader from "../ProfileHeader/ProfileHeader";
 import FeedbackCard from "../FeedbackCard/FeedbackCard";
-import AddProjectAccomplishmentsPopUp from "../AddProjectAccomplishmentsPopUp/AddProjectAccomplishmentsPopUp"
-
+import AddProjectAccomplishmentsPopUp from "../AddProjectAccomplishmentsPopUp/AddProjectAccomplishmentsPopUp";
+import AddFeedbackPopup from "../AddFeedbackPopup/AddFeedbackPopup";
+import { fetchAllFeedbacksAPI, newFeedbackAPI } from "../../api/feedback";
+import { toast } from "react-toastify";
+import {
+  fetchAccomplishmentAPI,
+  newProjectAccomplishmentAPI,
+} from "../../api/projectAccomplishment";
 
 const ProfileFeed = ({ user }) => {
   const { id } = useParams();
@@ -17,12 +23,29 @@ const ProfileFeed = ({ user }) => {
   const [showProjectAccomplishments, setShowProjectAccomplishments] =
     useState(false);
   const [posts, setPosts] = useState();
-  const [feedbacks, setFeedbacks] = useState();
-  const [isOpen, setIsOpen] = useState(false);
+  const [feedbacks, setFeedbacks] = useState([]);
+  const [showNewProjectAcc, setShowNewProjectAcc] = useState(false);
+  const [showNewFeedback, setShowNewFeedback] = useState(false);
+  const [accomplishments, setAccomplishments] = useState([]);
 
-  const handleChildValue = (value) => {
-  setIsOpen(value)
-  }
+  const fetchFeedbacks = async () => {
+    try {
+      const response = await fetchAllFeedbacksAPI(id);
+      setFeedbacks(response.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const fetchAccomplishments = async () => {
+    try {
+      const response = await fetchAccomplishmentAPI(id);
+      setAccomplishments(response.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   useEffect(() => {
     const getPosts = async () => {
       try {
@@ -34,8 +57,9 @@ const ProfileFeed = ({ user }) => {
         console.log(err);
       }
     };
-    setFeedbacks(user?.feedbacksRecieved);
+    fetchFeedbacks();
     getPosts();
+    fetchAccomplishments();
   }, []);
 
   const handleShowPosts = () => {
@@ -56,13 +80,28 @@ const ProfileFeed = ({ user }) => {
     setShowProjectAccomplishments(true);
   };
 
+  const submitNewFeedback = async (formData) => {
+    const response = await newFeedbackAPI({
+      target: id,
+      ...formData,
+    });
+    await fetchFeedbacks();
+    toast.success(response.message);
+  };
+
+  const submitNewAccomplishment = async (formData) => {
+    const response = await newProjectAccomplishmentAPI(formData);
+    await fetchAccomplishments();
+    toast.success(response.message);
+  };
+
   return (
     <div className="profile">
       <ProfileHeader user={user} pageName={"profile"} />
 
       <div className="feed">
         <div className="achievements">
-          <h2>Achieviements</h2>
+          <h2>Highlights</h2>
           <div className="achievements-container">
             <div className="placeholder"></div>
             <div className="placeholder"></div>
@@ -73,37 +112,89 @@ const ProfileFeed = ({ user }) => {
 
         <div className="posts">
           <div className="postTitle">
-            <h3
+            <h4
               className={showPosts ? "selected" : ""}
               onClick={handleShowPosts}
             >
               Posts
-            </h3>
-            <h3
+            </h4>
+            <h4
               className={showFeedbacks ? "selected" : ""}
               onClick={handleShowFeedbacks}
             >
               Feedbacks
-            </h3>
-            <h3
+            </h4>
+            <h4
               className={showProjectAccomplishments ? "selected" : ""}
               onClick={handleShowProjectAccomplishments}
             >
               Project Accomplishments
-            </h3>
+            </h4>
           </div>
-          {showPosts &&  <Posts posts={posts} />}
+          {showPosts && <Posts posts={posts} />}
           <div className="feedbacksContainer">
-            {showFeedbacks &&
-              feedbacks?.map((feedback, index) => (
-                <FeedbackCard key={index} feedback={feedback} />
-              ))}
-             
+            {showFeedbacks && id !== user?._id && (
+              <button
+                className="btn-add-feedback"
+                onClick={() => setShowNewFeedback(true)}
+              >
+                <h4>Add a feedback</h4>
+              </button>
+            )}
+            {showFeedbacks && (
+              <div className="feedbacks">
+                {feedbacks?.length ? (
+                  feedbacks.map((feedback, index) => (
+                    <FeedbackCard key={index} feedback={feedback} />
+                  ))
+                ) : (
+                  <h4>No feedbacks yet.</h4>
+                )}
+              </div>
+            )}
+            {showNewFeedback && (
+              <AddFeedbackPopup
+                toggleModal={setShowNewFeedback}
+                onSubmit={submitNewFeedback}
+              />
+            )}
           </div>
-{showProjectAccomplishments?<button className=" AddProjectAccomplishments" onClick={()=>setIsOpen(true)}>
-  <h4>Add An Project Accomplishments</h4>
-  </button>:"" }             
-             {isOpen? <AddProjectAccomplishmentsPopUp onValueChange={handleChildValue}/>:""}
+
+          <div className="project-accomplishments">
+            {showProjectAccomplishments && id === user?._id && (
+              <button
+                className="btn-add-project-acc"
+                onClick={() => setShowNewProjectAcc(true)}
+              >
+                <h4>Add a Project Accomplishment</h4>
+              </button>
+            )}
+            {showProjectAccomplishments && (
+              <div className="accomplishments">
+                {accomplishments?.length ? (
+                  accomplishments.map((accomplishment, index) => (
+                    <p
+                      style={{
+                        background: "lightgrey",
+                        padding: "10px",
+                      }}
+                    >
+                      Project Name : {accomplishment?.projectName} {"  "}
+                      Project Location : {accomplishment?.projectLocation}
+                    </p>
+                  ))
+                ) : (
+                  <h4>No accomplishments yet.</h4>
+                )}
+              </div>
+            )}
+            {showNewProjectAcc && (
+              <AddProjectAccomplishmentsPopUp
+                toggleModal={setShowNewProjectAcc}
+                onSubmit={submitNewAccomplishment}
+              />
+            )}
+          </div>
         </div>
       </div>
     </div>

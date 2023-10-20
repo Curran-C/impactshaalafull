@@ -10,50 +10,84 @@ const text4 =
   "To provide equal access to quality education, resources and opportunities to students from all background through their educational institutions.";
 
 const coreValues = [
+  // {
+  //   img: corevalue1,
+  //   title: "Bridging Educational Skill Gap",
+  //   text: "Lorem ipsum dolor sit amet consectetur,Qorem ipsum dolor sit amet consectetur",
+  // },
+  // {
+  //   img: corevalue2,
+  //   title: "Youth Empowerment",
+  //   text: "Lorem ipsum dolor sit amet consectetur,Qorem ipsum dolor sit amet consectetur",
+  // },
+  // {
+  //   img: corevalue3,
+  //   title: "Individual Social Responsibility",
+  //   text: "Lorem ipsum dolor sit amet consectetur,Qorem ipsum dolor sit amet consectetur",
+  // },
   {
     img: corevalue1,
-    title: "Bridging Educational Skill Gap",
-    text: "Lorem ipsum dolor sit amet consectetur,Qorem ipsum dolor sit amet consectetur",
+    title: "Collaboration",
+    text: "We believe in the power of working together, breaking down silos, and fostering connections that transcend boundaries",
   },
   {
     img: corevalue2,
-    title: "Youth Empowerment",
-    text: "Lorem ipsum dolor sit amet consectetur,Qorem ipsum dolor sit amet consectetur",
+    title: "Empathy",
+    text: "We approach our work with empathy, understanding the diverse needs and perspectives of the people, organizations and communities we serve.",
   },
   {
     img: corevalue3,
-    title: "Individual Social Responsibility",
-    text: "Lorem ipsum dolor sit amet consectetur,Qorem ipsum dolor sit amet consectetur",
+    title: "Lasting Impact",
+    text: "We are driven by a commitment to creating change that endures, leaving a positive mark on society that extends far into the future",
   },
 ];
 
-const beneficiaries = [
-  "Educational Institutions",
-  "Social Organisation",
-  "Students",
-  "Local Citizens",
-  "Corporates",
-];
-
 const educationalInstitutions = [
-  "Quality Education",
-  "Employability Skills",
-  "Individual Learning",
-  "Real-Time Learning",
+  "Exporsure-Based Learning for Students",
+  "Quality Eduacation Support",
+  "Basic Educational Resources",
+  "Institutional Growth Assistance",
+  "Reputation Enhancement",
 ];
 
 const students = [
-  "Life Readiness",
-  "Social Awareness",
-  "Fresher Job Opportunities",
-  "Individual Social Responsibility",
+  "Community Service Opportunities",
+  "Career Exploration",
+  "Passion-Based Learning",
+  "Access to Skill Development Resources",
+  "Performance Showcase and Progress Tracking",
 ];
 
 const corporates = [
-  "Brand Promotion",
-  "Educational Impact",
-  "CSR Project Assistance",
-  "Skilled Human Resource",
+  "Employee Volunteering Programs",
+  "Stakeholder Relationship Building",
+  "Reputation Enhancement",
+  "CSR Project Support",
+  "Skilled Workforce Recruitment",
+];
+
+const ngos = [
+  "Enhanced Advocacy Reach",
+  "NGO Branding Support",
+  "Corporate Partnerships",
+  "Resource Mobilization Assistance",
+  "Volunteer Engagement Opportunities",
+];
+
+const citizenPartners = [
+  "Leadership Roles in Problem Solving",
+  "Civic Engagement Initiatives",
+  "Expertise Contribution",
+  "Networking for Social Impact",
+  "Credibility Score Enhancement",
+];
+
+const beneficiaries = [
+  { title: "Educational Institutions", points: educationalInstitutions },
+  { title: "Students", points: students },
+  { title: "Corporations", points: corporates },
+  { title: "NGOs", points: ngos },
+  { title: " Citizen Partners", points: citizenPartners },
 ];
 
 const socialOrgos = [
@@ -101,6 +135,7 @@ const corporateOptions = [
   "Sports",
   "Telecommunications",
   "Textiles and Apparales",
+  "Others",
 ];
 
 const ngoOptions = [
@@ -112,7 +147,7 @@ const ngoOptions = [
   "Advocacy NGO",
   "Service-oriented NGO",
   "Participatory NGO",
-  "Empowering NGO"
+  "Empowering NGO",
 ];
 
 const citizenOptions = [
@@ -127,6 +162,37 @@ const citizenOptions = [
 ];
 
 const sectors = ["Private", "Public"];
+
+const yesNo = ["Yes", "No"];
+
+const focusAreaNGO = [
+  "SDG 1 - No Poverty",
+  "SDG 2 - Zero Hunger",
+  "SDG 3 - Good Health and Well-being",
+  "SDG 4 - Quality Education",
+  "SDG 5 - Gender Equality",
+  "SDG 6 - Clean Water and Sanitation",
+  "SDG 7 - Affordable and Clean Energy",
+  "SDG 8 - Decent Work and Economic Growth",
+  "SDG 9 - Industry, Innovation, and Infrastructure",
+  "SDG 10 - Reduced Inequalities",
+  "SDG 11 - Sustainable Cities and Communities",
+  "SDG 12 - Responsible Consumption and Production",
+  "SDG 13 - Climate Action",
+  "SDG 14 - Life Below Water",
+  "SDG 15 - Life On Land",
+  "SDG 16 - Peace, Justice, and Strong Institutions",
+  "SDG 17 - Partnerships for the Goals Other",
+];
+
+const expInYears = [
+  "0-2 years",
+  "3-5 years",
+  "6-10 years",
+  "11-15 years",
+  "16-20 years",
+  "20+ years",
+];
 
 export {
   text1,
@@ -144,4 +210,7 @@ export {
   ngoOptions,
   citizenOptions,
   sectors,
+  yesNo,
+  focusAreaNGO,
+  expInYears,
 };

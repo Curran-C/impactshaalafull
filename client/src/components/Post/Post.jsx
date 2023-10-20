@@ -12,13 +12,23 @@ import "./post.scss";
 import Tile from "../Tile/Tile";
 import { format } from "timeago.js";
 import axios from "axios";
-import { useNavigate, useParams } from "react-router-dom";
+import {
+  Link,
+  useNavigate,
+  useOutletContext,
+  useParams,
+} from "react-router-dom";
+
+axios.defaults = {
+  withCredentials: true,
+};
 
 const Post = ({ post }) => {
   // states
   const [bookmarked, setBookmarked] = useState(false);
   const [user, setUser] = useState();
-  const { id } = useParams();
+  const { user: authUser } = useOutletContext();
+  const id = authUser?._id;
   const navigate = useNavigate();
 
   // consts
@@ -36,17 +46,10 @@ const Post = ({ post }) => {
         );
         setUser(res.data);
         // checking if user has bookmarked post and setting bookmarked state
-        try {
-          const res = await axios.get(
-            `${import.meta.env.VITE_BASE_URL}/api/company/getuser/${id}`
-          );
-          const bookmarkedPosts = res.data.bookmarkedPosts;
-          bookmarkedPosts?.map((bookmarkedPost) => {
-            if (bookmarkedPost === post._id) setBookmarked(true);
-          });
-        } catch (err) {
-          console.log(err);
-        }
+        const bookmarkedPosts = authUser?.bookmarkedPosts;
+        bookmarkedPosts?.map((bookmarkedPost) => {
+          if (bookmarkedPost === post._id) setBookmarked(true);
+        });
       } catch (err) {
         console.log(err);
       }
@@ -227,7 +230,9 @@ const Post = ({ post }) => {
         <div className="userAboutContainer">
           <img src={user?.pfp || nopfp} alt="" className="pfp" />
           <div className="userAbout">
-            <h3>{user?.name || "ImpactShaala"}</h3>
+            <Link to={`/profile/${post.createdById}`}>
+              <h3>{user?.name || "ImpactShaala"}</h3>
+            </Link>
             <div className="tilesContainer">
               {post?.createdById ? (
                 <>
@@ -262,13 +267,13 @@ const Post = ({ post }) => {
                 onClick={handleCollabClick}
               />
             )}
-            {post?.createdById ? (
+            {/* {post?.createdById ? (
               <img
                 src={backblue}
                 alt=""
                 onClick={() => navigate(`/profile/${post.createdById}`)}
               />
-            ) : null}
+            ) : null} */}
           </div>
         </div>
       </div>

@@ -1,11 +1,11 @@
 import "./questions.scss";
 
-const Question = ({ question, position }) => {
+const Question = ({ question, description }) => {
   return (
-    <div className={`questionContainer ${position}`}>
+    <div className={`questionContainer`}>
       <div className="questionWrapper">
         <h3>{question}</h3>
-        <p></p>
+        <p>{description}</p>
       </div>
     </div>
   );

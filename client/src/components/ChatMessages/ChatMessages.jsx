@@ -20,9 +20,8 @@ const ChatMessages = ({
 
   // SETTING RECIEVED MESSAGE
   useEffect(() => {
-    console.log(recieveMessage);
     if (recieveMessage !== null && recieveMessage?.chatId === chat?._id) {
-      setMessages([...messages, recieveMessage?.text]);
+      setMessages([...messages, recieveMessage]);
     }
   }, [recieveMessage]);
 
@@ -103,7 +102,7 @@ const ChatMessages = ({
     <div className="chatMessages">
       <div className="name">
         <img src={userData?.data.pfp} alt="name" className="pfp" />
-        <h2>{userData?.data.name}</h2>
+        <h3>{userData?.data.name}</h3>
       </div>
       <hr />
       <div className="chats">

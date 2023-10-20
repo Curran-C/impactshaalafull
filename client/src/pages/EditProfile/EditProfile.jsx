@@ -1,33 +1,19 @@
 import "./editProfile.scss";
 import ProfileLeft from "../../components/ProfileLeft/ProfileLeft";
-import axios from "axios";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import NameDate from "../../components/NameDate/NameDate";
 import { date } from "../../utils/date";
-import { useParams } from "react-router-dom";
+import { useOutletContext } from "react-router-dom";
 import ProfileHeader from "../../components/ProfileHeader/ProfileHeader";
 import HomeRight from "../../components/HomeRight/HomeRight";
 import TitleInput from "../../components/TitleInput/TitleInput";
 
 const EditProfile = () => {
-  const [user, setUser] = useState();
-  const { id } = useParams();
+  const { user } = useOutletContext();
   const [updateUser, setUpdateUser] = useState({});
 
-  useEffect(() => {
-    const getUser = async () => {
-      try {
-        const res = await axios.get(
-          `${import.meta.env.VITE_BASE_URL}/api/company/getuser/${id}`
-        );
-        setUser(res.data);
-      } catch (err) {
-        console.log(err);
-      }
-    };
-    getUser();
-  }, []);
   const handleUserUpdate = () => {};
+
   return (
     <div className="editProfile">
       <div className="left">

@@ -19,7 +19,8 @@ const CollaborationsCard = ({ collabId, user, post, page }) => {
     try {
       // todo get post from post Id
       const res = await axios.get(
-        `${import.meta.env.VITE_BASE_URL}/api/post/getsinglepost/${post}`
+        `${import.meta.env.VITE_BASE_URL}/api/post/getsinglepost/${post}`,
+        { withCredentials: true }
       );
       // console.log(res);
       setPost(res);

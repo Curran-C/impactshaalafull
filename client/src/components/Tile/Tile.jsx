@@ -1,10 +1,10 @@
 import "./tile.scss";
 
-const Tile = ({ image, type, selected, onClicked }) => {
+const Tile = ({ image, type, selected, onClicked, className }) => {
   return (
     <div
       style={{ cursor: "pointer" }}
-      className={selected ? "highlighted tile" : "tile"}
+      className={`${className} ${selected ? "highlighted tile" : "tile"}`}
       onClick={onClicked}
     >
       <img className="img" src={image} alt="tile" />

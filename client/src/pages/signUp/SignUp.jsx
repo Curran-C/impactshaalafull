@@ -9,13 +9,17 @@ import {
   citizenOptions,
   corporateOptions,
   educationalOptions,
+  expInYears,
+  focusAreaNGO,
   ngoOptions,
   sectors,
+  yesNo,
 } from "../../constants";
 import Backbutton from "../../components/Backbutton/Backbutton";
 import { tagsImage } from "../../assets/signUp";
 import { Circles } from "react-loader-spinner";
 import Cookies from "js-cookie";
+import ForgotPasswordPopup from "../../components/ForgotPasswordPopup/ForgotPasswordPopup";
 
 const SignUp = () => {
   // states
@@ -25,11 +29,13 @@ const SignUp = () => {
   const [jwtToken, setJwtToken] = useState(null);
   const [hidden, setHidden] = useState(false);
   const [signInState, setSignInState] = useState(true);
+
   const [signUpState, setSignUpState] = useState(false);
-  const [companyDetailsState, setCompanyDetailsState] = useState(false);
-  const [locationDetailsState, setLocationDetailsState] = useState(false);
   const [stakeholderState, setStakeholderState] = useState(false);
+  const [locationDetailsState, setLocationDetailsState] = useState(false);
   const [tagsState, setTagsState] = useState(false);
+  const [companyDetailsState, setCompanyDetailsState] = useState(false);
+
   const [tag, setTag] = useState("");
   const [tags, setTags] = useState([]);
   const [newType, setNewType] = useState("");
@@ -99,22 +105,25 @@ const SignUp = () => {
     }
   };
   useEffect(() => {
-    /* global google */
-    window.google.accounts.id.initialize({
-      client_id:
-        "363281034776-lth0a4mj6bjjatfnaa7q5akbj2tr7s7h.apps.googleusercontent.com",
-      callback: handleGoogleCallback,
-    });
-    window.google.accounts.id.renderButton(
-      document.getElementById("googlesignin"),
-      {
-        theme: "filled_blue",
-        shape: "circle",
-        ux_mode: "popup",
-        text: "continue_with",
-        size: "large",
+    window.onload = function () {
+      if (window.google && window.google.accounts) {
+        window.google.accounts.id.initialize({
+          client_id:
+            "363281034776-lth0a4mj6bjjatfnaa7q5akbj2tr7s7h.apps.googleusercontent.com",
+          callback: handleGoogleCallback,
+        });
+        window.google.accounts.id.renderButton(
+          document.getElementById("googlesignin"),
+          {
+            theme: "filled_blue",
+            shape: "circle",
+            ux_mode: "popup",
+            text: "continue_with",
+            size: "large",
+          }
+        );
       }
-    );
+    };
     // const getLocation = async () => {
     //   try {
     //     const { data } = await axios.get("https://ipapi.co/json/", {
@@ -122,11 +131,13 @@ const SignUp = () => {
     //     });
     //     const { latitude, longitude } = data;
     //     setLocation({ city: data.city, state: data.region });
-    //     const locationFromGoogle = await axios.get(
-    //       `https://maps.googleapis.com/maps/api/geocode/json?latlng=${latitude},${longitude}&key=AIzaSyAphv25nyRmd3k1SbgHW4gcymZSIqdXS_U`,
+    //     const locationFromAccuWeather = await axios.get(
+    //       `http://dataservice.accuweather.com/locations/v1/cities/geoposition/search?apikey=${
+    //         import.meta.env.VITE_ACCUWEATHER_KEY
+    //       }&q=${latitude}%2C${longitude}`,
     //       { withCredentials: false }
     //     );
-    //     console.log(locationFromGoogle);
+    //     console.log(locationFromAccuWeather);
     //   } catch (err) {
     //     console.log(err);
     //   }
@@ -139,12 +150,23 @@ const SignUp = () => {
       navigator.geolocation.getCurrentPosition((position) => {
         const latitude = position.coords.latitude;
         const longitude = position.coords.longitude;
-        console.log(latitude, longitude);
-        const geoUrl = `https://maps.googleapis.com/maps/api/geocode/json?latlng=${latitude},${longitude}&key=AIzaSyAphv25nyRmd3k1SbgHW4gcymZSIqdXS_U`;
+        const geoUrl = `http://dataservice.accuweather.com/locations/v1/cities/geoposition/search?apikey=${
+          import.meta.env.VITE_ACCUWEATHER_KEY
+        }&q=${latitude}%2C${longitude}`;
         fetch(geoUrl)
           .then((res) => res.json())
           .then((data) => {
-            console.log(data);
+            setLocation({
+              city: data.LocalizedName,
+              state: data.AdministrativeArea.EnglishName,
+            });
+            setNewUser((prev) => {
+              return {
+                ...prev,
+                city: data.LocalizedName,
+                state: data.AdministrativeArea.EnglishName,
+              };
+            });
           });
       });
     } catch (err) {
@@ -173,54 +195,106 @@ const SignUp = () => {
 
   const [passwordMissmatch, setPasswordMissmatch] = useState(null);
 
-  const handleSignUpSubmit = (e) => {
-    e.preventDefault();
-    if (newUser?.cpassword) {
-      if (newUser.password !== newUser.cpassword) {
-        // alert("Password Missmatch");
-        setPasswordMissmatch("Password Missmatch");
-      } else {
-        setSignInState(false);
-        setSignUpState(false);
-        setCompanyDetailsState(true);
-      }
-    }
-  };
-
   const [taglineWordLengthWarning, setTaglineWordLengthWarning] =
     useState(null);
   const [descriptionWordLengthWarning, setDescriptionWordLengthWarning] =
     useState(null);
+
+  // Sign up tabs order
+  const handleStakeholderSubmit = (e) => {
+    e.preventDefault();
+    setStakeholderState(false);
+    setCompanyDetailsState(true);
+  };
+
   const handleCompanySubmit = (e) => {
     e.preventDefault();
     const taglineWordLength = newUser.tagline.split(/\s+/).length;
     const descriptionWordLength = newUser.description.split(/\s+/).length;
-    if (taglineWordLength < 15) {
-      setTaglineWordLengthWarning("Tag line should be minimum 15 words");
+    if (taglineWordLength > 15) {
+      setTaglineWordLengthWarning("Tag line should be maximum 15 words");
     } else {
       setTaglineWordLengthWarning("");
     }
-    if (descriptionWordLength < 50) {
-      setDescriptionWordLengthWarning("Description should be minimum 50 words");
+    if (descriptionWordLength > 50) {
+      setDescriptionWordLengthWarning("Description should be maximum 50 words");
     } else {
       setDescriptionWordLengthWarning("");
     }
-    if (taglineWordLength >= 15 && descriptionWordLength >= 50) {
+    if (taglineWordLength <= 15 && descriptionWordLength <= 50) {
       setCompanyDetailsState(false);
       setLocationDetailsState(true);
     }
-  };
-
-  const handleStakeholderSubmit = (e) => {
-    e.preventDefault();
-    setStakeholderState(false);
-    setSignUpState(true);
   };
 
   const handleLocationSubmit = async (e) => {
     e.preventDefault();
     setLocationDetailsState(false);
     setTagsState(true);
+  };
+
+  const handleSignUpSubmit = async (e) => {
+    e.preventDefault();
+    if (newUser?.cpassword) {
+      if (newUser.password !== newUser.cpassword) {
+        setPasswordMissmatch("Password Mismatch");
+      } else {
+        setIsLoading(true);
+        let pfpUrl, coverPicUrl;
+        if (pfp) pfpUrl = await upload(pfp);
+        if (coverPic) coverPicUrl = await upload(coverPic);
+
+        try {
+          const res = await axios.post(
+            `${import.meta.env.VITE_BASE_URL}/api/company/register`,
+            {
+              ...newUser,
+              pfp: pfpUrl?.toString(),
+              type: newType !== "" ? newType : newUser.type,
+              coverPic: coverPicUrl?.toString(),
+              tags: tags,
+            }
+          );
+          console.log(res.data);
+          try {
+            const res = await axios.post(
+              `${import.meta.env.VITE_BASE_URL}/api/company/login`,
+              {
+                email: newUser.email,
+                password: newUser.password,
+              }
+            );
+            Cookies.set("accessToken", res.data.token, {
+              domain: `.${import.meta.env.VITE_CLIENT_URL}`,
+              expires: 7000,
+              sameSite: "Lax",
+            });
+            res.data.info && setIsLoading(false);
+            // navigate(`/home/${res.data.info._id}`);
+            alert("Sign Up successfull");
+            navigate(`/signup`);
+            setSignUpState(false);
+            setSignInState(true);
+          } catch (err) {
+            console.log(err);
+          }
+        } catch (err) {
+          console.log(err);
+        }
+      }
+    }
+  };
+
+  const handleKeywordSubmit = (e) => {
+    e?.preventDefault();
+    if (!tags.length) {
+      setTagLineWaring("Add a keyword");
+    } else if (tags.length > 5) {
+      setTagLineWaring("Maximum of 5 keywords");
+    } else {
+      setTagsState(false);
+      setSignUpState(true);
+    }
   };
 
   const handleSignInInputChange = (e) => {
@@ -248,7 +322,8 @@ const SignUp = () => {
         sameSite: "Lax",
       });
       res.data.info && setIsLoading(true);
-      navigate(`/home/${res.data.info._id}`);
+      localStorage.setItem("IsUser", JSON.stringify(res.data.info));
+      navigate(`/home`);
     } catch (err) {
       console.log(err);
     }
@@ -265,62 +340,6 @@ const SignUp = () => {
   };
 
   const [tagLineWaring, setTagLineWaring] = useState(null);
-  const handleFinalSubmit = async (e) => {
-    e?.preventDefault();
-    if (tags.length < 5) {
-      setTagLineWaring("Minimum of 5 keywords");
-    } else {
-      setIsLoading(true);
-      let pfpUrl, coverPicUrl;
-      if (pfp) pfpUrl = await upload(pfp);
-      if (coverPic) coverPicUrl = await upload(coverPic);
-
-      try {
-        const res = await axios.post(
-          `${import.meta.env.VITE_BASE_URL}/api/company/register`,
-          {
-            ...newUser,
-            pfp: pfpUrl?.toString(),
-            type: newType !== "" ? newType : newUser.type,
-            coverPic: coverPicUrl?.toString(),
-            tags: tags,
-          }
-        );
-        // const res = await fetch(registerUrl, {
-        //   method: "POST",
-        //   headers: {
-        //     "Content-Type": "application/json",
-        //   },
-        //   body: JSON.stringify(requestBody),
-        // });
-        console.log(res.data);
-        try {
-          const res = await axios.post(
-            `${import.meta.env.VITE_BASE_URL}/api/company/login`,
-            {
-              email: newUser.email,
-              password: newUser.password,
-            }
-          );
-          Cookies.set("accessToken", res.data.token, {
-            domain: `.${import.meta.env.VITE_CLIENT_URL}`,
-            expires: 7000,
-            sameSite: "Lax",
-          });
-          res.data.info && setIsLoading(false);
-          // navigate(`/home/${res.data.info._id}`);
-          alert("Sign Up successfull");
-          navigate(`/signup`);
-          setTagsState(false);
-          setSignInState(true);
-        } catch (err) {
-          console.log(err);
-        }
-      } catch (err) {
-        console.log(err);
-      }
-    }
-  };
 
   const handlePincode = async () => {
     console.log(newUser.pinCode);
@@ -338,9 +357,8 @@ const SignUp = () => {
     });
   };
 
-  // constants
-
   // signin
+  const [showForgotPasswordPopup, setShowForgotPasswordPopup] = useState(false);
   const signIn = (
     <div className="signinpage">
       <div className={`signupblue ${hidden ? "visible" : "hidden"}`}>
@@ -386,7 +404,14 @@ const SignUp = () => {
             id=""
           />
         </div>
-        <a>Forgot your password?</a>
+        <span className="forgot-password-container">
+          <p onClick={() => setShowForgotPasswordPopup((prev) => !prev)}>
+            Forgot your password ?
+          </p>
+          {showForgotPasswordPopup && (
+            <ForgotPasswordPopup showPopup={setShowForgotPasswordPopup} />
+          )}
+        </span>
         <p className="signupToggle" onClick={handleSwitch}>
           Sign up?
         </p>
@@ -414,7 +439,7 @@ const SignUp = () => {
     <div className="stakeholderCategory">
       <Backbutton trueState={setSignInState} falseState={setStakeholderState} />
       <form onSubmit={handleStakeholderSubmit} className="stakeholderContainer">
-        <h1>Give us some Details</h1>
+        <h1>Stakeholder Details</h1>
         <select
           required
           onChange={(e) => handleSignUpInputChange(e)}
@@ -436,52 +461,62 @@ const SignUp = () => {
           required
           onChange={(e) => handleSignUpInputChange(e)}
           className="dropdown"
-          name="sector"
-          id=""
-        >
-          <option value="" disabled selected hidden>
-            Type {/*//!Previously known as sectors */}
-          </option>
-          {sectors.map((sector) => (
-            <option key={sector} value={sector}>
-              {sector}
-            </option>
-          ))}
-        </select>
-        <select
-          required
-          onChange={(e) => handleSignUpInputChange(e)}
-          className="dropdown"
           name="type"
           id=""
         >
-          <option value="" disabled selected hidden>
-            Sub-type {/*//!Previously known as type */}
-          </option>
-          {newUser?.stakeholder === "Educational Institution" &&
-            educationalOptions.map((option) => (
-              <option key={option} value={option}>
-                {option}
+          {!newUser?.stakeholder && (
+            <option value="" disabled selected hidden>
+              Choose Stakeholder
+            </option>
+          )}
+          {newUser?.stakeholder === "Educational Institution" && (
+            <>
+              <option value="" disabled selected hidden>
+                Select your institution's type
               </option>
-            ))}
-          {newUser?.stakeholder === "NGO" &&
-            ngoOptions.map((option) => (
-              <option key={option} value={option}>
-                {option}
+              {educationalOptions.map((option) => (
+                <option key={option} value={option}>
+                  {option}
+                </option>
+              ))}
+            </>
+          )}
+          {newUser?.stakeholder === "NGO" && (
+            <>
+              <option value="" disabled selected hidden>
+                Select your NGO type
               </option>
-            ))}
-          {newUser?.stakeholder === "Corporate" &&
-            corporateOptions.map((option) => (
-              <option key={option} value={option}>
-                {option}
+              {ngoOptions.map((option) => (
+                <option key={option} value={option}>
+                  {option}
+                </option>
+              ))}
+            </>
+          )}
+          {newUser?.stakeholder === "Corporate" && (
+            <>
+              <option value="" disabled selected hidden>
+                Select your Industry
               </option>
-            ))}
-          {newUser?.stakeholder === "Working Professional" &&
-            citizenOptions.map((option) => (
-              <option key={option} value={option}>
-                {option}
+              {corporateOptions.map((option) => (
+                <option key={option} value={option}>
+                  {option}
+                </option>
+              ))}
+            </>
+          )}
+          {newUser?.stakeholder === "Working Professional" && (
+            <>
+              <option value="" disabled selected hidden>
+                Select your Profession
               </option>
-            ))}
+              {citizenOptions.map((option) => (
+                <option key={option} value={option}>
+                  {option}
+                </option>
+              ))}
+            </>
+          )}
         </select>
         {newUser?.type === "Other" &&
           newUser?.stakeholder === "Working Professional" && (
@@ -494,6 +529,67 @@ const SignUp = () => {
               required
             />
           )}
+        <select
+          required
+          onChange={(e) => handleSignUpInputChange(e)}
+          className="dropdown"
+          name="sector"
+          id=""
+        >
+          {!newUser?.stakeholder && (
+            <option value="" disabled selected hidden>
+              Choose Stakeholder
+            </option>
+          )}
+          {newUser?.stakeholder === "Educational Institution" && (
+            <>
+              <option value="" disabled selected hidden>
+                Select your institution's nature
+              </option>
+              {sectors.map((option) => (
+                <option key={option} value={option}>
+                  {option}
+                </option>
+              ))}
+            </>
+          )}
+          {newUser?.stakeholder === "NGO" && (
+            <>
+              <option value="" disabled selected hidden>
+                Select your focus area
+              </option>
+              {focusAreaNGO.map((option) => (
+                <option key={option} value={option}>
+                  {option}
+                </option>
+              ))}
+            </>
+          )}
+          {newUser?.stakeholder === "Corporate" && (
+            <>
+              <option value="" disabled selected hidden>
+                CSR department ?
+              </option>
+              {yesNo.map((option) => (
+                <option key={option} value={option}>
+                  {option}
+                </option>
+              ))}
+            </>
+          )}
+          {newUser?.stakeholder === "Working Professional" && (
+            <>
+              <option value="" disabled selected hidden>
+                Years of experience
+              </option>
+              {expInYears.map((option) => (
+                <option key={option} value={option}>
+                  {option}
+                </option>
+              ))}
+            </>
+          )}
+        </select>
         <button type="submit">Next</button>
       </form>
     </div>
@@ -510,21 +606,18 @@ const SignUp = () => {
         </div>
         <div className="or">
           <hr />
-          <p>Or</p>
+          <p>OR</p>
           <hr />
         </div>
-        <div className="warning-message">
-          <p>{passwordMissmatch}</p>
-        </div>
-        <div className="inputs">
-          <input
+        <div className="inputs ">
+          {/* <input
             onChange={(e) => handleSignUpInputChange(e)}
             required
             placeholder="Enter your name"
             type="text"
             name="name"
             id=""
-          />
+          /> */}
           <input
             onChange={(e) => handleSignUpInputChange(e)}
             required
@@ -532,6 +625,7 @@ const SignUp = () => {
             type="email"
             name="email"
             id=""
+            title="This will be used as your username"
           />
           <input
             onChange={(e) => handleSignUpInputChange(e)}
@@ -550,7 +644,9 @@ const SignUp = () => {
             id=""
           />
         </div>
-
+        <div className="warning-message">
+          <p>{passwordMissmatch}</p>
+        </div>
         <button type="submit">Sign Up</button>
       </form>
 
@@ -570,17 +666,12 @@ const SignUp = () => {
 
   const companyDetails = (
     <div className="companyDetails">
-      <Backbutton
-        trueState={setSignUpState}
-        falseState={setCompanyDetailsState}
-      />
       <form className="signup" onSubmit={handleCompanySubmit}>
+        <Backbutton
+          trueState={setSignUpState}
+          falseState={setCompanyDetailsState}
+        />
         <h2>{newUser?.stakeholder} Details</h2>
-        <div className="warning-message">
-          <p>{descriptionWordLengthWarning}</p>
-          <p>{taglineWordLengthWarning}</p>
-        </div>
-
         <div className="inputs">
           <input
             onChange={(e) => handleSignUpInputChange(e)}
@@ -601,9 +692,14 @@ const SignUp = () => {
             placeholder="Description"
             name="description"
             onChange={(e) => handleSignUpInputChange(e)}
+            required
+            rows={3}
           />
+          <div className="warning-message">
+            <p>{taglineWordLengthWarning}</p>
+            <p>{descriptionWordLengthWarning}</p>
+          </div>
         </div>
-
         <button type="submit">Next</button>
       </form>
 
@@ -777,7 +873,7 @@ const SignUp = () => {
               />
             </button>
           ) : (
-            <button onClick={handleFinalSubmit}>Sign Up</button>
+            <button onClick={handleKeywordSubmit}>Continue</button>
           )}
         </div>
       </div>
@@ -789,10 +885,10 @@ const SignUp = () => {
     <div className="container">
       {signInState && signIn}
       {stakeholderState && stakeholder}
-      {signUpState && signUp}
       {companyDetailsState && companyDetails}
       {locationDetailsState && locationDetails}
       {tagsState && tagsPage}
+      {signUpState && signUp}
     </div>
   );
 };

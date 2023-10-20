@@ -1,4 +1,4 @@
-import { useParams } from "react-router-dom";
+import { useOutletContext } from "react-router-dom";
 import { search } from "../../assets/home";
 import { chat } from "../../assets/profile";
 
@@ -13,9 +13,7 @@ import "./chats.scss";
 import ChatFiller from "../../components/ChatFiller/ChatFiller";
 
 const Chats = () => {
-  const { id } = useParams();
-
-  const [loggedInUser, setLoggedInUser] = useState();
+  const { user: loggedInUser } = useOutletContext();
   const [chats, setChats] = useState();
   const [currentChat, setCurrentChat] = useState(null);
   const [onlineUsers, setOnlineUsers] = useState([]);
@@ -25,8 +23,8 @@ const Chats = () => {
 
   //SOCKET IO
   useEffect(() => {
-    socket.current = io("http://localhost:8800");
-    socket.current.emit("new-user-add", loggedInUser?.data._id);
+    socket.current = io(import.meta.env.VITE_BASE_URL);
+    socket.current.emit("new-user-add", loggedInUser?._id);
     socket.current.on("get-users", (users) => {
       setOnlineUsers(users);
     });
@@ -41,38 +39,23 @@ const Chats = () => {
 
   // RECIEVE MESSAGE FROM SOCKET SERVER
   useEffect(() => {
-    console.log("44");
     socket.current.on("recieve-message", (data) => {
-      console.log(data);
       setRecieveMessage(data);
     });
   }, [sendMessage]);
 
   useEffect(() => {
-    //GET USER
-    const getUser = async () => {
-      try {
-        const user = await axios.get(
-          `${import.meta.env.VITE_BASE_URL}/api/company/getuser/${id}`
-        );
-        setLoggedInUser(user);
-      } catch (err) {
-        console.log(err);
-      }
-    };
-
     //GET CHATS
     const getChats = async () => {
       try {
         const allchats = await axios.get(
-          `${import.meta.env.VITE_BASE_URL}/api/chat/${id}`
+          `${import.meta.env.VITE_BASE_URL}/api/chat/${loggedInUser?._id}`
         );
         setChats(allchats);
       } catch (err) {
         console.log(err);
       }
     };
-    getUser();
     getChats();
   }, []);
 
@@ -94,17 +77,16 @@ const Chats = () => {
                 showChat={setCurrentChat}
                 key={chat._id}
                 chat={chat}
-                currentUserId={loggedInUser?.data._id}
+                currentUserId={loggedInUser?._id}
               />
             ))}
           </div>
         </div>
         <div className="right">
-          {console.log(recieveMessage)}
           {currentChat ? (
             <ChatMessages
               chat={currentChat}
-              currentUserId={loggedInUser?.data._id}
+              currentUserId={loggedInUser?._id}
               setSendMessage={setSendMessage}
               recieveMessage={recieveMessage}
             />

@@ -2,19 +2,21 @@ import { useEffect, useState } from "react";
 import { corporate, nopfp } from "../../assets/profile";
 import Tile from "../Tile/Tile";
 import "./Notifications.scss";
-import { useParams, useNavigate } from "react-router-dom";
+import { useNavigate, useOutletContext } from "react-router-dom";
 import axios from "axios";
+import {
+  getAllNotificationsAPI,
+  markAsReadNotificationAPI,
+} from "../../api/notification";
 
 const Notifications = () => {
-  const [highlighted, setHighlighted] = useState(true);
-  const { id } = useParams();
+  const { user } = useOutletContext();
+  const id = user?._id;
   const navigate = useNavigate();
-  console.log("Id", id);
   const [notifications, setNotifications] = useState([]);
 
   useEffect(() => {
-    axios
-      .get(`${import.meta.env.VITE_BASE_URL}/api/notification/getall/${id}`)
+    getAllNotificationsAPI()
       .then((response) => {
         setNotifications(response.data.slice(0, 10));
       })
@@ -24,13 +26,7 @@ const Notifications = () => {
   }, [id]);
 
   const handleMarkAsRead = (notificationId) => {
-    console.log(notificationId);
-    axios
-      .post(
-        `${
-          import.meta.env.VITE_BASE_URL
-        }/api/notification/markAsRead/${notificationId}`
-      )
+    markAsReadNotificationAPI(notificationId)
       .then(() => {
         setNotifications((prevNotifications) =>
           prevNotifications.map((notification) =>

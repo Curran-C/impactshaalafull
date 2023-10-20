@@ -1,0 +1,78 @@
+.custom-modal {
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  z-index: 1;
+  position: fixed;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  .modal-overlay {
+    position: absolute;
+    background: #000;
+    height: 100vh;
+    width: 100vw;
+    opacity: 0.4;
+    z-index: -10;
+    top: 0;
+    margin: 0;
+  }
+
+  .container {
+    margin: 20px;
+    height: auto;
+    background-color: #fff;
+    border-radius: 25px;
+    padding: 20px 40px;
+    display: flex;
+    flex-direction: column;
+    max-height: 80vh;
+
+    .modal-title {
+      text-align: center;
+      padding-bottom: 15px;
+      border-bottom: rgb(241, 241, 241) 2px solid;
+      width: 100%;
+    }
+
+    .modal-body {
+      overflow-y: auto;
+    }
+
+    .modal-footer {
+      display: flex;
+      justify-content: end;
+      button {
+        border: none;
+        padding: 10px 15px;
+        color: white;
+        border-radius: 15px;
+        margin: 10px;
+        &:hover {
+          color: black;
+          box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+        }
+        &:active {
+          box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px inset;
+        }
+      }
+
+      .cancel-button {
+        background-color: #d37580;
+      }
+
+      .submit-button {
+        background-color: #759bd3;
+      }
+    }
+
+    button:disabled {
+      opacity: 0.6;
+      box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px inset;
+      cursor: not-allowed;
+    }
+  }
+}
