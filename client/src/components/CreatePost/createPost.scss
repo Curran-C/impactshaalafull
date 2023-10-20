@@ -6,53 +6,57 @@
   display: flex;
   flex-direction: column;
 
-  .input {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
+  .inputs {
+    height: 60vh;
+    overflow-y: auto;
+    .input {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
 
-    h4 {
-      margin: 0;
-      font-weight: 500;
-      font-size: 14px;
-    }
+      h4 {
+        margin: 0;
+        font-weight: 500;
+        font-size: 14px;
+      }
 
-    input,
-    textarea,
-    select {
-      padding: 10px 20px;
-      border: none;
-      outline: none;
-      background: #f5f7f6;
-      border-radius: 5px;
-      font-size: 15px;
-      margin-bottom: 10px;
-      .img {
-        display: flex;
-        align-items: center;
-        gap: 10px;
-        img {
-          height: 30px;
-        }
-        span {
-          font-size: 13px;
+      input,
+      textarea,
+      select {
+        padding: 10px 20px;
+        border: none;
+        outline: none;
+        background: #f5f7f6;
+        border-radius: 5px;
+        font-size: 15px;
+        margin-bottom: 10px;
+        .img {
+          display: flex;
+          align-items: center;
+          gap: 10px;
+          img {
+            height: 30px;
+          }
+          span {
+            font-size: 13px;
+          }
         }
       }
     }
-  }
-  .small-details {
-    display: flex;
-    justify-content: space-evenly;
-    align-items: center;
-    flex-wrap: wrap;
-    .input {
+    .small-details {
       display: flex;
-      flex-direction: row;
+      justify-content: space-evenly;
       align-items: center;
-      gap: 10px;
-      width: 50%;
-      h4 {
-        width: 30%;
+      flex-wrap: wrap;
+      .input {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        gap: 10px;
+        width: 50%;
+        h4 {
+          width: 30%;
+        }
       }
     }
   }

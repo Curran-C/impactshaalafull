@@ -26,7 +26,10 @@ const CreatePost = ({ onCancel }) => {
 
   const handleCreatePost = async (e) => {
     e.preventDefault();
-    console.log(post);
+    let updatedPost = post;
+    if (updatedPost?.keywords) {
+      updatedPost.keywords = keywords.split(" ");
+    }
     try {
       const res = await axios.post(
         `${import.meta.env.VITE_BASE_URL}/api/post/create`,
@@ -52,201 +55,203 @@ const CreatePost = ({ onCancel }) => {
     <Modal>
       <h3 className="modal-title">Create a post</h3>
       <form onSubmit={handleCreatePost} className="create-post modal-body">
-        <div className="input">
-          <h4>Keywords</h4>
-          <input
-            onChange={handleInputChange}
-            type="text"
-            placeholder="Seperate using space"
-            name="keywords"
-            value={post.words || ""}
-            required
-          />
-        </div>
-        <div className="input">
-          <h4>Collaborate with</h4>
-          <select
-            required
-            name="collaborateWith"
-            onChange={handleInputChange}
-            id="collaborateWith"
-            value={post.collaborateWith}
-          >
-            {user?.stakeholder !== "Educational Institutions" ? (
-              <>
-                <option value="" hidden selected disabled>
-                  Who do you want to collaborate with ?
-                </option>
+        <div className="inputs">
+          <div className="input">
+            <h4>Keywords</h4>
+            <input
+              onChange={handleInputChange}
+              type="text"
+              placeholder="Seperate using space"
+              name="keywords"
+              value={post.keywords}
+              required
+            />
+          </div>
+          <div className="input">
+            <h4>Collaborate with</h4>
+            <select
+              required
+              name="collaborateWith"
+              onChange={handleInputChange}
+              id="collaborateWith"
+              value={post.collaborateWith}
+            >
+              {user?.stakeholder !== "Educational Institutions" ? (
+                <>
+                  <option value="" hidden selected disabled>
+                    Who do you want to collaborate with ?
+                  </option>
+                  <option value="Educational Institutions">
+                    Educational Institutions
+                  </option>
+                  <option value="Corporates">Corporates</option>
+                  <option value="NGOs">NGOs</option>
+                  <option value="Working Professionals">
+                    Working Professionals
+                  </option>
+                </>
+              ) : (
                 <option value="Educational Institutions">
                   Educational Institutions
                 </option>
-                <option value="Corporates">Corporates</option>
-                <option value="NGOs">NGOs</option>
-                <option value="Working Professionals">
-                  Working Professionals
-                </option>
-              </>
-            ) : (
-              <option value="Educational Institutions">
-                Educational Institutions
-              </option>
-            )}
-          </select>
-        </div>
-        <div className="input">
-          <h4>Title</h4>
-          <input
-            onChange={handleInputChange}
-            type="text"
-            placeholder="A consice title for the project"
-            name="title"
-            required
-            value={post.title || ""}
-          />
-        </div>
-        <div className="input">
-          <h4>Objective</h4>
-          <input
-            onChange={handleInputChange}
-            type="text"
-            placeholder="A clear Objective of the project"
-            name="objective"
-            value={post.objective || ""}
-            required
-          />
-        </div>
-
-        <div className="input">
-          <h4>Project Description</h4>
-          <textarea
-            onChange={handleInputChange}
-            rows={3}
-            placeholder="Give a short description"
-            type="text"
-            name="description"
-            value={post.description || ""}
-            required
-          />
-        </div>
-
-        <div className="input">
-          <h4>Beneficiaries and Gains</h4>
-          <input
-            onChange={handleInputChange}
-            type="text"
-            placeholder="Who are the beneficiaries and what will they gain?"
-            name="beneficiaries"
-            value={post.beneficiaries || ""}
-            required
-          />
-        </div>
-
-        <div className="input">
-          <h4>Resource Needed</h4>
-          <input
-            onChange={handleInputChange}
-            type="text"
-            placeholder="What are the resources needed ? Eg: Skills / Expertise / Material Support"
-            required
-            name="resources"
-            value={post.resources || ""}
-          />
-        </div>
-
-        <div className="small-details">
-          <div className="input">
-            <h4>Project Tenure</h4>
-            <div className="input">
-              <img src={calender} alt="" />
-              <select
-                onChange={handleInputChange}
-                name="tenure"
-                id="tenure"
-                required
-                value={post?.tenure || ""}
-              >
-                <option value="Micro Projects: (1 to 3 days)">
-                  Micro Projects: (1 to 3 days)
-                </option>
-                <option value="Week-Long Projects: (4 to 7 days)">
-                  Week-Long Projects: (4 to 7 days)
-                </option>
-                <option value="Month-long projects: (25 to 31 days)">
-                  Month-long projects: (25 to 31 days)
-                </option>
-                <option value="Quarterly Projects: (3 months)">
-                  Quarterly Projects: (3 months)
-                </option>
-                <option value="Semester Projects: (4 to 6 months)">
-                  Semester Projects: (4 to 6 months)
-                </option>
-                <option value="Year-Long Projects: (12 months)">
-                  Year-Long Projects: (12 months)
-                </option>
-              </select>
-            </div>
+              )}
+            </select>
           </div>
           <div className="input">
-            <h4>Date</h4>
-            <div className="input">
-              <img src={calender} alt="" />
-              <input
-                onChange={handleInputChange}
-                type="date"
-                name="date"
-                required
-                id="date"
-                value={post.date || ""}
-              />
-            </div>
-          </div>
-          <div className="input">
-            <h4>Time</h4>
-            <div className="input">
-              <img src={clock} alt="" />
-              <input
-                type="time"
-                required
-                name="time"
-                id="time"
-                onChange={handleInputChange}
-                value={post.time || ""}
-              />
-            </div>
-          </div>
-          <div className="input">
-            <h4>Location</h4>
-            <div className="input">
-              <img src={location} alt="" />
-              <input
-                type="text"
-                name="location"
-                required
-                id="location"
-                onChange={handleInputChange}
-                value={post.location || ""}
-                placeholder="On-site / Virtual location"
-              />
-            </div>
-          </div>
-        </div>
-
-        <div className="input">
-          <h4>Attachments</h4>
-          <div className="input">
+            <h4>Title</h4>
             <input
-              type="file"
-              accept="image/*, .pdf, .doc, .docx"
-              onChange={handleFileInputChange}
-              name="attachments"
-              id="attachments"
-              multiple
+              onChange={handleInputChange}
+              type="text"
+              placeholder="A consice title for the project"
+              name="title"
+              required
+              value={post.title || ""}
+            />
+          </div>
+          <div className="input">
+            <h4>Objective</h4>
+            <input
+              onChange={handleInputChange}
+              type="text"
+              placeholder="A clear Objective of the project"
+              name="objective"
+              value={post.objective || ""}
               required
             />
-            {/* <label htmlFor="attachments">
+          </div>
+
+          <div className="input">
+            <h4>Project Description</h4>
+            <textarea
+              onChange={handleInputChange}
+              rows={3}
+              placeholder="Give a short description"
+              type="text"
+              name="description"
+              value={post.description || ""}
+              required
+            />
+          </div>
+
+          <div className="input">
+            <h4>Beneficiaries and Gains</h4>
+            <input
+              onChange={handleInputChange}
+              type="text"
+              placeholder="Who are the beneficiaries and what will they gain?"
+              name="beneficiaries"
+              value={post.beneficiaries || ""}
+              required
+            />
+          </div>
+
+          <div className="input">
+            <h4>Resource Needed</h4>
+            <input
+              onChange={handleInputChange}
+              type="text"
+              placeholder="What are the resources needed ? Eg: Skills / Expertise / Material Support"
+              required
+              name="resources"
+              value={post.resources || ""}
+            />
+          </div>
+
+          <div className="small-details">
+            <div className="input">
+              <h4>Project Tenure</h4>
+              <div className="input">
+                <img src={calender} alt="" />
+                <select
+                  onChange={handleInputChange}
+                  name="tenure"
+                  id="tenure"
+                  required
+                  value={post?.tenure || ""}
+                >
+                  <option value="Micro Projects: (1 to 3 days)">
+                    Micro Projects: (1 to 3 days)
+                  </option>
+                  <option value="Week-Long Projects: (4 to 7 days)">
+                    Week-Long Projects: (4 to 7 days)
+                  </option>
+                  <option value="Month-long projects: (25 to 31 days)">
+                    Month-long projects: (25 to 31 days)
+                  </option>
+                  <option value="Quarterly Projects: (3 months)">
+                    Quarterly Projects: (3 months)
+                  </option>
+                  <option value="Semester Projects: (4 to 6 months)">
+                    Semester Projects: (4 to 6 months)
+                  </option>
+                  <option value="Year-Long Projects: (12 months)">
+                    Year-Long Projects: (12 months)
+                  </option>
+                </select>
+              </div>
+            </div>
+            <div className="input">
+              <h4>Date</h4>
+              <div className="input">
+                <img src={calender} alt="" />
+                <input
+                  onChange={handleInputChange}
+                  type="date"
+                  name="date"
+                  required
+                  id="date"
+                  value={post.date || ""}
+                />
+              </div>
+            </div>
+            <div className="input">
+              <h4>Time</h4>
+              <div className="input">
+                <img src={clock} alt="" />
+                <input
+                  type="time"
+                  required
+                  name="time"
+                  id="time"
+                  onChange={handleInputChange}
+                  value={post.time || ""}
+                />
+              </div>
+            </div>
+            <div className="input">
+              <h4>Location</h4>
+              <div className="input">
+                <img src={location} alt="" />
+                <input
+                  type="text"
+                  name="location"
+                  required
+                  id="location"
+                  onChange={handleInputChange}
+                  value={post.location || ""}
+                  placeholder="On-site / Virtual location"
+                />
+              </div>
+            </div>
+          </div>
+
+          <div className="input">
+            <h4>Attachments</h4>
+            <div className="input">
+              <input
+                type="file"
+                accept="image/*, .pdf, .doc, .docx"
+                onChange={handleFileInputChange}
+                name="attachments"
+                id="attachments"
+                multiple
+                required
+              />
+              {/* <label htmlFor="attachments">
               <img src={attachIcon} alt="Attach Icon" />
               Attach Files
             </label> */}
+            </div>
           </div>
         </div>
 

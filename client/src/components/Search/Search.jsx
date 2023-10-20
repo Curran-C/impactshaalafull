@@ -16,7 +16,7 @@ const Search = ({ userName }) => {
   const [allUsers, setAllUsers] = useState();
   const [notifCount, setNotifCount] = useState(100);
   const { user } = useOutletContext();
-
+  const [showResults, setShowResults] = useState(false);
   const ref = useRef();
   const navigate = useNavigate();
 
@@ -42,6 +42,7 @@ const Search = ({ userName }) => {
       if (ref.current && !ref.current.contains(event.target)) {
         setSearchResults([]);
         setSearch("");
+        setShowResults(false);
       }
     }
 
@@ -70,29 +71,32 @@ const Search = ({ userName }) => {
     setSearchResults([]);
     allUsers?.map((user) => {
       if (
-        user?.name.toLowerCase().includes(search.toLowerCase()) ||
+        user?.name?.toLowerCase().includes(search.toLowerCase()) ||
         user?.tags.includes(search)
       )
         setSearchResults((prev) => [...prev, user]);
     });
+    setShowResults(true);
   };
 
   return (
     <div ref={ref} className="search">
-      {shownotifications && <Notifications />}
       <div className="title">
         <NameDate name={userName} date={date} />
         <div className="icons"></div>
         <div className="imgs">
+          <div className="notification-container">
+            <img
+              onClick={() => setShownotifications(!shownotifications)}
+              src={bell}
+              alt="notifications"
+              style={{ cursor: "pointer" }}
+            />
+            <div className="notifcount">{notifCount}</div>
+            {shownotifications && <Notifications />}
+          </div>
           <img
-            onClick={() => setShownotifications(!shownotifications)}
-            src={bell}
-            alt="notifications"
-            style={{ cursor: "pointer" }}
-          />
-          <div className="notifcount">{notifCount}</div>
-          <img
-            onClick={() => navigate(`/chats/${user?._id}`)}
+            onClick={() => navigate(`/chats`)}
             style={{ cursor: "pointer" }}
             src={chat}
             alt="chat"
@@ -111,10 +115,10 @@ const Search = ({ userName }) => {
         </div>
         <input type="submit" hidden />
         <img onClick={handleSearch} src={enter} alt="" />
+        {showResults && (
+          <SearchResults users={searchResults} onCancel={setSearchResults} />
+        )}
       </form>
-      {searchResults.length > 0 && search !== "" && (
-        <SearchResults users={searchResults} onCancel={setSearchResults} />
-      )}
     </div>
   );
 };
