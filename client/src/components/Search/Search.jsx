@@ -92,7 +92,7 @@ const Search = ({ userName }) => {
               alt="notifications"
               style={{ cursor: "pointer" }}
             />
-            <div className="notifcount">{notifCount}</div>
+            {notifCount && <div className="notifcount">{notifCount}</div>}
             {shownotifications && <Notifications />}
           </div>
           <img
@@ -116,7 +116,11 @@ const Search = ({ userName }) => {
         <input type="submit" hidden />
         <img onClick={handleSearch} src={enter} alt="" />
         {showResults && (
-          <SearchResults users={searchResults} onCancel={setSearchResults} />
+          <SearchResults
+            users={searchResults}
+            onCancel={setSearchResults}
+            short
+          />
         )}
       </form>
     </div>
