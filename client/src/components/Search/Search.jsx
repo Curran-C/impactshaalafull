@@ -16,7 +16,7 @@ const Search = ({ userName }) => {
   const [allUsers, setAllUsers] = useState();
   const [notifCount, setNotifCount] = useState(100);
   const { user } = useOutletContext();
-
+  const [showResults, setShowResults] = useState(false);
   const ref = useRef();
   const navigate = useNavigate();
 
@@ -42,6 +42,7 @@ const Search = ({ userName }) => {
       if (ref.current && !ref.current.contains(event.target)) {
         setSearchResults([]);
         setSearch("");
+        setShowResults(false);
       }
     }
 
@@ -75,6 +76,7 @@ const Search = ({ userName }) => {
       )
         setSearchResults((prev) => [...prev, user]);
     });
+    setShowResults(true);
   };
 
   return (
@@ -113,10 +115,8 @@ const Search = ({ userName }) => {
         </div>
         <input type="submit" hidden />
         <img onClick={handleSearch} src={enter} alt="" />
-        {searchResults.length > 0 && search !== "" ? (
+        {showResults && (
           <SearchResults users={searchResults} onCancel={setSearchResults} />
-        ) : (
-          <SearchResults onCancel={setSearchResults} users={[]} />
         )}
       </form>
     </div>
