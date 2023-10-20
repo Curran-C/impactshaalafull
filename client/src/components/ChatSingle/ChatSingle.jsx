@@ -33,10 +33,10 @@ const ChatSingle = ({ chat, currentUserId, showChat, onlineUsers }) => {
         <h4>{userData?.name}</h4>
         <p>{online ? "Online" : "Offline"}</p>
       </div>
-      <div className="time">
+      {/* <div className="time">
         <p>9:20</p>
         <div className="unreadCounter">9</div>
-      </div>
+      </div> */}
     </div>
   );
 };
