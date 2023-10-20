@@ -63,6 +63,7 @@ const ProfileLeft = ({ page }) => {
         highlighted={page === "savedPosts" ? true : false}
         img={savedposts}
         linkText={"Saved Posts"}
+        to='/savedPosts'
       />
       <ProfileLinks
         highlighted={page === "collaborations" ? true : false}

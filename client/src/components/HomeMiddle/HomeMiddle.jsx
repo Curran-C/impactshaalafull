@@ -29,6 +29,7 @@ const HomeMiddle = () => {
       <Search userName={user?.name} />
       <h2 className="title">Recent Posts</h2>
       <Posts posts={posts} />
+      <Collab />
     </div>
   );
 };

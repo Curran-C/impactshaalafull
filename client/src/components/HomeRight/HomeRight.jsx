@@ -16,8 +16,8 @@ const HomeRight = () => {
         <ContactUs email={user?.email} onCancel={setShowEmailForm} />
       )}
       <ProfileCard />
-      <Preferences />
-      <Collab />
+      {/* <Preferences />
+      <Collab /> */}
       <div className="getInTouch">
         <h4>Need help with collaborating?</h4>
         <button onClick={() => setShowEmailForm(true)}>Get in Touch</button>

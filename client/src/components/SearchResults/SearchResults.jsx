@@ -9,22 +9,26 @@ const SearchResults = ({ users }) => {
 
   return (
     <div className="searchResults">
-      {users?.map((user) => (
-        <div
-          onClick={() => navigate(`/profile/${user?._id}`)}
-          className="searchResult"
-          key={user?._id}
-        >
-          <img src={user?.pfp || nopfp} alt="" />
-          <div className="info">
-            <div className="searchAbout">
-              <h4>{user?.name}</h4>
-              <Tile image={corporate} type={user?.stakeholder} />
+      {users?.length ? (
+        users?.map((user) => (
+          <div
+            onClick={() => navigate(`/profile/${user?._id}`)}
+            className="searchResult"
+            key={user?._id}
+          >
+            <img src={user?.pfp || nopfp} alt="" />
+            <div className="info">
+              <div className="searchAbout">
+                <h4>{user?.name}</h4>
+                <Tile image={corporate} type={user?.stakeholder} />
+              </div>
+              <Tags tags={user?.tags} />
             </div>
-            <Tags tags={user?.tags} />
           </div>
-        </div>
-      ))}
+        ))
+      ) : (
+        <span className="no-results">No results found</span>
+      )}
     </div>
   );
 };
