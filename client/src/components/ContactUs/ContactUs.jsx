@@ -161,6 +161,18 @@ const ContactUs = ({ onCancel, email }) => {
             />
           </div>
           <div className="input">
+            <h4>Description</h4>
+            <textarea
+              required
+              onChange={handleInputChange}
+              type="text"
+              placeholder="Write a short description"
+              name="description"
+              value={form.description}
+              rows={3}
+            />
+          </div>
+          <div className="input">
             <h4>Project Tenure</h4>
             <select
               onChange={handleInputChange}
