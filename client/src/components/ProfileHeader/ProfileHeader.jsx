@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import { corporate, location, nopfp, linkIcon } from "../../assets/profile";
 import Hex from "../Hex/Hex";
 import Tags from "../Tags/Tags";
@@ -32,10 +33,12 @@ const ProfileHeader = ({ user, pageName }) => {
                   type={user?.stakeholder}
                 />
                 <Tile image={location} type={user?.city} />
-                <Tile
-                  image={linkIcon}
-                  type={user?.website || "https://companyurl.com"}
-                />
+                <Link to={user?.websiteLink}>
+                  <Tile
+                    image={linkIcon}
+                    type={user?.websiteLink || "https://companyurl.com"}
+                  />
+                </Link>
               </div>
             </div>
             <div className="company-about">
