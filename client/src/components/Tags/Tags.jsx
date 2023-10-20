@@ -5,12 +5,15 @@ axios.defaults = {
 import "./tags.scss";
 import { useEffect, useState } from "react";
 import jwtDecode from "jwt-decode";
+import { useOutletContext, useParams } from "react-router-dom";
 
 const Tags = ({ tags, page }) => {
   const [accessToken, setAccessToken] = useState();
   const [decodedToken, setDecodedToken] = useState();
   const [seenTags, setSeenTags] = useState();
   const [newTag, setNewTag] = useState("");
+  const { id } = useParams();
+  const { user } = useOutletContext();
 
   useEffect(() => {
     const getCookie = () => {
@@ -60,25 +63,29 @@ const Tags = ({ tags, page }) => {
     <div className="tagsContainer">
       <div className="header">
         <h4>Collaboration Keywords</h4>
-        <form onSubmit={handleTagAdd} className="addTags">
-          <input
-            value={newTag}
-            type="text"
-            onChange={(e) => setNewTag(e.target.value)}
-            placeholder="New tag"
-          />
-          <input type="submit" hidden />
-          <button>Add new</button>
-        </form>
+        {user?._id === id && (
+          <form onSubmit={handleTagAdd} className="addTags">
+            <input
+              value={newTag}
+              type="text"
+              onChange={(e) => setNewTag(e.target.value)}
+              placeholder="New tag"
+            />
+            <input type="submit" hidden />
+            <button>Add new</button>
+          </form>
+        )}
       </div>
       <div className="tagsWrapper">
         {seenTags && seenTags.length !== 0 ? (
           seenTags.map((tag, index) => (
             <div key={index} className="tag">
               <p>{tag}</p>
-              <p className="x" onClick={() => removeTag(tag)}>
-                X
-              </p>
+              {user?._id === id && (
+                <p className="x" onClick={() => removeTag(tag)}>
+                  X
+                </p>
+              )}
             </div>
           ))
         ) : (
