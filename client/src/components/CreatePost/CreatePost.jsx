@@ -26,7 +26,10 @@ const CreatePost = ({ onCancel }) => {
 
   const handleCreatePost = async (e) => {
     e.preventDefault();
-    console.log(post);
+    let updatedPost = post;
+    if (updatedPost?.keywords) {
+      updatedPost.keywords = keywords.split(" ");
+    }
     try {
       const res = await axios.post(
         `${import.meta.env.VITE_BASE_URL}/api/post/create`,
