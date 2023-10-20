@@ -1,4 +1,4 @@
-import { useOutletContext } from "react-router-dom";
+import { useNavigate, useOutletContext } from "react-router-dom";
 import { search } from "../../assets/home";
 import { chat } from "../../assets/profile";
 
@@ -20,6 +20,7 @@ const Chats = () => {
   const [sendMessage, setSendMessage] = useState(null);
   const [recieveMessage, setRecieveMessage] = useState(null);
   const socket = useRef();
+  const navigate = useNavigate();
 
   //SOCKET IO
   useEffect(() => {
@@ -28,6 +29,11 @@ const Chats = () => {
     socket.current.on("get-users", (users) => {
       setOnlineUsers(users);
     });
+    return () => {
+      console.log("userDisconnected");
+      socket.current.emit("disconnected");
+      socket.current.disconnect();
+    };
   }, [loggedInUser]);
 
   //SEND MESSAGE TO SOCKET IO SERVER
@@ -51,7 +57,7 @@ const Chats = () => {
         const allchats = await axios.get(
           `${import.meta.env.VITE_BASE_URL}/api/chat/${loggedInUser?._id}`
         );
-        setChats(allchats);
+        setChats(allchats.data);
       } catch (err) {
         console.log(err);
       }
@@ -61,9 +67,14 @@ const Chats = () => {
 
   return (
     <div className="chat">
-      <div className="title">
-        <img src={chat} alt="chat" />
-        <h2>Chats</h2>
+      <div className="header">
+        <button className="btn back-btn" onClick={() => navigate(-1)}>
+          Go Back
+        </button>
+        <div className="title">
+          <img src={chat} alt="chat" />
+          <h2>Chats</h2>
+        </div>
       </div>
       <div className="container">
         <div className="left">
@@ -72,12 +83,13 @@ const Chats = () => {
             <input type="text" placeholder="Search" />
           </div>
           <div className="chatsAll">
-            {chats?.data.map((chat) => (
+            {chats?.map((chat) => (
               <ChatSingle
                 showChat={setCurrentChat}
                 key={chat._id}
                 chat={chat}
                 currentUserId={loggedInUser?._id}
+                onlineUsers={onlineUsers}
               />
             ))}
           </div>
