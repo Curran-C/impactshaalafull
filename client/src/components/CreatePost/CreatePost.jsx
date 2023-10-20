@@ -13,7 +13,8 @@ const CreatePost = ({ onCancel }) => {
 
   //states
   const [post, setPost] = useState({
-    date: date.toISOString().slice(0, 10),
+    fromDate: date.toISOString().slice(0, 10),
+    toDate: date.toISOString().slice(0, 10),
     time: date.toTimeString().slice(0, 5),
   });
   const [selectedFiles, setSelectedFiles] = useState([]);
@@ -23,6 +24,11 @@ const CreatePost = ({ onCancel }) => {
       return { ...prev, [e.target.name]: e.target.value };
     });
   };
+
+
+
+  
+  
 
   const handleCreatePost = async (e) => {
     e.preventDefault();
@@ -191,20 +197,6 @@ const CreatePost = ({ onCancel }) => {
               </div>
             </div>
             <div className="input">
-              <h4>Date</h4>
-              <div className="input">
-                <img src={calender} alt="" />
-                <input
-                  onChange={handleInputChange}
-                  type="date"
-                  name="date"
-                  required
-                  id="date"
-                  value={post.date || ""}
-                />
-              </div>
-            </div>
-            <div className="input">
               <h4>Time</h4>
               <div className="input">
                 <img src={clock} alt="" />
@@ -218,7 +210,43 @@ const CreatePost = ({ onCancel }) => {
                 />
               </div>
             </div>
+
             <div className="input">
+              <h4>From</h4>
+              <div className="input">
+                <img src={calender} alt="" />
+                <input
+  onChange={handleInputChange}
+  type="date"
+  name="fromDate" // Make sure the name is "fromDate"
+  required
+  id="from_date"
+  value={post.fromDate || ""}
+/>
+              </div>
+            </div>
+
+   <div className="input">
+              <h4>TO</h4>
+              <div className="input">
+                <img src={calender} alt="" />
+                <input
+  onChange={handleInputChange}
+  type="date"
+  name="toDate" // Make sure the name is "toDate"
+  required
+  id="to_date"
+  value={post.toDate || ""}
+/>
+              </div>
+            </div>
+
+
+
+
+
+
+            {/* <div className="input">
               <h4>Location</h4>
               <div className="input">
                 <img src={location} alt="" />
@@ -232,7 +260,7 @@ const CreatePost = ({ onCancel }) => {
                   placeholder="On-site / Virtual location"
                 />
               </div>
-            </div>
+            </div> */}
           </div>
 
           <div className="input">
