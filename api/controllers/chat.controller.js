@@ -3,12 +3,12 @@ import Chat from "../modals/chat.modal.js";
 //*Create Chat
 export const createChat = async (req, res) => {
   const newChat = new Chat({
-    members: [req.body.senderId, req.body.recieverId],
+    members: [req.id, req.params.userId],
   });
 
   try {
     await newChat.save();
-    res.status(200).send(newChat);
+    res.send({ data: newChat });
   } catch (err) {
     res.status(500).send(err);
   }
@@ -18,9 +18,9 @@ export const createChat = async (req, res) => {
 export const userChats = async (req, res) => {
   try {
     const chat = await Chat.find({
-      members: { $in: [req.params.userId] }, //finds all chats that includes the params.in in members
-    });
-    res.status(200).json(chat);
+      members: { $in: [req.id] },
+    }).sort({ _id: -1 });
+    res.send({ data: chat });
   } catch (err) {
     res.status(500).send(err);
   }
@@ -32,7 +32,7 @@ export const findChat = async (req, res) => {
     const chat = await Chat.findOne({
       members: { $all: [req.params.firstId, req.params.secondId] },
     });
-    res.status(200).json(chat);
+    res.send(chat);
   } catch (err) {
     res.status(500).json(err);
   }

@@ -1,13 +1,19 @@
 import axios from "axios";
+axios.defaults = {
+  withCredentials: true,
+};
 import "./tags.scss";
 import { useEffect, useState } from "react";
 import jwtDecode from "jwt-decode";
+import { useOutletContext, useParams } from "react-router-dom";
 
 const Tags = ({ tags, page }) => {
   const [accessToken, setAccessToken] = useState();
   const [decodedToken, setDecodedToken] = useState();
   const [seenTags, setSeenTags] = useState();
   const [newTag, setNewTag] = useState("");
+  const { id } = useParams();
+  const { user } = useOutletContext();
 
   useEffect(() => {
     const getCookie = () => {
@@ -31,14 +37,14 @@ const Tags = ({ tags, page }) => {
         }`,
         { $pull: { tags: tag } }
       );
-      setSeenTags(res?.data?.tags);
-      location.reload();
+      setSeenTags((prev) => prev.filter((tempTag) => tag !== tempTag));
     } catch (err) {
       console.log(err);
     }
   };
 
-  const handleTagAdd = async () => {
+  const handleTagAdd = async (e) => {
+    e.preventDefault();
     setSeenTags((prev) => [...prev, newTag]);
     try {
       const res = await axios.post(
@@ -55,26 +61,37 @@ const Tags = ({ tags, page }) => {
 
   return (
     <div className="tagsContainer">
-      {seenTags?.length !== 0 && (
-        <div className="tagsWrapper">
-          {seenTags?.map((tag, index) => (
+      <div className="header">
+        <h4>Collaboration Keywords</h4>
+        {user?._id === id && (
+          <form onSubmit={handleTagAdd} className="addTags">
+            <input
+              value={newTag}
+              type="text"
+              onChange={(e) => setNewTag(e.target.value)}
+              placeholder="New tag"
+            />
+            <input type="submit" hidden />
+            <button>Add new</button>
+          </form>
+        )}
+      </div>
+      <div className="tagsWrapper">
+        {seenTags && seenTags.length !== 0 ? (
+          seenTags.map((tag, index) => (
             <div key={index} className="tag">
               <p>{tag}</p>
-              <p className="x" onClick={() => removeTag(tag)}>
-                X
-              </p>
+              {user?._id === id && (
+                <p className="x" onClick={() => removeTag(tag)}>
+                  X
+                </p>
+              )}
             </div>
-          ))}
-        </div>
-      )}
-      {/* <form onSubmit={handleTagAdd} className="addTags">
-        <input
-          value={newTag}
-          type="text"
-          onChange={(e) => setNewTag(e.target.value)}
-        />
-        <input type="submit" hidden />
-      </form> */}
+          ))
+        ) : (
+          <p className="no-keywords">No keywords</p>
+        )}
+      </div>
     </div>
   );
 };

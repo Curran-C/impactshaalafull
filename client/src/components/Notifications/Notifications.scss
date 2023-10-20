@@ -12,6 +12,7 @@
   min-height: 200px;
   gap: 20px;
   overflow-y: auto;
+  z-index: 1;
   .notification {
     display: flex;
     flex-direction: column;
