@@ -12,12 +12,9 @@ import "./post.scss";
 import Tile from "../Tile/Tile";
 import { format } from "timeago.js";
 import axios from "axios";
-import {
-  Link,
-  useNavigate,
-  useOutletContext,
-  useParams,
-} from "react-router-dom";
+import { Link, useNavigate, useOutletContext } from "react-router-dom";
+
+import { toast } from "react-toastify";
 
 axios.defaults = {
   withCredentials: true,
@@ -71,6 +68,7 @@ const Post = ({ post }) => {
             $push: { bookmarkedPosts: post._id },
           }
         );
+        toast.success("Bookmark added");
         console.log(res.data);
       } catch (err) {
         console.log(err);
@@ -84,6 +82,7 @@ const Post = ({ post }) => {
             $pull: { bookmarkedPosts: post?._id },
           }
         );
+        toast.success("Bookmark removed");
       } catch (err) {
         console.log(err);
       }
