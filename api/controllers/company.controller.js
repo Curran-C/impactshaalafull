@@ -365,3 +365,14 @@ export const resetPassword = async (req, res) => {
     res.status(500).send("Something went wrong");
   }
 };
+
+export const searchCompany = async (req, res) => {
+  try {
+    const regexPattern = new RegExp(req.query?.name, "i");
+    const companies = await Company.find({ name: { $regex: regexPattern } });
+    res.send({ companies });
+  } catch (err) {
+    console.log("Error searching company : ", error);
+    res.status(500).send("Something went wrong");
+  }
+};

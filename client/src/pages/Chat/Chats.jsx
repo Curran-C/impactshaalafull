@@ -11,6 +11,9 @@ import { io } from "socket.io-client";
 
 import "./chats.scss";
 import ChatFiller from "../../components/ChatFiller/ChatFiller";
+import { getAllChatsAPI, startNewChatAPI } from "../../api/chat";
+import SearchResults from "../../components/SearchResults/SearchResults";
+import { searchUserAPI } from "../../api/company";
 
 const Chats = () => {
   const { user: loggedInUser } = useOutletContext();
@@ -19,6 +22,9 @@ const Chats = () => {
   const [onlineUsers, setOnlineUsers] = useState([]);
   const [sendMessage, setSendMessage] = useState(null);
   const [recieveMessage, setRecieveMessage] = useState(null);
+  const [searchResults, setSearchResults] = useState(null);
+
+  const searchResultsRef = useRef();
   const socket = useRef();
   const navigate = useNavigate();
 
@@ -30,7 +36,6 @@ const Chats = () => {
       setOnlineUsers(users);
     });
     return () => {
-      console.log("userDisconnected");
       socket.current.emit("disconnected");
       socket.current.disconnect();
     };
@@ -50,19 +55,61 @@ const Chats = () => {
     });
   }, [sendMessage]);
 
+  const getChats = async () => {
+    try {
+      const allchats = await getAllChatsAPI();
+      setChats(allchats?.data);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
   useEffect(() => {
     //GET CHATS
-    const getChats = async () => {
-      try {
-        const allchats = await axios.get(
-          `${import.meta.env.VITE_BASE_URL}/api/chat/${loggedInUser?._id}`
-        );
-        setChats(allchats.data);
-      } catch (err) {
-        console.log(err);
-      }
-    };
     getChats();
+  }, []);
+
+  // Backend is functional
+  const startNewChat = async (userId) => {
+    try {
+      await startNewChatAPI(userId);
+      await getChats();
+      setSearchResults(null);
+    } catch (error) {
+      console.log("Error starting new chat: ", error);
+    }
+  };
+
+  const handleSearchChange = async (e) => {
+    const input = e.target.value?.trim();
+    if (!input) return setSearchResults(null);
+    try {
+      const filteredUsers = await searchUserAPI(input);
+      setSearchResults(
+        filteredUsers?.companies?.filter(
+          (company) => loggedInUser?._id !== company?._id
+        )
+      );
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    function handleOutsideClick(event) {
+      if (
+        searchResultsRef.current &&
+        !searchResultsRef.current.contains(event.target)
+      ) {
+        setSearchResults(null);
+      }
+    }
+
+    document.addEventListener("click", handleOutsideClick);
+
+    return () => {
+      document.removeEventListener("click", handleOutsideClick);
+    };
   }, []);
 
   return (
@@ -78,9 +125,20 @@ const Chats = () => {
       </div>
       <div className="container">
         <div className="left">
-          <div className="search">
+          <div className="search" ref={searchResultsRef}>
             <img src={search} alt="search" />
-            <input type="text" placeholder="Search" />
+            <input
+              type="text"
+              placeholder="Search"
+              onChange={handleSearchChange}
+            />
+            {searchResults && (
+              <SearchResults
+                users={searchResults}
+                short
+                onClick={startNewChat}
+              />
+            )}
           </div>
           <div className="chatsAll">
             {chats?.map((chat) => (

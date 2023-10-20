@@ -42,6 +42,7 @@
       margin-bottom: auto;
       height: 100%;
       max-width: 30vw;
+
       .search {
         display: flex;
         flex-direction: row;
@@ -51,6 +52,11 @@
         padding: 10px 50px 10px 20px;
         height: 30px;
         border-radius: 15px;
+        position: relative;
+        .searchResults {
+          top: 55px;
+          left: 0;
+        }
         b img {
           height: 20px;
         }

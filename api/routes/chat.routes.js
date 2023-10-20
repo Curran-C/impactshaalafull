@@ -4,11 +4,14 @@ import {
   userChats,
   findChat,
 } from "../controllers/chat.controller.js";
+import { cookieAuth } from "../utils/cookieAuth.js";
 
 const router = express.Router();
 
-router.post("/", createChat);
-router.get("/:userId", userChats); //find all chats of a user
-router.get("/find/:firstId/:secondId", findChat); //finding a specific chat with a specific person
+router.use(cookieAuth);
+
+router.post("/:userId", createChat);
+router.get("/", userChats);
+router.get("/find/:firstId/:secondId", findChat);
 
 export default router;

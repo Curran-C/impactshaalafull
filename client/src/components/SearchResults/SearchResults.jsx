@@ -4,7 +4,7 @@ import Tile from "../Tile/Tile";
 import { corporate, nopfp } from "../../assets/profile";
 import Tags from "../Tags/Tags";
 
-const SearchResults = ({ users }) => {
+const SearchResults = ({ users, short, onClick }) => {
   const navigate = useNavigate();
 
   return (
@@ -12,7 +12,9 @@ const SearchResults = ({ users }) => {
       {users?.length ? (
         users?.map((user) => (
           <div
-            onClick={() => navigate(`/profile/${user?._id}`)}
+            onClick={() =>
+              onClick ? onClick(user?._id) : navigate(`/profile/${user?._id}`)
+            }
             className="searchResult"
             key={user?._id}
           >
@@ -22,7 +24,7 @@ const SearchResults = ({ users }) => {
                 <h4>{user?.name}</h4>
                 <Tile image={corporate} type={user?.stakeholder} />
               </div>
-              <Tags tags={user?.tags} />
+              {!short && <Tags tags={user?.tags} />}
             </div>
           </div>
         ))
