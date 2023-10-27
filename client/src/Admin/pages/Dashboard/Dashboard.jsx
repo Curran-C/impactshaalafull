@@ -76,7 +76,9 @@ const Dashboard = () => {
 
   return (
     <div className="adminDashboard">
-      {showFilter && <Filter onCancel={setShowFilter} onFilterChange={handleFilterChange}/>}
+      {showFilter && (
+        <Filter onCancel={setShowFilter} onFilterChange={handleFilterChange} />
+      )}
       <div className="left">
         <LeftNavigation page={"dashboard"} />
       </div>

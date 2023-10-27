@@ -1,11 +1,13 @@
 .leftNav {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: 20px;
-    position: fixed;
-    .logo {
-        height: 50px;
-    }
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+  width: max-content;
+  margin: 0 10px;
+  position: sticky;
+  .logo {
+    height: 50px;
+  }
 }

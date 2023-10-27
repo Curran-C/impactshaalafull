@@ -25,7 +25,6 @@ const Complaints = () => {
   }, []);
   return (
     <div className="complaints">
-      
       <div className="left">
         <LeftNavigation page={"complaints"} />
       </div>
@@ -39,14 +38,14 @@ const Complaints = () => {
         </div>
 
         <div className="complainsContainer">
-          {complaints.map(complaint => (
-              // eslint-disable-next-line react/jsx-key
-              <Complaint 
+          {complaints.map((complaint) => (
+            // eslint-disable-next-line react/jsx-key
+            <Complaint
               userId={complaint.userId}
               complaint={complaint.text}
               id={complaint._id}
-              />
-            ))}
+            />
+          ))}
         </div>
       </div>
     </div>
