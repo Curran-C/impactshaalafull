@@ -30,6 +30,7 @@ import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import PrivateRoutes from "./utils/PrivateRoutes/PrivateRoutes";
 import ResetPassword from "./pages/ResetPassword/ResetPassword";
+import PrivateRoutesAdmin from "./utils/PrivateRoutes/Admin/PrivateRoutesAdmin";
 
 function App() {
   return (
@@ -55,27 +56,29 @@ function App() {
         </Route>
 
         <Route path="/admin" element={<Login />} />
-        <Route path="/admin/dashboard" element={<Dashboard />} />
-        <Route path="/admin/collabdetails" element={<CollabDetails />} />
-        <Route path="/admin/collaborations" element={<AdminCollaborations />} />
-        <Route path="/admin/givescore" element={<GiveScore />} />
-        <Route path="/admin/useractivity" element={<UserActivity />} />
-        <Route path="/admin/reviews" element={<Reviews />} />
-        <Route
-          path="/admin/useractivity/details"
-          element={
-            <UserActivityDetails
-              page={"details"}
-              buttonText={"Send Notification"}
-            />
-          }
-        />
-        <Route
-          path="/admin/useractivity/recoveraccount"
-          element={<UserActivityDetails buttonText={"Recover Account"} />}
-        />
-        <Route path="/admin/feedback" element={<Complaints />} />
-        <Route path="/admin/approvecollaboration" element={<ApproveCollab />} />
+        <Route path="/admin" element={<PrivateRoutesAdmin />}>
+          <Route path="dashboard" element={<Dashboard />} />
+          <Route path="collabdetails" element={<CollabDetails />} />
+          <Route path="collaborations" element={<AdminCollaborations />} />
+          <Route path="givescore" element={<GiveScore />} />
+          <Route path="useractivity" element={<UserActivity />} />
+          <Route path="reviews" element={<Reviews />} />
+          <Route
+            path="useractivity/details"
+            element={
+              <UserActivityDetails
+                page={"details"}
+                buttonText={"Send Notification"}
+              />
+            }
+          />
+          <Route
+            path="useractivity/recoveraccount"
+            element={<UserActivityDetails buttonText={"Recover Account"} />}
+          />
+          <Route path="feedback" element={<Complaints />} />
+          <Route path="approvecollaboration" element={<ApproveCollab />} />
+        </Route>
       </Routes>
       <ToastContainer
         position="top-right"

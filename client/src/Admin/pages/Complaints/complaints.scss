@@ -1,53 +1,28 @@
 .complaints {
+  flex-grow: 1;
+  height: 100vh;
+  overflow-y: auto;
   display: flex;
-  background: #f8f9fa;
-  gap: 20px;
-
-  .left {
+  flex-direction: column;
+  gap: 30px;
+  .stakeholders {
     display: flex;
-    flex-direction: column;
-    align-items: center;
-    background: #545bfc;
-    border-radius: 0px 25px 25px 0px;
-
-    min-height: 100vh;
-
-    & > div {
-      width: max-content;
-      position: sticky;
-    }
-
-    .logo {
-      margin-left: 20px;
-      margin-top: 50px;
-    }
-  }
-  .right {
-    flex-grow: 1;
-    height: 100vh;
-    overflow-y: auto;
-    display: flex;
-    flex-direction: column;
-    gap: 30px;
-    .stakeholders {
-      display: flex;
-      justify-content: space-evenly;
-      p {
-        font-size: 12px;
-        margin: 0;
-        background: white;
-        padding: 5px;
-        border-radius: 25px;
-        margin-top: 20px;
-        &:hover {
-          cursor: pointer;
-        }
+    justify-content: space-evenly;
+    p {
+      font-size: 12px;
+      margin: 0;
+      background: white;
+      padding: 5px;
+      border-radius: 25px;
+      margin-top: 20px;
+      &:hover {
+        cursor: pointer;
       }
     }
-    .complainsContainer {
-      display: flex;
-      flex-direction: column;
-      gap: 50px;
-    }
+  }
+  .complainsContainer {
+    display: flex;
+    flex-direction: column;
+    gap: 50px;
   }
 }
