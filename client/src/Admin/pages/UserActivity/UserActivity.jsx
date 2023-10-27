@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import { AdminSearch, LeftNavigation, UserInfoCard } from "../../components";
 import "./userActivity.scss";
+import { useOutletContext } from "react-router-dom";
 
 const UserActivity = () => {
   const [showUsers, setShowUsers] = useState(true);
@@ -49,53 +50,55 @@ const UserActivity = () => {
     };
     getUser();
   }, [userStatus]);
+
+  const { setPageTitle } = useOutletContext();
+
+  useEffect(() => {
+    setPageTitle("useractivity");
+  }, []);
+
   return (
     <div className="userActivity">
-      <div className="left">
-        <LeftNavigation page={"useractivity"} />
-      </div>
-      <div className="right">
-        <AdminSearch />
-        <div className="titleContainer">
-          <div className="titles">
-            <span
-              className={showUsers && "highlighted"}
-              onClick={() => handleClick("all")}
-            >
-              All Users
-            </span>
-            <span
-              className={showRemovedUsers && "highlighted"}
-              onClick={() => handleClick("remove")}
-            >
-              Removed Users
-            </span>
-            <span
-              className={showInactiveUsers && "highlighted"}
-              onClick={() => handleClick("inactive")}
-            >
-              Not active Users
-            </span>
-          </div>
-          <div className="stakeholders">
-            <p>NGOs</p>
-            <p>Corporates</p>
-            <p>Citizens</p>
-            <p>Institutions</p>
-          </div>
+      <AdminSearch />
+      <div className="titleContainer">
+        <div className="titles">
+          <span
+            className={showUsers && "highlighted"}
+            onClick={() => handleClick("all")}
+          >
+            All Users
+          </span>
+          <span
+            className={showRemovedUsers && "highlighted"}
+            onClick={() => handleClick("remove")}
+          >
+            Removed Users
+          </span>
+          <span
+            className={showInactiveUsers && "highlighted"}
+            onClick={() => handleClick("inactive")}
+          >
+            Not active Users
+          </span>
+        </div>
+        <div className="stakeholders">
+          <p>NGOs</p>
+          <p>Corporates</p>
+          <p>Citizens</p>
+          <p>Institutions</p>
+        </div>
 
-          <div className="activity">
-            {users?.map((user) => (
-              // eslint-disable-next-line react/jsx-key
-              <UserInfoCard
-                pfp={user?.pfp}
-                userId={user._id}
-                name={user.name}
-                stakeholder={user.stakeholder}
-                key={user._id}
-              />
-            ))}
-          </div>
+        <div className="activity">
+          {users?.map((user) => (
+            // eslint-disable-next-line react/jsx-key
+            <UserInfoCard
+              pfp={user?.pfp}
+              userId={user._id}
+              name={user.name}
+              stakeholder={user.stakeholder}
+              key={user._id}
+            />
+          ))}
         </div>
       </div>
     </div>

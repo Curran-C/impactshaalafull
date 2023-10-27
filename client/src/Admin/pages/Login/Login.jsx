@@ -18,7 +18,6 @@ const Login = () => {
 
   const handleLogin = (e) => {
     e.preventDefault();
-    console.log(admin);
     if (admin.username === "admin" && admin.password === "admin")
       navigate("/admin/dashboard");
   };

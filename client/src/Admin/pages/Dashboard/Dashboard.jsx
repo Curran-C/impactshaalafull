@@ -16,6 +16,7 @@ import {
 } from "../../components";
 import "./dashboard.scss";
 import Filter from "../../components/Filter/Filter";
+import { useOutletContext } from "react-router-dom";
 
 const Dashboard = () => {
   const [showFilter, setShowFilter] = useState(false);
@@ -27,6 +28,11 @@ const Dashboard = () => {
     dateFilter: "",
     stakeholder: "",
   });
+  const { setPageTitle } = useOutletContext();
+
+  useEffect(() => {
+    setPageTitle("dashboard");
+  }, []);
 
   useEffect(() => {
     console.log(filterValues);
@@ -76,70 +82,68 @@ const Dashboard = () => {
 
   return (
     <div className="adminDashboard">
-      {showFilter && <Filter onCancel={setShowFilter} onFilterChange={handleFilterChange}/>}
-      <div className="left">
-        <LeftNavigation page={"dashboard"} />
-      </div>
-      <div className="right">
-        <AdminSearch />
-        <div className="rightContainer">
-          <div className="leftSide">
-            <div className="stats">
-              <p className="stakeholderTitle">No. of stakeholders</p>
-              <div className="stakeholders">
-                <Stat
-                  img={corporates}
-                  count={stat?.corporates}
-                  title={"Corporates"}
-                />
-                <Stat img={NGOs} count={stat?.ngos} title={"NGOs"} />
-                <Stat
-                  img={institutes}
-                  count={stat?.educationalInstitutions}
-                  title={"Institutes"}
-                />
-                <Stat
-                  img={citizens}
-                  count={stat?.workingProfessional}
-                  title={"Citizens"}
-                />
-              </div>
-            </div>
+      {showFilter && (
+        <Filter onCancel={setShowFilter} onFilterChange={handleFilterChange} />
+      )}
 
-            <div className="collabContainer">
-              <div className="titleForCollab">
-                <h3>All Collaborations</h3>
-                <div onClick={() => setShowFilter(true)} className="filter">
-                  <img src={filter} alt="" />
-                  <p>Filter</p>
-                </div>
-                <p onClick={handleClearFilter}>See all</p>
-              </div>
-              {collabs.map((collab) => (
-                // eslint-disable-next-line react/jsx-key
-                <div className="miniCollabContainer">
-                  {/* <MiniCollab page={"dashboard"} status={"In progress"} /> */}
-                  <MiniCollab
-                    collabId={collab._id}
-                    status={collab.completed}
-                    page={"dashboard"}
-                    fromId={collab.fromId}
-                    toId={collab.toId}
-                  />
-                </div>
-              ))}
+      <AdminSearch />
+      <div className="rightContainer">
+        <div className="leftSide">
+          <div className="stats">
+            <p className="stakeholderTitle">No. of stakeholders</p>
+            <div className="stakeholders">
+              <Stat
+                img={corporates}
+                count={stat?.corporates}
+                title={"Corporates"}
+              />
+              <Stat img={NGOs} count={stat?.ngos} title={"NGOs"} />
+              <Stat
+                img={institutes}
+                count={stat?.educationalInstitutions}
+                title={"Institutes"}
+              />
+              <Stat
+                img={citizens}
+                count={stat?.workingProfessional}
+                title={"Citizens"}
+              />
             </div>
           </div>
 
-          <div className="rightSide">
-            <div className="usersContainer">
-              <p className="noOfUsers">No. of users</p>
-              <Stat img={citizens} count={stat?.totalUsers} title={"Total"} />
+          <div className="collabContainer">
+            <div className="titleForCollab">
+              <h3>All Collaborations</h3>
+              <div onClick={() => setShowFilter(true)} className="filter">
+                <img src={filter} alt="" />
+                <p>Filter</p>
+              </div>
+              <p onClick={handleClearFilter}>See all</p>
             </div>
-            <div className="usersContainer">
-              <p className="noOfUsers">Total Projects</p>
-              <Stat img={project} count={stat?.totalProjects} title={"Total"} />
-            </div>
+            {collabs.map((collab) => (
+              // eslint-disable-next-line react/jsx-key
+              <div className="miniCollabContainer">
+                {/* <MiniCollab page={"dashboard"} status={"In progress"} /> */}
+                <MiniCollab
+                  collabId={collab._id}
+                  status={collab.completed}
+                  page={"dashboard"}
+                  fromId={collab.fromId}
+                  toId={collab.toId}
+                />
+              </div>
+            ))}
+          </div>
+        </div>
+
+        <div className="rightSide">
+          <div className="usersContainer">
+            <p className="noOfUsers">No. of users</p>
+            <Stat img={citizens} count={stat?.totalUsers} title={"Total"} />
+          </div>
+          <div className="usersContainer">
+            <p className="noOfUsers">Total Projects</p>
+            <Stat img={project} count={stat?.totalProjects} title={"Total"} />
           </div>
         </div>
       </div>

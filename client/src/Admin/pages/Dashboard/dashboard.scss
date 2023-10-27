@@ -1,108 +1,87 @@
 .adminDashboard {
+  .rightContainer {
     display: flex;
-    background: #f8f9fa;
-    .left {
-        width: 350px;
+    .leftSide {
+      display: flex;
+      flex-direction: column;
+      .stats {
+        padding: 20px 30px;
+        border-radius: 40px;
+        background: #f2f2fd;
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+        .stakeholderTitle {
+          color: #6a6a6a;
+          font-size: 18px;
+          font-weight: 500;
+          letter-spacing: 0.8px;
+        }
+        .stakeholders {
+          align-items: center;
+          // justify-content: center;
+          gap: 30px;
+          display: flex;
+        }
+      }
+      .collabContainer {
+        display: flex;
+        flex-direction: column;
+        margin-top: 40px;
+        .titleForCollab {
+          display: flex;
+          gap: 30px;
+          align-items: center;
+          h3 {
+            margin-right: 300px;
+          }
+          .filter {
+            display: flex;
+            gap: 10px;
+            &:hover {
+              cursor: pointer;
+            }
+          }
+          p {
+            &:hover {
+              cursor: pointer;
+            }
+          }
+        }
+        .miniCollabContainer {
+          margin-top: 20px;
+          height: 80px;
+          padding: 30px 20px;
+          border-radius: 25px;
+          background-color: white;
+        }
+      }
+    }
+    .rightSide {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: start;
+      margin-left: 40px;
+      // margin-top: -100px;
+      gap: 80px;
+      .usersContainer {
+        background-color: white;
         display: flex;
         flex-direction: column;
         align-items: center;
-        // height: 100vh;
-        background: #545bfc;
-        border-radius: 0px 25px 25px 0px;
-        .logo {
-            margin-left: 20px;
-            margin-top: 50px;
+        border-radius: 25px;
+        width: 200px;
+        &:hover {
+          box-shadow: 1px 1px 5px lightgray;
+          cursor: pointer;
         }
-    }
-    .right {
-        display: flex;
-        margin-left: 80px;
-        flex-direction: column;
-        gap: 30px;
-        .rightContainer {
-            display: flex;
-            .leftSide {
-                display: flex;
-                flex-direction: column;
-                .stats {
-                    padding: 20px 30px;
-                    border-radius: 40px;
-                    background: #f2f2fd;
-                    display: flex;
-                    flex-direction: column;
-                    gap: 20px;
-                    .stakeholderTitle {
-                        color: #6a6a6a;
-                        font-size: 18px;
-                        font-weight: 500;
-                        letter-spacing: 0.8px;
-                    }
-                    .stakeholders {
-                        align-items: center;
-                        // justify-content: center;
-                        gap: 30px;
-                        display: flex;
-                    }
-                }
-                .collabContainer {
-                    display: flex;
-                    flex-direction: column;
-                    margin-top: 40px;
-                    .titleForCollab {
-                        display: flex;
-                        gap: 30px;
-                        align-items: center;
-                        h3 {
-                            margin-right: 300px;
-                        }
-                        .filter {
-                            display: flex;
-                            gap: 10px;
-                            &:hover {
-                                cursor: pointer;
-                            }
-                        }
-                        p {
-                            &:hover {
-                                cursor: pointer;
-                            }
-                        }
-                    }
-                    .miniCollabContainer {
-                        margin-top: 20px;
-                        height: 80px;
-                        padding: 30px 20px;
-                        border-radius: 25px;
-                        background-color: white;
-                    }
-                }
-            }
-            .rightSide {
-                display: flex;
-                flex-direction: column;
-                align-items: center;
-                justify-content: start;
-                margin-left: 40px;
-                // margin-top: -100px;
-                gap: 80px;
-                .usersContainer {
-                    background-color: white;
-                    display: flex;
-                    flex-direction: column;
-                    align-items: center;
-                    border-radius: 25px;
-                    width: 200px;
-                    &:hover {
-                        box-shadow: 1px 1px 5px lightgray;
-                        cursor: pointer;
-                    }
-                    .noOfUsers {
-                        text-align: center;
-                        font-size: 20px;
-                        color: #6a6a6a;
-                    }
-                }
-            }
+        .noOfUsers {
+          text-align: center;
+          font-size: 20px;
+          color: #6a6a6a;
         }
+      }
     }
+  }
 }

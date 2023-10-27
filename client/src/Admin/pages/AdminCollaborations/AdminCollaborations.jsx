@@ -7,6 +7,7 @@ import {
   MiniCollab,
 } from "../../components";
 import "./adminCollaborations.scss";
+import { useOutletContext } from "react-router-dom";
 
 const AdminCollaborations = () => {
   const [pendingState, setPendingState] = useState(true);
@@ -28,13 +29,11 @@ const AdminCollaborations = () => {
     if (pendingState) {
       setCollabState("requested");
       setButtonText("Approve");
-    } else if (ongoingState) 
-      setCollabState("ongoing");
+    } else if (ongoingState) setCollabState("ongoing");
     else if (completedState) {
       setCollabState("completed");
       setButtonText("Give Score");
-    }
-    else if (canceledState) {
+    } else if (canceledState) {
       setCollabState("declined");
     }
   };
@@ -43,7 +42,9 @@ const AdminCollaborations = () => {
     const getCollab = async () => {
       try {
         const res = await axios.get(
-          `${import.meta.env.VITE_BASE_URL}/api/collaboration/getallcollab?status=${collabState}`
+          `${
+            import.meta.env.VITE_BASE_URL
+          }/api/collaboration/getallcollab?status=${collabState}`
         );
         setCollaborations(res.data);
       } catch (err) {
@@ -53,54 +54,53 @@ const AdminCollaborations = () => {
     getCollab();
   }, [collabState]);
 
+  const { setPageTitle } = useOutletContext();
+
+  useEffect(() => {
+    setPageTitle("collaborations");
+  }, []);
+
   return (
     <div className="adminCollaborations">
-      {/* <DocumentPreview /> */}
-      <div className="left">
-        <LeftNavigation page={"collaborations"} />
+      <AdminSearch />
+      <div className="tabs">
+        <h1
+          className={`${pendingState && "highlighted"}`}
+          onClick={() => setStateToTrue("requested")}
+        >
+          Pending
+        </h1>
+        <h1
+          className={`${ongoingState && "highlighted"}`}
+          onClick={() => setStateToTrue("ongoing")}
+        >
+          Ongoing
+        </h1>
+        <h1
+          className={`${completedState && "highlighted"}`}
+          onClick={() => setStateToTrue("completed")}
+        >
+          Completed
+        </h1>
+        <h1
+          className={`${canceledState && "highlighted"}`}
+          onClick={() => setStateToTrue("declined")}
+        >
+          Canceled
+        </h1>
       </div>
-      <div className="right">
-        <AdminSearch />
-        <div className="tabs">
-          <h1
-            className={`${pendingState && "highlighted"}`}
-            onClick={() => setStateToTrue("requested")}
-          >
-            Pending
-          </h1>
-          <h1
-            className={`${ongoingState && "highlighted"}`}
-            onClick={() => setStateToTrue("ongoing")}
-          >
-            Ongoing
-          </h1>
-          <h1
-            className={`${completedState && "highlighted"}`}
-            onClick={() => setStateToTrue("completed")}
-          >
-            Completed
-          </h1>
-          <h1
-            className={`${canceledState && "highlighted"}`}
-            onClick={() => setStateToTrue("declined")}
-          >
-            Canceled
-          </h1>
-        </div>
-        <div className="collabContainer">
-          
-          {collaborations.map(collab => (
-            <MiniCollab
-              key={collab._id}
-              collabId={collab._id}
-              status={collabState}
-              page={"collaborations"}
-              buttonText={buttonText}
-              fromId={collab.fromId}
-              toId={collab.toId}
-            />
-          ))}
-        </div>
+      <div className="collabContainer">
+        {collaborations.map((collab) => (
+          <MiniCollab
+            key={collab._id}
+            collabId={collab._id}
+            status={collabState}
+            page={"collaborations"}
+            buttonText={buttonText}
+            fromId={collab.fromId}
+            toId={collab.toId}
+          />
+        ))}
       </div>
     </div>
   );
