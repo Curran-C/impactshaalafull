@@ -1,3 +1,4 @@
+import Cookies from "js-cookie";
 import { logo } from "../../../assets";
 import {
   collabs,
@@ -9,8 +10,20 @@ import {
 } from "../../pages/adminDashboard";
 import Links from "../Links/Links";
 import "./leftNavigation.scss";
+import { useNavigate } from "react-router-dom";
+import Modal from "../../../components/Modal/Modal";
+import { useState } from "react";
 
 const LeftNavigation = ({ page }) => {
+  const [showModal, setShowModal] = useState(false);
+
+  const navigate = useNavigate();
+  const handleLogout = () => {
+    localStorage.removeItem("IsAdmin");
+    Cookies.remove("accessToken");
+    navigate("/admin");
+  };
+
   return (
     <div className="leftNav">
       <img className="logo" src={logo} alt="" />
@@ -50,6 +63,25 @@ const LeftNavigation = ({ page }) => {
         linkText={"Feedback"}
         navLink={"feedback"}
       />
+      <button className="btn btn-light" onClick={() => setShowModal(true)}>
+        Log out
+      </button>
+      {showModal && (
+        <Modal>
+          <h3>Are you sure you want to log out?</h3>
+          <div className="modal-footer">
+            <button
+              className="submit-button"
+              onClick={() => setShowModal(false)}
+            >
+              Cancel
+            </button>
+            <button className="cancel-button" onClick={handleLogout}>
+              Log out
+            </button>
+          </div>
+        </Modal>
+      )}
     </div>
   );
 };

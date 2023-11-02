@@ -6,8 +6,12 @@
   gap: 20px;
   width: max-content;
   margin: 0 10px;
-  position: sticky;
+  height: 100%;
   .logo {
     height: 50px;
+  }
+
+  button {
+    margin-top: auto;
   }
 }
