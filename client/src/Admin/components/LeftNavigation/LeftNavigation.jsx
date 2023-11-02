@@ -58,6 +58,12 @@ const LeftNavigation = ({ page }) => {
         navLink={"subsciptions"}
       /> */}
       <Links
+        highlighted={page === "givescore" ? true : false}
+        img={subscription}
+        linkText={"Score"}
+        navLink={"givescore"}
+      />
+      <Links
         highlighted={page === "complaints" ? true : false}
         img={complaints}
         linkText={"Feedback"}

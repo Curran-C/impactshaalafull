@@ -1,23 +1,6 @@
 .reviews {
-    display: flex;
-    // background: #f8f9fa;
-    .left {
-        width: 350px;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        // height: 100vh;
-        background: #545bfc;
-        border-radius: 0px 25px 25px 0px;
-        .logo {
-            margin-left: 20px;
-            margin-top: 50px;
-        }
-    }
-    .right {
-        display: flex;
-        margin-left: 80px;
-        flex-direction: column;
-        gap: 30px;
-    }
+  display: flex;
+  margin-left: 80px;
+  flex-direction: column;
+  gap: 30px;
 }

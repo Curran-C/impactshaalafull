@@ -80,6 +80,8 @@ function App() {
           <Route path="approvecollaboration" element={<ApproveCollab />} />
         </Route>
       </Routes>
+
+      {/* toast */}
       <ToastContainer
         position="top-right"
         autoClose={1500}

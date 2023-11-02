@@ -1,3 +1,4 @@
+import Modal from "../../../components/Modal/Modal";
 import "./filter.scss";
 import { useState } from "react";
 
@@ -62,74 +63,71 @@ const Filter = ({ onCancel, onFilterChange }) => {
   };
 
   return (
-    <div className="filterModal">
-      <div className="blackbg" onClick={() => onCancel(false)}></div>
+    <Modal>
       <div className="filterContainer">
-        <div className="wrapper">
-          <span>Recently</span>
-          <div className="times">
-            <p
-              className={thisMonth && "highlighted"}
-              onClick={() => handleTimeFilterClick("thisMonth")}
-            >
-              In this month
-            </p>
-            <p
-              className={lastMonth && "highlighted"}
-              onClick={() => handleTimeFilterClick("lastMonth")}
-            >
-              Last month
-            </p>
-            <p
-              className={lastThreeMonth && "highlighted"}
-              onClick={() => handleTimeFilterClick("lastThreeMonths")}
-            >
-              Last 3 months
-            </p>
-          </div>
+        <span>Recently</span>
+        <div className="times">
+          <p
+            className={thisMonth && "highlighted"}
+            onClick={() => handleTimeFilterClick("thisMonth")}
+          >
+            In this month
+          </p>
+          <p
+            className={lastMonth && "highlighted"}
+            onClick={() => handleTimeFilterClick("lastMonth")}
+          >
+            Last month
+          </p>
+          <p
+            className={lastThreeMonth && "highlighted"}
+            onClick={() => handleTimeFilterClick("lastThreeMonths")}
+          >
+            Last 3 months
+          </p>
+        </div>
 
-          <span>Custom</span>
-          <div className="times">
-            <input type="date" name="from" onChange={handleDateFilterChange} />
-            <input type="date" name="to" onChange={handleDateFilterChange} />
-          </div>
+        <span>Custom</span>
+        <div className="times">
+          <input type="date" name="from" onChange={handleDateFilterChange} />
+          <input type="date" name="to" onChange={handleDateFilterChange} />
+        </div>
 
-          <div className="times">
-            <p
-              className={professional && "highlighted"}
-              onClick={() =>
-                handleStakeHolderFilterClick("Working Professional")
-              }
-            >
-              Professional
-            </p>
-            <p
-              className={ngo && "highlighted"}
-              onClick={() => handleStakeHolderFilterClick("NGO")}
-            >
-              NGOs
-            </p>
-            <p
-              className={corporates && "highlighted"}
-              onClick={() => handleStakeHolderFilterClick("Corporate")}
-            >
-              Corporates
-            </p>
-            <p
-              className={institutions && "highlighted"}
-              onClick={() =>
-                handleStakeHolderFilterClick("Educational Institution")
-              }
-            >
-              Institution
-            </p>
-          </div>
-          <div className="times">
-            <button onClick={applyFilters}>Select</button>
-          </div>
+        <div className="times">
+          <p
+            className={professional && "highlighted"}
+            onClick={() => handleStakeHolderFilterClick("Working Professional")}
+          >
+            Professional
+          </p>
+          <p
+            className={ngo && "highlighted"}
+            onClick={() => handleStakeHolderFilterClick("NGO")}
+          >
+            NGOs
+          </p>
+          <p
+            className={corporates && "highlighted"}
+            onClick={() => handleStakeHolderFilterClick("Corporate")}
+          >
+            Corporates
+          </p>
+          <p
+            className={institutions && "highlighted"}
+            onClick={() =>
+              handleStakeHolderFilterClick("Educational Institution")
+            }
+          >
+            Institution
+          </p>
+        </div>
+        <div className="modal-footer">
+          <button onClick={applyFilters} className="submit-button">
+            Select
+          </button>
         </div>
       </div>
-    </div>
+    </Modal>
   );
 };
 

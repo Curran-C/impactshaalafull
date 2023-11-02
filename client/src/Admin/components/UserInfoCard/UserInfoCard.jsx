@@ -45,9 +45,9 @@ const UserInfoCard = ({ userId, name, stakeholder, pfp }) => {
         >
           View Details
         </button>
-        <button className="white" onClick={() => navigate("/admin/reviews")}>
+        {/* <button className="white" onClick={() => navigate("/admin/reviews")}>
           Give Score
-        </button>
+        </button> */}
       </div>
     </div>
   );
