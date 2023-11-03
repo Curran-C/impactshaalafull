@@ -5,7 +5,6 @@ import {
   bookmarkfilled,
   collaboration,
 } from "../../assets/home";
-import { Modal, Button } from 'react-bootstrap';
 
 import { corporate, location, nopfp } from "../../assets/profile";
 
