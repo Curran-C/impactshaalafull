@@ -5,6 +5,7 @@ import {
   bookmarkfilled,
   collaboration,
 } from "../../assets/home";
+import { Modal, Button } from 'react-bootstrap';
 
 import { corporate, location, nopfp } from "../../assets/profile";
 
@@ -37,8 +38,7 @@ const Post = ({ post }) => {
       try {
         // getting post of the user
         const res = await axios.get(
-          `${import.meta.env.VITE_BASE_URL}/api/company/getuser/${
-            post?.createdById
+          `${import.meta.env.VITE_BASE_URL}/api/company/getuser/${post?.createdById
           }`
         );
         setUser(res.data);
@@ -93,8 +93,7 @@ const Post = ({ post }) => {
   const handleChatClick = async () => {
     try {
       const findChat = await axios.get(
-        `${import.meta.env.VITE_BASE_URL}/api/chat/find/${id}/${
-          post?.createdById
+        `${import.meta.env.VITE_BASE_URL}/api/chat/find/${id}/${post?.createdById
         }`
       );
       if (!findChat?.data) {
@@ -147,8 +146,7 @@ const Post = ({ post }) => {
           `${import.meta.env.VITE_BASE_URL}/api/collaboration/singletoId/${id}`
         );
         const isFromId = await axios.get(
-          `${import.meta.env.VITE_BASE_URL}/api/collaboration/singlefromId/${
-            post?.createdById
+          `${import.meta.env.VITE_BASE_URL}/api/collaboration/singlefromId/${post?.createdById
           }`
         );
         console.log(isToId?.data.length);
@@ -158,13 +156,11 @@ const Post = ({ post }) => {
           // *check if user is fromId
           try {
             const isFromId = await axios.get(
-              `${
-                import.meta.env.VITE_BASE_URL
+              `${import.meta.env.VITE_BASE_URL
               }/api/collaboration/singlefromId/${id}`
             );
             const isToId = await axios.get(
-              `${import.meta.env.VITE_BASE_URL}/api/collaboration/singletoId/${
-                post?.createdById
+              `${import.meta.env.VITE_BASE_URL}/api/collaboration/singletoId/${post?.createdById
               }`
             );
             if (isFromId?.data.length !== 0 && isToId?.data.length !== 0) {
@@ -180,8 +176,7 @@ const Post = ({ post }) => {
                 );
                 //update logged in user
                 const resUpdateLoggedInUser = await axios.post(
-                  `${
-                    import.meta.env.VITE_BASE_URL
+                  `${import.meta.env.VITE_BASE_URL
                   }/api/company/updateuser/${id}`,
                   {
                     $push: { collaborationIds: resCollab?.data._id },
@@ -190,8 +185,7 @@ const Post = ({ post }) => {
 
                 //updated user who posted it
                 const resUpdatePostedInUser = await axios.post(
-                  `${import.meta.env.VITE_BASE_URL}/api/company/updateuser/${
-                    post?.createdById
+                  `${import.meta.env.VITE_BASE_URL}/api/company/updateuser/${post?.createdById
                   }`,
                   {
                     $push: { collaborationIds: resCollab?.data._id },
@@ -223,6 +217,16 @@ const Post = ({ post }) => {
     }
   };
 
+  const [showDetails, setShowDetails] = useState(false);
+
+  const handleTitleClick = () => {
+    setShowDetails(true);
+  };
+
+  const handleClose = () => {
+    setShowDetails(false);
+  };
+
   return (
     <div className={user?.name ? "post" : "post bgblue"}>
       <div className="user">
@@ -250,9 +254,69 @@ const Post = ({ post }) => {
         />
       </div>
       <div className="container">
-        <p className="postDetails">{post?.posDetails}</p>
+        <p className="postDetails" onClick={handleTitleClick}>{post?.title}</p>
+        {showDetails && (
+          <div className="custom-modal">
+            <div className="modal-content">
+              <span className="close" onClick={handleClose}>
+                &times;
+              </span>
+              <h2>Post Details</h2>
+              <hr />
+              <table className="postDetails">
+                <tbody>
+                  <tr>
+                    <th>Title:</th>
+                    <td>{post?.title}</td>
+                  </tr>
+                  <tr>
+                    <th>Location:</th>
+                    <td>{post?.location}</td>
+                  </tr>
+                  <tr>
+                    <th>Keywords:</th>
+                    <td>{post?.keywords?.join(', ')}</td>
+                  </tr>
+                  <tr>
+                    <th>Collaborate With:</th>
+                    <td>{post?.collaborateWith}</td>
+                  </tr>
+                  <tr>
+                    <th>Objective:</th>
+                    <td>{post?.objective}</td>
+                  </tr>
+                  <tr>
+                    <th>Project Description:</th>
+                    <td>{post?.description}</td>
+                  </tr>
+                  <tr>
+                    <th>Beneficiaries and Gains:</th>
+                    <td>{post?.beneficiaries}</td>
+                  </tr>
+                  <tr>
+                    <th>Resource Needed:</th>
+                    <td>{post?.resources}</td>
+                  </tr>
+                  <tr>
+                    <th>Project Tenure:</th>
+                    <td>{post?.tenure}</td>
+                  </tr>
+                  <tr>
+                    <th>From Date:</th>
+                    <td>{post?.fromDate && new Date(post?.fromDate).toISOString().split("T")[0]}</td>
+                  </tr>
+                  <tr>
+                    <th>To Date:</th>
+                    <td>{post?.fromDate && new Date(post?.toDate).toISOString().split("T")[0]}</td>
+                  </tr>
+                </tbody>
+              </table>
+
+            </div>
+          </div>
+        )}
         <div className="dateandtime">
-          <p>{date.toDateString()}</p>
+          <p>{post?.fromDate && new Date(post?.fromDate).toISOString().split("T")[0]} - {post?.toDate && new Date(post?.toDate).toISOString().split("T")[0]}</p>
           <p>{post?.time}</p>
         </div>
         <div className="containerFooter">

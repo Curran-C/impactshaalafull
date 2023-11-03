@@ -5,6 +5,7 @@ import {
   DocumentPreview,
   LeftNavigation,
   MiniCollab,
+  PostViewCard,
 } from "../../components";
 import "./adminCollaborations.scss";
 import { useOutletContext } from "react-router-dom";
@@ -17,6 +18,8 @@ const AdminCollaborations = () => {
   const [collabState, setCollabState] = useState("requested");
   const [buttonText, setButtonText] = useState("Approve");
   const [collaborations, setCollaborations] = useState([]);
+  const [pendingPosts, setPendingPost] = useState([]);
+  const [isApproved, setIsApproved] = useState(false);
 
   const setStateToTrue = (state) => {
     setPendingState(state === "requested" ? true : false);
@@ -26,14 +29,14 @@ const AdminCollaborations = () => {
 
     setButtonText("");
 
-    if (pendingState) {
+    if (state === "requested") {
       setCollabState("requested");
       setButtonText("Approve");
-    } else if (ongoingState) setCollabState("ongoing");
-    else if (completedState) {
+    } else if (state === "ongoing") setCollabState("ongoing");
+    else if (state === "completed") {
       setCollabState("completed");
       setButtonText("Give Score");
-    } else if (canceledState) {
+    } else if (state === "declined") {
       setCollabState("declined");
     }
   };
@@ -42,8 +45,7 @@ const AdminCollaborations = () => {
     const getCollab = async () => {
       try {
         const res = await axios.get(
-          `${
-            import.meta.env.VITE_BASE_URL
+          `${import.meta.env.VITE_BASE_URL
           }/api/collaboration/getallcollab?status=${collabState}`
         );
         setCollaborations(res.data);
@@ -51,14 +53,43 @@ const AdminCollaborations = () => {
         console.log(err);
       }
     };
-    getCollab();
-  }, [collabState]);
+    const getPendingPosts = async () => {
+      try {
+        const res = await axios.get(
+          `${import.meta.env.VITE_BASE_URL
+          }/api/post/getPendingPost`
+        );
+        setPendingPost(res.data);
+      } catch (err) {
+        console.log(err);
+      }
+    }
+    if (pendingState) {
+      getPendingPosts();
+    } else {
+      getCollab();
+    }
+  }, [collabState, pendingState, isApproved]);
 
   const { setPageTitle } = useOutletContext();
 
   useEffect(() => {
     setPageTitle("collaborations");
   }, []);
+
+  const handleApprovePost = async (postId) => {
+    const confirmApprove = window.confirm("Are you sure you want to approve this post?");
+    if (confirmApprove) {
+      try {
+        const res = await axios.patch(
+          `${import.meta.env.VITE_BASE_URL}/api/post/approvePost/${postId}`
+        );
+        setIsApproved(!isApproved);
+      } catch (err) {
+        console.log(err);
+      }
+    }
+  };
 
   return (
     <div className="adminCollaborations">
@@ -90,17 +121,32 @@ const AdminCollaborations = () => {
         </h1>
       </div>
       <div className="collabContainer">
-        {collaborations.map((collab) => (
-          <MiniCollab
-            key={collab._id}
-            collabId={collab._id}
-            status={collabState}
-            page={"collaborations"}
-            buttonText={buttonText}
-            fromId={collab.fromId}
-            toId={collab.toId}
-          />
-        ))}
+        {pendingState ?
+          pendingPosts.map((post) => (
+            <PostViewCard
+              key={post._id}
+              postId={post._id}
+              status={post.status}
+              page={"collaborations"}
+              buttonText={buttonText}
+              fromId={post.createdById}
+              // toId={collab.toId}
+              handleApprovePost={handleApprovePost}
+            />
+          ))
+          :
+          collaborations.map((collab) => (
+            <MiniCollab
+              key={collab._id}
+              collabId={collab._id}
+              status={collabState}
+              page={"collaborations"}
+              buttonText={buttonText}
+              fromId={collab.fromId}
+              toId={collab.toId}
+            />
+          ))
+        }
       </div>
     </div>
   );

@@ -111,6 +111,6 @@ export const getCollabs = async (req, res) => {
     res.status(200).send(collab);
   } catch (err) {
     console.log(err);
-    res.status.send(err);
+    res.status(500).send(err);
   }
 };
