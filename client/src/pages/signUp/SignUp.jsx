@@ -20,6 +20,7 @@ import { tagsImage } from "../../assets/signUp";
 import { Circles } from "react-loader-spinner";
 import Cookies from "js-cookie";
 import ForgotPasswordPopup from "../../components/ForgotPasswordPopup/ForgotPasswordPopup";
+import { toast } from "react-toastify";
 
 const SignUp = () => {
   // states
@@ -150,9 +151,8 @@ const SignUp = () => {
       navigator.geolocation.getCurrentPosition((position) => {
         const latitude = position.coords.latitude;
         const longitude = position.coords.longitude;
-        const geoUrl = `http://dataservice.accuweather.com/locations/v1/cities/geoposition/search?apikey=${
-          import.meta.env.VITE_ACCUWEATHER_KEY
-        }&q=${latitude}%2C${longitude}`;
+        const geoUrl = `http://dataservice.accuweather.com/locations/v1/cities/geoposition/search?apikey=${import.meta.env.VITE_ACCUWEATHER_KEY
+          }&q=${latitude}%2C${longitude}`;
         fetch(geoUrl)
           .then((res) => res.json())
           .then((data) => {
@@ -271,7 +271,8 @@ const SignUp = () => {
             });
             res.data.info && setIsLoading(false);
             // navigate(`/home/${res.data.info._id}`);
-            alert("Sign Up successfull");
+            // alert("");
+            toast.success("Sign Up successfull");
             navigate(`/signup`);
             setSignUpState(false);
             setSignInState(true);
@@ -323,8 +324,11 @@ const SignUp = () => {
       });
       res.data.info && setIsLoading(true);
       localStorage.setItem("IsUser", JSON.stringify(res.data.info));
+      toast.success("Sign in successfull");
       navigate(`/home`);
     } catch (err) {
+      setIsLoading(false);
+      toast.error("Invalid Credentials");
       console.log(err);
     }
   };
@@ -344,8 +348,7 @@ const SignUp = () => {
   const handlePincode = async () => {
     console.log(newUser.pinCode);
     const { data: response } = await axios.get(
-      `${import.meta.env.VITE_BASE_URL}/api/company/getAddress/${
-        newUser.pinCode
+      `${import.meta.env.VITE_BASE_URL}/api/company/getAddress/${newUser.pinCode
       }`
     );
     // const data = response.data;
@@ -842,7 +845,7 @@ const SignUp = () => {
                 type="submit"
                 name=""
                 id=""
-                // hidden
+              // hidden
               >
                 {" "}
                 Add{" "}

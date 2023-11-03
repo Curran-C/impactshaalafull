@@ -86,6 +86,7 @@ const AdminPost = ({ onCancel }) => {
             title: notificationTitle,
             posDetails: message,
             date: new Date(),
+            isAdmin: true,
           }
         );
         alert("Posted");

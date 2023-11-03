@@ -8,31 +8,50 @@ const postSchema = new Schema(
       type: String,
       required: true,
     },
-    posName: {
-      type: String,
-      // required: true,  
-    },
-    posDetails: {
-      type: String,
-      required: true,
-    },
+
     createdById: {
       type: String,
       // required: true,
     },
-    date: {
-      type: Date,
-      // required: true,  
-    },
-    time: {
-      type: String,
-      // required: true,
-    },
+
     location: {
       type: String,
       // required: true,
     },
     timeline: {
+      type: String,
+    },
+    keywords: {
+      type: Array,
+    },
+    collaborateWith: {
+      type: String,
+    },
+    objective: {
+      type: String,
+    },
+    description: {
+      type: String,
+    },
+    beneficiaries: {
+      type: String,
+    },
+    resources: {
+      type: String,
+    },
+    tenure: {
+      type: String,
+    },
+    attachments: {
+      type: String,
+    },
+    fromDate: {
+      type: Date,
+    },
+    toDate: {
+      type: Date,
+    },
+    status: {
       type: String,
     },
   },

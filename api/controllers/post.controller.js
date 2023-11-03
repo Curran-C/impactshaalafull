@@ -2,6 +2,11 @@ import Post from "../modals/post.modal.js";
 
 const createPost = async (req, res) => {
   try {
+    if (req.body.isAdmin) {
+      req.body.status = "active";
+    } else {
+      req.body.status = "pending";
+    }
     const newPost = new Post({
       ...req.body,
     });
@@ -33,7 +38,7 @@ const getPostByUser = async (req, res) => {
 
 const getAllPosts = async (req, res) => {
   try {
-    const post = await Post.find().sort({ createdAt: -1 });
+    const post = await Post.find({ status: "active" }).sort({ createdAt: -1 });
     res.status(200).send(post);
   } catch (err) {
     res.status(500).send(err);
@@ -49,4 +54,27 @@ const getSomePosts = async (req, res) => {
   }
 };
 
-export { createPost, getPostByUser, getAllPosts, getSomePosts, getSinglePost };
+const approvePost = async (req, res) => {
+  try {
+    const post = await Post.findByIdAndUpdate(req.params.postId, { status: "active" });
+    if (!post) {
+      return res.status(404).send({ message: "Post not found" });
+    }
+    return res.status(200).send({ message: "Post approved successfully" });
+  } catch (err) {
+    console.log(err);
+    return res.status(500).send(err);
+  }
+};
+
+export const getPendingPosts = async (req, res) => {
+  try {
+    const pendingPosts = await Post.find({ status: "pending" }).sort({ createdAt: -1 });
+    res.status(200).send(pendingPosts);
+  } catch (err) {
+    console.log(err);
+    res.status.send(err);
+  }
+};
+
+export { createPost, getPostByUser, getAllPosts, getSomePosts, getSinglePost, approvePost };
