@@ -4,6 +4,7 @@ import "./createPost.scss";
 import { calender, clock, location } from "../../assets/createpost";
 import { useOutletContext } from "react-router-dom";
 import Modal from "../Modal/Modal";
+import { toast } from "react-toastify";
 
 const CreatePost = ({ onCancel }) => {
   const date = new Date();
@@ -16,6 +17,7 @@ const CreatePost = ({ onCancel }) => {
     fromDate: date.toISOString().slice(0, 10),
     toDate: date.toISOString().slice(0, 10),
     time: date.toTimeString().slice(0, 5),
+    tenure: "Micro Projects: (1 to 3 days)",
   });
   const [selectedFiles, setSelectedFiles] = useState([]);
 
@@ -26,15 +28,12 @@ const CreatePost = ({ onCancel }) => {
   };
 
 
-
-  
-  
-
   const handleCreatePost = async (e) => {
     e.preventDefault();
+    console.log(post);
     let updatedPost = post;
     if (updatedPost?.keywords) {
-      updatedPost.keywords = keywords.split(" ");
+      updatedPost.keywords = updatedPost?.keywords.split(" ");
     }
     try {
       const res = await axios.post(
@@ -43,8 +42,10 @@ const CreatePost = ({ onCancel }) => {
           ...post,
           createdById: id,
           location: userDetails.city,
+          isAdmin: false,
         }
       );
+      toast.success("Your post request has been submitted. An admin will review and accept it soon.");
       console.log(res.data);
       onCancel(false);
     } catch (err) {
@@ -216,28 +217,28 @@ const CreatePost = ({ onCancel }) => {
               <div className="input">
                 <img src={calender} alt="" />
                 <input
-  onChange={handleInputChange}
-  type="date"
-  name="fromDate" // Make sure the name is "fromDate"
-  required
-  id="from_date"
-  value={post.fromDate || ""}
-/>
+                  onChange={handleInputChange}
+                  type="date"
+                  name="fromDate" // Make sure the name is "fromDate"
+                  required
+                  id="from_date"
+                  value={post.fromDate || ""}
+                />
               </div>
             </div>
 
-   <div className="input">
+            <div className="input">
               <h4>TO</h4>
               <div className="input">
                 <img src={calender} alt="" />
                 <input
-  onChange={handleInputChange}
-  type="date"
-  name="toDate" // Make sure the name is "toDate"
-  required
-  id="to_date"
-  value={post.toDate || ""}
-/>
+                  onChange={handleInputChange}
+                  type="date"
+                  name="toDate" // Make sure the name is "toDate"
+                  required
+                  id="to_date"
+                  value={post.toDate || ""}
+                />
               </div>
             </div>
 
