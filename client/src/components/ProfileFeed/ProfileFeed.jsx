@@ -1,6 +1,6 @@
 import "./profileFeed.scss";
 import { useEffect, useState } from "react";
-import axios from "axios";
+import axiosInstance from "../../utils/service";
 import { useParams } from "react-router-dom";
 import Posts from "../Posts/Posts";
 import ProfileHeader from "../ProfileHeader/ProfileHeader";
@@ -49,7 +49,7 @@ const ProfileFeed = ({ user }) => {
   useEffect(() => {
     const getPosts = async () => {
       try {
-        const res = await axios.get(
+        const res = await axiosInstance.get(
           `${import.meta.env.VITE_BASE_URL}/api/post/getpost/${id}`
         );
         setPosts(res.data);

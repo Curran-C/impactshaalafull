@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { keyboard, link, send } from "../../assets/chats";
-import axios from "axios";
+import axiosInstance from "../../utils/service";
 import SingleMessage from "../SingleMessage/SingleMessage";
 
 import "./chatMessages.scss";
@@ -32,10 +32,10 @@ const ChatMessages = ({
     const getUser = async () => {
       const userId = chat?.members?.find((id) => id !== currentUserId);
       try {
-        const user = await axios.get(
+        const user = await axiosInstance.get(
           `${import.meta.env.VITE_BASE_URL}/api/company/getuser/${userId}`
         );
-        const loggedinuser = await axios.get(
+        const loggedinuser = await axiosInstance.get(
           `${
             import.meta.env.VITE_BASE_URL
           }/api/company/getuser/${currentUserId}`
@@ -53,7 +53,7 @@ const ChatMessages = ({
   useEffect(() => {
     const getMessages = async () => {
       try {
-        const res = await axios.get(
+        const res = await axiosInstance.get(
           `${import.meta.env.VITE_BASE_URL}/api/message/${chat?._id}`
         );
         setMessages(res.data);
@@ -73,7 +73,7 @@ const ChatMessages = ({
       chatId: chat?._id,
     };
     try {
-      const res = await axios.post(
+      const res = await axiosInstance.post(
         `${import.meta.env.VITE_BASE_URL}/api/message/`,
         {
           senderId: currentUserId,

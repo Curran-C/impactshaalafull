@@ -20,7 +20,8 @@ import {
   resetPassword,
   searchCompany,
 } from "../controllers/company.controller.js";
-import { cookieAuth } from "../utils/cookieAuth.js";
+// import { cookieAuth } from "../utils/cookieAuth.js";
+import { authenticateUser } from "../middlewares/authenticateUsers.js";
 
 const router = express.Router();
 
@@ -48,7 +49,9 @@ router.get("/stats/:id", getUserStat);
 router.get("/getAllUsersByStakeholder/:stakeholder", getAllUsersByStakeholder);
 router.get("/getAddress/:pincode", getAddress);
 
-router.use(cookieAuth);
+// router.use(cookieAuth);
+router.use(authenticateUser);
+
 router.get('/search', searchCompany)
 
 export default router;

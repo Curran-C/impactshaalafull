@@ -1,14 +1,14 @@
-import { authorizedInstance } from "./index";
+import axiosInstance from "../utils/service";
 
 const routes = {
-  forgotPassword: "/api/company/forgot-password",
-  resetPassword: "/api/company/reset-password",
-  search: "/api/company/search",
+  forgotPassword: `${import.meta.env.VITE_BASE_URL}/api/company/forgot-password`,
+  resetPassword: `${import.meta.env.VITE_BASE_URL}/api/company/reset-password`,
+  search: `${import.meta.env.VITE_BASE_URL}/api/company/search`,
 };
 
 export const forgotPasswordAPI = async (payload) => {
   try {
-    const res = await authorizedInstance.post(routes.forgotPassword, payload);
+    const res = await axiosInstance.post(routes.forgotPassword, payload);
     return res.data;
   } catch (error) {
     console.log("Error sending forgot password: ", error);
@@ -18,7 +18,7 @@ export const forgotPasswordAPI = async (payload) => {
 
 export const resetPasswordAPI = async (payload) => {
   try {
-    const res = await authorizedInstance.post(routes.resetPassword, payload);
+    const res = await axiosInstance.post(routes.resetPassword, payload);
     return res.data;
   } catch (error) {
     console.log("Error resetting password: ", error);
@@ -28,7 +28,7 @@ export const resetPasswordAPI = async (payload) => {
 
 export const searchUserAPI = async (input) => {
   try {
-    const res = await authorizedInstance.get(
+    const res = await axiosInstance.get(
       `${routes.search}?name=${input}`
     );
     return res.data;

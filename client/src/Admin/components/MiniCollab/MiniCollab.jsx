@@ -1,6 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
-import axios from "axios";
+import axiosInstance from "../../../utils/service";
+
 import MiniCollabProfile from "../MiniCollabProfile/MiniCollabProfile";
 import "./miniCollab.scss";
 
@@ -12,7 +13,7 @@ const MiniCollab = ({ collabId, status, page, buttonText, fromId, toId }) => {
     if (fromId) {
       const getFromUser = async () => {
         try {
-          const res = await axios.get(
+          const res = await axiosInstance.get(
             `${import.meta.env.VITE_BASE_URL}/api/company/getuser/${fromId}`
           );
           setFromUser(res.data);
@@ -26,7 +27,7 @@ const MiniCollab = ({ collabId, status, page, buttonText, fromId, toId }) => {
     if (toId) {
       const getToUser = async () => {
         try {
-          const res = await axios.get(
+          const res = await axiosInstance.get(
             `${import.meta.env.VITE_BASE_URL}/api/company/getuser/${toId}`
           );
           setToUser(res.data);

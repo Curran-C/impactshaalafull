@@ -1,12 +1,11 @@
-import { authorizedInstance } from "./index";
-
+import axiosInstance from "../utils/service";
 const routes = {
-  getAllPosts: "/api/post/getposts",
+  getAllPosts: `${import.meta.env.VITE_BASE_URL}/api/post/getposts`,
 };
 
 export const getAllPostsAPI = async () => {
   try {
-    const res = await authorizedInstance.get(routes.getAllPosts);
+    const res = await axiosInstance.get(routes.getAllPosts);
     return res.data;
   } catch (err) {
     console.log(err);

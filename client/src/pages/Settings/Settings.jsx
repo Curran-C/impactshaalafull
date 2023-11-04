@@ -22,6 +22,7 @@ const Settings = () => {
   const handleLogoutConfirm = () => {
     setShowModal(false);
     localStorage.removeItem("IsUser");
+    localStorage.removeItem("accessToken");
     Cookies.remove("accessToken");
     navigate("/");
   };

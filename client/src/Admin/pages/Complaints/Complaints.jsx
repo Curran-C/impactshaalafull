@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import axios from "axios";
+import axiosInstance from "../../../utils/service";
 import {
   AdminSearch,
   CancelCollab,
@@ -8,16 +8,18 @@ import {
 } from "../../components";
 import "./complaints.scss";
 import { useOutletContext } from "react-router-dom";
+import { Spin } from 'antd';
 
 const Complaints = () => {
   const { setPageTitle } = useOutletContext();
+  const [loading, setLoading] = useState(false);
 
   const [complaints, setComplaint] = useState([]);
 
   useEffect(() => {
     const getComplaints = async () => {
       try {
-        const res = await axios.get(
+        const res = await axiosInstance.get(
           `${import.meta.env.VITE_BASE_URL}/api/feedback/all`
         );
         setComplaint(res.data);

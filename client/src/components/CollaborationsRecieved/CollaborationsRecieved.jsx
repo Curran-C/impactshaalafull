@@ -1,8 +1,9 @@
 import { useParams } from "react-router-dom";
 import "./collaborationsRecieved.scss";
 import { useEffect, useState } from "react";
-import axios from "axios";
+import axiosInstance from "../../utils/service";
 import CollaborationsCard from "../CollaborationsCard/CollaborationsCard";
+import { Spin } from 'antd';
 
 const CollaborationsRecieved = () => {
   const { id } = useParams();
@@ -10,11 +11,13 @@ const CollaborationsRecieved = () => {
   const [collabIds, setCollabIds] = useState([]);
   const [collabs, setCollabs] = useState([]);
   const [post, setPosts] = useState([]);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     const getUser = async () => {
+      setLoading(true);
       try {
-        const resCollabGot = await axios.get(
+        const resCollabGot = await axiosInstance.get(
           `${import.meta.env.VITE_BASE_URL}/api/collaboration/singletoId/${id}`
         );
         setCollabs(resCollabGot.data);
@@ -23,9 +26,8 @@ const CollaborationsRecieved = () => {
         resCollabGot.data?.map(async (collab) => {
           try {
             console.log(collab.fromId);
-            const resFromUser = await axios.get(
-              `${import.meta.env.VITE_BASE_URL}/api/company/getuser/${
-                collab.fromId
+            const resFromUser = await axiosInstance.get(
+              `${import.meta.env.VITE_BASE_URL}/api/company/getuser/${collab.fromId
               }`
             );
             setFromUsers((prev) => [...prev, resFromUser?.data]);
@@ -36,6 +38,8 @@ const CollaborationsRecieved = () => {
         });
       } catch (err) {
         console.log(err);
+      } finally {
+        setLoading(false);
       }
     };
     getUser();
@@ -51,6 +55,7 @@ const CollaborationsRecieved = () => {
           page={"collabsRecieved"}
         />
       ))}
+      <Spin spinning={loading} fullscreen />
     </div>
   );
 };

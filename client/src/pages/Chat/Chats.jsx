@@ -4,9 +4,10 @@ import { chat } from "../../assets/profile";
 
 import ChatSingle from "../../components/ChatSingle/ChatSingle";
 import ChatMessages from "../../components/ChatMessages/ChatMessages";
+import { Spin } from 'antd';
 
 import { useEffect, useRef, useState } from "react";
-import axios from "axios";
+import axiosInstance from "../../utils/service";
 import { io } from "socket.io-client";
 
 import "./chats.scss";
@@ -16,13 +17,15 @@ import SearchResults from "../../components/SearchResults/SearchResults";
 import { searchUserAPI } from "../../api/company";
 
 const Chats = () => {
-  const { user: loggedInUser } = useOutletContext();
+  // const { user: loggedInUser } = useOutletContext();
+  const loggedInUser = JSON.parse(localStorage.getItem("IsUser"));
   const [chats, setChats] = useState();
   const [currentChat, setCurrentChat] = useState(null);
   const [onlineUsers, setOnlineUsers] = useState([]);
   const [sendMessage, setSendMessage] = useState(null);
   const [recieveMessage, setRecieveMessage] = useState(null);
   const [searchResults, setSearchResults] = useState(null);
+  const [loading, setLoading] = useState(false);
 
   const searchResultsRef = useRef();
   const socket = useRef();
@@ -39,7 +42,7 @@ const Chats = () => {
       socket.current.emit("disconnected");
       socket.current.disconnect();
     };
-  }, [loggedInUser]);
+  }, []);
 
   //SEND MESSAGE TO SOCKET IO SERVER
   useEffect(() => {
@@ -57,10 +60,14 @@ const Chats = () => {
 
   const getChats = async () => {
     try {
+      setLoading(true);
       const allchats = await getAllChatsAPI();
+      console.log(allchats);
       setChats(allchats?.data);
     } catch (err) {
       console.log(err);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -71,12 +78,15 @@ const Chats = () => {
 
   // Backend is functional
   const startNewChat = async (userId) => {
+    setLoading(true);
     try {
       await startNewChatAPI(userId);
       await getChats();
       setSearchResults(null);
     } catch (error) {
       console.log("Error starting new chat: ", error);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -141,6 +151,9 @@ const Chats = () => {
             )}
           </div>
           <div className="chatsAll">
+            {chats?.length === 0 &&
+              < h4 > No Chats</h4>
+            }
             {chats?.map((chat) => (
               <ChatSingle
                 showChat={setCurrentChat}
@@ -163,6 +176,7 @@ const Chats = () => {
           ) : (
             <ChatFiller />
           )}
+          <Spin spinning={loading} fullscreen />
         </div>
       </div>
     </div>

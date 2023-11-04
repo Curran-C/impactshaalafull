@@ -7,7 +7,8 @@ import {
 import Tile from "../../../components/Tile/Tile";
 import "./adminPost.scss";
 import { useState } from "react";
-import axios from "axios";
+import axiosInstance from "../../../utils/service";
+
 import Modal from "../../../components/Modal/Modal";
 
 const AdminPost = ({ onCancel }) => {
@@ -41,15 +42,14 @@ const AdminPost = ({ onCancel }) => {
       if (notifyChecked) {
         if (stakeholders) {
           console.log(stakeholders);
-          const response = await axios.get(
-            `${
-              import.meta.env.VITE_BASE_URL
+          const response = await axiosInstance.get(
+            `${import.meta.env.VITE_BASE_URL
             }/api/company/getAllUsersByStakeholder/${stakeholders}`
           );
           setCompanies(response.data);
           console.log(response.data);
           for (const company of response.data) {
-            await axios.post(
+            await axiosInstance.post(
               `${import.meta.env.VITE_BASE_URL}/api/notification/create`,
               {
                 toId: company._id,
@@ -61,12 +61,12 @@ const AdminPost = ({ onCancel }) => {
           alert(`Notifications sent`);
           onCancel(false);
         } else {
-          const response = await axios.get(
+          const response = await axiosInstance.get(
             `${import.meta.env.VITE_BASE_URL}/api/company/getallusers`
           );
           setCompanies(response.data);
           for (const company of response.data) {
-            await axios.post(
+            await axiosInstance.post(
               `${import.meta.env.VITE_BASE_URL}/api/notification/create`,
               {
                 toId: company._id,
@@ -80,11 +80,11 @@ const AdminPost = ({ onCancel }) => {
         }
       }
       if (postChecked) {
-        const res = await axios.post(
+        const res = await axiosInstance.post(
           `${import.meta.env.VITE_BASE_URL}/api/post/create`,
           {
             title: notificationTitle,
-            posDetails: message,
+            description: message,
             date: new Date(),
             isAdmin: true,
           }

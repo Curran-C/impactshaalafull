@@ -4,12 +4,14 @@ import Cookies from "js-cookie";
 
 function PrivateRoutes() {
   let user = localStorage.getItem("IsUser");
-  const accessToken = Cookies.get("accessToken");
+  let token = localStorage.getItem("accessToken");
+  // const accessToken = Cookies.get("accessToken");
   if (user) user = JSON.parse(user);
-
-  if (!user || !accessToken) {
+  console.log(user._id);  
+  if (!user || !token) {
     localStorage.removeItem("IsUser");
-    Cookies.remove("accessToken");
+    localStorage.removeItem("accessToken");
+    // Cookies.remove("accessToken");
     return <Navigate to={"/signUp"} replace />;
   }
   return <Outlet context={{ user }} />;

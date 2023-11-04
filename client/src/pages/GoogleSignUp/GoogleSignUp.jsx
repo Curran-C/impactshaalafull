@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import "./googleSignup.scss";
-import axios from "axios";
+import axiosInstance from "../../utils/service";
 import { gmail } from "../../assets/signUp";
 import { useNavigate, useParams } from "react-router-dom";
 import { upload } from "../../../../api/utils/upload";
@@ -42,7 +42,7 @@ const GoogleSignUp = () => {
     console.log(updatedUser);
     const coverPicUrl = await upload(coverImg);
     try {
-      const res = await axios.post(
+      const res = await axiosInstance.post(
         `${import.meta.env.VITE_BASE_URL}/api/company/updateuser/${id}`,
         {
           ...updatedUser,
@@ -51,7 +51,7 @@ const GoogleSignUp = () => {
         }
       );
       try {
-        const res = await axios.post(
+        const res = await axiosInstance.post(
           `${import.meta.env.VITE_BASE_URL}/api/company/login`,
           {
             email: updatedUser.email,

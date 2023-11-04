@@ -1,7 +1,8 @@
 .postModal {
     position: absolute;
-    top: 0;
-    left: 0;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
     bottom: 0;
     right: 0;
     position: fixed;
@@ -9,16 +10,23 @@
     align-items: center;
     justify-content: center;
     flex-direction: column;
+    width: 600px;
+    max-width: 100%;
     gap: 20px;
+    z-index: 9;
+    
+    
+      
     .blackbg {
         position: absolute;
-        background: #000;
+        // background: #000;
         height: 100vh;
-        width: 100%;
-        opacity: 0.2;
+        width: 100vh;
+        // opacity: 0;
         // z-index: -10;
         top: 0;
     }
+
     .post {
         z-index: 10;
         display: flex;
@@ -31,40 +39,49 @@
         // width: 700px;
         border-radius: 25px;
         justify-content: space-between;
+
         .user {
             display: flex;
             width: 100%;
             justify-content: space-between;
+
             .userAboutContainer {
                 display: flex;
                 gap: 50px;
+
                 h2 {
                     margin: 0;
                 }
+
                 .pfp {
                     height: 50px;
                     object-fit: cover;
                     width: 50px;
                     border-radius: 50px;
                 }
+
                 .userAbout {
                     display: flex;
                     align-items: start;
                     flex-direction: column;
                     gap: 10px;
+
                     .tilesContainer {
                         display: flex;
                         gap: 20px;
                     }
                 }
             }
+
             .bookmark {
                 height: 30px;
+
                 &:hover {
                     cursor: pointer;
                 }
             }
         }
+
         .container {
             display: flex;
             flex-direction: column;
@@ -74,25 +91,31 @@
             height: 200px;
             width: 550px;
             border-radius: 25px;
+
             .containerFooter {
                 align-items: center;
                 justify-content: center;
                 display: flex;
                 width: 100%;
                 justify-content: space-between;
+
                 p {
                     color: rgba(57, 57, 57, 0.75);
                     font-size: 15px;
                 }
+
                 .links {
                     display: flex;
                     justify-content: space-between;
                     gap: 20px;
+
                     .collabImage {
                         height: 35px;
                     }
+
                     img {
                         height: 40px;
+
                         &:hover {
                             cursor: pointer;
                         }
@@ -101,17 +124,22 @@
             }
         }
     }
+
     .buttons {
-        z-index: 10;
+        z-index: 9;
+
         button {
             padding: 10px 20px;
+
             &:hover {
                 cursor: pointer;
             }
         }
+
         .green {
             background-color: rgb(31, 126, 31);
         }
+
         .red {
             background-color: rgb(153, 39, 39);
         }

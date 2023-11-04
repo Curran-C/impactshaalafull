@@ -1,13 +1,13 @@
-import { authorizedInstance } from "./index.js";
+import axiosInstance from "../utils/service.js";
 
 const routes = {
-  newProjectAccomplishment: "/api/accomplishment",
-  fetchAccomplishment: "/api/accomplishment",
+  newProjectAccomplishment: `${import.meta.env.VITE_BASE_URL}/api/accomplishment`,
+  fetchAccomplishment: `${import.meta.env.VITE_BASE_URL}/api/accomplishment`,
 };
 
 export const newProjectAccomplishmentAPI = async (formData) => {
   try {
-    const response = await authorizedInstance.post(
+    const response = await axiosInstance.post(
       routes.newProjectAccomplishment,
       formData
     );
@@ -20,7 +20,7 @@ export const newProjectAccomplishmentAPI = async (formData) => {
 
 export const fetchAccomplishmentAPI = async (companyId) => {
   try {
-    const response = await authorizedInstance.get(
+    const response = await axiosInstance.get(
       `${routes.fetchAccomplishment}/${companyId}`
     );
     return response.data;

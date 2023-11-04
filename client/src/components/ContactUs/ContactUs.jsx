@@ -1,7 +1,7 @@
 import { useState } from "react";
 import "./contactUs.scss";
 import emailjs from "@emailjs/browser";
-import axios from "axios";
+import axiosInstance from "../../utils/service";
 import { useParams } from "react-router-dom";
 import Modal from "../Modal/Modal";
 
@@ -67,7 +67,7 @@ const ContactUs = ({ onCancel, email }) => {
         }
       );
 
-    axios.post(`${import.meta.env.VITE_BASE_URL}/api/feedback/create`, {
+    axiosInstance.post(`${import.meta.env.VITE_BASE_URL}/api/feedback/create`, {
       userId: id,
       text: form.additionalDetails,
     });

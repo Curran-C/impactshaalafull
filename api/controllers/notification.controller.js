@@ -16,7 +16,8 @@ export const createNotification = async (req, res) => {
 //get all notification
 export const getAllNotification = async (req, res) => {
   try {
-    const notification = await Notification.find({ toId: req.id });
+    console.log(req.id);
+    const notification = await Notification.find({ toId: req.id }).sort({ status: 'desc', time: 'desc'});
     res.status(200).send({ data: notification });
   } catch (err) {
     res.status(500).send(err);
