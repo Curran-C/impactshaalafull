@@ -3,7 +3,7 @@ import MiniCollabProfile from "../MiniCollabProfile/MiniCollabProfile";
 import Stat from "../Stat/Stat";
 import "./userInfoCard.scss";
 import { useState, useEffect } from "react";
-import axios from "axios";
+import axiosInstance from "../../../utils/service";
 
 const UserInfoCard = ({ userId, name, stakeholder, pfp }) => {
   const navigate = useNavigate();
@@ -12,7 +12,7 @@ const UserInfoCard = ({ userId, name, stakeholder, pfp }) => {
   useEffect(() => {
     const getUserStats = async () => {
       try {
-        const res = await axios.get(
+        const res = await axiosInstance.get(
           `${import.meta.env.VITE_BASE_URL}/api/company/stats/${userId}`
         );
         setUserStats(res.data);

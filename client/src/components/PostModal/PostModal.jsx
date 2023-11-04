@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react";
 import Post from "../Post/Post";
 import "./postModal.scss";
-import axios from "axios";
+import axiosInstance from "../../utils/service";
 import { useNavigate, useParams } from "react-router-dom";
 
-const PostModal = ({ user, collabId, post, onCancel, page }) => {
+const PostModal = ({ user, collabId, post, onCancel, page, closeModel }) => {
   const { id } = useParams();
   const otherUser = id === post?.createdById ? user?._id : id;
   console.log(user._id);
@@ -14,12 +14,12 @@ const PostModal = ({ user, collabId, post, onCancel, page }) => {
 
   const handleChatClick = async () => {
     try {
-      const findChat = await axios.get(
+      const findChat = await axiosInstance.get(
         `${import.meta.env.VITE_BASE_URL}/api/chat/find/${id}/${otherUser}`
       );
       if (!findChat?.data) {
         try {
-          const chatRes = await axios.post(
+          const chatRes = await axiosInstance.post(
             `${import.meta.env.VITE_BASE_URL}/api/chat/`,
             {
               senderId: id,
@@ -44,35 +44,33 @@ const PostModal = ({ user, collabId, post, onCancel, page }) => {
   const handleAccept = async () => {
     try {
       // update current loggedin use
-      const resToCurrentUserOne = await axios.post(
+      const resToCurrentUserOne = await axiosInstance.post(
         `${import.meta.env.VITE_BASE_URL}/api/company/updateuser/${otherUser}`,
         { $push: { collaborationIdsAccepted: collabId } }
       );
-      const resToCurrentUserTwo = await axios.post(
+      const resToCurrentUserTwo = await axiosInstance.post(
         `${import.meta.env.VITE_BASE_URL}/api/company/updateuser/${otherUser}`,
         { $pull: { collaborationIds: collabId } }
       );
 
       //update user who posted the collaborating
-      const resToOtherUserOne = await axios.post(
-        `${import.meta.env.VITE_BASE_URL}/api/company/updateuser/${
-          post?.createdById
+      const resToOtherUserOne = await axiosInstance.post(
+        `${import.meta.env.VITE_BASE_URL}/api/company/updateuser/${post?.createdById
         }`,
         { $push: { collaborationIdsAccepted: collabId } }
       );
-      const resToOtherUserTwo = await axios.post(
-        `${import.meta.env.VITE_BASE_URL}/api/company/updateuser/${
-          post?.createdById
+      const resToOtherUserTwo = await axiosInstance.post(
+        `${import.meta.env.VITE_BASE_URL}/api/company/updateuser/${post?.createdById
         }`,
         { $pull: { collaborationIds: collabId } }
       );
-      const updateCollabs = await axios.post(
+      const updateCollabs = await axiosInstance.post(
         `${import.meta.env.VITE_BASE_URL}/api/collaboration/update/${collabId}`,
         {
           completed: "ongoing"
         }
       );
-      await axios.post(`${import.meta.env.VITE_BASE_URL}/api/notification/create`, {
+      await axiosInstance.post(`${import.meta.env.VITE_BASE_URL}/api/notification/create`, {
         fromId: post?.createdById,
         toId: otherUser,
         title: "Collab Request Accepted",
@@ -87,29 +85,27 @@ const PostModal = ({ user, collabId, post, onCancel, page }) => {
   const handleDecline = async () => {
     try {
       // update current loggedin use
-      const resToCurrentUser = await axios.post(
+      const resToCurrentUser = await axiosInstance.post(
         `${import.meta.env.VITE_BASE_URL}/api/company/updateuser/${otherUser}`,
         { $push: { collaborationIdsDeclined: collabId } }
       );
-      const resToCurrentUserTwo = await axios.post(
+      const resToCurrentUserTwo = await axiosInstance.post(
         `${import.meta.env.VITE_BASE_URL}/api/company/updateuser/${otherUser}`,
         { $pull: { collaborationIds: collabId } }
       );
 
       //update user who posted the collaborating
-      const resToOtherUser = await axios.post(
-        `${import.meta.env.VITE_BASE_URL}/api/company/updateuser/${
-          post?.createdById
+      const resToOtherUser = await axiosInstance.post(
+        `${import.meta.env.VITE_BASE_URL}/api/company/updateuser/${post?.createdById
         }`,
         { $push: { collaborationIdsDeclined: collabId } }
       );
-      const resToOtherUserTwo = await axios.post(
-        `${import.meta.env.VITE_BASE_URL}/api/company/updateuser/${
-          post?.createdById
+      const resToOtherUserTwo = await axiosInstance.post(
+        `${import.meta.env.VITE_BASE_URL}/api/company/updateuser/${post?.createdById
         }`,
         { $pull: { collaborationIds: collabId } }
       );
-      const updateCollabs = await axios.post(
+      const updateCollabs = await axiosInstance.post(
         `${import.meta.env.VITE_BASE_URL}/api/collaboration/update/${collabId}`,
         {
           completed: "declined"

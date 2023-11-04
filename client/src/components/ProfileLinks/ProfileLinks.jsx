@@ -6,18 +6,19 @@ import jwtDecode from "jwt-decode";
 const ProfileLinks = ({ img, linkText, highlighted, to }) => {
   // states
   const navigate = useNavigate();
-  const [accessToken, setAccessToken] = useState();
-  const [decodedToken, setDecodedToken] = useState();
+  // const [accessToken, setAccessToken] = useState();
+  // const [decodedToken, setDecodedToken] = useState();
+  const loggedInUser = JSON.parse(localStorage.getItem("IsUser"));
 
-  useEffect(() => {
-    const cookie = document.cookie;
-    const cookies = cookie.split("; ");
-    for (let i = 0; i < cookies.length; i++) {
-      const cookie = cookies[i].split("=");
-      setAccessToken(decodeURIComponent(cookie[1]));
-      accessToken && setDecodedToken(jwtDecode(accessToken));
-    }
-  }, [accessToken]);
+  // useEffect(() => {
+  //   const cookie = document.cookie;
+  //   const cookies = cookie.split("; ");
+  //   for (let i = 0; i < cookies.length; i++) {
+  //     const cookie = cookies[i].split("=");
+  //     setAccessToken(decodeURIComponent(cookie[1]));
+  //     accessToken && setDecodedToken(jwtDecode(accessToken));
+  //   }
+  // }, [accessToken]);
 
   // vars
   let navLink = linkText.toLowerCase();
@@ -26,7 +27,7 @@ const ProfileLinks = ({ img, linkText, highlighted, to }) => {
   // return
   return (
     <div
-      onClick={() => navigate(to ? to : `/${navLink}/${decodedToken.id}`)}
+      onClick={() => navigate(to ? to : `/${navLink}/${loggedInUser._id}`)}
       className={`profileLinks ${highlighted ? "highlighted" : ""}`}
     >
       <img className="img" src={img} alt="" />

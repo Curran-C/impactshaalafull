@@ -2,7 +2,7 @@ import { useNavigate } from "react-router-dom";
 import "./complaint.scss";
 import { useState, useEffect } from "react";
 import CancelCollab from "../CancelCollab/CancelCollab";
-import axios from "axios";
+import axiosInstance from "../../../utils/service";
 
 const Complaint = ({ userId, complaint, id }) => {
   const navigate = useNavigate();
@@ -11,7 +11,7 @@ const Complaint = ({ userId, complaint, id }) => {
 
   const handleDeleteComplaint = async () => {
     try {
-      await axios.delete(
+      await axiosInstance.delete(
         `${import.meta.env.VITE_BASE_URL}/api/feedback/delete/${id}`
       );
       alert("Complaint Deleted");
@@ -24,7 +24,7 @@ const Complaint = ({ userId, complaint, id }) => {
   useEffect(() => {
     const getUser = async () => {
       try {
-        const res = await axios.get(
+        const res = await axiosInstance.get(
           `${import.meta.env.VITE_BASE_URL}/api/company/getuser/${userId}`
         );
         setUserDetails(res.data);

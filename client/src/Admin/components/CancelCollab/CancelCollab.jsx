@@ -1,5 +1,5 @@
 import "./cancelCollab.scss";
-import axios from "axios";
+import axiosInstance from "../../../utils/service";
 import { useState } from 'react';
 
 const CancelCollab = ({ onCancel, title, button, userId, collabId, feedbackId }) => {
@@ -7,7 +7,7 @@ const CancelCollab = ({ onCancel, title, button, userId, collabId, feedbackId })
   const handleSubmit = async () => {
     try {
       if (button === "Send Notification") {
-        const user = await axios.get(
+        const user = await axiosInstance.get(
           `${import.meta.env.VITE_BASE_URL}/api/company/getuser/${userId}`
         );
         const requestbody = {
@@ -16,10 +16,10 @@ const CancelCollab = ({ onCancel, title, button, userId, collabId, feedbackId })
           email: user.data.email,
           message: message,
         }
-        const res = await axios.post(
+        const res = await axiosInstance.post(
           `${import.meta.env.VITE_BASE_URL}/api/company/send/${userId}`, requestbody
         );
-        await axios.post(`${import.meta.env.VITE_BASE_URL}/api/notification/create`, {
+        await axiosInstance.post(`${import.meta.env.VITE_BASE_URL}/api/notification/create`, {
           toId: userId,
            // title: "Important Notification from ImpactShaala",
           title: message,
@@ -31,13 +31,13 @@ const CancelCollab = ({ onCancel, title, button, userId, collabId, feedbackId })
         }
       }
       else if (button === "Remove account") {
-        const user = await axios.get(
+        const user = await axiosInstance.get(
           `${import.meta.env.VITE_BASE_URL}/api/company/getuser/${userId}`
         );
         const requestbody = {
           reason: message
         }
-        const res = await axios.post(
+        const res = await axiosInstance.post(
           `${import.meta.env.VITE_BASE_URL}/api/company/remove/${userId}`, requestbody
         );
         if (res.status === 200) {
@@ -50,25 +50,25 @@ const CancelCollab = ({ onCancel, title, button, userId, collabId, feedbackId })
         const requestBody = {
           completed: "declined"
         }
-        const res = await axios.post(
+        const res = await axiosInstance.post(
           `${import.meta.env.VITE_BASE_URL}/api/collaboration/update/${collabId}`, requestBody
         );
         console.log(res.data);
 
         //send notification to both users
-        await axios.post(`${import.meta.env.VITE_BASE_URL}/api/notification/create`, {
+        await axiosInstance.post(`${import.meta.env.VITE_BASE_URL}/api/notification/create`, {
           toId: res.data.fromId,
           title: "Collab Request Declined",
           message: message,
         });
 
-        await axios.post(`${import.meta.env.VITE_BASE_URL}/api/notification/create`, {
+        await axiosInstance.post(`${import.meta.env.VITE_BASE_URL}/api/notification/create`, {
           toId: res.data.toId,
           title: "Collab Request Declined",
           message: message,
         });
 
-        const resToCurrentUser = await axios.post(
+        const resToCurrentUser = await axiosInstance.post(
           `${import.meta.env.VITE_BASE_URL}/api/company/updateuser/${res.data.fromId}`,
           {
             $push: { collaborationIdsDeclined: collabId },
@@ -79,7 +79,7 @@ const CancelCollab = ({ onCancel, title, button, userId, collabId, feedbackId })
           }
         );
 
-        const resToOtherUser = await axios.post(
+        const resToOtherUser = await axiosInstance.post(
           `${import.meta.env.VITE_BASE_URL}/api/company/updateuser/${res.data.toId}`,
           {
             $push: { collaborationIdsDeclined: collabId },
@@ -90,7 +90,7 @@ const CancelCollab = ({ onCancel, title, button, userId, collabId, feedbackId })
           }
         );
         //send mail to both users
-        await axios.post(
+        await axiosInstance.post(
           `${import.meta.env.VITE_BASE_URL}/api/company/send/${resToCurrentUser.data._id}`, {
           name: resToCurrentUser.data.name,
           email: resToCurrentUser.data.email,
@@ -98,7 +98,7 @@ const CancelCollab = ({ onCancel, title, button, userId, collabId, feedbackId })
           message: message
         }
         )
-        await axios.post(
+        await axiosInstance.post(
           `${import.meta.env.VITE_BASE_URL}/api/company/send/${resToOtherUser.data._id}`, {
           name: resToOtherUser.data.name,
           email: resToOtherUser.data.email,
@@ -114,10 +114,10 @@ const CancelCollab = ({ onCancel, title, button, userId, collabId, feedbackId })
         const requestBody = {
           replay: message,
         }
-        const res = await axios.post(
+        const res = await axiosInstance.post(
           `${import.meta.env.VITE_BASE_URL}/api/feedback/replay/${feedbackId}`, requestBody
         );
-        await axios.post(`${import.meta.env.VITE_BASE_URL}/api/notification/create`, {
+        await axiosInstance.post(`${import.meta.env.VITE_BASE_URL}/api/notification/create`, {
           toId: res.data.userId,
           // title: "Replay for your feedback",
           title: message,

@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import axios from "axios";
+import axiosInstance from "../../utils/service";
 import "./createPost.scss";
 import { calender, clock, location } from "../../assets/createpost";
 import { useOutletContext } from "react-router-dom";
@@ -36,7 +36,7 @@ const CreatePost = ({ onCancel }) => {
       updatedPost.keywords = updatedPost?.keywords.split(" ");
     }
     try {
-      const res = await axios.post(
+      const res = await axiosInstance.post(
         `${import.meta.env.VITE_BASE_URL}/api/post/create`,
         {
           ...post,

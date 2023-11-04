@@ -4,7 +4,7 @@ import { bell, chat, enter, search } from "../../assets/home";
 import { date } from "../../utils/date";
 import NameDate from "../NameDate/NameDate";
 import { useEffect, useRef, useState } from "react";
-import axios from "axios";
+import axiosInstance from "../../utils/service";
 import SearchResults from "../SearchResults/SearchResults";
 import Notifications from "../Notifications/Notifications";
 import { useNavigate, useOutletContext } from "react-router-dom";
@@ -23,7 +23,7 @@ const Search = ({ userName }) => {
   useEffect(() => {
     const fetchNotificationCount = async () => {
       try {
-        const response = await axios.get(
+        const response = await axiosInstance.get(
           `${import.meta.env.VITE_BASE_URL}/api/notification/getCount/${
             user?._id
           }`
@@ -50,7 +50,7 @@ const Search = ({ userName }) => {
 
     const getAllUsers = async () => {
       try {
-        const res = await axios.get(
+        const res = await axiosInstance.get(
           `${import.meta.env.VITE_BASE_URL}/api/company/getallusers`
         );
         setAllUsers(res?.data);
@@ -64,6 +64,7 @@ const Search = ({ userName }) => {
   const handleSearchInput = (e) => {
     setSearch(e.target.value);
     setSearchResults([]);
+    handleSearch();
   };
 
   const handleSearch = async (e) => {

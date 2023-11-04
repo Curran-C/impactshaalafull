@@ -9,10 +9,11 @@ import "./collabDetails.scss";
 import { useState } from "react";
 import { useLocation } from "react-router-dom";
 import { useEffect } from "react";
-import axios from "axios";
+import axiosInstance from "../../../utils/service";
 import MiniCollabProfile from "../../components/MiniCollabProfile/MiniCollabProfile";
 import { keyboard } from "../../../assets/chats";
 import { toast } from "react-toastify";
+import { Spin } from 'antd';
 
 const CollabDetails = () => {
   const navigate = useNavigate();
@@ -27,29 +28,31 @@ const CollabDetails = () => {
   const [user, setUser] = useState({});
   const [fromDate, setFromDate] = useState("");
   const [toDate, setToDate] = useState("");
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     const getCollab = async () => {
+      setLoading(true);
       try {
         if (postId) {
-          const res = await axios.get(
+          const res = await axiosInstance.get(
             `${import.meta.env.VITE_BASE_URL}/api/post/getsinglepost/${postId}`
           );
           setPost(res.data);
           setFromDate(new Date(res.data.fromDate).toISOString().split("T")[0]);
           setToDate(new Date(res.data.toDate).toISOString().split("T")[0])
-          const user = await axios.get(
+          const user = await axiosInstance.get(
             `${import.meta.env.VITE_BASE_URL}/api/company/getuser/${res.data.createdById
             }`
           );
           setUser(user.data);
         } else {
-          const collabRequest = await axios.get(
+          const collabRequest = await axiosInstance.get(
             `${import.meta.env.VITE_BASE_URL
             }/api/collaboration/single/${collabId}`
           );
           setCollab(collabRequest.data);
-          const postRequest = await axios.get(
+          const postRequest = await axiosInstance.get(
             `${import.meta.env.VITE_BASE_URL}/api/post/getsinglepost/${collabRequest.data.postId
             }`
           );
@@ -57,7 +60,7 @@ const CollabDetails = () => {
           setStartDate(
             new Date(postRequest.data.createdAt).toISOString().split("T")[0]
           );
-          const res = await axios.get(
+          const res = await axiosInstance.get(
             `${import.meta.env.VITE_BASE_URL}/api/company/getuser/${postRequest.data.createdById
             }`
           );
@@ -66,6 +69,11 @@ const CollabDetails = () => {
 
       } catch (err) {
         console.log(err);
+      } finally {
+        // setTimeout(() => {
+        //   setLoading(false);
+        // }, 1000);
+        setLoading(false);
       }
     };
     getCollab();
@@ -73,15 +81,20 @@ const CollabDetails = () => {
 
   const handleApprovePost = async (postId) => {
     const confirmApprove = window.confirm("Are you sure you want to approve this post?");
+    setLoading(true);
     if (confirmApprove) {
       try {
-        const res = await axios.patch(
+        const res = await axiosInstance.patch(
           `${import.meta.env.VITE_BASE_URL}/api/post/approvePost/${postId}`
         );
         toast.success("Post Approved");
         navigate("/admin/collaborations");
       } catch (err) {
         console.log(err);
+      } finally {
+        setTimeout(() => {
+          setLoading(false);
+        }, 1000);
       }
     }
   };
@@ -170,7 +183,7 @@ const CollabDetails = () => {
           </div>
         </div>
       }
-
+      <Spin spinning={loading} fullscreen />
     </div>
   );
 };

@@ -1,8 +1,7 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import jwt_decode from "jwt-decode";
-import axios from "axios";
-
+import axiosInstance from "../../utils/service";
 import "./signUp.scss";
 import { upload } from "../../../../api/utils/upload";
 import {
@@ -77,7 +76,7 @@ const SignUp = () => {
     const { email, name, picture } = jwt_decode(res.credential);
     // checking if user already exists and signing them in
     try {
-      const res = await axios.post(
+      const res = await axiosInstance.post(
         `${import.meta.env.VITE_BASE_URL}/api/company/verifyuser`,
         { email }
       );
@@ -88,7 +87,7 @@ const SignUp = () => {
       // adding new user
       const { stakeholder, type } = newUser;
       try {
-        const res = await axios.post(
+        const res = await axiosInstance.post(
           `${import.meta.env.VITE_BASE_URL}/api/company/register`,
           {
             name,
@@ -127,12 +126,12 @@ const SignUp = () => {
     };
     // const getLocation = async () => {
     //   try {
-    //     const { data } = await axios.get("https://ipapi.co/json/", {
+    //     const { data } = await axiosInstance.get("https://ipapi.co/json/", {
     //       withCredentials: false,
     //     });
     //     const { latitude, longitude } = data;
     //     setLocation({ city: data.city, state: data.region });
-    //     const locationFromAccuWeather = await axios.get(
+    //     const locationFromAccuWeather = await axiosInstance.get(
     //       `http://dataservice.accuweather.com/locations/v1/cities/geoposition/search?apikey=${
     //         import.meta.env.VITE_ACCUWEATHER_KEY
     //       }&q=${latitude}%2C${longitude}`,
@@ -245,7 +244,7 @@ const SignUp = () => {
         if (coverPic) coverPicUrl = await upload(coverPic);
 
         try {
-          const res = await axios.post(
+          const res = await axiosInstance.post(
             `${import.meta.env.VITE_BASE_URL}/api/company/register`,
             {
               ...newUser,
@@ -255,9 +254,8 @@ const SignUp = () => {
               tags: tags,
             }
           );
-          console.log(res.data);
           try {
-            const res = await axios.post(
+            const res = await axiosInstance.post(
               `${import.meta.env.VITE_BASE_URL}/api/company/login`,
               {
                 email: newUser.email,
@@ -269,6 +267,7 @@ const SignUp = () => {
               expires: 7000,
               sameSite: "Lax",
             });
+            localStorage.setItem("accessToken", res.data.token);
             res.data.info && setIsLoading(false);
             // navigate(`/home/${res.data.info._id}`);
             // alert("");
@@ -311,17 +310,19 @@ const SignUp = () => {
     e?.preventDefault();
     setIsLoading(true);
     try {
-      const res = await axios.post(
+      const res = await axiosInstance.post(
         `${import.meta.env.VITE_BASE_URL}/api/company/login`,
         {
           ...oldUser,
         }
       );
+      console.log(res.data);
       Cookies.set("accessToken", res.data.token, {
         domain: `.${import.meta.env.VITE_CLIENT_URL}`,
         expires: 7000,
         sameSite: "Lax",
       });
+      localStorage.setItem("accessToken", res.data.token);
       res.data.info && setIsLoading(true);
       localStorage.setItem("IsUser", JSON.stringify(res.data.info));
       toast.success("Sign in successfull");
@@ -347,7 +348,7 @@ const SignUp = () => {
 
   const handlePincode = async () => {
     console.log(newUser.pinCode);
-    const { data: response } = await axios.get(
+    const { data: response } = await axiosInstance.get(
       `${import.meta.env.VITE_BASE_URL}/api/company/getAddress/${newUser.pinCode
       }`
     );
@@ -381,14 +382,14 @@ const SignUp = () => {
         onSubmit={handleSignIn}
       >
         <h1>Sign In</h1>
-        <div className="signupButtons">
+        {/* <div className="signupButtons">
           <div id="googlesignin"></div>
         </div>
         <div className="or">
           <hr />
           <p>Or</p>
           <hr />
-        </div>
+        </div> */}
         <div className="inputs">
           <input
             required
@@ -396,7 +397,7 @@ const SignUp = () => {
             placeholder="Enter your email"
             type="email"
             name="email"
-            id=""
+            id="email"
           />
           <input
             required
@@ -404,7 +405,7 @@ const SignUp = () => {
             placeholder="Enter your password"
             type="password"
             name="password"
-            id=""
+            id="password"
           />
         </div>
         <span className="forgot-password-container">

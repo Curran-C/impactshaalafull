@@ -25,6 +25,10 @@ const Login = () => {
         "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiYWRtaW4iLCJfaWQiOiJzb21ldGhpbmcgc3RhdGljLm5vIGJhY2tlbmQgZm9yIG5vdyJ9.5RTs2FEd_fUGu1sQocoVUbk35RUWSq6HuioOH6XgbQc"
       );
       localStorage.setItem(
+        "accessToken",
+        "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiYWRtaW4iLCJfaWQiOiJzb21ldGhpbmcgc3RhdGljLm5vIGJhY2tlbmQgZm9yIG5vdyJ9.5RTs2FEd_fUGu1sQocoVUbk35RUWSq6HuioOH6XgbQc"
+      );
+      localStorage.setItem(
         "IsAdmin",
         JSON.stringify({ username: admin.username })
       );

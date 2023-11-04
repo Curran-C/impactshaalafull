@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import ProfileLeft from "../../components/ProfileLeft/ProfileLeft";
 import Search from "../../components/Search/Search";
-import axios from "axios";
+import axiosInstance from "../../utils/service.js";
 import HomeRight from "../../components/HomeRight/HomeRight";
 import FeedBacksWritten from "../../components/FeedBacksWritten/FeedBacksWritten.jsx";
 import FeedbacksRecieved from "../../components/FeedbacksRecieved/FeedbacksRecieved.jsx";
@@ -16,7 +16,7 @@ const Feedback = () => {
   useEffect(() => {
     const getUser = async () => {
       try {
-        const res = await axios.get(
+        const res = await axiosInstance.get(
           `${import.meta.env.VITE_BASE_URL}/api/company/getuser/${id}`
         );
         setUser(res.data);

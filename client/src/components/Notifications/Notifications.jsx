@@ -3,7 +3,7 @@ import { corporate, nopfp } from "../../assets/profile";
 import Tile from "../Tile/Tile";
 import "./Notifications.scss";
 import { useNavigate, useOutletContext } from "react-router-dom";
-import axios from "axios";
+import axiosInstance from "../../utils/service";
 import {
   getAllNotificationsAPI,
   markAsReadNotificationAPI,

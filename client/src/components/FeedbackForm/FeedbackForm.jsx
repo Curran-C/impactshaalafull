@@ -2,35 +2,34 @@ import { useEffect, useState } from "react";
 import "./feedbackForm.scss";
 import jwtDecode from "jwt-decode";
 import { useParams } from "react-router-dom";
-import axios from "axios";
-
+import axiosInstance from "../../utils/service";
 const FeedbackForm = ({ onCancel }) => {
   const [accessToken, setAccessToken] = useState();
-  const [decodedToken, setDecodedToken] = useState();
   const [feedback, setFeedback] = useState("");
   const { id } = useParams();
+  const loggedInUser = JSON.parse(localStorage.getItem("IsUser"));
 
-  useEffect(() => {
-    const getCookie = () => {
-      const cookie = document.cookie;
-      const cookies = cookie.split("; ");
-      for (let i = 0; i < cookies.length; i++) {
-        const cookie = cookies[i].split("=");
-        setAccessToken(decodeURIComponent(cookie[1]));
-        accessToken && setDecodedToken(jwtDecode(accessToken));
-      }
-    };
-    getCookie();
-  }, [accessToken]);
+  // useEffect(() => {
+  //   const getCookie = () => {
+  //     const cookie = document.cookie;
+  //     const cookies = cookie.split("; ");
+  //     for (let i = 0; i < cookies.length; i++) {
+  //       const cookie = cookies[i].split("=");
+  //       setAccessToken(decodeURIComponent(cookie[1]));
+  //       accessToken && setDecodedToken(jwtDecode(accessToken));
+  //     }
+  //   };
+  //   getCookie();
+  // }, [accessToken]);
 
   const handleFormSubmit = async (e) => {
     e.preventDefault();
-    console.log(decodedToken.id);
+    console.log(loggedInUser.id);
     try {
       // UPDATING THE USER WHO IS WRITNG THE FEEDBACK
-      const feedbackWriter = await axios.post(
+      const feedbackWriter = await axiosInstance.post(
         `${import.meta.env.VITE_BASE_URL}/api/company/updateuser/${
-          decodedToken.id
+          loggedInUser.id
         }`,
         {
           $push: { feedbacksGiven: { feedback, id } },
@@ -43,10 +42,10 @@ const FeedbackForm = ({ onCancel }) => {
     }
     try {
       //UPDATING THE USER WHOM THE FEEDBACK IS WRITTEN FOR
-      const feedbackReciever = await axios.post(
+      const feedbackReciever = await axiosInstance.post(
         `${import.meta.env.VITE_BASE_URL}/api/company/updateuser/${id}`,
         {
-          $push: { feedbacksRecieved: { feedback, id: decodedToken.id } },
+          $push: { feedbacksRecieved: { feedback, id: loggedInUser.id } },
         }
       );
       console.log(feedbackReciever.data);

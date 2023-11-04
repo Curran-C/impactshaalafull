@@ -3,12 +3,13 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import ProfileLeft from "../../components/ProfileLeft/ProfileLeft";
 import Search from "../../components/Search/Search";
-import axios from "axios";
+import axiosInstance from "../../utils/service.js";
 import HomeRight from "../../components/HomeRight/HomeRight";
 import CollaborationsSent from "../../components/CollaborationsSent/CollaborationsSent.jsx";
 import CollaborationsRecieved from "../../components/CollaborationsRecieved/CollaborationsRecieved";
 import CollaborationsAccepted from "../../components/CollaborationsAccepted/CollaborationsAccepted/CollaborationsAccepted";
 import CollaborationsRejected from "../../components/CollaborationsRejected/CollaborationsRejected";
+import { Spin } from 'antd';
 
 const Collaborations = () => {
   const { id } = useParams();
@@ -17,16 +18,20 @@ const Collaborations = () => {
   const [collabSent, setCollabSent] = useState(false);
   const [collabAccepted, setCollabAccepted] = useState(false);
   const [collabDeclined, setCollabDeclined] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     const getUser = async () => {
+      setLoading(true);
       try {
-        const res = await axios.get(
+        const res = await axiosInstance.get(
           `${import.meta.env.VITE_BASE_URL}/api/company/getuser/${id}`
         );
         setUser(res.data);
       } catch (err) {
         console.log(err);
+      } finally {
+        setLoading(false);
       }
     };
     getUser();
@@ -107,6 +112,7 @@ const Collaborations = () => {
       <div className="right">
         <HomeRight user={user} />
       </div>
+      <Spin spinning={loading} fullscreen />
     </div>
   );
 };

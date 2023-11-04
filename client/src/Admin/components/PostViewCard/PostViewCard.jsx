@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
-import axios from "axios";
+import axiosInstance from "../../../utils/service";
 import MiniCollabProfile from "../MiniCollabProfile/MiniCollabProfile";
 import "./PostViewCard.scss";
 
@@ -13,7 +13,7 @@ const PostViewCard = ({ postId, status, fromId, handleApprovePost }) => {
     if (fromId) {
       const getFromUser = async () => {
         try {
-          const res = await axios.get(
+          const res = await axiosInstance.get(
             `${import.meta.env.VITE_BASE_URL}/api/company/getuser/${fromId}`
           );
           setFromUser(res.data);
@@ -24,7 +24,7 @@ const PostViewCard = ({ postId, status, fromId, handleApprovePost }) => {
       getFromUser();
       const getSinglePost = async () => {
         try {
-          const res = await axios.get(
+          const res = await axiosInstance.get(
             `${import.meta.env.VITE_BASE_URL}/api/post/getsinglepost/${postId}`
           );
           setPost(res.data);

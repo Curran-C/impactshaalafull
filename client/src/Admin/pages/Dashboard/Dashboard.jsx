@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import axios from "axios";
+import axiosInstance from "../../../utils/service";
 import {
   NGOs,
   citizens,
@@ -17,6 +17,7 @@ import {
 import "./dashboard.scss";
 import Filter from "../../components/Filter/Filter";
 import { useOutletContext } from "react-router-dom";
+import { Spin } from 'antd';
 
 const Dashboard = () => {
   const [showFilter, setShowFilter] = useState(false);
@@ -29,39 +30,49 @@ const Dashboard = () => {
     stakeholder: "",
   });
   const { setPageTitle } = useOutletContext();
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     setPageTitle("dashboard");
   }, []);
 
   useEffect(() => {
-    console.log(filterValues);
-    const getStat = async () => {
-      try {
-        const res = await axios.get(
-          `${import.meta.env.VITE_BASE_URL}/api/company/getstats`
-        );
-        setStat(res.data);
-      } catch (err) {
-        console.log(err);
-      }
-    };
-    getStat();
+    setLoading(true);
+    try {
+      const getStat = async () => {
+        try {
+          const res = await axiosInstance.get(
+            `${import.meta.env.VITE_BASE_URL}/api/company/getstats`
+          );
+          setStat(res.data);
+        } catch (err) {
+          console.log(err);
+        }
+      };
+      getStat();
 
-    const getCollab = async () => {
-      try {
-        const res = await axios.get(
-          `${import.meta.env.VITE_BASE_URL}/api/collaboration/getallcollab`,
-          {
-            params: filterValues,
-          }
-        );
-        setCollab(res.data);
-      } catch (err) {
-        console.log(err);
-      }
-    };
-    getCollab();
+      const getCollab = async () => {
+        try {
+          const res = await axiosInstance.get(
+            `${import.meta.env.VITE_BASE_URL}/api/collaboration/getallcollab`,
+            {
+              params: filterValues,
+            }
+          );
+          setCollab(res.data);
+        } catch (err) {
+          console.log(err);
+        }
+      };
+      getCollab();
+    } catch (err) {
+      console.log(err);
+    } finally {
+      setTimeout(() => {
+        setLoading(false);
+      }, 1000);
+    }
+
   }, [filterValues]);
 
   const handleFilterChange = (selectedFilters) => {
@@ -147,6 +158,7 @@ const Dashboard = () => {
           </div>
         </div>
       </div>
+      <Spin spinning={loading} fullscreen />
     </div>
   );
 };

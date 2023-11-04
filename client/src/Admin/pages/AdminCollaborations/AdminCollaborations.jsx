@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import axios from "axios";
+import axiosInstance from "../../../utils/service";
 import {
   AdminSearch,
   DocumentPreview,
@@ -9,6 +9,8 @@ import {
 } from "../../components";
 import "./adminCollaborations.scss";
 import { useOutletContext } from "react-router-dom";
+import { Spin } from 'antd';
+import { toast } from "react-toastify";
 
 const AdminCollaborations = () => {
   const [pendingState, setPendingState] = useState(true);
@@ -20,6 +22,7 @@ const AdminCollaborations = () => {
   const [collaborations, setCollaborations] = useState([]);
   const [pendingPosts, setPendingPost] = useState([]);
   const [isApproved, setIsApproved] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   const setStateToTrue = (state) => {
     setPendingState(state === "requested" ? true : false);
@@ -42,32 +45,41 @@ const AdminCollaborations = () => {
   };
 
   useEffect(() => {
-    const getCollab = async () => {
-      try {
-        const res = await axios.get(
-          `${import.meta.env.VITE_BASE_URL
-          }/api/collaboration/getallcollab?status=${collabState}`
-        );
-        setCollaborations(res.data);
-      } catch (err) {
-        console.log(err);
+    setLoading(true);
+    try {
+      const getCollab = async () => {
+        try {
+          const res = await axiosInstance.get(
+            `${import.meta.env.VITE_BASE_URL
+            }/api/collaboration/getallcollab?status=${collabState}`
+          );
+          setCollaborations(res.data);
+        } catch (err) {
+          console.log(err);
+        }
+      };
+      const getPendingPosts = async () => {
+        try {
+          const res = await axiosInstance.get(
+            `${import.meta.env.VITE_BASE_URL
+            }/api/post/getPendingPost`
+          );
+          setPendingPost(res.data);
+        } catch (err) {
+          console.log(err);
+        }
       }
-    };
-    const getPendingPosts = async () => {
-      try {
-        const res = await axios.get(
-          `${import.meta.env.VITE_BASE_URL
-          }/api/post/getPendingPost`
-        );
-        setPendingPost(res.data);
-      } catch (err) {
-        console.log(err);
+      if (pendingState) {
+        getPendingPosts();
+      } else {
+        getCollab();
       }
-    }
-    if (pendingState) {
-      getPendingPosts();
-    } else {
-      getCollab();
+    } catch (err) {
+      console.log(err);
+    } finally {
+      setTimeout(() => {
+        setLoading(false);
+      }, 1000);
     }
   }, [collabState, pendingState, isApproved]);
 
@@ -79,14 +91,18 @@ const AdminCollaborations = () => {
 
   const handleApprovePost = async (postId) => {
     const confirmApprove = window.confirm("Are you sure you want to approve this post?");
+    setLoading(true);
     if (confirmApprove) {
       try {
-        const res = await axios.patch(
+        const res = await axiosInstance.patch(
           `${import.meta.env.VITE_BASE_URL}/api/post/approvePost/${postId}`
         );
+        toast.success("Post Approved");
         setIsApproved(!isApproved);
       } catch (err) {
         console.log(err);
+      } finally {
+        setLoading(true);
       }
     }
   };
@@ -147,6 +163,14 @@ const AdminCollaborations = () => {
             />
           ))
         }
+        {!pendingState && collaborations.length === 0 &&
+          <h3>No Collabrations</h3>
+        }
+        {pendingState && pendingPosts.length === 0 &&
+          <h3 >No Pending post</h3>
+        }
+        <Spin spinning={loading} fullscreen />
+
       </div>
     </div>
   );

@@ -113,7 +113,12 @@ export const getUserFromEmail = async (req, res) => {
       );
 
       const { ...info } = user._doc;
-      res.cookie("accessToken", token).status(200).send(info);
+      comsole.log(info);
+      // res.cookie("accessToken", token).status(200).send(info);
+      res.json({
+        token,
+        info,
+      });
     }
   } catch (err) {
     res.status(500).send(err);
@@ -124,7 +129,9 @@ export const findUserAndUpdate = async (req, res) => {
   try {
     const user = await Company.findByIdAndUpdate(req.params.id, {
       ...req.body,
-    });
+    }
+      , { new: true }
+    );
     res.status(200).send(user);
   } catch (err) {
     res.status(500).send("Something went wrong :(");
@@ -175,8 +182,13 @@ export const getNoOfStakeholders = async (req, res) => {
 export const getUserActivity = async (req, res) => {
   try {
     const userStatus = req.params.userstatus;
+    const stakeholder = req.query.stakeholder;
+    const query = {};
+    if (stakeholder !== "null" && stakeholder !== "" && stakeholder !== undefined && stakeholder !== null) {
+      query.stakeholder = stakeholder;
+    }
     if (userStatus === "allusers") {
-      const users = await Company.find();
+      const users = await Company.find(query);
       res.status(200).send(users);
     } else if (userStatus === "notactive") {
       const twoMonthsAgo = new Date();
@@ -190,6 +202,7 @@ export const getUserActivity = async (req, res) => {
           $nin: [...new Set(allPosts.map((post) => post.createdById).flat())],
         },
         createdAt: { $lte: twoMonthsAgo },
+        ...query,
       });
       const userWithPostTwoMonthsAgo = await Company.find({
         _id: {
@@ -199,10 +212,11 @@ export const getUserActivity = async (req, res) => {
             ),
           ],
         },
+        ...query,
       });
       res.status(200).send([...userWithNoPosts, ...userWithPostTwoMonthsAgo]);
     } else if (userStatus === "removed") {
-      const removedUser = await Company.find({ status: "inactive" });
+      const removedUser = await Company.find({ status: "inactive", ...query });
       res.status(200).send(removedUser);
     } else {
       res.status(500).send("Invalid Status");
@@ -347,7 +361,8 @@ export const forgotPassword = async (req, res) => {
 export const resetPassword = async (req, res) => {
   try {
     const token = req?.body?.token;
-    const userId = jwt.decode(token)?.userId;
+    // const userId = jwt.decode(token)?.userId;
+    const userId = req.id;
     if (!token || !userId) {
       return res.status(401).send({
         message: "You are not authenticated",

@@ -9,7 +9,7 @@ function PrivateRoutesAdmin() {
   const [pageTitle, setPageTitle] = useState("dashboard");
 
   let user = localStorage.getItem("IsAdmin");
-  let accessToken = Cookies.get("accessToken");
+  let accessToken = localStorage.getItem("accessToken");
 
   // Temporary fix only. No backend for now.
   if (user) user = JSON.parse(user);
@@ -19,8 +19,8 @@ function PrivateRoutesAdmin() {
   }
 
   if (!user || !accessToken) {
-    localStorage.removeItem("IsAdmin");
-    Cookies.remove("accessToken");
+    // localStorage.removeItem("IsAdmin");
+    // Cookies.remove("accessToken");
     return <Navigate to={"/admin"} replace />;
   }
 

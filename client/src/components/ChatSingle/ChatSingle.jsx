@@ -1,16 +1,20 @@
 import { useEffect, useState } from "react";
 import "./chatSingle.scss";
-import axios from "axios";
+import axiosInstance from "../../utils/service";
 
 const ChatSingle = ({ chat, currentUserId, showChat, onlineUsers }) => {
   const [userData, setUserData] = useState(); //user to whom we send the message
   const [online, setOnline] = useState(false);
 
   useEffect(() => {
-    const userId = chat.members.find((id) => id !== currentUserId);
+    console.log(chat);
+    const userId = chat?.members?.find(id => id !== currentUserId);
+
+    console.log(userId);
+
     const getUser = async () => {
       try {
-        const res = await axios.get(
+        const res = await axiosInstance.get(
           `${import.meta.env.VITE_BASE_URL}/api/company/getuser/${userId}`
         );
         setUserData(res.data);
@@ -19,7 +23,7 @@ const ChatSingle = ({ chat, currentUserId, showChat, onlineUsers }) => {
       }
     };
     getUser();
-  }, []);
+  }, [chat, currentUserId]);
 
   useEffect(() => {
     const isOnline = onlineUsers?.some((user) => user.userId === userData?._id);

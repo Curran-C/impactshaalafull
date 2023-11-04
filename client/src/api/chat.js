@@ -1,13 +1,12 @@
-import { authorizedInstance } from "./index";
-
+import axiosInstance from "../utils/service";
 const routes = {
-  startNew: "/api/chat",
-  getAll: "/api/chat",
+  startNew: `${import.meta.env.VITE_BASE_URL}/api/chat`,
+  getAll: `${import.meta.env.VITE_BASE_URL}/api/chat`,
 };
 
 export const startNewChatAPI = async (userId) => {
   try {
-    const res = await authorizedInstance.post(`${routes.startNew}/${userId}`);
+    const res = await axiosInstance.post(`${routes.startNew}/${userId}`);
     return res.data;
   } catch (error) {
     console.log(error);
@@ -17,7 +16,7 @@ export const startNewChatAPI = async (userId) => {
 
 export const getAllChatsAPI = async () => {
   try {
-    const res = await authorizedInstance.get(`${routes.getAll}`);
+    const res = await axiosInstance.get(`${routes.getAll}`);
     return res.data;
   } catch (error) {
     console.log(error);

@@ -6,11 +6,13 @@ import {
   markAsReadNotification,
   getNotificationCount,
 } from "../controllers/notification.controller.js";
-import { cookieAuth } from "../utils/cookieAuth.js";
+// import { cookieAuth } from "../utils/cookieAuth.js";
+import { authenticateUser } from "../middlewares/authenticateUsers.js";
 
 const router = express.Router();
 
-router.use(cookieAuth);
+// router.use(cookieAuth);
+router.use(authenticateUser);
 
 router.post("/create", createNotification);
 router.get("/getall", getAllNotification);

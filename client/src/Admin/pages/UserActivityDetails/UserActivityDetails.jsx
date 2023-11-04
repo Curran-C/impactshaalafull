@@ -8,7 +8,8 @@ import {
   Stat,
 } from "../../components";
 import "./userActivityDetails.scss";
-import axios from "axios";
+import axiosInstance from "../../../utils/service";
+import { Spin } from 'antd';
 
 const UserActivityDetails = ({ buttonText, page }) => {
   const [showNotificatonDialog, setShowNotificatonDialog] = useState(false);
@@ -18,31 +19,41 @@ const UserActivityDetails = ({ buttonText, page }) => {
   const location = useLocation();
   // eslint-disable-next-line react-hooks/exhaustive-deps
   const userId = location.state?.userId || {};
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    const getUserDetails = async () => {
-      try {
-        const res = await axios.get(
-          `${import.meta.env.VITE_BASE_URL}/api/company/getuser/${userId}`
-        );
-        setUserDetails(res.data);
-      } catch (err) {
-        console.log(err);
-      }
-    };
-    getUserDetails();
+    setLoading(true);
+    try {
+      const getUserDetails = async () => {
+        try {
+          const res = await axiosInstance.get(
+            `${import.meta.env.VITE_BASE_URL}/api/company/getuser/${userId}`
+          );
+          setUserDetails(res.data);
+        } catch (err) {
+          console.log(err);
+        }
+      };
+      getUserDetails();
 
-    const getUserStats = async () => {
-      try {
-        const res = await axios.get(
-          `${import.meta.env.VITE_BASE_URL}/api/company/stats/${userId}`
-        );
-        setUserStats(res.data);
-      } catch (err) {
-        console.log(err);
-      }
-    };
-    getUserStats();
+      const getUserStats = async () => {
+        try {
+          const res = await axiosInstance.get(
+            `${import.meta.env.VITE_BASE_URL}/api/company/stats/${userId}`
+          );
+          setUserStats(res.data);
+        } catch (err) {
+          console.log(err);
+        }
+      };
+      getUserStats();
+    } catch (err) {
+      console.log(err);
+    } finally {
+      setTimeout(() => {
+        setLoading(false);
+      }, 1000);
+    }
   }, [userId]);
 
   return (
@@ -113,6 +124,7 @@ const UserActivityDetails = ({ buttonText, page }) => {
           </button>
         </div>
       </div>
+      <Spin spinning={loading} fullscreen />
     </div>
   );
 };

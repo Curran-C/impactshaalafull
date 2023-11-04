@@ -1,8 +1,9 @@
 import { useState, useEffect } from "react";
-import axios from "axios";
+import axiosInstance from "../../../utils/service";
 import { AdminSearch, LeftNavigation, UserInfoCard } from "../../components";
 import "./userActivity.scss";
 import { useOutletContext } from "react-router-dom";
+import { Spin } from 'antd';
 
 const UserActivity = () => {
   const [showUsers, setShowUsers] = useState(true);
@@ -10,6 +11,9 @@ const UserActivity = () => {
   const [showInactiveUsers, setShowInactiveUsers] = useState(false);
   const [userStatus, setUserStatus] = useState("allusers");
   const [users, setUsers] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [selectedStakeholder, setSelectedStakeholder] = useState(null);
+
   const setAllUsers = (user) => {
     setShowUsers(users === "allusers" ? true : false);
     setShowRemovedUsers(users === "removed" ? true : false);
@@ -21,41 +25,51 @@ const UserActivity = () => {
     // setAllFalse();
     if (tab === "all") {
       setAllUsers("allusers");
-      // setShowUsers(true);
+      setShowUsers(true);
       setUserStatus("allusers");
     }
     if (tab === "remove") {
       setAllUsers("removed");
-      // setShowRemovedUsers(true);
+      setShowRemovedUsers(true);
       setUserStatus("removed");
     }
     if (tab === "inactive") {
       setAllUsers("nonactive");
-      // setShowInactiveUsers(true);
+      setShowInactiveUsers(true);
       setUserStatus("notactive");
     }
   };
   useEffect(() => {
+    setLoading(true);
     const getUser = async () => {
       try {
-        const res = await axios.get(
-          `${
-            import.meta.env.VITE_BASE_URL
-          }/api/company/getuseractivity/${userStatus}`
+        const res = await axiosInstance.get(
+          `${import.meta.env.VITE_BASE_URL
+          }/api/company/getuseractivity/${userStatus}?stakeholder=${selectedStakeholder}`
         );
         setUsers(res.data);
       } catch (err) {
         console.log(err);
+      } finally {
+        setLoading(false);
       }
     };
     getUser();
-  }, [userStatus]);
+  }, [userStatus, selectedStakeholder]);
 
   const { setPageTitle } = useOutletContext();
 
   useEffect(() => {
     setPageTitle("useractivity");
   }, []);
+
+  const handleStakeholderClick = (stakeholder) => {
+    if (stakeholder === "See All") {
+      setSelectedStakeholder("");
+    } else {
+      setSelectedStakeholder(stakeholder);
+    }
+  };
 
   return (
     <div className="userActivity">
@@ -82,11 +96,17 @@ const UserActivity = () => {
           </span>
         </div>
         <div className="stakeholders">
-          <p>NGOs</p>
-          <p>Corporates</p>
-          <p>Citizens</p>
-          <p>Institutions</p>
+          {["NGO", "Corporate", "Working Professional", "Educational Institution", "See All"].map((stakeholder) => (
+            <p
+              key={stakeholder}
+              onClick={() => handleStakeholderClick(stakeholder)}
+              className={selectedStakeholder === stakeholder ? "highlighted" : ""}
+            >
+              {stakeholder}
+            </p>
+          ))}
         </div>
+
 
         <div className="activity">
           {users?.map((user) => (
@@ -99,8 +119,12 @@ const UserActivity = () => {
               key={user._id}
             />
           ))}
+          {users.length === 0 &&
+            <h3 >No user found</h3>
+          }
         </div>
       </div>
+      <Spin spinning={loading} fullscreen />
     </div>
   );
 };

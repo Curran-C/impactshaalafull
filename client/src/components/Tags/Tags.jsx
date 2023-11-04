@@ -1,7 +1,5 @@
-import axios from "axios";
-axios.defaults = {
-  withCredentials: true,
-};
+import axiosInstance from "../../utils/service";
+
 import "./tags.scss";
 import { useEffect, useState } from "react";
 import jwtDecode from "jwt-decode";
@@ -14,26 +12,26 @@ const Tags = ({ tags, page }) => {
   const [newTag, setNewTag] = useState("");
   const { id } = useParams();
   const { user } = useOutletContext();
+  const loggedInUser = JSON.parse(localStorage.getItem("IsUser"));
 
   useEffect(() => {
-    const getCookie = () => {
-      const cookie = document.cookie;
-      const cookies = cookie.split("; ");
-      for (let i = 0; i < cookies.length; i++) {
-        const cookie = cookies[i].split("=");
-        setAccessToken(decodeURIComponent(cookie[1]));
-        accessToken && setDecodedToken(jwtDecode(accessToken));
-      }
-    };
-    getCookie();
+    // const getCookie = () => {
+    //   const cookie = document.cookie;
+    //   const cookies = cookie.split("; ");
+    //   for (let i = 0; i < cookies.length; i++) {
+    //     const cookie = cookies[i].split("=");
+    //     setAccessToken(decodeURIComponent(cookie[1]));
+    //     accessToken && setDecodedToken(jwtDecode(accessToken));
+    //   }
+    // };
+    // getCookie();
     setSeenTags(tags);
   }, [accessToken, tags]);
 
   const removeTag = async (tag) => {
     try {
-      const res = await axios.post(
-        `${import.meta.env.VITE_BASE_URL}/api/company/updateuser/${
-          decodedToken?.id
+      const res = await axiosInstance.post(
+        `${import.meta.env.VITE_BASE_URL}/api/company/updateuser/${loggedInUser?.id
         }`,
         { $pull: { tags: tag } }
       );
@@ -47,9 +45,8 @@ const Tags = ({ tags, page }) => {
     e.preventDefault();
     setSeenTags((prev) => [...prev, newTag]);
     try {
-      const res = await axios.post(
-        `${import.meta.env.VITE_BASE_URL}/api/company/updateuser/${
-          decodedToken?.id
+      const res = await axiosInstance.post(
+        `${import.meta.env.VITE_BASE_URL}/api/company/updateuser/${loggedInUser?.id
         }`,
         { $push: { tags: newTag } }
       );

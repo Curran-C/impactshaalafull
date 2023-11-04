@@ -11,21 +11,20 @@ import { corporate, location, nopfp } from "../../assets/profile";
 import "./post.scss";
 import Tile from "../Tile/Tile";
 import { format } from "timeago.js";
-import axios from "axios";
+import axiosInstance from "../../utils/service";
 import { Link, useNavigate, useOutletContext } from "react-router-dom";
 
 import { toast } from "react-toastify";
 
-axios.defaults = {
-  withCredentials: true,
-};
 
 const Post = ({ post }) => {
   // states
   const [bookmarked, setBookmarked] = useState(false);
   const [user, setUser] = useState();
-  const { user: authUser } = useOutletContext();
-  const id = authUser?._id;
+  // const { user: authUser } = useOutletContext();
+  const loggedInUser = JSON.parse(localStorage.getItem("IsUser"));
+  const id = loggedInUser?._id;
+
   const navigate = useNavigate();
 
   // consts
@@ -36,13 +35,13 @@ const Post = ({ post }) => {
     const getUser = async () => {
       try {
         // getting post of the user
-        const res = await axios.get(
+        const res = await axiosInstance.get(
           `${import.meta.env.VITE_BASE_URL}/api/company/getuser/${post?.createdById
           }`
         );
         setUser(res.data);
         // checking if user has bookmarked post and setting bookmarked state
-        const bookmarkedPosts = authUser?.bookmarkedPosts;
+        const bookmarkedPosts = loggedInUser?.bookmarkedPosts;
         bookmarkedPosts?.map((bookmarkedPost) => {
           if (bookmarkedPost === post._id) setBookmarked(true);
         });
@@ -61,12 +60,14 @@ const Post = ({ post }) => {
     if (bookmarked === false) {
       console.log("Bookmarked");
       try {
-        const res = await axios.post(
+        const res = await axiosInstance.post(
           `${import.meta.env.VITE_BASE_URL}/api/company/updateuser/${id}`,
           {
             $push: { bookmarkedPosts: post._id },
           }
         );
+        // console.log(res.data);
+        localStorage.setItem("IsUser", JSON.stringify(res.data));
         toast.success("Bookmark added");
         console.log(res.data);
       } catch (err) {
@@ -75,12 +76,13 @@ const Post = ({ post }) => {
     } else if (bookmarked === true) {
       console.log("Unbookmarked");
       try {
-        const res = await axios.post(
+        const res = await axiosInstance.post(
           `${import.meta.env.VITE_BASE_URL}/api/company/updateuser/${id}`,
           {
             $pull: { bookmarkedPosts: post?._id },
           }
         );
+        localStorage.setItem("IsUser", JSON.stringify(res.data));
         toast.success("Bookmark removed");
       } catch (err) {
         console.log(err);
@@ -91,13 +93,13 @@ const Post = ({ post }) => {
   // ! implement somewhere else do not delete
   const handleChatClick = async () => {
     try {
-      const findChat = await axios.get(
+      const findChat = await axiosInstance.get(
         `${import.meta.env.VITE_BASE_URL}/api/chat/find/${id}/${post?.createdById
         }`
       );
       if (!findChat?.data) {
         try {
-          const chatRes = await axios.post(
+          const chatRes = await axiosInstance.post(
             `${import.meta.env.VITE_BASE_URL}/api/chat/`,
             {
               senderId: id,
@@ -133,7 +135,7 @@ const Post = ({ post }) => {
     try {
       // * get all collabs and check if postId in collabs is present in collaborationIds of user
       //get logged in user
-      const user = await axios.get(
+      const user = await axiosInstance.get(
         `${import.meta.env.VITE_BASE_URL}/api/company/getuser/${id}`
       );
       // check if user has started collabing
@@ -141,10 +143,10 @@ const Post = ({ post }) => {
       // todo 4. if collab exists - show popup saying 'you have already requested to collab with this person'
       try {
         //*check if user is toId
-        const isToId = await axios.get(
+        const isToId = await axiosInstance.get(
           `${import.meta.env.VITE_BASE_URL}/api/collaboration/singletoId/${id}`
         );
-        const isFromId = await axios.get(
+        const isFromId = await axiosInstance.get(
           `${import.meta.env.VITE_BASE_URL}/api/collaboration/singlefromId/${post?.createdById
           }`
         );
@@ -154,11 +156,11 @@ const Post = ({ post }) => {
         } else {
           // *check if user is fromId
           try {
-            const isFromId = await axios.get(
+            const isFromId = await axiosInstance.get(
               `${import.meta.env.VITE_BASE_URL
               }/api/collaboration/singlefromId/${id}`
             );
-            const isToId = await axios.get(
+            const isToId = await axiosInstance.get(
               `${import.meta.env.VITE_BASE_URL}/api/collaboration/singletoId/${post?.createdById
               }`
             );
@@ -167,14 +169,14 @@ const Post = ({ post }) => {
             } else {
               // todo 5. if collab doesnt exist - create a new collab
               try {
-                const resCollab = await axios.post(
+                const resCollab = await axiosInstance.post(
                   `${import.meta.env.VITE_BASE_URL}/api/collaboration/create`,
                   {
                     ...newCollab,
                   }
                 );
                 //update logged in user
-                const resUpdateLoggedInUser = await axios.post(
+                const resUpdateLoggedInUser = await axiosInstance.post(
                   `${import.meta.env.VITE_BASE_URL
                   }/api/company/updateuser/${id}`,
                   {
@@ -183,14 +185,14 @@ const Post = ({ post }) => {
                 );
 
                 //updated user who posted it
-                const resUpdatePostedInUser = await axios.post(
+                const resUpdatePostedInUser = await axiosInstance.post(
                   `${import.meta.env.VITE_BASE_URL}/api/company/updateuser/${post?.createdById
                   }`,
                   {
                     $push: { collaborationIds: resCollab?.data._id },
                   }
                 );
-                await axios.post(
+                await axiosInstance.post(
                   `${import.meta.env.VITE_BASE_URL}/api/notification/create`,
                   {
                     fromId: newCollab.fromId,

@@ -1,8 +1,7 @@
 import { useState } from "react";
 import { upload } from "../../../../api/utils/upload";
 import "./GetCreditScore.scss";
-import axios from "axios";
-
+import axiosInstance from "../../utils/service";
 const GetCreditScore = ({ onCancel, collabId }) => {
   const [document, setDocument] = useState("");
 
@@ -11,7 +10,7 @@ const GetCreditScore = ({ onCancel, collabId }) => {
     if (document) documentUrl = await upload(document);
     console.log(documentUrl?.toString());
     try {
-      const res = await axios.post(
+      const res = await axiosInstance.post(
         `${import.meta.env.VITE_BASE_URL}/api/documents/upload`,
         {
           collaborationId: collabId,
