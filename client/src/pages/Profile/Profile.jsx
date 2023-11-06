@@ -11,6 +11,7 @@ import jwtDecode from "jwt-decode";
 import FeedbackForm from "../../components/FeedbackForm/FeedbackForm";
 import HomeRight from "../../components/HomeRight/HomeRight";
 import { Spin } from "antd";
+import { useSelector } from "react-redux";
 
 const Profile = () => {
   const { user: authUser, setPageLoading } = useOutletContext();
@@ -21,7 +22,7 @@ const Profile = () => {
   const [feedbackFrom, setFeedbackFrom] = useState(false);
   const navigate = useNavigate();
   const { id } = useParams();
-  const loggedInUser = JSON.parse(localStorage.getItem("IsUser"));
+  const loggedInUser = useSelector((state) => state.authUser.user);
 
   // const getCookie = () => {
   //   const cookie = document.cookie;
@@ -67,20 +68,20 @@ const Profile = () => {
         <div className="profileDetails">
           <div className="nameandfeedback">
             <NameDate name={authUser?.name} date={date} />
-            {loggedInUser?.id !== id && (
+            {/* {loggedInUser?._id !== id && (
               <>
-                {/* <button
+                <button
                   className="feedbackbutton"
                   onClick={() => handleFeedbackShow(true)}
                 >
                   Leave a feedback
-                </button> */}
-                {/* <button className="feedbackbutton" onClick={handleMessage}>
+                </button>
+                <button className="feedbackbutton" onClick={handleMessage}>
                   Message
-                </button> */}
+                </button>
               </>
-            )}
-            {loggedInUser?.id === id && (
+            )} */}
+            {loggedInUser?._id === id && (
               <button
                 className="feedbackbutton"
                 onClick={() => navigate(`/profile/edit`)}
