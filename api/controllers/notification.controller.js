@@ -17,7 +17,10 @@ export const createNotification = async (req, res) => {
 export const getAllNotification = async (req, res) => {
   try {
     console.log(req.id);
-    const notification = await Notification.find({ toId: req.id }).sort({ status: 'desc', time: 'desc'});
+    const notification = await Notification.find({ toId: req.id }).sort({
+      status: "desc",
+      time: "desc",
+    });
     res.status(200).send({ data: notification });
   } catch (err) {
     res.status(500).send(err);
@@ -70,6 +73,6 @@ export const getNotificationCount = async (req, res) => {
     res.status(200).send({ count: notificationCount });
   } catch (error) {
     console.log(error);
-    res.status(500).send(err);
+    res.status(500).send(error);
   }
 };

@@ -10,10 +10,10 @@ import { date } from "../../utils/date";
 import jwtDecode from "jwt-decode";
 import FeedbackForm from "../../components/FeedbackForm/FeedbackForm";
 import HomeRight from "../../components/HomeRight/HomeRight";
-import { Spin } from 'antd';
+import { Spin } from "antd";
 
 const Profile = () => {
-  const { user: authUser } = useOutletContext();
+  const { user: authUser, setPageLoading } = useOutletContext();
   // states
   const [user, setUser] = useState({});
   const [accessToken, setAccessToken] = useState();
@@ -22,7 +22,6 @@ const Profile = () => {
   const navigate = useNavigate();
   const { id } = useParams();
   const loggedInUser = JSON.parse(localStorage.getItem("IsUser"));
-  const [loading, setLoading] = useState(false);
 
   // const getCookie = () => {
   //   const cookie = document.cookie;
@@ -36,7 +35,7 @@ const Profile = () => {
 
   useEffect(() => {
     const getUser = async () => {
-      setLoading(true);
+      setPageLoading(true);
       try {
         // const res = await fetch(
         //   `${import.meta.env.VITE_BASE_URL}/api/company/getuser/${id}`
@@ -48,7 +47,7 @@ const Profile = () => {
       } catch (err) {
         console.log(err);
       } finally {
-        setLoading(false);
+        setPageLoading(false);
       }
     };
     // getCookie();
@@ -90,7 +89,6 @@ const Profile = () => {
               </button>
             )}
           </div>
-          <Spin spinning={loading} fullscreen />
           <ProfileFeed user={user} />
         </div>
         <div className="right">

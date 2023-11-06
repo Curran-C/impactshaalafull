@@ -15,20 +15,17 @@ import axiosInstance from "../../utils/service";
 import { Link, useNavigate, useOutletContext } from "react-router-dom";
 
 import { toast } from "react-toastify";
-
+import { setUserAuth } from "../../store/slices/user";
+import { useDispatch } from "react-redux";
 
 const Post = ({ post }) => {
   // states
   const [bookmarked, setBookmarked] = useState(false);
   const [user, setUser] = useState();
-  // const { user: authUser } = useOutletContext();
-  const loggedInUser = JSON.parse(localStorage.getItem("IsUser"));
-  const id = loggedInUser?._id;
+  const { user: authUser } = useOutletContext();
 
   const navigate = useNavigate();
-
-  // consts
-  const date = new Date(post?.date);
+  const dispatch = useDispatch();
 
   // side effects
   useEffect(() => {
@@ -36,20 +33,23 @@ const Post = ({ post }) => {
       try {
         // getting post of the user
         const res = await axiosInstance.get(
-          `${import.meta.env.VITE_BASE_URL}/api/company/getuser/${post?.createdById
+          `${import.meta.env.VITE_BASE_URL}/api/company/getuser/${
+            post?.createdById
           }`
         );
         setUser(res.data);
         // checking if user has bookmarked post and setting bookmarked state
-        const bookmarkedPosts = loggedInUser?.bookmarkedPosts;
+        const bookmarkedPosts = authUser?.bookmarkedPosts;
         bookmarkedPosts?.map((bookmarkedPost) => {
           if (bookmarkedPost === post._id) setBookmarked(true);
         });
       } catch (err) {
-        console.log(err);
+        console.log("Post ", post._id, err);
       }
     };
-    getUser();
+    if (post?.createdById) {
+      getUser();
+    }
   }, []);
 
   // function
@@ -61,15 +61,15 @@ const Post = ({ post }) => {
       console.log("Bookmarked");
       try {
         const res = await axiosInstance.post(
-          `${import.meta.env.VITE_BASE_URL}/api/company/updateuser/${id}`,
+          `${import.meta.env.VITE_BASE_URL}/api/company/updateuser/${
+            authUser._id
+          }`,
           {
             $push: { bookmarkedPosts: post._id },
           }
         );
-        // console.log(res.data);
-        localStorage.setItem("IsUser", JSON.stringify(res.data));
+        dispatch(setUserAuth({ user: res.data }));
         toast.success("Bookmark added");
-        console.log(res.data);
       } catch (err) {
         console.log(err);
       }
@@ -77,12 +77,14 @@ const Post = ({ post }) => {
       console.log("Unbookmarked");
       try {
         const res = await axiosInstance.post(
-          `${import.meta.env.VITE_BASE_URL}/api/company/updateuser/${id}`,
+          `${import.meta.env.VITE_BASE_URL}/api/company/updateuser/${
+            authUser._id
+          }`,
           {
             $pull: { bookmarkedPosts: post?._id },
           }
         );
-        localStorage.setItem("IsUser", JSON.stringify(res.data));
+        dispatch(setUserAuth({ user: res.data }));
         toast.success("Bookmark removed");
       } catch (err) {
         console.log(err);
@@ -94,7 +96,8 @@ const Post = ({ post }) => {
   const handleChatClick = async () => {
     try {
       const findChat = await axiosInstance.get(
-        `${import.meta.env.VITE_BASE_URL}/api/chat/find/${id}/${post?.createdById
+        `${import.meta.env.VITE_BASE_URL}/api/chat/find/${authUser._id}/${
+          post?.createdById
         }`
       );
       if (!findChat?.data) {
@@ -102,7 +105,7 @@ const Post = ({ post }) => {
           const chatRes = await axiosInstance.post(
             `${import.meta.env.VITE_BASE_URL}/api/chat/`,
             {
-              senderId: id,
+              senderId: authUser._id,
               recieverId: post?.createdById,
             }
           );
@@ -110,11 +113,11 @@ const Post = ({ post }) => {
           console.log(err);
         }
         console.log("chat not found");
-        navigate(`/chats/${id}`);
+        navigate(`/chats/${authUser._id}`);
       }
       if (findChat?.data) {
         console.log("chat found");
-        navigate(`/chats/${id}`);
+        navigate(`/chats/${authUser._id}`);
       }
     } catch (err) {
       console.log(err);
@@ -128,7 +131,7 @@ const Post = ({ post }) => {
     // todo 2. get post id and store in postId
     const newCollab = {
       toId: post?.createdById,
-      fromId: id,
+      fromId: authUser._id,
       postId: post?._id,
     };
     // todo 3. Check if collab exists
@@ -136,7 +139,7 @@ const Post = ({ post }) => {
       // * get all collabs and check if postId in collabs is present in collaborationIds of user
       //get logged in user
       const user = await axiosInstance.get(
-        `${import.meta.env.VITE_BASE_URL}/api/company/getuser/${id}`
+        `${import.meta.env.VITE_BASE_URL}/api/company/getuser/${authUser._id}`
       );
       // check if user has started collabing
 
@@ -144,10 +147,13 @@ const Post = ({ post }) => {
       try {
         //*check if user is toId
         const isToId = await axiosInstance.get(
-          `${import.meta.env.VITE_BASE_URL}/api/collaboration/singletoId/${id}`
+          `${import.meta.env.VITE_BASE_URL}/api/collaboration/singletoId/${
+            authUser._id
+          }`
         );
         const isFromId = await axiosInstance.get(
-          `${import.meta.env.VITE_BASE_URL}/api/collaboration/singlefromId/${post?.createdById
+          `${import.meta.env.VITE_BASE_URL}/api/collaboration/singlefromId/${
+            post?.createdById
           }`
         );
         console.log(isToId?.data.length);
@@ -157,11 +163,13 @@ const Post = ({ post }) => {
           // *check if user is fromId
           try {
             const isFromId = await axiosInstance.get(
-              `${import.meta.env.VITE_BASE_URL
+              `${
+                import.meta.env.VITE_BASE_URL
               }/api/collaboration/singlefromId/${id}`
             );
             const isToId = await axiosInstance.get(
-              `${import.meta.env.VITE_BASE_URL}/api/collaboration/singletoId/${post?.createdById
+              `${import.meta.env.VITE_BASE_URL}/api/collaboration/singletoId/${
+                post?.createdById
               }`
             );
             if (isFromId?.data.length !== 0 && isToId?.data.length !== 0) {
@@ -177,8 +185,9 @@ const Post = ({ post }) => {
                 );
                 //update logged in user
                 const resUpdateLoggedInUser = await axiosInstance.post(
-                  `${import.meta.env.VITE_BASE_URL
-                  }/api/company/updateuser/${id}`,
+                  `${import.meta.env.VITE_BASE_URL}/api/company/updateuser/${
+                    authUser._id
+                  }`,
                   {
                     $push: { collaborationIds: resCollab?.data._id },
                   }
@@ -186,7 +195,8 @@ const Post = ({ post }) => {
 
                 //updated user who posted it
                 const resUpdatePostedInUser = await axiosInstance.post(
-                  `${import.meta.env.VITE_BASE_URL}/api/company/updateuser/${post?.createdById
+                  `${import.meta.env.VITE_BASE_URL}/api/company/updateuser/${
+                    post?.createdById
                   }`,
                   {
                     $push: { collaborationIds: resCollab?.data._id },
@@ -255,7 +265,9 @@ const Post = ({ post }) => {
         />
       </div>
       <div className="container">
-        <p className="postDetails" onClick={handleTitleClick}>{post?.title}</p>
+        <p className="postDetails" onClick={handleTitleClick}>
+          {post?.title}
+        </p>
         {showDetails && (
           <div className="custom-modal">
             <div className="modal-content">
@@ -276,7 +288,7 @@ const Post = ({ post }) => {
                   </tr>
                   <tr>
                     <th>Keywords:</th>
-                    <td>{post?.keywords?.join(', ')}</td>
+                    <td>{post?.keywords?.join(", ")}</td>
                   </tr>
                   <tr>
                     <th>Collaborate With:</th>
@@ -304,26 +316,36 @@ const Post = ({ post }) => {
                   </tr>
                   <tr>
                     <th>From Date:</th>
-                    <td>{post?.fromDate && new Date(post?.fromDate).toISOString().split("T")[0]}</td>
+                    <td>
+                      {post?.fromDate &&
+                        new Date(post?.fromDate).toISOString().split("T")[0]}
+                    </td>
                   </tr>
                   <tr>
                     <th>To Date:</th>
-                    <td>{post?.fromDate && new Date(post?.toDate).toISOString().split("T")[0]}</td>
+                    <td>
+                      {post?.fromDate &&
+                        new Date(post?.toDate).toISOString().split("T")[0]}
+                    </td>
                   </tr>
                 </tbody>
               </table>
-
             </div>
           </div>
         )}
         <div className="dateandtime">
-          <p>{post?.fromDate && new Date(post?.fromDate).toISOString().split("T")[0]} - {post?.toDate && new Date(post?.toDate).toISOString().split("T")[0]}</p>
+          <p>
+            {post?.fromDate &&
+              new Date(post?.fromDate).toISOString().split("T")[0]}{" "}
+            -{" "}
+            {post?.toDate && new Date(post?.toDate).toISOString().split("T")[0]}
+          </p>
           <p>{post?.time}</p>
         </div>
         <div className="containerFooter">
           <p>{format(post?.createdAt)}</p>
           <div className="links">
-            {post?.createdById && id !== post.createdById && (
+            {post?.createdById && authUser._id !== post.createdById && (
               <img
                 className="collabImage"
                 src={collaboration}

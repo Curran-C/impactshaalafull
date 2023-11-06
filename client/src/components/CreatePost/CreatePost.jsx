@@ -5,10 +5,11 @@ import { calender, clock, location } from "../../assets/createpost";
 import { useOutletContext } from "react-router-dom";
 import Modal from "../Modal/Modal";
 import { toast } from "react-toastify";
+import { useSelector } from "react-redux";
 
 const CreatePost = ({ onCancel }) => {
   const date = new Date();
-  const { user } = useOutletContext();
+  const user = useSelector((state) => state.authUser.user);
   const id = user._id;
   const userDetails = user;
 
@@ -27,7 +28,6 @@ const CreatePost = ({ onCancel }) => {
     });
   };
 
-
   const handleCreatePost = async (e) => {
     e.preventDefault();
     console.log(post);
@@ -45,7 +45,9 @@ const CreatePost = ({ onCancel }) => {
           isAdmin: false,
         }
       );
-      toast.success("Your post request has been submitted. An admin will review and accept it soon.");
+      toast.success(
+        "Your post request has been submitted. An admin will review and accept it soon."
+      );
       console.log(res.data);
       onCancel(false);
     } catch (err) {
@@ -241,11 +243,6 @@ const CreatePost = ({ onCancel }) => {
                 />
               </div>
             </div>
-
-
-
-
-
 
             {/* <div className="input">
               <h4>Location</h4>

@@ -20,6 +20,8 @@ import { Circles } from "react-loader-spinner";
 import Cookies from "js-cookie";
 import ForgotPasswordPopup from "../../components/ForgotPasswordPopup/ForgotPasswordPopup";
 import { toast } from "react-toastify";
+import { setUserAuth } from "../../store/slices/user";
+import { useDispatch } from "react-redux";
 
 const SignUp = () => {
   // states
@@ -35,6 +37,8 @@ const SignUp = () => {
   const [locationDetailsState, setLocationDetailsState] = useState(false);
   const [tagsState, setTagsState] = useState(false);
   const [companyDetailsState, setCompanyDetailsState] = useState(false);
+
+  const dispatch = useDispatch();
 
   const [tag, setTag] = useState("");
   const [tags, setTags] = useState([]);
@@ -150,8 +154,9 @@ const SignUp = () => {
       navigator.geolocation.getCurrentPosition((position) => {
         const latitude = position.coords.latitude;
         const longitude = position.coords.longitude;
-        const geoUrl = `http://dataservice.accuweather.com/locations/v1/cities/geoposition/search?apikey=${import.meta.env.VITE_ACCUWEATHER_KEY
-          }&q=${latitude}%2C${longitude}`;
+        const geoUrl = `http://dataservice.accuweather.com/locations/v1/cities/geoposition/search?apikey=${
+          import.meta.env.VITE_ACCUWEATHER_KEY
+        }&q=${latitude}%2C${longitude}`;
         fetch(geoUrl)
           .then((res) => res.json())
           .then((data) => {
@@ -316,15 +321,15 @@ const SignUp = () => {
           ...oldUser,
         }
       );
-      console.log(res.data);
-      Cookies.set("accessToken", res.data.token, {
-        domain: `.${import.meta.env.VITE_CLIENT_URL}`,
-        expires: 7000,
-        sameSite: "Lax",
-      });
-      localStorage.setItem("accessToken", res.data.token);
+
       res.data.info && setIsLoading(true);
-      localStorage.setItem("IsUser", JSON.stringify(res.data.info));
+      // localStorage.setItem("IsUser", JSON.stringify(res.data.info));
+      dispatch(
+        setUserAuth({
+          user: res.data.info,
+          token: res.data.token,
+        })
+      );
       toast.success("Sign in successfull");
       navigate(`/home`);
     } catch (err) {
@@ -349,7 +354,8 @@ const SignUp = () => {
   const handlePincode = async () => {
     console.log(newUser.pinCode);
     const { data: response } = await axiosInstance.get(
-      `${import.meta.env.VITE_BASE_URL}/api/company/getAddress/${newUser.pinCode
+      `${import.meta.env.VITE_BASE_URL}/api/company/getAddress/${
+        newUser.pinCode
       }`
     );
     // const data = response.data;
@@ -846,7 +852,7 @@ const SignUp = () => {
                 type="submit"
                 name=""
                 id=""
-              // hidden
+                // hidden
               >
                 {" "}
                 Add{" "}

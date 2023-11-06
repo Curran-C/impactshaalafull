@@ -6,22 +6,21 @@ import Collab from "../Collab/Collab";
 import { useEffect, useState } from "react";
 import { useOutletContext } from "react-router-dom";
 import { getAllPostsAPI } from "../../api/post";
-import { Spin } from 'antd';
+import { Spin } from "antd";
 
 const HomeMiddle = () => {
   const [posts, setPosts] = useState([]);
-  const { user } = useOutletContext();
-  const [loading, setLoading] = useState(false);
+  const { user, setPageLoading } = useOutletContext();
 
   const fetchPosts = async () => {
     try {
-      setLoading(true);
+      setPageLoading(true);
       const data = await getAllPostsAPI();
       setPosts(data);
     } catch (error) {
       console.log(error);
     } finally {
-      setLoading(false);
+      setPageLoading(false);
     }
   };
 
@@ -35,7 +34,6 @@ const HomeMiddle = () => {
       <h2 className="title">Recent Posts</h2>
       <Posts posts={posts} />
       <Collab />
-      <Spin spinning={loading} fullscreen/>
     </div>
   );
 };

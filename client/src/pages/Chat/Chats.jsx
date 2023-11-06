@@ -4,7 +4,7 @@ import { chat } from "../../assets/profile";
 
 import ChatSingle from "../../components/ChatSingle/ChatSingle";
 import ChatMessages from "../../components/ChatMessages/ChatMessages";
-import { Spin } from 'antd';
+import { Spin } from "antd";
 
 import { useEffect, useRef, useState } from "react";
 import axiosInstance from "../../utils/service";
@@ -151,9 +151,7 @@ const Chats = () => {
             )}
           </div>
           <div className="chatsAll">
-            {chats?.length === 0 &&
-              < h4 > No Chats</h4>
-            }
+            {chats?.length === 0 && <h4> No Chats</h4>}
             {chats?.map((chat) => (
               <ChatSingle
                 showChat={setCurrentChat}

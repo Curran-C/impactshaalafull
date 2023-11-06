@@ -8,6 +8,7 @@ import axiosInstance from "../../utils/service";
 import SearchResults from "../SearchResults/SearchResults";
 import Notifications from "../Notifications/Notifications";
 import { useNavigate, useOutletContext } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 const Search = ({ userName }) => {
   const [search, setSearch] = useState("");
@@ -15,7 +16,7 @@ const Search = ({ userName }) => {
   const [shownotifications, setShownotifications] = useState(false);
   const [allUsers, setAllUsers] = useState();
   const [notifCount, setNotifCount] = useState(100);
-  const { user } = useOutletContext();
+  const user = useSelector((state) => state.authUser.user);
   const [showResults, setShowResults] = useState(false);
   const ref = useRef();
   const navigate = useNavigate();
@@ -93,7 +94,7 @@ const Search = ({ userName }) => {
               alt="notifications"
               style={{ cursor: "pointer" }}
             />
-            {notifCount && <div className="notifcount">{notifCount}</div>}
+            {notifCount ? <div className="notifcount">{notifCount}</div> : ""}
             {shownotifications && <Notifications />}
           </div>
           <img

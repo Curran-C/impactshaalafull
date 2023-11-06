@@ -8,7 +8,11 @@ const ProfileLinks = ({ img, linkText, highlighted, to }) => {
   const navigate = useNavigate();
   // const [accessToken, setAccessToken] = useState();
   // const [decodedToken, setDecodedToken] = useState();
-  const loggedInUser = JSON.parse(localStorage.getItem("IsUser"));
+
+  let loggedInUser = localStorage.getItem("IsUser");
+  if (loggedInUser) {
+    loggedInUser = JSON.parse(loggedInUser);
+  }
 
   // useEffect(() => {
   //   const cookie = document.cookie;

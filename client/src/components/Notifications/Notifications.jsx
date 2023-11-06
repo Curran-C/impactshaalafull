@@ -2,15 +2,15 @@ import { useEffect, useState } from "react";
 import { corporate, nopfp } from "../../assets/profile";
 import Tile from "../Tile/Tile";
 import "./Notifications.scss";
-import { useNavigate, useOutletContext } from "react-router-dom";
-import axiosInstance from "../../utils/service";
+import { useNavigate } from "react-router-dom";
 import {
   getAllNotificationsAPI,
   markAsReadNotificationAPI,
 } from "../../api/notification";
+import { useSelector } from "react-redux";
 
 const Notifications = () => {
-  const { user } = useOutletContext();
+  const user = useSelector((state) => state.authUser.user);
   const id = user?._id;
   const navigate = useNavigate();
   const [notifications, setNotifications] = useState([]);

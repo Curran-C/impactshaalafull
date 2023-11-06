@@ -17,7 +17,7 @@ import { useState } from "react";
 import Cookies from "js-cookie";
 
 // functional component
-const ProfileLeft = ({ page }) => {
+const ProfileLeft = ({ page, ...props }) => {
   const navigate = useNavigate();
   const [showCreatePost, setShowCreatePost] = useState(false);
 
@@ -34,7 +34,7 @@ const ProfileLeft = ({ page }) => {
 
   // return
   return (
-    <div className="profileLeft">
+    <div className="profileLeft" {...props}>
       {showCreatePost && <CreatePost onCancel={handleCancel} />}
       <button
         className="createpost"
@@ -63,7 +63,7 @@ const ProfileLeft = ({ page }) => {
         highlighted={page === "savedPosts" ? true : false}
         img={savedposts}
         linkText={"Saved Posts"}
-        to='/savedPosts'
+        to="/savedPosts"
       />
       <ProfileLinks
         highlighted={page === "collaborations" ? true : false}

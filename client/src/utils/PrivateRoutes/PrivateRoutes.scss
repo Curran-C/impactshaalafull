@@ -1,0 +1,12 @@
+main.private-content {
+  //   display: flex;
+  //   min-width: 100vw;
+
+  @media (max-width: 820px) {
+    .profileLeft,
+    .homeRight,
+    .search {
+      display: none;
+    }
+  }
+}

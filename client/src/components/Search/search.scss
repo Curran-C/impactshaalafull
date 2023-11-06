@@ -4,7 +4,7 @@
   .title {
     display: flex;
     align-items: center;
-    width: 700px;
+    max-width: 700px;
     position: relative;
     justify-content: space-between;
     .imgs {
@@ -38,7 +38,7 @@
   .inputContainer {
     display: flex;
     gap: 20px;
-    position: relative; 
+    position: relative;
     .input {
       width: 400px;
       border-radius: 25px;
