@@ -1,6 +1,6 @@
 import axiosInstance from "../utils/service";
 const routes = {
-  getAllPosts: `${import.meta.env.VITE_BASE_URL}/api/post/getposts`,
+  getAllPosts: `/api/post/getposts`,
 };
 
 export const getAllPostsAPI = async () => {
