@@ -3,7 +3,7 @@ import "./profileLinks.scss";
 import { useEffect, useState } from "react";
 import jwtDecode from "jwt-decode";
 
-const ProfileLinks = ({ img, linkText, highlighted, to }) => {
+const ProfileLinks = ({ img, linkText, highlighted, to, ...props }) => {
   // states
   const navigate = useNavigate();
   // const [accessToken, setAccessToken] = useState();
@@ -33,6 +33,7 @@ const ProfileLinks = ({ img, linkText, highlighted, to }) => {
     <div
       onClick={() => navigate(to ? to : `/${navLink}/${loggedInUser._id}`)}
       className={`profileLinks ${highlighted ? "highlighted" : ""}`}
+      {...props}
     >
       <img className="img" src={img} alt="" />
       <span className="linkText">{linkText}</span>

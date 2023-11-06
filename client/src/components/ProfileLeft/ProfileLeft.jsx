@@ -34,7 +34,7 @@ const ProfileLeft = ({ page, ...props }) => {
 
   // return
   return (
-    <div className="profileLeft" {...props}>
+    <div className="profileLeft">
       {showCreatePost && <CreatePost onCancel={handleCancel} />}
       <button
         className="createpost"
@@ -43,34 +43,40 @@ const ProfileLeft = ({ page, ...props }) => {
         Create Post +
       </button>
       <ProfileLinks
+        {...props}
         highlighted={page === "home" ? true : false}
         img={home}
         linkText={"Home"}
         to="/home"
       />
       <ProfileLinks
+        {...props}
         highlighted={page === "profile" ? true : false}
         img={profileIcon}
         linkText={"Profile"}
       />
       <ProfileLinks
+        {...props}
         highlighted={page === "chat" ? true : false}
         img={chat}
         linkText={"Chats"}
         to="/chats"
       />
       <ProfileLinks
+        {...props}
         highlighted={page === "savedPosts" ? true : false}
         img={savedposts}
         linkText={"Saved Posts"}
         to="/savedPosts"
       />
       <ProfileLinks
+        {...props}
         highlighted={page === "collaborations" ? true : false}
         img={feedback}
         linkText={"Collaborations"}
       />
       <ProfileLinks
+        {...props}
         highlighted={page === "settings" ? true : false}
         img={settings}
         linkText={"Settings"}
