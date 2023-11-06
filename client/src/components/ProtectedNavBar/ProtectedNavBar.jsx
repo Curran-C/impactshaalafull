@@ -77,7 +77,7 @@ const ProtectedNavBar = ({ user, pageTitle }) => {
         open={isDrawerOpen}
         className="protected-navbar-drawer"
       >
-        <ProfileLeft />
+        <ProfileLeft onClick={onClose} />
         <HomeRight />
       </Drawer>
     </nav>
