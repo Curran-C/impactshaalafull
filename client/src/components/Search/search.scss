@@ -1,6 +1,8 @@
 .search {
   display: flex;
   flex-direction: column;
+  z-index: inherit;
+
   .title {
     display: flex;
     align-items: center;

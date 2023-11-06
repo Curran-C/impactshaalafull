@@ -1,12 +1,13 @@
-import { useNavigate, useOutletContext } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { edit } from "../../assets/home";
 import { corporate } from "../../assets/profile";
 import Tile from "../Tile/Tile";
 import "./profileCard.scss";
+import { useSelector } from "react-redux";
 
 const ProfileCard = () => {
   const navigate = useNavigate();
-  const { user } = useOutletContext();
+  const user = useSelector((state) => state.authUser.user);
 
   return (
     <div className="profileCard">

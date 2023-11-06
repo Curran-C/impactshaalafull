@@ -4,11 +4,11 @@ import ProfileCard from "../ProfileCard/ProfileCard";
 import "./homeRight.scss";
 import ContactUs from "../ContactUs/ContactUs";
 import Collab from "../Collab/Collab";
-import { useOutletContext } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 const HomeRight = () => {
   const [showEmailForm, setShowEmailForm] = useState(false);
-  const { user } = useOutletContext();
+  const user = useSelector((state) => state.authUser.user);
 
   return (
     <div className="homeRight">

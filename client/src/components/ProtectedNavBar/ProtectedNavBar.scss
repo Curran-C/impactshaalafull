@@ -49,11 +49,18 @@ nav.protected-navbar {
     background-color: white;
     position: static;
     margin: 0;
+    margin-bottom: 20px;
     align-items: start;
     padding: 0;
     display: flex;
     .profileLinks {
       margin: 0;
+    }
+  }
+
+  .homeRight {
+    & > div {
+      border: rgb(223, 223, 223) solid 2px;
     }
   }
 }

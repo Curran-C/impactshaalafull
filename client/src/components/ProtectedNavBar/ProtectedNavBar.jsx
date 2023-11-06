@@ -8,6 +8,7 @@ import { bell, chat } from "../../assets/home";
 import Notifications from "../Notifications/Notifications";
 import { Link, useNavigate } from "react-router-dom";
 import axiosInstance from "../../utils/service";
+import HomeRight from "../HomeRight/HomeRight";
 
 const ProtectedNavBar = ({ user, pageTitle }) => {
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
@@ -76,8 +77,8 @@ const ProtectedNavBar = ({ user, pageTitle }) => {
         open={isDrawerOpen}
         className="protected-navbar-drawer"
       >
-        {/* <ProfileLeft onClick={onClose} /> */}
         <ProfileLeft />
+        <HomeRight />
       </Drawer>
     </nav>
   );
