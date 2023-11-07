@@ -47,3 +47,20 @@
     }
   }
 }
+
+@media (max-width: 820px) {
+  .hex-container {
+    .one {
+      top: -200px; /* Move 30px more to the top */
+      left: -230px; /* Move 50px more to the left */
+    }
+    .two {
+      top: -320px; /* Move 30px more to the top */
+      left: -330px; /* Move 50px more to the left */
+    }
+    .three {
+      top: -350px; /* Move 30px more to the top */
+      left: -180px; /* Move 50px more to the left */
+    }
+  }
+}
