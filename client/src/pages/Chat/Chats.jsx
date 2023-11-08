@@ -7,7 +7,6 @@ import ChatMessages from "../../components/ChatMessages/ChatMessages";
 import { Spin } from "antd";
 
 import { useEffect, useRef, useState } from "react";
-import axiosInstance from "../../utils/service";
 import { io } from "socket.io-client";
 
 import "./chats.scss";
@@ -15,10 +14,11 @@ import ChatFiller from "../../components/ChatFiller/ChatFiller";
 import { getAllChatsAPI, startNewChatAPI } from "../../api/chat";
 import SearchResults from "../../components/SearchResults/SearchResults";
 import { searchUserAPI } from "../../api/company";
+import { useDispatch, useSelector } from "react-redux";
+import { resetChat, setChatId } from "../../store/slices/chat";
 
 const Chats = () => {
-  // const { user: loggedInUser } = useOutletContext();
-  const loggedInUser = JSON.parse(localStorage.getItem("IsUser"));
+  const loggedInUser = useSelector((state) => state.authUser.user);
   const [chats, setChats] = useState();
   const [currentChat, setCurrentChat] = useState(null);
   const [onlineUsers, setOnlineUsers] = useState([]);
@@ -26,7 +26,10 @@ const Chats = () => {
   const [recieveMessage, setRecieveMessage] = useState(null);
   const [searchResults, setSearchResults] = useState(null);
   const [loading, setLoading] = useState(false);
+  const chatId = useSelector((state) => state.chat.chatId);
+  const isMobile = useSelector((state) => state.design.isMobile);
 
+  const dispatch = useDispatch();
   const searchResultsRef = useRef();
   const socket = useRef();
   const navigate = useNavigate();
@@ -122,12 +125,25 @@ const Chats = () => {
     };
   }, []);
 
+  const handleSetSingleChat = (chatData) => {
+    setCurrentChat(chatData);
+    dispatch(setChatId(chatData?._id));
+  };
+
+  const handleResetChat = () => dispatch(resetChat());
+
   return (
     <div className="chat">
       <div className="header">
-        <button className="btn back-btn" onClick={() => navigate(-1)}>
-          Go Back
-        </button>
+        {isMobile ? (
+          <button className="btn back-btn" onClick={handleResetChat}>
+            All Chats
+          </button>
+        ) : (
+          <button className="btn back-btn" onClick={() => navigate(-1)}>
+            Go Back
+          </button>
+        )}
         <div className="title">
           <img src={chat} alt="chat" />
           <h2>Chats</h2>
@@ -135,33 +151,78 @@ const Chats = () => {
       </div>
       <div className="container">
         <div className="left">
-          <div className="search" ref={searchResultsRef}>
-            <img src={search} alt="search" />
-            <input
-              type="text"
-              placeholder="Search"
-              onChange={handleSearchChange}
-            />
-            {searchResults && (
-              <SearchResults
-                users={searchResults}
-                short
-                onClick={startNewChat}
-              />
-            )}
-          </div>
-          <div className="chatsAll">
-            {chats?.length === 0 && <h4> No Chats</h4>}
-            {chats?.map((chat) => (
-              <ChatSingle
-                showChat={setCurrentChat}
-                key={chat._id}
-                chat={chat}
-                currentUserId={loggedInUser?._id}
-                onlineUsers={onlineUsers}
-              />
-            ))}
-          </div>
+          {isMobile ? (
+            <>
+              {!chatId ? (
+                <>
+                  <div className="search" ref={searchResultsRef}>
+                    <img src={search} alt="search" />
+                    <input
+                      type="text"
+                      placeholder="Search"
+                      onChange={handleSearchChange}
+                    />
+                    {searchResults && (
+                      <SearchResults
+                        users={searchResults}
+                        short
+                        onClick={startNewChat}
+                      />
+                    )}
+                  </div>
+                  <div className="chatsAll">
+                    {chats?.length === 0 && <h4> No Chats</h4>}
+                    {chats?.map((chat) => (
+                      <ChatSingle
+                        showChat={handleSetSingleChat}
+                        key={chat._id}
+                        chat={chat}
+                        currentUserId={loggedInUser?._id}
+                        onlineUsers={onlineUsers}
+                      />
+                    ))}
+                  </div>
+                </>
+              ) : (
+                <ChatMessages
+                  chat={currentChat}
+                  currentUserId={loggedInUser?._id}
+                  setSendMessage={setSendMessage}
+                  recieveMessage={recieveMessage}
+                />
+              )}
+            </>
+          ) : (
+            <>
+              <div className="search" ref={searchResultsRef}>
+                <img src={search} alt="search" />
+                <input
+                  type="text"
+                  placeholder="Search"
+                  onChange={handleSearchChange}
+                />
+                {searchResults && (
+                  <SearchResults
+                    users={searchResults}
+                    short
+                    onClick={startNewChat}
+                  />
+                )}
+              </div>
+              <div className="chatsAll">
+                {chats?.length === 0 && <h4> No Chats</h4>}
+                {chats?.map((chat) => (
+                  <ChatSingle
+                    showChat={handleSetSingleChat}
+                    key={chat._id}
+                    chat={chat}
+                    currentUserId={loggedInUser?._id}
+                    onlineUsers={onlineUsers}
+                  />
+                ))}
+              </div>
+            </>
+          )}
         </div>
         <div className="right">
           {currentChat ? (

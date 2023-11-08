@@ -1,12 +1,15 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { corporate, location, nopfp, linkIcon } from "../../assets/profile";
 import Hex from "../Hex/Hex";
 import Tags from "../Tags/Tags";
 import Tile from "../Tile/Tile";
 import "./profileHeader.scss";
 import moment from "moment";
+import { useSelector } from "react-redux";
 
 const ProfileHeader = ({ user, pageName }) => {
+  const navigate = useNavigate();
+  const authUser = useSelector((state) => state.authUser.user);
   return (
     <div className="profileHeader">
       <div className="coverimg">
@@ -19,6 +22,14 @@ const ProfileHeader = ({ user, pageName }) => {
             <div className="company-info">
               <div className="header">
                 <h3>{user?.companyName}</h3>
+                {authUser?._id === user._id && (
+                  <button
+                    className="feedbackbutton"
+                    onClick={() => navigate(`/profile/edit`)}
+                  >
+                    Edit Profile
+                  </button>
+                )}
                 {pageName !== "editProfile" && (
                   <div className="stats">
                     <Hex />

@@ -31,8 +31,27 @@ import "react-toastify/dist/ReactToastify.css";
 import PrivateRoutes from "./utils/PrivateRoutes/PrivateRoutes";
 import ResetPassword from "./pages/ResetPassword/ResetPassword";
 import PrivateRoutesAdmin from "./utils/PrivateRoutes/Admin/PrivateRoutesAdmin";
+import { useDispatch } from "react-redux";
+import { setMobileView } from "./store/slices/design";
+import { useEffect } from "react";
 
 function App() {
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    const updateMobileView = () => {
+      const isMobile = window.innerWidth <= 820;
+      dispatch(setMobileView(isMobile));
+    };
+    updateMobileView();
+
+    window.addEventListener("resize", updateMobileView);
+
+    return () => {
+      window.removeEventListener("resize", updateMobileView);
+    };
+  }, []);
+
   return (
     <>
       <Routes>
