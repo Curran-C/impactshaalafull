@@ -6,7 +6,7 @@ import { useParams } from "react-router-dom";
 import Modal from "../Modal/Modal";
 
 const ContactUs = ({ onCancel, email }) => {
-  const { id } = useParams();
+  const loggedInUser = JSON.parse(localStorage.getItem("IsUser"));
   const [form, setForm] = useState({
     name: "",
     email: email,
@@ -43,18 +43,105 @@ const ContactUs = ({ onCancel, email }) => {
 
   const handleEmail = (e) => {
     e.preventDefault();
-    oncancel(false);
+    // oncancel(false);
+    const {
+      additionalDetails,
+      email,
+      name,
+      description,
+      keywords,
+      collaborateWith,
+      startDate,
+      endDate,
+      tenure,
+    } = form;
+
+    const collaboratorString = collaborateWith.join(', ');
+
+    const emailMessage = `
+    <!DOCTYPE html>
+    <html>
+    <head>
+      <style>
+        /* Define your CSS styles here */
+        body {
+          font-family: Arial, sans-serif;
+          background-color: #f5f5f5;
+          margin: 0;
+          padding: 0;
+        }
+        .container {
+          max-width: 600px;
+          margin: 0 auto;
+          background-color: #fff;
+          border: 1px solid #e0e0e0;
+          border-radius: 5px;
+          box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+          padding: 20px;
+        }
+        h2 {
+          color: #333;
+          font-size: 24px;
+          margin: 0 0 20px;
+        }
+        ul {
+          list-style-type: none;
+          padding: 0;
+        }
+        li {
+          margin-bottom: 10px;
+          font-size: 16px;
+        }
+        strong {
+          font-weight: bold;
+        }
+        p {
+          margin-top: 20px;
+          color: #555;
+          font-size: 16px;
+        }
+        .header {
+          background-color: #007BFF;
+          color: #fff;
+          padding: 10px;
+          text-align: center;
+        }
+      </style>
+    </head>
+    <body>
+      <div class="container">
+        <div class="header">
+          <h2>Contact Us Email</h2>
+        </div>
+        <ul>
+          <li><strong>Name:</strong> ${loggedInUser.name}</li>
+          <li><strong>Email:</strong> ${email}</li>
+          <li><strong>Title:</strong> ${name}</li>
+          <li><strong>Description:</strong> ${description}</li>
+          <li><strong>Keywords:</strong> ${keywords}</li>
+          <li><strong>Collaborate with:</strong> ${collaboratorString}</li>
+          <li><strong>Start Date:</strong> ${startDate}</li>
+          <li><strong>End Date:</strong> ${endDate}</li>
+          <li><strong>Tenure:</strong> ${tenure}</li>
+        </ul>
+        <p><strong>Additional Details:</strong> ${additionalDetails}</p>
+      </div>
+    </body>
+    </html>
+    `;
+
     emailjs
       .send(
-        "service_t1zgvzr",
-        "template_6ojdncx",
+        "service_tcfskpn",
+        "template_t5z4lk9",
         {
-          name: form.name,
-          email: email,
-          subject: form.objective,
-          message: form.additionalDetails,
+          subject: "Get in Touch Email",
+          message: emailMessage,
+          to_mail: "impactshaala@gmail.com",
+          from_name: loggedInUser.name,
+          from_mail: loggedInUser.email,
         },
-        "pdWGRZTcDsXSx5UcT"
+        "C9uqzMPdzE6aIJ-7C"
       )
       .then(
         () => {
@@ -67,15 +154,17 @@ const ContactUs = ({ onCancel, email }) => {
         }
       );
 
-    axiosInstance.post(`${import.meta.env.VITE_BASE_URL}/api/feedback/create`, {
-      userId: id,
-      text: form.additionalDetails,
-    });
+    // axiosInstance.post(`${import.meta.env.VITE_BASE_URL}/api/feedback/create`, {
+    //   userId: loggedInUser._id,
+    //   text: form.additionalDetails,
+    // });
+
+
   };
 
   return (
     <Modal>
-      <form onSubmit={handleEmail} className="contactus-wrapper">
+      <form className="contactus-wrapper">
         <h2 className="modal-title">Get in Touch</h2>
         <div className="inputs-container">
           <div className="input">
@@ -261,7 +350,7 @@ const ContactUs = ({ onCancel, email }) => {
           >
             Cancel
           </button>
-          <button type="submit" className="submit-button">
+          <button type="submit" className="submit-button" onClick={(e) => handleEmail(e)}>
             Submit
           </button>
         </div>

@@ -90,7 +90,7 @@ const Profile = () => {
               </button>
             )}
           </div>
-          <ProfileFeed user={user} />
+          <ProfileFeed user={loggedInUser} />
         </div>
         <div className="right">
           <HomeRight />
