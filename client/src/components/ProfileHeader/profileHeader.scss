@@ -50,6 +50,18 @@
             justify-content: space-between;
             width: 100%;
             overflow: visible;
+            .feedbackbutton {
+              padding: 8px 12px;
+              background-color: #759bd3;
+              border: none;
+              border-radius: 25px;
+              font-size: 12px;
+              color: white;
+
+              @media (min-width: 821px) {
+                display: none ;
+              }
+            }
           }
           h3 {
             margin: 0;
