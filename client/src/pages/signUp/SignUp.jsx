@@ -892,7 +892,7 @@ const SignUp = () => {
 
   // return
   return (
-    <div className="container">
+    <div className="sign-up-page">
       {signInState && signIn}
       {stakeholderState && stakeholder}
       {companyDetailsState && companyDetails}
