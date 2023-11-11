@@ -15,6 +15,8 @@ import { useSelector } from "react-redux";
 
 const Profile = () => {
   const { user: authUser, setPageLoading } = useOutletContext();
+  const { setPageTitle } = useOutletContext();
+
   // states
   const [user, setUser] = useState({});
   const [accessToken, setAccessToken] = useState();
@@ -33,6 +35,10 @@ const Profile = () => {
   //     accessToken && setDecodedToken(jwtDecode(accessToken));
   //   }
   // };
+
+  useEffect(() => {
+    setPageTitle("Profile");
+  }, []);
 
   useEffect(() => {
     const getUser = async () => {
