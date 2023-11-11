@@ -1,4 +1,4 @@
-import { useNavigate, useOutletContext } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { search } from "../../assets/home";
 import { chat } from "../../assets/profile";
 
@@ -133,7 +133,7 @@ const Chats = () => {
   const handleResetChat = () => dispatch(resetChat());
 
   return (
-    <div className="chat">
+    <div className="chat-page">
       <div className="header">
         {isMobile ? (
           <button className="btn back-btn" onClick={handleResetChat}>
@@ -149,8 +149,8 @@ const Chats = () => {
           <h2>Chats</h2>
         </div>
       </div>
-      <div className="container">
-        <div className="left">
+      <div className="chat-container">
+        <div className="all-chats">
           {isMobile ? (
             <>
               {!chatId ? (
@@ -224,7 +224,7 @@ const Chats = () => {
             </>
           )}
         </div>
-        <div className="right">
+        <div className="single-chat-container">
           {currentChat ? (
             <ChatMessages
               chat={currentChat}

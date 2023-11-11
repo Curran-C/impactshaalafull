@@ -43,7 +43,7 @@ function PrivateRoutes() {
       <main className="private-content">
         <header>
           <ProtectedNavBar user={user} pageTitle={pageTitle} />
-          <Search userName={user?.name} />
+          <Search userName={user?.name} pageTitle={pageTitle} />
         </header>
         <div className="container">
           <ProfileLeft userId={user?._id} />

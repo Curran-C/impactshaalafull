@@ -5,7 +5,6 @@ main.private-content {
   align-items: stretch;
   justify-content: stretch;
   background-color: #d9def2;
-  min-height: 100vh;
 
   & > .container {
     display: flex;
@@ -17,6 +16,14 @@ main.private-content {
     padding-left: 15px;
     margin-right: auto;
     margin-left: auto;
+
+    &:has(.chat-page) {
+      .profileLeft,
+      .homeRight,
+      .page-title {
+        display: none;
+      }
+    }
 
     @media (min-width: 768px) {
       max-width: 750px;
