@@ -9,6 +9,7 @@ import HomeRight from "../HomeRight/HomeRight";
 import { BsBell, BsBellFill } from "react-icons/bs";
 import { useNavigate } from "react-router-dom";
 import { PiChats } from "react-icons/pi";
+import { logo } from "../../assets/index";
 
 const ProtectedNavBar = ({ user, pageTitle }) => {
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
@@ -77,14 +78,13 @@ const ProtectedNavBar = ({ user, pageTitle }) => {
         </Button> */}
       </div>
       <Drawer
-        title="ImpactShaala"
+        title={<img src={logo} alt="ImpactShaala" style={{ width: "70%" }} />}
         placement="left"
         closable={false}
         onClose={onClose}
         open={isDrawerOpen}
         className="protected-navbar-drawer"
       >
-        {/* <ProfileLeft onClick={onClose} /> */}
         <ProfileLeft />
         <HomeRight />
       </Drawer>
