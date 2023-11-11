@@ -5,11 +5,6 @@ nav.protected-navbar {
   align-items: center;
   background-color: #d9def2;
   // border: none;
-
-  @media (min-width: 821px) {
-    display: none;
-  }
-
   h3 {
     margin: 0;
   }
