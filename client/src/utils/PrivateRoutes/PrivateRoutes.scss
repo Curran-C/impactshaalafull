@@ -37,7 +37,11 @@ main.private-content {
     }
 
     & > div:nth-child(2) {
+      box-sizing: border-box;
       flex-grow: 1;
+      @media (max-width: 820px) {
+        width: 100%;
+      }
     }
   }
 
@@ -46,6 +50,15 @@ main.private-content {
     .homeRight,
     .search-container {
       display: none;
+    }
+  }
+
+  @media (max-width: 1200px) {
+    .homeRight {
+      display: none;
+    }
+    .profileLeft {
+      max-width: 23%;
     }
   }
 
