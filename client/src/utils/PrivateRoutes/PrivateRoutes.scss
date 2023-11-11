@@ -2,7 +2,7 @@ main.private-content {
   display: flex;
   flex-direction: column;
   gap: 1rem;
-  align-items: center;
+  align-items: stretch;
   justify-content: stretch;
   background-color: #d9def2;
 
@@ -44,7 +44,7 @@ main.private-content {
   @media (max-width: 820px) {
     .profileLeft,
     .homeRight,
-    .search {
+    .search-container {
       display: none;
     }
   }
