@@ -10,6 +10,7 @@ import { useSelector } from "react-redux";
 const ProfileHeader = ({ user, pageName }) => {
   const navigate = useNavigate();
   const authUser = useSelector((state) => state.authUser.user);
+
   return (
     <div className="profileHeader">
       <div className="coverimg">
@@ -22,7 +23,7 @@ const ProfileHeader = ({ user, pageName }) => {
             <div className="company-info">
               <div className="header">
                 <h3>{user?.companyName}</h3>
-                {authUser?._id === user._id && (
+                {authUser?._id === user._id && pageName !== "editProfile" && (
                   <button
                     className="feedbackbutton"
                     onClick={() => navigate(`/profile/edit`)}

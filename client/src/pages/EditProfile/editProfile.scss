@@ -3,6 +3,7 @@
 
   background: #d9def2;
   gap: 50px;
+
   .profileLeft {
     margin-top: 320px;
     .createpost {
@@ -11,13 +12,26 @@
   }
   .middle {
     background: white;
+    border-radius: 25px;
+    margin-bottom: 2rem;
+
     .edits {
       display: flex;
       flex-direction: column;
       gap: 30px;
       align-items: start;
-      margin-left: 30px;
-      margin-top: 40px;
+      margin-inline: 45px;
+      margin-block: 40px;
+      // border: 1px solid red;
+    }
+
+    .action_buttons {
+      align-self: flex-end;
+
+      display: flex;
+      align-items: center;
+      gap: 1em;
+      // border: 1px solid red;
     }
   }
 }
