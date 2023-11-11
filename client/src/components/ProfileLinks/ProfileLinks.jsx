@@ -17,7 +17,6 @@ const ProfileLinks = ({ img, linkText, to, ...props }) => {
     <NavLink
       to={to ? to : `/${navLink}/${loggedInUser._id}`}
       className="profileLinks"
-      activeClassName="highlighted"
       {...props}
     >
       <img className="img" src={img} alt="" />

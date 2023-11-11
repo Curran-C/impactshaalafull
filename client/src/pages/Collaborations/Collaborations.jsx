@@ -1,10 +1,11 @@
 import "./collaborations.scss";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import CollaborationsSent from "../../components/CollaborationsSent/CollaborationsSent.jsx";
 import CollaborationsRecieved from "../../components/CollaborationsRecieved/CollaborationsRecieved";
 import CollaborationsAccepted from "../../components/CollaborationsAccepted/CollaborationsAccepted/CollaborationsAccepted";
 import CollaborationsRejected from "../../components/CollaborationsRejected/CollaborationsRejected";
+import { useOutletContext } from "react-router-dom";
 
 const Collaborations = () => {
   const [collabRecieved, setCollabRecieved] = useState(true);
@@ -40,9 +41,14 @@ const Collaborations = () => {
     setCollabDeclined(true);
   };
 
+  const { setPageTitle } = useOutletContext();
+
+  useEffect(() => {
+    setPageTitle("Collaborations");
+  }, []);
+
   return (
     <div className="collaborations-page">
-      <h1>Collaborations</h1>
       <div className="feedbacksContainer">
         <div className="buttons">
           <button

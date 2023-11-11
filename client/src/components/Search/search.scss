@@ -19,25 +19,14 @@
 
       .notification-container {
         position: relative;
-        .notifcount {
-          position: absolute;
-          height: 20px;
-          width: 20px;
-          border-radius: 100%;
-          background-color: red;
-          display: flex;
-          justify-content: center;
-          text-align: center;
-          top: -5px;
-          right: -5px;
-          color: white;
-          font-size: 12px;
-          font-weight: 500;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        svg {
+          font-size: 30px;
+          margin: auto;
+          cursor: pointer;
         }
-      }
-
-      img {
-        height: 30px;
       }
     }
   }

@@ -10,7 +10,6 @@ import {
   chat,
   feedback,
   home,
-  logout,
   profileIcon,
   savedposts,
   settings,

@@ -1,10 +1,5 @@
-import { useEffect, useState } from "react";
-import {
-  backblue,
-  bookmark,
-  bookmarkfilled,
-  collaboration,
-} from "../../assets/home";
+import { useEffect, useRef, useState } from "react";
+import { bookmark, bookmarkfilled, collaboration } from "../../assets/home";
 
 import { corporate, location, nopfp } from "../../assets/profile";
 
@@ -14,9 +9,9 @@ import { format } from "timeago.js";
 import axiosInstance from "../../utils/service";
 import { Link, useNavigate, useOutletContext } from "react-router-dom";
 
-import { toast } from "react-toastify";
 import { setUserAuth } from "../../store/slices/user";
 import { useDispatch } from "react-redux";
+import { Popover } from "antd";
 
 const Post = ({ post }) => {
   // states
@@ -24,6 +19,11 @@ const Post = ({ post }) => {
   const [user, setUser] = useState();
   const { user: authUser } = useOutletContext();
 
+  const [collabStatus, setCollabStatus] = useState("");
+  const [bookmarkStatus, setBookmarkStatus] = useState("");
+
+  const bookmarkTimeoutRef = useRef(null);
+  const collabTimeoutRef = useRef(null);
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
@@ -53,12 +53,36 @@ const Post = ({ post }) => {
   }, []);
 
   // function
+
+  const handleBookmarkStatus = (message) => {
+    setBookmarkStatus(message);
+
+    if (bookmarkTimeoutRef.current) {
+      clearTimeout(bookmarkTimeoutRef.current);
+    }
+
+    bookmarkTimeoutRef.current = setTimeout(() => {
+      setBookmarkStatus("");
+    }, 1500);
+  };
+
+  const handleCollabRequest = (message) => {
+    setCollabStatus(message);
+
+    if (collabTimeoutRef.current) {
+      clearTimeout(collabTimeoutRef.current);
+    }
+
+    collabTimeoutRef.current = setTimeout(() => {
+      setCollabStatus("");
+    }, 1500);
+  };
+
   // save and unsave collab posts
   const handleBookmark = async () => {
     setBookmarked(!bookmarked);
     // only works in reverse for some reason
     if (bookmarked === false) {
-      console.log("Bookmarked");
       try {
         const res = await axiosInstance.post(
           `${import.meta.env.VITE_BASE_URL}/api/company/updateuser/${
@@ -69,12 +93,11 @@ const Post = ({ post }) => {
           }
         );
         dispatch(setUserAuth({ user: res.data }));
-        toast.success("Bookmark added");
+        handleBookmarkStatus("Bookmark added");
       } catch (err) {
         console.log(err);
       }
     } else if (bookmarked === true) {
-      console.log("Unbookmarked");
       try {
         const res = await axiosInstance.post(
           `${import.meta.env.VITE_BASE_URL}/api/company/updateuser/${
@@ -85,7 +108,7 @@ const Post = ({ post }) => {
           }
         );
         dispatch(setUserAuth({ user: res.data }));
-        toast.success("Bookmark removed");
+        handleBookmarkStatus("Bookmark removed");
       } catch (err) {
         console.log(err);
       }
@@ -158,7 +181,7 @@ const Post = ({ post }) => {
         );
         console.log(isToId?.data.length);
         if (isToId?.data.length !== 0 && isFromId?.data.length !== 0) {
-          alert("You have collab with this person");
+          handleCollabRequest("You have collab with this person");
         } else {
           // *check if user is fromId
           try {
@@ -173,7 +196,7 @@ const Post = ({ post }) => {
               }`
             );
             if (isFromId?.data.length !== 0 && isToId?.data.length !== 0) {
-              alert("You have collab with this person!");
+              handleCollabRequest("You have collab with this person!");
             } else {
               // todo 5. if collab doesnt exist - create a new collab
               try {
@@ -211,7 +234,7 @@ const Post = ({ post }) => {
                     message: "New Collab Request",
                   }
                 );
-                alert("Successfully sent Collaboration request");
+                handleCollabRequest("Successfully sent Collaboration request");
               } catch (err) {
                 console.log(err);
               }
@@ -245,94 +268,36 @@ const Post = ({ post }) => {
           <img src={user?.pfp || nopfp} alt="" className="pfp" />
           <div className="userAbout">
             <Link to={`/profile/${post.createdById}`}>
-              <h3>{user?.name || "ImpactShaala"}</h3>
+              <h4>{user?.name || "ImpactShaala"}</h4>
             </Link>
             <div className="tilesContainer">
               {post?.createdById ? (
                 <>
-                  <Tile image={corporate} type={user?.stakeholder} />
+                  <Tile
+                    image={corporate}
+                    type={user?.stakeholder}
+                    className="bg-lightblue"
+                  />
                   <Tile image={location} type={user?.city} />
                 </>
               ) : null}
             </div>
           </div>
         </div>
-        <img
-          src={bookmarked ? bookmarkfilled : bookmark}
-          alt="bookmark"
-          onClick={() => handleBookmark()}
-          className="bookmark"
-        />
+
+        <Popover content={bookmarkStatus} trigger="click" open={bookmarkStatus}>
+          <img
+            src={bookmarked ? bookmarkfilled : bookmark}
+            alt="bookmark"
+            onClick={() => handleBookmark()}
+            className="bookmark_img"
+          />
+        </Popover>
       </div>
       <div className="container">
         <p className="postDetails" onClick={handleTitleClick}>
           {post?.title}
         </p>
-        {showDetails && (
-          <div className="custom-modal">
-            <div className="modal-content">
-              <span className="close" onClick={handleClose}>
-                &times;
-              </span>
-              <h2>Post Details</h2>
-              <hr />
-              <table className="postDetails">
-                <tbody>
-                  <tr>
-                    <th>Title:</th>
-                    <td>{post?.title}</td>
-                  </tr>
-                  <tr>
-                    <th>Location:</th>
-                    <td>{post?.location}</td>
-                  </tr>
-                  <tr>
-                    <th>Keywords:</th>
-                    <td>{post?.keywords?.join(", ")}</td>
-                  </tr>
-                  <tr>
-                    <th>Collaborate With:</th>
-                    <td>{post?.collaborateWith}</td>
-                  </tr>
-                  <tr>
-                    <th>Objective:</th>
-                    <td>{post?.objective}</td>
-                  </tr>
-                  <tr>
-                    <th>Project Description:</th>
-                    <td>{post?.description}</td>
-                  </tr>
-                  <tr>
-                    <th>Beneficiaries and Gains:</th>
-                    <td>{post?.beneficiaries}</td>
-                  </tr>
-                  <tr>
-                    <th>Resource Needed:</th>
-                    <td>{post?.resources}</td>
-                  </tr>
-                  <tr>
-                    <th>Project Tenure:</th>
-                    <td>{post?.tenure}</td>
-                  </tr>
-                  <tr>
-                    <th>From Date:</th>
-                    <td>
-                      {post?.fromDate &&
-                        new Date(post?.fromDate).toISOString().split("T")[0]}
-                    </td>
-                  </tr>
-                  <tr>
-                    <th>To Date:</th>
-                    <td>
-                      {post?.fromDate &&
-                        new Date(post?.toDate).toISOString().split("T")[0]}
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-          </div>
-        )}
         <div className="dateandtime">
           <p>
             {post?.fromDate &&
@@ -346,12 +311,18 @@ const Post = ({ post }) => {
           <p>{format(post?.createdAt)}</p>
           <div className="links">
             {post?.createdById && authUser._id !== post.createdById && (
-              <img
-                className="collabImage"
-                src={collaboration}
-                alt=""
-                onClick={handleCollabClick}
-              />
+              <Popover
+                content={collabStatus}
+                trigger="click"
+                open={collabStatus}
+              >
+                <img
+                  className="collabImage"
+                  src={collaboration}
+                  alt=""
+                  onClick={handleCollabClick}
+                />
+              </Popover>
             )}
             {/* {post?.createdById ? (
               <img
@@ -363,6 +334,71 @@ const Post = ({ post }) => {
           </div>
         </div>
       </div>
+      {showDetails && (
+        <div className="custom-modal">
+          <div className="modal-content">
+            <span className="close" onClick={handleClose}>
+              &times;
+            </span>
+            <h2>Post Details</h2>
+            <hr />
+            <table className="postDetails">
+              <tbody>
+                <tr>
+                  <th>Title:</th>
+                  <td>{post?.title}</td>
+                </tr>
+                <tr>
+                  <th>Location:</th>
+                  <td>{post?.location}</td>
+                </tr>
+                <tr>
+                  <th>Keywords:</th>
+                  <td>{post?.keywords?.join(", ")}</td>
+                </tr>
+                <tr>
+                  <th>Collaborate With:</th>
+                  <td>{post?.collaborateWith}</td>
+                </tr>
+                <tr>
+                  <th>Objective:</th>
+                  <td>{post?.objective}</td>
+                </tr>
+                <tr>
+                  <th>Project Description:</th>
+                  <td>{post?.description}</td>
+                </tr>
+                <tr>
+                  <th>Beneficiaries and Gains:</th>
+                  <td>{post?.beneficiaries}</td>
+                </tr>
+                <tr>
+                  <th>Resource Needed:</th>
+                  <td>{post?.resources}</td>
+                </tr>
+                <tr>
+                  <th>Project Tenure:</th>
+                  <td>{post?.tenure}</td>
+                </tr>
+                <tr>
+                  <th>From Date:</th>
+                  <td>
+                    {post?.fromDate &&
+                      new Date(post?.fromDate).toISOString().split("T")[0]}
+                  </td>
+                </tr>
+                <tr>
+                  <th>To Date:</th>
+                  <td>
+                    {post?.fromDate &&
+                      new Date(post?.toDate).toISOString().split("T")[0]}
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

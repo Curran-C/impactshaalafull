@@ -21,9 +21,9 @@
     background: rgb(245, 245, 245);
     border-radius: 25px;
   }
-}
-.highlighted {
-  background: white;
-  border-radius: 25px;
-  border: none;
+  &.active {
+    background: white;
+    border-radius: 25px;
+    border: none;
+  }
 }

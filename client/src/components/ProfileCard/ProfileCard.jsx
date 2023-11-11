@@ -12,12 +12,11 @@ const ProfileCard = () => {
   return (
     <div className="profileCard">
       <div className="header">
-        <h2>Profile</h2>
         {/* <img src={edit} alt="" /> */}
       </div>
       <div className="profileInfo">
         <img className="profilepic" src={user?.pfp} alt="" />
-        <h2>{user?.name}</h2>
+        <h3>{user?.name}</h3>
         <p>{user?.tagline}</p>
       </div>
       <Tile image={corporate} type={user?.stakeholder} />

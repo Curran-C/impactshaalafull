@@ -1,4 +1,4 @@
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useOutletContext } from "react-router-dom";
 import { search } from "../../assets/home";
 import { chat } from "../../assets/profile";
 
@@ -18,6 +18,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { resetChat, setChatId } from "../../store/slices/chat";
 
 const Chats = () => {
+  const { setPageTitle } = useOutletContext();
+
   const loggedInUser = useSelector((state) => state.authUser.user);
   const [chats, setChats] = useState();
   const [currentChat, setCurrentChat] = useState(null);
@@ -36,6 +38,7 @@ const Chats = () => {
 
   //SOCKET IO
   useEffect(() => {
+    setPageTitle("Chats");
     socket.current = io(import.meta.env.VITE_BASE_URL);
     socket.current.emit("new-user-add", loggedInUser?._id);
     socket.current.on("get-users", (users) => {

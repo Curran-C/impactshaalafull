@@ -18,12 +18,12 @@ const SearchResults = ({ users, short, onClick }) => {
             className="searchResult"
             key={user?._id}
           >
-            <img src={user?.pfp || nopfp} alt="" />
+            <div className="title">
+              <img src={user?.pfp || nopfp} alt="" />
+              <h5>{user?.name}</h5>
+            </div>
             <div className="info">
-              <div className="searchAbout">
-                <h4>{user?.name}</h4>
-                <Tile image={corporate} type={user?.stakeholder} />
-              </div>
+              <Tile className='bg-lightblue w-max-content' image={corporate} type={user?.stakeholder} />
               {!short && <Tags tags={user?.tags} />}
             </div>
           </div>
