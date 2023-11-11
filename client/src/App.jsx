@@ -67,11 +67,11 @@ function App() {
           <Route path="/chats" element={<Chats />} />
           <Route path="/profile/edit" element={<EditProfile />} />
           <Route path="/savedPosts" element={<SavedPosts />} />
+          <Route path="/settings" element={<Settings />} />
+          <Route path="/collaborations" element={<Collaborations />} />
 
           {/* Pending Pages below */}
           <Route path="/profile/:id" element={<Profile />} />
-          <Route path="/settings/:id" element={<Settings />} />
-          <Route path="/collaborations/:id" element={<Collaborations />} />
         </Route>
 
         <Route path="/admin" element={<Login />} />

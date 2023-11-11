@@ -18,7 +18,6 @@ import {
 
 const ProfileLeft = ({ ...props }) => {
   const location = useLocation();
-  const navigate = useNavigate();
   const [showCreatePost, setShowCreatePost] = useState(false);
 
   const handleCancel = (prop) => {
@@ -31,7 +30,7 @@ const ProfileLeft = ({ ...props }) => {
     { path: "/chats", img: chat, text: "Chats" },
     { path: "/savedPosts", img: savedposts, text: "Saved Posts" },
     {
-      path: `/collaborations/${props?.userId}`,
+      path: `/collaborations`,
       img: feedback,
       text: "Collaborations",
     },
@@ -51,7 +50,6 @@ const ProfileLeft = ({ ...props }) => {
         <ProfileLinks
           key={index}
           {...props}
-          highlighted={location.pathname === link.path}
           img={link.img}
           linkText={link.text}
           to={link.path}

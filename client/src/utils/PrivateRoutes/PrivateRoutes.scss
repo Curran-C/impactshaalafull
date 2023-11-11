@@ -5,6 +5,7 @@ main.private-content {
   align-items: stretch;
   justify-content: stretch;
   background-color: #d9def2;
+  min-height: 100vh;
 
   & > .container {
     display: flex;
