@@ -70,7 +70,29 @@ main.private-content {
       display: none;
     }
     .profileLeft {
-      max-width: 23%;
+      flex: 0 0 12rem !important;
+      // max-width: 23%;
+    }
+  }
+
+  @media (max-width: 1439px) {
+    .homeRight {
+      display: none;
+    }
+
+    .profileLeft {
+      flex: 0 0 16rem !important;
+      // max-width: 23%;
+    }
+  }
+
+  @media (min-width: 1440px) {
+    .homeRight {
+      flex: 0 0 20rem !important;
+    }
+
+    .profileLeft {
+      flex: 0 0 20rem !important;
     }
   }
 

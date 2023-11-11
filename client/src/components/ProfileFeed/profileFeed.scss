@@ -10,10 +10,12 @@
       display: flex;
       flex-direction: column;
       align-items: center;
+      gap: 1rem;
       margin-top: 20px;
       .achievements-container {
         display: flex;
         gap: 20px;
+        padding-inline: 1rem;
         .placeholder {
           width: 150px;
           height: 100px;
@@ -22,6 +24,7 @@
           box-shadow: 10px 10px 10px 0px rgba(0, 0, 0, 0.07);
         }
         @media (max-width: 820px) {
+          padding-inline: 0.5rem;
           flex-wrap: wrap;
           .placeholder {
             margin: auto;
@@ -57,13 +60,21 @@
 
         gap: 20px;
         align-items: center;
+        justify-content: center;
         text-align: center;
         border-bottom: rgb(156, 156, 156) solid 1px;
         margin-bottom: 20px;
+
+        @media (max-width: 424px) {
+          flex-direction: column;
+          align-items: flex-start;
+        }
+
         h4 {
           padding: 5px 20px;
           border-radius: 25px;
           margin: 0 0 10px 0;
+
           &:hover {
             background-color: #b1becd;
             cursor: pointer;
@@ -179,7 +190,7 @@
         .postTitle {
           gap: 5px;
           h4 {
-              font-size: 14px;
+            font-size: 14px;
           }
         }
 

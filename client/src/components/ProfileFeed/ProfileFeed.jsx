@@ -178,6 +178,7 @@ const ProfileFeed = ({ user }) => {
                         background: "lightgrey",
                         padding: "10px",
                       }}
+                      key={accomplishment._id}
                     >
                       Project Name : {accomplishment?.projectName} {"  "}
                       Project Location : {accomplishment?.projectLocation}
