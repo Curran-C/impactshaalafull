@@ -1,32 +1,30 @@
 import "./savedPosts.scss";
-import ProfileLeft from "../../components/ProfileLeft/ProfileLeft";
-import Search from "../../components/Search/Search";
-import HomeRight from "../../components/HomeRight/HomeRight";
+
 import Posts from "../../components/Posts/Posts";
 import { useOutletContext } from "react-router-dom";
 import { useEffect, useState } from "react";
 import axiosInstance from "../../utils/service";
+import { useDispatch, useSelector } from "react-redux";
+import { getUserAPI } from "../../api/company";
+import { setUserAuth } from "../../store/slices/user";
+import { Spin } from "antd";
 
 const SavedPosts = () => {
-  // const { user } = useOutletContext();
-  const loggedInUser = JSON.parse(localStorage.getItem("IsUser"));
-
+  const authUser = useSelector((state) => state.authUser.user);
   const [posts, setPosts] = useState([]);
-  const [user, setUser] = useState([]);
-  const { setPageLoading } = useOutletContext();
+  const { setPageLoading, setPageTitle } = useOutletContext();
+  const dispatch = useDispatch();
+  const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
-    const getSavedPosts = async () => {
-      setPageLoading(true);
-      try {
-        const res = await axiosInstance.get(
-          `${import.meta.env.VITE_BASE_URL}/api/company/getuser/${
-            loggedInUser._id
-          }`
-        );
-        setUser(res.data);
+  const getSavedPosts = async () => {
+    setPageLoading(true);
 
-        res.data?.bookmarkedPosts.map(async (bookmarkedPost) => {
+    try {
+      const userData = await getUserAPI(authUser._id);
+      dispatch(setUserAuth({ user: userData }));
+
+      await Promise.all(
+        authUser?.bookmarkedPosts.map(async (bookmarkedPost) => {
           try {
             const post = await axiosInstance.get(
               `${
@@ -38,30 +36,27 @@ const SavedPosts = () => {
           } catch (err) {
             console.log(err);
           }
-        });
-      } catch (err) {
-        console.log(err);
-      } finally {
-        setPageLoading(false);
-      }
-    };
+        })
+      );
+    } catch (err) {
+      console.log(err);
+    } finally {
+      setPageLoading(false);
+      setLoading(false);
+    }
+
+    setPageTitle("Saved Posts");
+  };
+
+  useEffect(() => {
     getSavedPosts();
   }, []);
 
   return (
-    <div className="savedPosts">
-      <div className="left">
-        <ProfileLeft page={"savedPosts"} />
-      </div>
-      <div className="center">
-        {user && <Search userName={user?.name} />}
-        <h1>Saved Posts</h1>
-
+    <div className="saved-posts-page">
+      <Spin size="large" spinning={loading}>
         <Posts posts={posts} isSaved={true} />
-      </div>
-      <div className="right">
-        <HomeRight />
-      </div>
+      </Spin>
     </div>
   );
 };

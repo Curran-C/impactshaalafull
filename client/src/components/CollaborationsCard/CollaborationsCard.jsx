@@ -1,29 +1,24 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { corporate } from "../../assets/profile";
 import Tile from "../Tile/Tile";
 import "./collaborationsCard.scss";
 import axiosInstance from "../../utils/service";
 import PostModal from "../PostModal/PostModal";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import GetCreditScore from "../GetCreditScore/GetCreditScore";
 
 const CollaborationsCard = ({ collabId, user, post, page }) => {
   const navigate = useNavigate();
-  const { id } = useParams();
 
-  const [Post, setPost] = useState();
+  const [Post, setPost] = useState(null);
   const [showPost, setShowPost] = useState(false);
   const [showGetCreditScore, setShowGetCreditScore] = useState(false);
 
   const showCollab = async () => {
     try {
-      // todo get post from post Id
-      console.log(post);
       const res = await axiosInstance.get(
-        `${import.meta.env.VITE_BASE_URL}/api/post/getsinglepost/${post}`,
-        { withCredentials: true }
+        `${import.meta.env.VITE_BASE_URL}/api/post/getsinglepost/${post}`
       );
-      // console.log(res);
       setPost(res);
       setShowPost(true);
     } catch (err) {
@@ -43,7 +38,6 @@ const CollaborationsCard = ({ collabId, user, post, page }) => {
           <Tile image={corporate} type={user?.stakeholder} />
         </div>
       </div>
-      {/* <div className="feedbacktext"> */}
       <button onClick={showCollab}>View Collaboration Details</button>
       {page === "collabsAccepted" && (
         <div className="collabButtons">
@@ -65,7 +59,6 @@ const CollaborationsCard = ({ collabId, user, post, page }) => {
           />
         </div>
       )}
-      {/* </div> */}
     </div>
   );
 };
