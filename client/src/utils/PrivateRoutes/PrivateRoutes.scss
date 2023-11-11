@@ -6,7 +6,7 @@ main.private-content {
   justify-content: stretch;
   background-color: #d9def2;
 
-  .container {
+  & > .container {
     display: flex;
     gap: 1rem;
 
