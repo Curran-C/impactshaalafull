@@ -16,40 +16,40 @@ const SavedPosts = () => {
   const dispatch = useDispatch();
   const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
-    const getSavedPosts = async () => {
-      setPageLoading(true);
-      try {
-        getUserAPI(authUser._id).then((data) => {
-          dispatch(setUserAuth({ user: data }));
-          return checkBookmarked();
-        });
+  const getSavedPosts = async () => {
+    setPageLoading(true);
 
-        function checkBookmarked() {
-          authUser?.bookmarkedPosts.map(async (bookmarkedPost) => {
-            try {
-              const post = await axiosInstance.get(
-                `${
-                  import.meta.env.VITE_BASE_URL
-                }/api/post/getsavedposts/${bookmarkedPost}`,
-                { withCredentials: true }
-              );
-              setPosts((prev) => [...prev, post.data]);
-              setLoading(false);
-            } catch (err) {
-              console.log(err);
-            }
-          });
-        }
-      } catch (err) {
-        console.log(err);
-      } finally {
-        setPageLoading(false);
-      }
-    };
-    getSavedPosts();
+    try {
+      const userData = await getUserAPI(authUser._id);
+      dispatch(setUserAuth({ user: userData }));
+
+      await Promise.all(
+        authUser?.bookmarkedPosts.map(async (bookmarkedPost) => {
+          try {
+            const post = await axiosInstance.get(
+              `${
+                import.meta.env.VITE_BASE_URL
+              }/api/post/getsavedposts/${bookmarkedPost}`,
+              { withCredentials: true }
+            );
+            setPosts((prev) => [...prev, post.data]);
+          } catch (err) {
+            console.log(err);
+          }
+        })
+      );
+    } catch (err) {
+      console.log(err);
+    } finally {
+      setPageLoading(false);
+      setLoading(false);
+    }
 
     setPageTitle("Saved Posts");
+  };
+
+  useEffect(() => {
+    getSavedPosts();
   }, []);
 
   return (
