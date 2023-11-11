@@ -15,7 +15,7 @@ import {
   settings,
 } from "../../assets/profile";
 
-const ProfileLeft = ({ ...props }) => {
+const ProfileLeft = ({ userId, ...props }) => {
   const location = useLocation();
   const [showCreatePost, setShowCreatePost] = useState(false);
 
@@ -25,7 +25,7 @@ const ProfileLeft = ({ ...props }) => {
 
   const links = [
     { path: "/home", img: home, text: "Home" },
-    { path: `/profile/${props?.userId}`, img: profileIcon, text: "Profile" },
+    { path: `/profile/${userId}`, img: profileIcon, text: "Profile" },
     { path: "/chats", img: chat, text: "Chats" },
     { path: "/savedPosts", img: savedposts, text: "Saved Posts" },
     {

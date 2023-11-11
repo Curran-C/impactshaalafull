@@ -40,7 +40,6 @@ export const searchUserAPI = async (input) => {
 export const getUserAPI = async (_id) => {
   try {
     const res = await axiosInstance.get(`${routes.getUser}/${_id}`);
-    console.log(res.data);
     return res.data;
   } catch (error) {
     console.log("Error fetching company: ", error);
