@@ -58,9 +58,13 @@
               font-size: 12px;
               color: white;
 
-              @media (min-width: 821px) {
-                display: none ;
-              }
+              // CSS for edit profile button - Srihari
+              margin-right: auto;
+              margin-left: 20px;
+
+              // @media (min-width: 821px) {
+              //   display: none ;
+              // }
             }
           }
           h3 {

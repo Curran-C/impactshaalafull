@@ -64,11 +64,11 @@ const Profile = () => {
     <div className="companyProfile">
       {feedbackFrom && <FeedbackForm onCancel={handleFeedbackShow} />}
       <div className="profileContainer">
-        <ProfileLeft page={"profile"} />
+        {/* <ProfileLeft page={"profile"} /> */}
         <div className="profileDetails">
-          <div className="nameandfeedback">
-            <NameDate name={authUser?.name} date={date} />
-            {/* {loggedInUser?._id !== id && (
+          {/* <div className="nameandfeedback"> */}
+          {/* <NameDate name={authUser?.name} date={date} /> */}
+          {/* {loggedInUser?._id !== id && (
               <>
                 <button
                   className="feedbackbutton"
@@ -81,20 +81,20 @@ const Profile = () => {
                 </button>
               </>
             )} */}
-            {loggedInUser?._id === id && (
+          {/* {loggedInUser?._id === id && (
               <button
                 className="feedbackbutton"
                 onClick={() => navigate(`/profile/edit`)}
               >
                 Edit Profile
               </button>
-            )}
-          </div>
+            )} */}
+          {/* </div> */}
           <ProfileFeed user={loggedInUser} />
         </div>
-        <div className="right">
+        {/* <div className="right">
           <HomeRight />
-        </div>
+        </div> */}
       </div>
     </div>
   );
