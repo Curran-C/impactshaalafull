@@ -14,15 +14,7 @@ const Home = () => {
 
   return (
     <div className="homePage">
-      <div className="left">
-        <ProfileLeft page={"home"} />
-      </div>
-      <div className="center">
-        <HomeMiddle />
-      </div>
-      <div className="right">
-        <HomeRight />
-      </div>
+      <HomeMiddle />
     </div>
   );
 };

@@ -30,7 +30,7 @@ const HomeMiddle = () => {
 
   return (
     <div className="homeMiddle">
-      <Search userName={user?.name} />
+      {/* <Search userName={user?.name} /> */}
       <h2 className="title">Recent Posts</h2>
       <Posts posts={posts} />
       <Collab />
