@@ -8,6 +8,7 @@ import { Spin } from "antd";
 import Search from "../../components/Search/Search";
 import ProfileLeft from "../../components/ProfileLeft/ProfileLeft";
 import HomeRight from "../../components/HomeRight/HomeRight";
+import { getUserAPI } from "../../api/company";
 
 function PrivateRoutes() {
   const dispatch = useDispatch();
@@ -22,9 +23,10 @@ function PrivateRoutes() {
 
     if (user) {
       try {
-        const parsedUser = JSON.parse(user);
-        dispatch(setUserAuth({ user: parsedUser, token }));
-        setUser(parsedUser);
+        getUserAPI(JSON.parse(user)?._id).then((data) => {
+          dispatch(setUserAuth({ user: data, token }));
+          setUser(data);
+        });
       } catch (error) {
         console.error("Error parsing user from localStorage:", error);
       }

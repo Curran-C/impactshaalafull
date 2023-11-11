@@ -1,32 +1,21 @@
 import "./savedPosts.scss";
-import ProfileLeft from "../../components/ProfileLeft/ProfileLeft";
-import Search from "../../components/Search/Search";
-import HomeRight from "../../components/HomeRight/HomeRight";
+
 import Posts from "../../components/Posts/Posts";
 import { useOutletContext } from "react-router-dom";
 import { useEffect, useState } from "react";
 import axiosInstance from "../../utils/service";
+import { useSelector } from "react-redux";
 
 const SavedPosts = () => {
-  // const { user } = useOutletContext();
-  const loggedInUser = JSON.parse(localStorage.getItem("IsUser"));
-
+  const authUser = useSelector((state) => state.authUser.user);
   const [posts, setPosts] = useState([]);
-  const [user, setUser] = useState([]);
-  const { setPageLoading } = useOutletContext();
+  const { setPageLoading, setPageTitle } = useOutletContext();
 
   useEffect(() => {
     const getSavedPosts = async () => {
       setPageLoading(true);
       try {
-        const res = await axiosInstance.get(
-          `${import.meta.env.VITE_BASE_URL}/api/company/getuser/${
-            loggedInUser._id
-          }`
-        );
-        setUser(res.data);
-
-        res.data?.bookmarkedPosts.map(async (bookmarkedPost) => {
+        authUser?.bookmarkedPosts.map(async (bookmarkedPost) => {
           try {
             const post = await axiosInstance.get(
               `${
@@ -46,22 +35,13 @@ const SavedPosts = () => {
       }
     };
     getSavedPosts();
+
+    setPageTitle("Saved Posts");
   }, []);
 
   return (
-    <div className="savedPosts">
-      <div className="left">
-        <ProfileLeft page={"savedPosts"} />
-      </div>
-      <div className="center">
-        {user && <Search userName={user?.name} />}
-        <h1>Saved Posts</h1>
-
-        <Posts posts={posts} isSaved={true} />
-      </div>
-      <div className="right">
-        <HomeRight />
-      </div>
+    <div className="saved-posts-page">
+      <Posts posts={posts} isSaved={true} />
     </div>
   );
 };

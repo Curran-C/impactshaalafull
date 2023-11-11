@@ -1,9 +1,10 @@
 import axiosInstance from "../utils/service";
 
 const routes = {
-  forgotPassword: `${import.meta.env.VITE_BASE_URL}/api/company/forgot-password`,
-  resetPassword: `${import.meta.env.VITE_BASE_URL}/api/company/reset-password`,
-  search: `${import.meta.env.VITE_BASE_URL}/api/company/search`,
+  forgotPassword: `/api/company/forgot-password`,
+  resetPassword: `/api/company/reset-password`,
+  search: `/api/company/search`,
+  getUser: `/api/company/getuser`,
 };
 
 export const forgotPasswordAPI = async (payload) => {
@@ -28,12 +29,21 @@ export const resetPasswordAPI = async (payload) => {
 
 export const searchUserAPI = async (input) => {
   try {
-    const res = await axiosInstance.get(
-      `${routes.search}?name=${input}`
-    );
+    const res = await axiosInstance.get(`${routes.search}?name=${input}`);
     return res.data;
   } catch (error) {
     console.log("Error searching company: ", error);
+    throw error?.response?.data;
+  }
+};
+
+export const getUserAPI = async (_id) => {
+  try {
+    const res = await axiosInstance.get(`${routes.getUser}/${_id}`);
+    console.log(res.data);
+    return res.data;
+  } catch (error) {
+    console.log("Error fetching company: ", error);
     throw error?.response?.data;
   }
 };
