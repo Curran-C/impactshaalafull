@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import "./chatSingle.scss";
 import axiosInstance from "../../utils/service";
+import { HiOutlineUserCircle } from "react-icons/hi";
 
 const ChatSingle = ({ chat, currentUserId, showChat, onlineUsers }) => {
   const [userData, setUserData] = useState(); //user to whom we send the message
@@ -8,7 +9,7 @@ const ChatSingle = ({ chat, currentUserId, showChat, onlineUsers }) => {
 
   useEffect(() => {
     console.log(chat);
-    const userId = chat?.members?.find(id => id !== currentUserId);
+    const userId = chat?.members?.find((id) => id !== currentUserId);
 
     console.log(userId);
 
@@ -32,7 +33,11 @@ const ChatSingle = ({ chat, currentUserId, showChat, onlineUsers }) => {
 
   return (
     <div className="chatSingle" onClick={() => showChat(chat)}>
-      <img src={userData?.pfp} alt="" />
+      {userData?.pfp ? (
+        <img src={userData?.pfp} alt="" />
+      ) : (
+        <HiOutlineUserCircle size={"44px"} />
+      )}
       <div className="name">
         <h4>{userData?.name}</h4>
         <p>{online ? "Online" : "Offline"}</p>

@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { keyboard, link, send } from "../../assets/chats";
 import axiosInstance from "../../utils/service";
 import SingleMessage from "../SingleMessage/SingleMessage";
+import { HiOutlineUserCircle } from "react-icons/hi";
 
 import "./chatMessages.scss";
 import { format } from "timeago.js";
@@ -101,7 +102,11 @@ const ChatMessages = ({
   return (
     <div className="chatMessages">
       <div className="name">
-        <img src={userData?.data.pfp} alt="name" className="pfp" />
+        {userData?.pfp ? (
+          <img src={userData?.data.pfp} alt="name" className="pfp" />
+        ) : (
+          <HiOutlineUserCircle size={"44px"} />
+        )}
         <h3>{userData?.data.name}</h3>
       </div>
       <hr />
