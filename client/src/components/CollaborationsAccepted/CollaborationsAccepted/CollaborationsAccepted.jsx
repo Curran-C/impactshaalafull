@@ -1,13 +1,12 @@
 import { useEffect, useState } from "react";
 import "./CollaborationsAccepted.scss";
 import axiosInstance from "../../../utils/service";
-
-import { useParams } from "react-router-dom";
 import CollaborationsCard from "../../CollaborationsCard/CollaborationsCard";
-import { Spin } from 'antd';
+import { Spin } from "antd";
+import { useSelector } from "react-redux";
 
 const CollaborationsAccepted = () => {
-  const { id } = useParams();
+  const authUser = useSelector((state) => state.authUser.user);
 
   const [collabsAcceptedIds, setCollabsAcceptedIds] = useState();
   const [collabsAccepted, setCollabsAccepted] = useState([]);
@@ -22,7 +21,7 @@ const CollaborationsAccepted = () => {
       try {
         //todo get collab ids from user
         const user = await axiosInstance.get(
-          `${import.meta.env.VITE_BASE_URL}/api/company/getuser/${id}`
+          `${import.meta.env.VITE_BASE_URL}/api/company/getuser/${authUser._id}`
         );
         setCollabsAcceptedIds(user?.data.collaborationIdsAccepted);
         // console.log("asdsads",user.data.collaborationIdsAccepted);
@@ -30,13 +29,15 @@ const CollaborationsAccepted = () => {
         //todo loop over collabids and then get the collab for each id
         user?.data.collaborationIdsAccepted.map(async (collab) => {
           const collabs = await axiosInstance.get(
-            `${import.meta.env.VITE_BASE_URL
+            `${
+              import.meta.env.VITE_BASE_URL
             }/api/collaboration/single/${collab}`
           );
 
           //todo use the fromId: in collabs to get userdetails
           const user = await axiosInstance.get(
-            `${import.meta.env.VITE_BASE_URL}/api/company/getuser/${collabs?.data.fromId
+            `${import.meta.env.VITE_BASE_URL}/api/company/getuser/${
+              collabs?.data.fromId
             }`
           );
           console.log(user.data);
@@ -54,7 +55,6 @@ const CollaborationsAccepted = () => {
 
   return (
     <div className="collaborationsRecieved">
-      {console.log("asda", Posts)}
       {fromUsers?.map((user, index) => (
         <CollaborationsCard
           key={index}
@@ -64,7 +64,7 @@ const CollaborationsAccepted = () => {
           page={"collabsAccepted"}
         />
       ))}
-      <Spin spinning={loading} fullscreen />
+      <Spin spinning={loading && !fromUsers?.length} />
     </div>
   );
 };
