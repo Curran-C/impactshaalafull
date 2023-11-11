@@ -51,7 +51,7 @@ const ProfileLeft = ({ ...props }) => {
       </button>
       {links.map((link, index) => (
         <ProfileLinks
-          onClick={props.onLinkClick}
+          onClick={props?.onLinkClick}
           key={index}
           img={link.img}
           linkText={link.text}
