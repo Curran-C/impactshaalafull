@@ -1,28 +1,12 @@
-import { useNavigate } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import "./profileLinks.scss";
-import { useEffect, useState } from "react";
-import jwtDecode from "jwt-decode";
 
-const ProfileLinks = ({ img, linkText, highlighted, to, ...props }) => {
+const ProfileLinks = ({ img, linkText, to, ...props }) => {
   // states
-  const navigate = useNavigate();
-  // const [accessToken, setAccessToken] = useState();
-  // const [decodedToken, setDecodedToken] = useState();
-
   let loggedInUser = localStorage.getItem("IsUser");
   if (loggedInUser) {
     loggedInUser = JSON.parse(loggedInUser);
   }
-
-  // useEffect(() => {
-  //   const cookie = document.cookie;
-  //   const cookies = cookie.split("; ");
-  //   for (let i = 0; i < cookies.length; i++) {
-  //     const cookie = cookies[i].split("=");
-  //     setAccessToken(decodeURIComponent(cookie[1]));
-  //     accessToken && setDecodedToken(jwtDecode(accessToken));
-  //   }
-  // }, [accessToken]);
 
   // vars
   let navLink = linkText.toLowerCase();
@@ -30,14 +14,15 @@ const ProfileLinks = ({ img, linkText, highlighted, to, ...props }) => {
 
   // return
   return (
-    <div
-      onClick={() => navigate(to ? to : `/${navLink}/${loggedInUser._id}`)}
-      className={`profileLinks ${highlighted ? "highlighted" : ""}`}
+    <NavLink
+      to={to ? to : `/${navLink}/${loggedInUser._id}`}
+      className="profileLinks"
+      activeClassName="highlighted"
       {...props}
     >
       <img className="img" src={img} alt="" />
       <span className="linkText">{linkText}</span>
-    </div>
+    </NavLink>
   );
 };
 

@@ -46,7 +46,7 @@ function PrivateRoutes() {
           <Search userName={user?.name} />
         </header>
         <div className="container">
-          <ProfileLeft page={"home"} />
+          <ProfileLeft userId={user?._id} />
           <Outlet context={{ user, setPageLoading, setPageTitle }} />
           <HomeRight />
         </div>
