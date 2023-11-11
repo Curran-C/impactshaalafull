@@ -7,12 +7,14 @@ import axiosInstance from "../../utils/service";
 import { useDispatch, useSelector } from "react-redux";
 import { getUserAPI } from "../../api/company";
 import { setUserAuth } from "../../store/slices/user";
+import { Spin } from "antd";
 
 const SavedPosts = () => {
   const authUser = useSelector((state) => state.authUser.user);
   const [posts, setPosts] = useState([]);
   const { setPageLoading, setPageTitle } = useOutletContext();
   const dispatch = useDispatch();
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const getSavedPosts = async () => {
@@ -33,6 +35,7 @@ const SavedPosts = () => {
                 { withCredentials: true }
               );
               setPosts((prev) => [...prev, post.data]);
+              setLoading(false);
             } catch (err) {
               console.log(err);
             }
@@ -51,7 +54,9 @@ const SavedPosts = () => {
 
   return (
     <div className="saved-posts-page">
-      <Posts posts={posts} isSaved={true} />
+      <Spin size="large" spinning={loading}>
+        <Posts posts={posts} isSaved={true} />
+      </Spin>
     </div>
   );
 };
