@@ -97,6 +97,23 @@
       }
     }
   }
+}
+// .right {
+//   width: 25%;
+//   margin-top: 320px;
+// }
+.logout_popup {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  text-align: center;
+  gap: 10px;
+  p {
+    margin: 0;
+  }
+  h3 {
+    margin: 0;
+  }
   .confirm_btn {
     display: flex;
     flex-direction: row;

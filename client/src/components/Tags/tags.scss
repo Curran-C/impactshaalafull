@@ -56,11 +56,11 @@
   .tagsWrapper {
     display: flex;
     gap: 10px;
-    min-width: 400px;
+    // min-width: 400px;
     overflow-x: auto;
 
     @media (max-width: 820px) {
-      width: auto;
+      // width: auto;
     }
 
     .no-keywords {
