@@ -1,14 +1,16 @@
-.search {
+.search-container {
   display: flex;
   flex-direction: column;
-  z-index: inherit;
-
+  gap: 0.5rem;
+  margin: 10px;
+  
   .title {
     display: flex;
     align-items: center;
-    max-width: 700px;
     position: relative;
     justify-content: space-between;
+    gap: 1rem;
+
     .imgs {
       display: flex;
       gap: 40px;

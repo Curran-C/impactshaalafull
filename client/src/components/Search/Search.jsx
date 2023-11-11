@@ -7,7 +7,7 @@ import { useEffect, useRef, useState } from "react";
 import axiosInstance from "../../utils/service";
 import SearchResults from "../SearchResults/SearchResults";
 import Notifications from "../Notifications/Notifications";
-import { useNavigate, useOutletContext } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 
 const Search = ({ userName }) => {
@@ -82,7 +82,7 @@ const Search = ({ userName }) => {
   };
 
   return (
-    <div ref={ref} className="search">
+    <div ref={ref} className="search-container">
       <div className="title">
         <NameDate name={userName} date={date} />
         <div className="icons"></div>

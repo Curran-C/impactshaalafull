@@ -1,7 +1,11 @@
 .homeRight {
-  display: flex;
   flex-direction: column;
   gap: 50px;
+  position: sticky;
+  display: flex;
+  top: 50px;
+  margin-top: 50px;
+  
   .getInTouch {
     // width: 500px;
     background: white;
