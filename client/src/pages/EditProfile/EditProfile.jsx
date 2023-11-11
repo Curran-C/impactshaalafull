@@ -21,63 +21,57 @@ const EditProfile = () => {
 
   return (
     <div className="editProfile">
-      {/* <div className="left">
-        <ProfileLeft />
-      </div> */}
-      <div className="middle">
-        {/* <NameDate name={user?.name} date={date} /> */}
-        <ProfileHeader user={user} pageName={"editProfile"} />
-        <form action="" className="edits">
-          <TitleInput
-            onChange={handleUserUpdate}
-            title={user?.stakeholder}
-            text={user?.companyName}
-          />
-          <TitleInput
-            onChange={handleUserUpdate}
-            title={"Tag Line"}
-            text={user?.tagline}
-          />
-          <TitleInput
-            onChange={handleUserUpdate}
-            title={"Description"}
-            text={user?.description}
-          />
-          <TitleInput
-            onChange={handleUserUpdate}
-            title={"Email"}
-            text={user?.email}
-          />
-          <TitleInput
-            onChange={handleUserUpdate}
-            title={"Website"}
-            text={user?.website}
-          />
-          <TitleInput
-            onChange={handleUserUpdate}
-            title={"Address 1"}
-            text={user?.addressOne}
-          />
-          <TitleInput
-            onChange={setUpdateUser}
-            title={"Address 2"}
-            text={user?.addressTwo}
-          />
-          <TitleInput
-            onChange={setUpdateUser}
-            title={"Location"}
-            text={user?.city}
-          />
-          <div className="action_buttons">
-            <Link type="submit" className="btn-outline-primary">
-              Back
-            </Link>
-            <button type="submit" className="btn-primary">
-              Save
-            </button>
-          </div>
-        </form>
-      </div>
+      <ProfileHeader user={user} pageName={"editProfile"} />
+      <form action="" className="edits">
+        <TitleInput
+          onChange={handleUserUpdate}
+          title={user?.stakeholder}
+          text={user?.companyName}
+        />
+        <TitleInput
+          onChange={handleUserUpdate}
+          title={"Tag Line"}
+          text={user?.tagline}
+        />
+        <TitleInput
+          onChange={handleUserUpdate}
+          title={"Description"}
+          text={user?.description}
+        />
+        <TitleInput
+          onChange={handleUserUpdate}
+          title={"Email"}
+          text={user?.email}
+        />
+        <TitleInput
+          onChange={handleUserUpdate}
+          title={"Website"}
+          text={user?.website}
+        />
+        <TitleInput
+          onChange={handleUserUpdate}
+          title={"Address 1"}
+          text={user?.addressOne}
+        />
+        <TitleInput
+          onChange={setUpdateUser}
+          title={"Address 2"}
+          text={user?.addressTwo}
+        />
+        <TitleInput
+          onChange={setUpdateUser}
+          title={"Location"}
+          text={user?.city}
+        />
+        <div className="action_buttons">
+          <Link type="submit" className="btn-outline-primary">
+            Back
+          </Link>
+          <button type="submit" className="btn-primary">
+            Save
+          </button>
+        </div>
+      </form>
     </div>
   );
 };
