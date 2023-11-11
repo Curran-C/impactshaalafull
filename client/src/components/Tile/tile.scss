@@ -11,14 +11,7 @@
   }
   .linkText {
     text-align: center;
-    font-size: 13px;
+    font-size: 12px;
+    white-space: nowrap;
   }
-}
-
-.highlighted {
-  border: 1px solid black;
-}
-
-.bg-lightblue {
-  background: #d5e8ed;
 }

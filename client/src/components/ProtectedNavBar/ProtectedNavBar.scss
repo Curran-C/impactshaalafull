@@ -4,12 +4,6 @@ nav.protected-navbar {
   padding: 20px;
   align-items: center;
   background-color: #d9def2;
-  // border: none;
-
-  @media (min-width: 821px) {
-    display: none;
-  }
-
   h3 {
     margin: 0;
   }
@@ -21,25 +15,14 @@ nav.protected-navbar {
 
     .notification-container {
       position: relative;
-      .notifcount {
-        position: absolute;
-        height: 20px;
-        width: 20px;
-        border-radius: 100%;
-        background-color: red;
-        display: flex;
-        justify-content: center;
-        text-align: center;
-        top: -5px;
-        right: -5px;
-        color: white;
-        font-size: 12px;
-        font-weight: 500;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      svg {
+        font-size: 24px;
+        margin: auto;
+        cursor: pointer;
       }
-    }
-
-    img {
-      height: 30px;
     }
   }
 }

@@ -1,57 +1,36 @@
-.collabs {
+.collaborations-page {
+  display: flex;
+  flex-direction: column;
+  width: 50%;
+  gap: 50px;
+  h1 {
+    margin: 0;
+  }
+  .feedbacksContainer {
     display: flex;
-    flex-direction: row;
-    // align-items: center;
-    justify-content: space-evenly;
-    width: 100%;
-
-    background-color: #d9def2;
-    .profileLeft {
-        width: 250px;
-        margin-top: 320px;
-        .createpost {
-            margin-top: 0;
-        }
+    flex-direction: column;
+    background: #f5f7f6;
+    border-radius: 25px;
+    padding: 20px;
+    .buttons {
+      display: flex;
+      gap: 20px;
+      flex-wrap: wrap;
+      justify-content: center;
+      align-items: center;
+      .bluebutton,
+      .whitebutton {
+        background-color: #759bd3;
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 25px;
+        font-size: 15px;
+        letter-spacing: 1px;
+      }
+      .whitebutton {
+        background-color: gray;
+      }
     }
-    .left {
-        width: 20%;
-    }
-    .center {
-        display: flex;
-        flex-direction: column;
-        width: 50%;
-        gap: 50px;
-        h1 {
-            margin: 0;
-        }
-        .feedbacksContainer {
-            display: flex;
-            flex-direction: column;
-            background: #f5f7f6;
-            // margin-top: 80px;
-            border-radius: 25px;
-            padding: 20px;
-            .buttons {
-                display: flex;
-                gap: 20px;
-                .bluebutton,
-                .whitebutton {
-                    background-color: #759bd3;
-                    color: white;
-                    border: none;
-                    padding: 10px 20px;
-                    border-radius: 25px;
-                    font-size: 15px;
-                    letter-spacing: 1px;
-                }
-                .whitebutton {
-                    background-color: gray;
-                }
-            }
-        }
-    }
-    .right {
-        width: 25%;
-        margin-top: 320px;
-    }
+  }
 }

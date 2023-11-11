@@ -5,6 +5,9 @@ import ProtectedNavBar from "../../components/ProtectedNavBar/ProtectedNavBar";
 import { useDispatch } from "react-redux";
 import { logoutUser, setUserAuth } from "../../store/slices/user";
 import { Spin } from "antd";
+import Search from "../../components/Search/Search";
+import ProfileLeft from "../../components/ProfileLeft/ProfileLeft";
+import HomeRight from "../../components/HomeRight/HomeRight";
 
 function PrivateRoutes() {
   const dispatch = useDispatch();
@@ -37,9 +40,16 @@ function PrivateRoutes() {
 
   return (
     <>
-      <ProtectedNavBar user={user} pageTitle={pageTitle} />
       <main className="private-content">
-        <Outlet context={{ user, setPageLoading, setPageTitle }} />
+        <header>
+          <ProtectedNavBar user={user} pageTitle={pageTitle} />
+          <Search userName={user?.name} pageTitle={pageTitle} />
+        </header>
+        <div className="container">
+          <ProfileLeft userId={user?._id} />
+          <Outlet context={{ user, setPageLoading, setPageTitle }} />
+          <HomeRight />
+        </div>
       </main>
       <Spin spinning={pageLoading} fullscreen />
     </>

@@ -7,10 +7,13 @@ import { useEffect, useRef, useState } from "react";
 import axiosInstance from "../../utils/service";
 import SearchResults from "../SearchResults/SearchResults";
 import Notifications from "../Notifications/Notifications";
-import { useNavigate, useOutletContext } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
+import { BsBell, BsBellFill } from "react-icons/bs";
+import { PiChats } from "react-icons/pi";
+import { Badge } from "antd";
 
-const Search = ({ userName }) => {
+const Search = ({ userName, pageTitle }) => {
   const [search, setSearch] = useState("");
   const [searchResults, setSearchResults] = useState([]);
   const [shownotifications, setShownotifications] = useState(false);
@@ -82,27 +85,28 @@ const Search = ({ userName }) => {
   };
 
   return (
-    <div ref={ref} className="search">
+    <div ref={ref} className="search-container">
       <div className="title">
         <NameDate name={userName} date={date} />
         <div className="icons"></div>
         <div className="imgs">
           <div className="notification-container">
-            <img
-              onClick={() => setShownotifications(!shownotifications)}
-              src={bell}
-              alt="notifications"
-              style={{ cursor: "pointer" }}
-            />
-            {notifCount ? <div className="notifcount">{notifCount}</div> : ""}
-            {shownotifications && <Notifications />}
+            <Badge count={notifCount} overflowCount={10}>
+              {shownotifications ? (
+                <BsBellFill
+                  onClick={() => setShownotifications(!shownotifications)}
+                  style={{ cursor: "pointer" }}
+                />
+              ) : (
+                <BsBell
+                  onClick={() => setShownotifications(!shownotifications)}
+                  style={{ cursor: "pointer" }}
+                />
+              )}
+              {shownotifications && <Notifications />}
+            </Badge>
+            <PiChats onClick={() => navigate("/chats")} />
           </div>
-          <img
-            onClick={() => navigate(`/chats`)}
-            style={{ cursor: "pointer" }}
-            src={chat}
-            alt="chat"
-          />
         </div>
       </div>
       <form onSubmit={handleSearch} className="inputContainer">
@@ -125,6 +129,7 @@ const Search = ({ userName }) => {
           />
         )}
       </form>
+      {pageTitle !== "Chats" && <h2 className="page-title">{pageTitle}</h2>}
     </div>
   );
 };

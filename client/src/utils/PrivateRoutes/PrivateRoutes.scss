@@ -1,11 +1,81 @@
 main.private-content {
-  //   display: flex;
-  //   min-width: 100vw;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  align-items: stretch;
+  justify-content: stretch;
+  background-color: #d9def2;
+
+  * {
+    box-sizing: border-box;
+  }
+
+  & > .container {
+    display: flex;
+    align-items: stretch;
+    gap: 1rem;
+    position: relative;
+    width: 100%;
+    padding-right: 15px;
+    padding-left: 15px;
+    margin-right: auto;
+    margin-left: auto;
+
+    &:has(.chat-page) {
+      .profileLeft,
+      .homeRight,
+      .page-title {
+        display: none;
+      }
+    }
+
+    @media (min-width: 768px) {
+      max-width: 750px;
+    }
+    @media (min-width: 992px) {
+      max-width: 970px;
+    }
+    @media (min-width: 1200px) {
+      max-width: 1170px;
+    }
+
+    @media (min-width: 1400px) {
+      max-width: 1370px;
+    }
+
+    .profileLeft,
+    .homeRight {
+      flex: 0 0 20rem;
+    }
+
+    & > div:nth-child(2) {
+      box-sizing: border-box;
+      flex-grow: 1;
+      @media (max-width: 820px) {
+        width: 100%;
+      }
+    }
+  }
 
   @media (max-width: 820px) {
     .profileLeft,
     .homeRight,
-    .search {
+    .search-container {
+      display: none;
+    }
+  }
+
+  @media (max-width: 1200px) {
+    .homeRight {
+      display: none;
+    }
+    .profileLeft {
+      max-width: 23%;
+    }
+  }
+
+  @media (min-width: 821px) {
+    nav.protected-navbar {
       display: none;
     }
   }

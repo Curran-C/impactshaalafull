@@ -2,21 +2,22 @@
   display: flex;
   flex-direction: column;
   gap: 50px;
+
   .getInTouch {
-    // width: 500px;
     background: white;
     gap: 20px;
     border-radius: 25px;
     padding: 30px;
-
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
+
     h4 {
       text-align: center;
       margin: 0;
     }
+
     button {
       background-color: #759bd3;
       border: none;

@@ -18,6 +18,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { resetChat, setChatId } from "../../store/slices/chat";
 
 const Chats = () => {
+  const { setPageTitle } = useOutletContext();
+
   const loggedInUser = useSelector((state) => state.authUser.user);
   const [chats, setChats] = useState();
   const [currentChat, setCurrentChat] = useState(null);
@@ -36,6 +38,7 @@ const Chats = () => {
 
   //SOCKET IO
   useEffect(() => {
+    setPageTitle("Chats");
     socket.current = io(import.meta.env.VITE_BASE_URL);
     socket.current.emit("new-user-add", loggedInUser?._id);
     socket.current.on("get-users", (users) => {
@@ -133,7 +136,7 @@ const Chats = () => {
   const handleResetChat = () => dispatch(resetChat());
 
   return (
-    <div className="chat">
+    <div className="chat-page">
       <div className="header">
         {isMobile ? (
           <button className="btn back-btn" onClick={handleResetChat}>
@@ -149,8 +152,8 @@ const Chats = () => {
           <h2>Chats</h2>
         </div>
       </div>
-      <div className="container">
-        <div className="left">
+      <div className="chat-container">
+        <div className="all-chats">
           {isMobile ? (
             <>
               {!chatId ? (
@@ -224,7 +227,7 @@ const Chats = () => {
             </>
           )}
         </div>
-        <div className="right">
+        <div className="single-chat-container">
           {currentChat ? (
             <ChatMessages
               chat={currentChat}

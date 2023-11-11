@@ -1,0 +1,43 @@
+.text-danger {
+  color: red;
+}
+
+.fs-12 {
+  font-size: 12px;
+}
+
+.btn {
+  border: none;
+  padding: 10px 15px;
+  color: white;
+  border-radius: 15px;
+  margin: 10px;
+  &:hover {
+    color: black;
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+  }
+  &:active {
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px inset;
+  }
+  &:disabled {
+    opacity: 0.8;
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px inset;
+  }
+
+  &-light {
+    background-color: white;
+    color: rgb(128, 128, 128);
+  }
+}
+
+.highlighted {
+  border: 1px solid black;
+}
+
+.bg-lightblue {
+  background: #d5e8ed;
+}
+
+.w-max-content {
+  width: max-content;
+}
