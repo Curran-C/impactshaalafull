@@ -8,7 +8,7 @@ import {
 } from "../../components";
 import "./complaints.scss";
 import { useOutletContext } from "react-router-dom";
-import { Spin } from 'antd';
+import { Spin } from "antd";
 
 const Complaints = () => {
   const { setPageTitle } = useOutletContext();
@@ -42,9 +42,10 @@ const Complaints = () => {
       </div>
 
       <div className="complainsContainer">
-        {complaints.map((complaint) => (
+        {complaints.map((complaint, index) => (
           // eslint-disable-next-line react/jsx-key
           <Complaint
+            key={index}
             userId={complaint.userId}
             complaint={complaint.text}
             id={complaint._id}

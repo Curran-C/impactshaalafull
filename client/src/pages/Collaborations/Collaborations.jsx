@@ -7,38 +7,25 @@ import CollaborationsAccepted from "../../components/CollaborationsAccepted/Coll
 import CollaborationsRejected from "../../components/CollaborationsRejected/CollaborationsRejected";
 import { useOutletContext } from "react-router-dom";
 
+const CollabStates = {
+  RECEIVED: "received",
+  SENT: "sent",
+  ACCEPTED: "accepted",
+  DECLINED: "declined",
+};
+
+const buttonLabels = {
+  [CollabStates.RECEIVED]: "Received",
+  [CollabStates.SENT]: "Requested",
+  [CollabStates.ACCEPTED]: "Accepted",
+  [CollabStates.DECLINED]: "Declined",
+};
+
 const Collaborations = () => {
-  const [collabRecieved, setCollabRecieved] = useState(true);
-  const [collabSent, setCollabSent] = useState(false);
-  const [collabAccepted, setCollabAccepted] = useState(false);
-  const [collabDeclined, setCollabDeclined] = useState(false);
+  const [collabState, setCollabState] = useState(CollabStates.RECEIVED);
 
-  const handleCollabRecieved = () => {
-    setCollabRecieved(true);
-    setCollabSent(false);
-    setCollabAccepted(false);
-    setCollabDeclined(false);
-  };
-
-  const handleCollabSent = () => {
-    setCollabRecieved(false);
-    setCollabSent(true);
-    setCollabAccepted(false);
-    setCollabDeclined(false);
-  };
-
-  const handleCollabAccepted = () => {
-    setCollabRecieved(false);
-    setCollabSent(false);
-    setCollabAccepted(true);
-    setCollabDeclined(false);
-  };
-
-  const handleCollabDeclined = () => {
-    setCollabRecieved(false);
-    setCollabSent(false);
-    setCollabAccepted(false);
-    setCollabDeclined(true);
+  const handleCollabStateChange = (newState) => {
+    setCollabState(newState);
   };
 
   const { setPageTitle } = useOutletContext();
@@ -51,37 +38,22 @@ const Collaborations = () => {
     <div className="collaborations-page">
       <div className="feedbacksContainer">
         <div className="buttons">
-          <button
-            className={collabRecieved ? "bluebutton" : "whitebutton"}
-            onClick={handleCollabRecieved}
-          >
-            Recieved
-          </button>
-          <button
-            className={collabSent ? "bluebutton" : "whitebutton"}
-            onClick={handleCollabSent}
-          >
-            Requested
-          </button>
-          <button
-            className={collabAccepted ? "bluebutton" : "whitebutton"}
-            onClick={handleCollabAccepted}
-          >
-            Accepted
-          </button>
-          <button
-            className={collabDeclined ? "bluebutton" : "whitebutton"}
-            onClick={handleCollabDeclined}
-          >
-            Declined
-          </button>
+          {Object.values(CollabStates).map((state) => (
+            <button
+              key={state}
+              className={collabState === state ? "bluebutton" : "whitebutton"}
+              onClick={() => handleCollabStateChange(state)}
+            >
+              {buttonLabels[state]}
+            </button>
+          ))}
         </div>
 
         <div className="feedbacksWrapper">
-          {collabRecieved && <CollaborationsRecieved />}
-          {collabSent && <CollaborationsSent />}
-          {collabAccepted && <CollaborationsAccepted />}
-          {collabDeclined && <CollaborationsRejected />}
+          {collabState === CollabStates.RECEIVED && <CollaborationsRecieved />}
+          {collabState === CollabStates.SENT && <CollaborationsSent />}
+          {collabState === CollabStates.ACCEPTED && <CollaborationsAccepted />}
+          {collabState === CollabStates.DECLINED && <CollaborationsRejected />}
         </div>
       </div>
     </div>

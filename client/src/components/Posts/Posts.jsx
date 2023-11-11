@@ -8,10 +8,8 @@ const Posts = ({ posts, isSaved = false }) => {
       {posts?.map((post) => (
         <Post post={post} key={post._id} />
       ))}
-      {posts?.length === 0 && isSaved &&
-        < h4 > No Saved Post.</h4>
-      }
-    </div >
+      {posts?.length === 0 && isSaved && <h4> No Saved Post.</h4>}
+    </div>
   );
 };
 
