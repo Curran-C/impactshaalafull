@@ -6,6 +6,10 @@ main.private-content {
   justify-content: stretch;
   background-color: #d9def2;
 
+  * {
+    box-sizing: border-box;
+  }
+
   & > .container {
     display: flex;
     align-items: stretch;

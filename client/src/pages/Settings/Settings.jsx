@@ -3,9 +3,9 @@ import { faq, privacy, account } from "../../assets/settings";
 import "./settings.scss";
 import { logout } from "../../assets/profile";
 import Cookies from "js-cookie";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useOutletContext } from "react-router-dom";
 import Modal from "../../components/Modal/Modal";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 const Settings = () => {
   const [showNewModal, setShowModal] = useState(false);
@@ -23,10 +23,16 @@ const Settings = () => {
     Cookies.remove("accessToken");
     navigate("/");
   };
+
+  const { setPageTitle } = useOutletContext();
+  
+  useEffect(() => {
+    setPageTitle("Settings");
+  }, []);
+
   return (
     <div className="settings-page">
       <div className="settingsContainer">
-        <h1>Position name details</h1>
         <div className="settingsWrapper">
           <div className="left_section">
             <div className="setting">
