@@ -41,6 +41,12 @@ main.private-content {
     }
   }
 
+  @media (min-width: 1400px) {
+    .container {
+      max-width: 1370px;
+    }
+  }
+
   @media (max-width: 820px) {
     .profileLeft,
     .homeRight,
