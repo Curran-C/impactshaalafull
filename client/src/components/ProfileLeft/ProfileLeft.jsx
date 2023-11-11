@@ -1,5 +1,4 @@
 import { useState } from "react";
-import { useLocation } from "react-router-dom";
 
 import "./profileLeft.scss";
 
@@ -14,9 +13,10 @@ import {
   savedposts,
   settings,
 } from "../../assets/profile";
+import { useSelector } from "react-redux";
 
-const ProfileLeft = ({ userId, ...props }) => {
-  const location = useLocation();
+const ProfileLeft = ({ ...props }) => {
+  const authUser = useSelector((state) => state.authUser.user);
   const [showCreatePost, setShowCreatePost] = useState(false);
 
   const handleCancel = (prop) => {
@@ -25,7 +25,11 @@ const ProfileLeft = ({ userId, ...props }) => {
 
   const links = [
     { path: "/home", img: home, text: "Home" },
-    { path: `/profile/${userId}`, img: profileIcon, text: "Profile" },
+    {
+      path: `/profile/${authUser._id}`,
+      img: profileIcon,
+      text: "Profile",
+    },
     { path: "/chats", img: chat, text: "Chats" },
     { path: "/savedPosts", img: savedposts, text: "Saved Posts" },
     {
@@ -47,8 +51,8 @@ const ProfileLeft = ({ userId, ...props }) => {
       </button>
       {links.map((link, index) => (
         <ProfileLinks
+          onClick={props.onLinkClick}
           key={index}
-          {...props}
           img={link.img}
           linkText={link.text}
           to={link.path}
