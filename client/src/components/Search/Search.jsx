@@ -10,7 +10,7 @@ import Notifications from "../Notifications/Notifications";
 import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 
-const Search = ({ userName }) => {
+const Search = ({ userName, pageTitle }) => {
   const [search, setSearch] = useState("");
   const [searchResults, setSearchResults] = useState([]);
   const [shownotifications, setShownotifications] = useState(false);
@@ -125,6 +125,7 @@ const Search = ({ userName }) => {
           />
         )}
       </form>
+      <h2 className="page-title">{pageTitle}</h2>
     </div>
   );
 };

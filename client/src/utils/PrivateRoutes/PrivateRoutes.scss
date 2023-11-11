@@ -19,7 +19,8 @@ main.private-content {
 
     &:has(.chat-page) {
       .profileLeft,
-      .homeRight {
+      .homeRight,
+      .page-title {
         display: none;
       }
     }
