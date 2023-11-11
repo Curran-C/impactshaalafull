@@ -61,7 +61,7 @@ main.private-content {
     }
   }
 
-  @media (max-width: 820px) {
+  @media (max-width: 819px) {
     .profileLeft,
     .homeRight,
     .search-container {
@@ -69,7 +69,7 @@ main.private-content {
     }
   }
 
-  @media (max-width: 1200px) {
+  @media (min-width: 820px) {
     .homeRight {
       display: none;
     }
@@ -79,19 +79,19 @@ main.private-content {
     }
   }
 
-  @media (max-width: 1439px) {
-    .homeRight {
-      display: none;
-    }
-
+  @media (min-width: 1200px) {
     .profileLeft {
       flex: 0 0 16rem !important;
       // max-width: 23%;
+    }
+    .homeRight {
+      display: none;
     }
   }
 
   @media (min-width: 1440px) {
     .homeRight {
+      display: flex;
       flex: 0 0 20rem !important;
     }
 
