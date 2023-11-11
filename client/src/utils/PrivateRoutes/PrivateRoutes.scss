@@ -46,6 +46,10 @@ main.private-content {
     .profileLeft,
     .homeRight {
       flex: 0 0 20rem;
+      // For sticky
+      align-self: flex-start;
+      position: sticky;
+      top: 30px;
     }
 
     & > div:nth-child(2) {
