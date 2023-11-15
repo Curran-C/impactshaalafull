@@ -1,15 +1,16 @@
 import "./titleInput.scss";
 
-const TitleInput = ({ title, text, onChange }) => {
+const TitleInput = ({ title, value, onChange, name }) => {
   return (
     <div className="titleInput">
-      <h3>{title}</h3>
+      <h5>{title}</h5>
       <input
         type="text"
-        name=""
+        name={name}
         id=""
-        value={text}
-        onChange={(e) => onChange(e)}
+        value={value}
+        onChange={onChange}
+        required
       />
     </div>
   );
