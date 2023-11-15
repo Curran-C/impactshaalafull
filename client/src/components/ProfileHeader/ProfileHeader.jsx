@@ -48,7 +48,7 @@ const ProfileHeader = ({ user, pageName }) => {
                 <a href={user?.websiteLink} target="_blank" rel="noopener noreferrer">
                   <Tile
                     image={linkIcon}
-                    type={user?.websiteLink || "https://companyurl.com"}
+                    type={user?.website || "https://companyurl.com"}
                   />
                 </a>
 

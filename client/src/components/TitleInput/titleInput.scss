@@ -1,15 +1,17 @@
 .titleInput {
   display: flex;
   flex-direction: column;
-  // width: 500px;
   gap: 10px;
-  h3 {
+
+  width: 100%;
+
+  h5 {
     margin: 0;
   }
+
   input {
     border-radius: 10px;
     height: 25px;
-    // width: 300px;
     padding: 30px 30px;
     outline: none;
     border: none;

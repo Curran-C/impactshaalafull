@@ -65,13 +65,12 @@ function App() {
         <Route element={<PrivateRoutes />}>
           <Route path="/home" element={<Home />} />
           <Route path="/chats" element={<Chats />} />
-          <Route path="/profile/edit" element={<EditProfile />} />
+          <Route path="/profile" element={<Profile />} exact />
+          <Route path="/profile/:id" element={<Profile />} />
+          <Route path="/profile/edit" element={<EditProfile />} exact  />
           <Route path="/savedPosts" element={<SavedPosts />} />
           <Route path="/settings" element={<Settings />} />
           <Route path="/collaborations" element={<Collaborations />} />
-
-          {/* Pending Pages below */}
-          <Route path="/profile/:id" element={<Profile />} />
         </Route>
 
         <Route path="/admin" element={<Login />} />
