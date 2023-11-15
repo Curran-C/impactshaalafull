@@ -20,8 +20,6 @@ const Profile = () => {
   let id = params?.id;
   id ??= authUser?._id;
 
-  const loggedInUser = useSelector((state) => state.authUser.user);
-
   useEffect(() => {
     setPageTitle("Profile");
   }, []);
@@ -56,10 +54,7 @@ const Profile = () => {
     <div className="companyProfile">
       {feedbackFrom && <FeedbackForm onCancel={handleFeedbackShow} />}
       <div className="profileContainer">
-        {/* <ProfileLeft page={"profile"} /> */}
         <div className="profileDetails">
-          {/* <div className="nameandfeedback"> */}
-          {/* <NameDate name={authUser?.name} date={date} /> */}
           {/* {loggedInUser?._id !== id && (
               <>
                 <button
@@ -81,12 +76,8 @@ const Profile = () => {
                 Edit Profile
               </button>
             )} */}
-          {/* </div> */}
           <ProfileFeed user={user} />
         </div>
-        {/* <div className="right">
-          <HomeRight />
-        </div> */}
       </div>
     </div>
   );

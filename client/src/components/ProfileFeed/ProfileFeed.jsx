@@ -1,7 +1,7 @@
 import "./profileFeed.scss";
 import { useEffect, useState } from "react";
 import axiosInstance from "../../utils/service";
-import { useParams } from "react-router-dom";
+import { useOutletContext, useParams } from "react-router-dom";
 import Posts from "../Posts/Posts";
 import ProfileHeader from "../ProfileHeader/ProfileHeader";
 import FeedbackCard from "../FeedbackCard/FeedbackCard";
@@ -15,7 +15,11 @@ import {
 } from "../../api/projectAccomplishment";
 
 const ProfileFeed = ({ user }) => {
-  const { id } = useParams();
+  const params = useParams();
+  const { user: authUser } = useOutletContext();
+
+  let id = params?.id;
+  id ??= authUser?._id;
 
   // states
   const [showPosts, setShowPosts] = useState(true);
@@ -98,7 +102,7 @@ const ProfileFeed = ({ user }) => {
   return (
     <div className="profile">
       <ProfileHeader user={user} pageName={"profile"} />
-
+      
       <div className="feed">
         <div className="achievements">
           <h2>Highlights</h2>
@@ -133,7 +137,7 @@ const ProfileFeed = ({ user }) => {
           </div>
           {showPosts && <Posts posts={posts} />}
           <div className="feedbacksContainer">
-            {showFeedbacks && id !== user?._id && (
+            {showFeedbacks && id !== authUser?._id && (
               <button
                 className="btn-add-feedback"
                 onClick={() => setShowNewFeedback(true)}
@@ -161,7 +165,7 @@ const ProfileFeed = ({ user }) => {
           </div>
 
           <div className="project-accomplishments">
-            {showProjectAccomplishments && id === user?._id && (
+            {showProjectAccomplishments && id === authUser?._id && (
               <button
                 className="btn-add-project-acc"
                 onClick={() => setShowNewProjectAcc(true)}
