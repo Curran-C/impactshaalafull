@@ -4,13 +4,7 @@ import { useState, useEffect } from "react";
 import { useNavigate, useOutletContext, useParams } from "react-router-dom";
 
 import "./profile.scss";
-import ProfileLeft from "../../components/ProfileLeft/ProfileLeft";
-import NameDate from "../../components/NameDate/NameDate";
-import { date } from "../../utils/date";
-import jwtDecode from "jwt-decode";
 import FeedbackForm from "../../components/FeedbackForm/FeedbackForm";
-import HomeRight from "../../components/HomeRight/HomeRight";
-import { Spin } from "antd";
 import { useSelector } from "react-redux";
 
 const Profile = () => {
@@ -19,22 +13,12 @@ const Profile = () => {
 
   // states
   const [user, setUser] = useState({});
-  const [accessToken, setAccessToken] = useState();
-  // const [decodedToken, setDecodedToken] = useState();
   const [feedbackFrom, setFeedbackFrom] = useState(false);
   const navigate = useNavigate();
-  const { id } = useParams();
-  const loggedInUser = useSelector((state) => state.authUser.user);
+  const params = useParams();
 
-  // const getCookie = () => {
-  //   const cookie = document.cookie;
-  //   const cookies = cookie.split("; ");
-  //   for (let i = 0; i < cookies.length; i++) {
-  //     const cookie = cookies[i].split("=");
-  //     setAccessToken(decodeURIComponent(cookie[1]));
-  //     accessToken && setDecodedToken(jwtDecode(accessToken));
-  //   }
-  // };
+  let id = params?.id;
+  id ??= authUser?._id;
 
   useEffect(() => {
     setPageTitle("Profile");
@@ -70,10 +54,7 @@ const Profile = () => {
     <div className="companyProfile">
       {feedbackFrom && <FeedbackForm onCancel={handleFeedbackShow} />}
       <div className="profileContainer">
-        {/* <ProfileLeft page={"profile"} /> */}
         <div className="profileDetails">
-          {/* <div className="nameandfeedback"> */}
-          {/* <NameDate name={authUser?.name} date={date} /> */}
           {/* {loggedInUser?._id !== id && (
               <>
                 <button
@@ -95,12 +76,8 @@ const Profile = () => {
                 Edit Profile
               </button>
             )} */}
-          {/* </div> */}
-          <ProfileFeed user={loggedInUser} />
+          <ProfileFeed user={user} />
         </div>
-        {/* <div className="right">
-          <HomeRight />
-        </div> */}
       </div>
     </div>
   );

@@ -45,10 +45,10 @@ const ProfileHeader = ({ user, pageName }) => {
                   type={user?.stakeholder}
                 />
                 <Tile image={location} type={user?.city} />
-                <Link to={user?.websiteLink}>
+                <Link to={user?.website}>
                   <Tile
                     image={linkIcon}
-                    type={user?.websiteLink || "https://companyurl.com"}
+                    type={user?.website || "https://companyurl.com"}
                   />
                 </Link>
               </div>
