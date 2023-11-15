@@ -5,6 +5,7 @@ import {
   getSingleFeedback,
   sendAdminReplay,
   deleteFeedback,
+  getAll,
 } from "../controllers/feedback.controller.js";
 // import { cookieAuth } from "../utils/cookieAuth.js";
 import { authenticateUser } from "../middlewares/authenticateUsers.js";
@@ -12,6 +13,9 @@ import { authenticateUser } from "../middlewares/authenticateUsers.js";
 const router = express.Router();
 
 // router.use(cookieAuth);
+
+router.get("/getAll", getAll);
+
 // router.use(authenticateUser);
 
 router.post("/create", createFeedback);
@@ -19,5 +23,6 @@ router.get("/company/:id", getAllFeedback);
 router.get("/single/:id", getSingleFeedback);
 router.post("/replay/:id", sendAdminReplay);
 router.delete("/delete/:id", deleteFeedback);
+
 
 export default router;

@@ -16,7 +16,7 @@ router.use(authenticateUser);
 
 router.post("/create", createNotification);
 router.get("/getall", getAllNotification);
-router.get("/getall/:id", getNotificationByUser);
+router.get("/getAllNotificationByUser", getNotificationByUser);
 router.post("/markAsRead/:notificationId", markAsReadNotification);
 router.get("/getCount/:userId", getNotificationCount);
 

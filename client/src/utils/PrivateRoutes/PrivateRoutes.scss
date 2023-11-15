@@ -42,9 +42,9 @@ main.private-content {
     @media (min-width: 1400px) {
       max-width: 1370px;
     }
-
-    .profileLeft,
-    .homeRight {
+    
+    // .homeRight,
+    .profileLeft {
       flex: 0 0 20rem;
       // For sticky
       align-self: flex-start;

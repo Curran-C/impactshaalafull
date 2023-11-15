@@ -31,7 +31,7 @@ const Tags = ({ tags, page }) => {
   const removeTag = async (tag) => {
     try {
       const res = await axiosInstance.post(
-        `${import.meta.env.VITE_BASE_URL}/api/company/updateuser/${loggedInUser?.id
+        `${import.meta.env.VITE_BASE_URL}/api/company/updateuser/${loggedInUser?._id
         }`,
         { $pull: { tags: tag } }
       );
@@ -46,10 +46,11 @@ const Tags = ({ tags, page }) => {
     setSeenTags((prev) => [...prev, newTag]);
     try {
       const res = await axiosInstance.post(
-        `${import.meta.env.VITE_BASE_URL}/api/company/updateuser/${loggedInUser?.id
+        `${import.meta.env.VITE_BASE_URL}/api/company/updateuser/${loggedInUser?._id
         }`,
         { $push: { tags: newTag } }
       );
+      localStorage.setItem("IsUser", JSON.stringify(res.data));
       setNewTag("");
     } catch (err) {
       console.log(err);

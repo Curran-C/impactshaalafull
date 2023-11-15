@@ -5,10 +5,17 @@ import { sendMail } from "../utils/mailHelper.js";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import axios from "axios";
+import { uploadImages } from "../utils/upload.js";
 
 // register company
 export const register = async (req, res) => {
   try {
+    const existingCompany = await Company.findOne({ email: req.body.email });
+
+    if (existingCompany) {
+      return res.status(400).send({ message: 'Email already exists' });
+    }
+
     let newCompany;
     if (req.body.password) {
       const hashedPassword = bcrypt.hashSync(req.body.password, 5);
@@ -102,6 +109,7 @@ export const logout = async (req, res) => {
 export const getUserFromEmail = async (req, res) => {
   try {
     const user = await Company.findOne({ email: req.body.email });
+    // console.log(user);
     if (!user) {
       res.status(401).send("Email doesnt exist");
     } else {
@@ -111,13 +119,9 @@ export const getUserFromEmail = async (req, res) => {
         },
         process.env.JWT_KEY
       );
-
-      const { ...info } = user._doc;
-      comsole.log(info);
-      // res.cookie("accessToken", token).status(200).send(info);
       res.json({
         token,
-        info,
+        user,
       });
     }
   } catch (err) {
@@ -387,7 +391,17 @@ export const searchCompany = async (req, res) => {
     const companies = await Company.find({ name: { $regex: regexPattern } });
     res.send({ companies });
   } catch (err) {
-    console.log("Error searching company : ", error);
+    console.log("Error searching company : ", err);
     res.status(500).send("Something went wrong");
   }
 };
+
+export const uploadImage = async (req, res) => {
+  try {
+    const url = await uploadImages(req.body.image);
+    res.status(200).send({ url });
+  } catch (err) {
+    console.log("Error uploading image : ", err);
+    res.status(500).send("Something went wrong");
+  }
+}

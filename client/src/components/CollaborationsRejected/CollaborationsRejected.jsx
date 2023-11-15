@@ -23,20 +23,21 @@ const CollaborationsRejected = () => {
         const user = await axiosInstance.get(
           `${import.meta.env.VITE_BASE_URL}/api/company/getuser/${authUser._id}`
         );
-        setCollabsRejectedIds(user?.data.collaborationIdsDeclined);
-        console.log(collabsRejectedIds);
+        setCollabsRejectedIds(new Set(user?.data.collaborationIdsDeclined));
+        // console.log(collabsRejectedIds);
         //todo loop over collabids and then get the collab for each id
-        user?.data.collaborationIdsDeclined.map(async (collab) => {
+        const collabRejectedIds = new Set(user?.data.collaborationIdsDeclined);
+        const collabIdsArray = Array.from(collabRejectedIds);
+
+        collabIdsArray?.map(async (collab) => {
           const collabs = await axiosInstance.get(
-            `${
-              import.meta.env.VITE_BASE_URL
+            `${import.meta.env.VITE_BASE_URL
             }/api/collaboration/single/${collab}`
           );
 
           //todo use the fromId: in collabs to get userdetails
           const user = await axiosInstance.get(
-            `${import.meta.env.VITE_BASE_URL}/api/company/getuser/${
-              collabs?.data.fromId
+            `${import.meta.env.VITE_BASE_URL}/api/company/getuser/${collabs?.data.fromId
             }`
           );
           setPosts((prev) => [...prev, collabs?.data.postId]);
@@ -61,6 +62,10 @@ const CollaborationsRejected = () => {
           collabId={collabsRejectedIds[index]?._id}
         />
       ))}
+
+      {!loading && fromUsers?.length === 0 &&
+        <p style={{ marginTop: "20px" }}><strong>No Rejected collabs</strong></p>
+      }
       <Spin spinning={loading && !fromUsers?.length} />
     </div>
   );

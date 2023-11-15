@@ -23,21 +23,21 @@ const CollaborationsAccepted = () => {
         const user = await axiosInstance.get(
           `${import.meta.env.VITE_BASE_URL}/api/company/getuser/${authUser._id}`
         );
-        setCollabsAcceptedIds(user?.data.collaborationIdsAccepted);
+        setCollabsAcceptedIds(new Set(user?.data.collaborationIdsAccepted));
         // console.log("asdsads",user.data.collaborationIdsAccepted);
         // console.log(collabsAcceptedIds);
         //todo loop over collabids and then get the collab for each id
-        user?.data.collaborationIdsAccepted.map(async (collab) => {
+        const collabAcceptedIds = new Set(user?.data.collaborationIdsAccepted);
+        const collabIdsArray = Array.from(collabAcceptedIds);
+        collabIdsArray?.map(async (collab) => {
           const collabs = await axiosInstance.get(
-            `${
-              import.meta.env.VITE_BASE_URL
+            `${import.meta.env.VITE_BASE_URL
             }/api/collaboration/single/${collab}`
           );
 
           //todo use the fromId: in collabs to get userdetails
           const user = await axiosInstance.get(
-            `${import.meta.env.VITE_BASE_URL}/api/company/getuser/${
-              collabs?.data.fromId
+            `${import.meta.env.VITE_BASE_URL}/api/company/getuser/${collabs?.data.fromId
             }`
           );
           console.log(user.data);
@@ -64,6 +64,11 @@ const CollaborationsAccepted = () => {
           page={"collabsAccepted"}
         />
       ))}
+
+      {!loading && fromUsers?.length === 0 &&
+        <p style={{ marginTop: "20px" }}><strong>No Accepted collabs</strong></p>
+      }
+
       <Spin spinning={loading && !fromUsers?.length} />
     </div>
   );

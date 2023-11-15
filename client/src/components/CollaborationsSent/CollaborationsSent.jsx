@@ -18,19 +18,16 @@ const CollaborationsSent = () => {
       setLoading(true);
       try {
         const resCollabGot = await axiosInstance.get(
-          `${import.meta.env.VITE_BASE_URL}/api/collaboration/singlefromId/${
-            authUser._id
+          `${import.meta.env.VITE_BASE_URL}/api/collaboration/singlefromId/${authUser._id
           }`
         );
-        setCollabs(resCollabGot.data);
-        console.log(resCollabGot.data);
-        console.log("first");
-        resCollabGot.data?.map(async (collab) => {
+        const requestedCollabs = resCollabGot.data.filter(collab => collab.completed === 'requested');
+        setCollabs(requestedCollabs);
+        requestedCollabs?.map(async (collab) => {
           try {
             console.log(collab.fromId);
             const resFromUser = await axiosInstance.get(
-              `${import.meta.env.VITE_BASE_URL}/api/company/getuser/${
-                collab.toId
+              `${import.meta.env.VITE_BASE_URL}/api/company/getuser/${collab.toId
               }`
             );
             setFromUsers((prev) => [...prev, resFromUser?.data]);
@@ -53,6 +50,9 @@ const CollaborationsSent = () => {
         fromUsers?.map((user, index) => (
           <CollaborationsCard key={index} user={user} post={post[index]} />
         ))}
+      {!loading && fromUsers?.length === 0 &&
+        <p style={{ marginTop: "20px" }}><strong>No Requested collabs</strong></p>
+      }
       <Spin spinning={loading && !fromUsers?.length} />
     </div>
   );
