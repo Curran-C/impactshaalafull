@@ -45,7 +45,7 @@ const EditProfile = () => {
       const updatedUser = await updateUserAPI(user._id, updateUser);
       dispatch(setUserAuth({ user: updatedUser }));
       toast.success("Profile Updated");
-      navigate("/profile");
+      navigate(`/profile/${user._id}`);
     } catch (error) {
       console.log(error);
     } finally {
@@ -106,7 +106,7 @@ const EditProfile = () => {
           name="city"
         />
         <div className="action_buttons">
-          <Link to="/profile" className="btn btn-outline-primary">
+          <Link to={`/profile/${user._id}`} className="btn btn-outline-primary">
             Back
           </Link>
           <button type="submit" className="btn btn-primary" disabled={updating}>
