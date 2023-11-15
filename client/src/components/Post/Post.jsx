@@ -13,7 +13,7 @@ import { setUserAuth } from "../../store/slices/user";
 import { useDispatch } from "react-redux";
 import { Popover } from "antd";
 
-const Post = ({ post }) => {
+const Post = ({ post, ongoingCompletedCollabsIds }) => {
   // states
   const [bookmarked, setBookmarked] = useState(false);
   const [user, setUser] = useState();
@@ -33,8 +33,7 @@ const Post = ({ post }) => {
       try {
         // getting post of the user
         const res = await axiosInstance.get(
-          `${import.meta.env.VITE_BASE_URL}/api/company/getuser/${
-            post?.createdById
+          `${import.meta.env.VITE_BASE_URL}/api/company/getuser/${post?.createdById
           }`
         );
         setUser(res.data);
@@ -51,6 +50,9 @@ const Post = ({ post }) => {
       getUser();
     }
   }, []);
+
+
+
 
   // function
 
@@ -85,8 +87,7 @@ const Post = ({ post }) => {
     if (bookmarked === false) {
       try {
         const res = await axiosInstance.post(
-          `${import.meta.env.VITE_BASE_URL}/api/company/updateuser/${
-            authUser._id
+          `${import.meta.env.VITE_BASE_URL}/api/company/updateuser/${authUser._id
           }`,
           {
             $push: { bookmarkedPosts: post._id },
@@ -100,8 +101,7 @@ const Post = ({ post }) => {
     } else if (bookmarked === true) {
       try {
         const res = await axiosInstance.post(
-          `${import.meta.env.VITE_BASE_URL}/api/company/updateuser/${
-            authUser._id
+          `${import.meta.env.VITE_BASE_URL}/api/company/updateuser/${authUser._id
           }`,
           {
             $pull: { bookmarkedPosts: post?._id },
@@ -119,8 +119,7 @@ const Post = ({ post }) => {
   const handleChatClick = async () => {
     try {
       const findChat = await axiosInstance.get(
-        `${import.meta.env.VITE_BASE_URL}/api/chat/find/${authUser._id}/${
-          post?.createdById
+        `${import.meta.env.VITE_BASE_URL}/api/chat/find/${authUser._id}/${post?.createdById
         }`
       );
       if (!findChat?.data) {
@@ -148,108 +147,161 @@ const Post = ({ post }) => {
   };
 
   // implement collaborations
+  // const handleCollabClick = async () => {
+  //   // todo 0. get id of the user who created post and store in toId
+  //   // todo 1. get id of the current user and store in fromId
+  //   // todo 2. get post id and store in postId
+  //   console.log(authUser);
+  //   const newCollab = {
+  //     toId: post?.createdById,
+  //     fromId: authUser._id,
+  //     postId: post?._id,
+  //   };
+  //   // todo 3. Check if collab exists
+  //   try {
+  //     // * get all collabs and check if postId in collabs is present in collaborationIds of user
+  //     //get logged in user
+  //     const user = await axiosInstance.get(
+  //       `${import.meta.env.VITE_BASE_URL}/api/company/getuser/${authUser._id}`
+  //     );
+  //     // check if user has started collabing
+
+  //     // todo 4. if collab exists - show popup saying 'you have already requested to collab with this person'
+  //     try {
+  //       //*check if user is toId
+  //       const isToId = await axiosInstance.get(
+  //         `${import.meta.env.VITE_BASE_URL}/api/collaboration/singletoId/${
+  //           authUser._id
+  //         }`
+  //       );
+  //       const isFromId = await axiosInstance.get(
+  //         `${import.meta.env.VITE_BASE_URL}/api/collaboration/singlefromId/${
+  //           post?.createdById
+  //         }`
+  //       );
+  //       console.log(isToId?.data.length);
+  //       if (isToId?.data.length !== 0 && isFromId?.data.length !== 0) {
+  //         handleCollabRequest("You have collab with this person");
+  //       } else {
+  //         // *check if user is fromId
+  //         try {
+  //           const isFromId = await axiosInstance.get(
+  //             `${
+  //               import.meta.env.VITE_BASE_URL
+  //             }/api/collaboration/singlefromId/${authUser._id}`
+  //           );
+  //           const isToId = await axiosInstance.get(
+  //             `${import.meta.env.VITE_BASE_URL}/api/collaboration/singletoId/${
+  //               post?.createdById
+  //             }`
+  //           );
+  //           if (isFromId?.data.length !== 0 && isToId?.data.length !== 0) {
+  //             handleCollabRequest("You have collab with this person!");
+  //           } else {
+  //             // todo 5. if collab doesnt exist - create a new collab
+  //             try {
+  //               const resCollab = await axiosInstance.post(
+  //                 `${import.meta.env.VITE_BASE_URL}/api/collaboration/create`,
+  //                 {
+  //                   ...newCollab,
+  //                 }
+  //               );
+  //               //update logged in user
+  //               const resUpdateLoggedInUser = await axiosInstance.post(
+  //                 `${import.meta.env.VITE_BASE_URL}/api/company/updateuser/${
+  //                   authUser._id
+  //                 }`,
+  //                 {
+  //                   $push: { collaborationIds: resCollab?.data._id },
+  //                 }
+  //               );
+
+  //               //updated user who posted it
+  //               const resUpdatePostedInUser = await axiosInstance.post(
+  //                 `${import.meta.env.VITE_BASE_URL}/api/company/updateuser/${
+  //                   post?.createdById
+  //                 }`,
+  //                 {
+  //                   $push: { collaborationIds: resCollab?.data._id },
+  //                 }
+  //               );
+  //               await axiosInstance.post(
+  //                 `${import.meta.env.VITE_BASE_URL}/api/notification/create`,
+  //                 {
+  //                   fromId: newCollab.fromId,
+  //                   toId: newCollab.toId,
+  //                   title: "New Collab Request",
+  //                   message: "New Collab Request",
+  //                 }
+  //               );
+  //               handleCollabRequest("Successfully sent Collaboration request");
+  //             } catch (err) {
+  //               console.log(err);
+  //             }
+  //           }
+  //         } catch (err) {
+  //           console.log(err);
+  //         }
+  //       }
+  //     } catch (err) {
+  //       console.log(err);
+  //     }
+  //   } catch (err) {
+  //     console.log(err);
+  //   }
+  // };
+
   const handleCollabClick = async () => {
-    // todo 0. get id of the user who created post and store in toId
-    // todo 1. get id of the current user and store in fromId
-    // todo 2. get post id and store in postId
-    const newCollab = {
-      toId: post?.createdById,
-      fromId: authUser._id,
-      postId: post?._id,
-    };
-    // todo 3. Check if collab exists
     try {
-      // * get all collabs and check if postId in collabs is present in collaborationIds of user
-      //get logged in user
-      const user = await axiosInstance.get(
-        `${import.meta.env.VITE_BASE_URL}/api/company/getuser/${authUser._id}`
+      const newCollab = {
+        toId: post?.createdById,
+        fromId: authUser._id,
+        postId: post?._id,
+      };
+      const { data: isSentResponse } = await axiosInstance.get(
+        `${import.meta.env.VITE_BASE_URL}/api/collaboration/isCollabSent/${authUser._id}/${post?.createdById}/${post._id}`
       );
-      // check if user has started collabing
-
-      // todo 4. if collab exists - show popup saying 'you have already requested to collab with this person'
-      try {
-        //*check if user is toId
-        const isToId = await axiosInstance.get(
-          `${import.meta.env.VITE_BASE_URL}/api/collaboration/singletoId/${
-            authUser._id
-          }`
-        );
-        const isFromId = await axiosInstance.get(
-          `${import.meta.env.VITE_BASE_URL}/api/collaboration/singlefromId/${
-            post?.createdById
-          }`
-        );
-        console.log(isToId?.data.length);
-        if (isToId?.data.length !== 0 && isFromId?.data.length !== 0) {
-          handleCollabRequest("You have collab with this person");
-        } else {
-          // *check if user is fromId
-          try {
-            const isFromId = await axiosInstance.get(
-              `${
-                import.meta.env.VITE_BASE_URL
-              }/api/collaboration/singlefromId/${id}`
-            );
-            const isToId = await axiosInstance.get(
-              `${import.meta.env.VITE_BASE_URL}/api/collaboration/singletoId/${
-                post?.createdById
-              }`
-            );
-            if (isFromId?.data.length !== 0 && isToId?.data.length !== 0) {
-              handleCollabRequest("You have collab with this person!");
-            } else {
-              // todo 5. if collab doesnt exist - create a new collab
-              try {
-                const resCollab = await axiosInstance.post(
-                  `${import.meta.env.VITE_BASE_URL}/api/collaboration/create`,
-                  {
-                    ...newCollab,
-                  }
-                );
-                //update logged in user
-                const resUpdateLoggedInUser = await axiosInstance.post(
-                  `${import.meta.env.VITE_BASE_URL}/api/company/updateuser/${
-                    authUser._id
-                  }`,
-                  {
-                    $push: { collaborationIds: resCollab?.data._id },
-                  }
-                );
-
-                //updated user who posted it
-                const resUpdatePostedInUser = await axiosInstance.post(
-                  `${import.meta.env.VITE_BASE_URL}/api/company/updateuser/${
-                    post?.createdById
-                  }`,
-                  {
-                    $push: { collaborationIds: resCollab?.data._id },
-                  }
-                );
-                await axiosInstance.post(
-                  `${import.meta.env.VITE_BASE_URL}/api/notification/create`,
-                  {
-                    fromId: newCollab.fromId,
-                    toId: newCollab.toId,
-                    title: "New Collab Request",
-                    message: "New Collab Request",
-                  }
-                );
-                handleCollabRequest("Successfully sent Collaboration request");
-              } catch (err) {
-                console.log(err);
-              }
-            }
-          } catch (err) {
-            console.log(err);
+      if (isSentResponse.isSent) {
+        handleCollabRequest("You have already sent the collab request");
+      } else {
+        const resCollab = await axiosInstance.post(
+          `${import.meta.env.VITE_BASE_URL}/api/collaboration/create`,
+          {
+            ...newCollab,
           }
-        }
-      } catch (err) {
-        console.log(err);
+        );
+        //update logged in user
+        const resUpdateLoggedInUser = await axiosInstance.post(
+          `${import.meta.env.VITE_BASE_URL}/api/company/updateuser/${authUser._id
+          }`,
+          {
+            $push: { collaborationIds: resCollab?.data._id },
+          }
+        );
+
+        //updated user who posted it
+        const resUpdatePostedInUser = await axiosInstance.post(
+          `${import.meta.env.VITE_BASE_URL}/api/company/updateuser/${post?.createdById
+          }`,
+          {
+            $push: { collaborationIds: resCollab?.data._id },
+          }
+        );
+        await axiosInstance.post(
+          `${import.meta.env.VITE_BASE_URL}/api/notification/create`,
+          {
+            fromId: newCollab.fromId,
+            toId: newCollab.toId,
+            title: "New Collab Request",
+            message: "New Collab Request",
+          }
+        );
+        handleCollabRequest("Successfully sent Collaboration request");
       }
     } catch (err) {
       console.log(err);
     }
-  };
+  }
 
   const [showDetails, setShowDetails] = useState(false);
 
@@ -310,7 +362,7 @@ const Post = ({ post }) => {
         <div className="containerFooter">
           <p>{format(post?.createdAt)}</p>
           <div className="links">
-            {post?.createdById && authUser._id !== post.createdById && (
+            {!ongoingCompletedCollabsIds?.includes(post._id.toString()) && post?.createdById && authUser._id !== post.createdById && (
               <Popover
                 content={collabStatus}
                 trigger="click"

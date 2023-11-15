@@ -3,26 +3,34 @@ import Post from "../Post/Post";
 import "./postModal.scss";
 import axiosInstance from "../../utils/service";
 import { useNavigate, useParams } from "react-router-dom";
+import { useOutletContext } from "react-router-dom";
+import { setUserAuth } from "../../store/slices/user";
+import { useDispatch } from "react-redux";
+import { toast } from "react-toastify";
 
-const PostModal = ({ user, collabId, post, onCancel, page, closeModel }) => {
-  const { id } = useParams();
-  const otherUser = id === post?.createdById ? user?._id : id;
+const PostModal = ({ user, collabId, post, onCancel, page, closeModel, setIsAccepted, isAccepted }) => {
+  const dispatch = useDispatch();
+
+  // const { id } = useParams();
+  const { user: authUser } = useOutletContext();
+  const otherUser = authUser._id === post?.createdById ? user?._id : authUser._id;
   console.log(user._id);
   console.log(otherUser);
+  const { setPageLoading } = useOutletContext();
 
   const navigate = useNavigate();
 
   const handleChatClick = async () => {
     try {
       const findChat = await axiosInstance.get(
-        `${import.meta.env.VITE_BASE_URL}/api/chat/find/${id}/${otherUser}`
+        `${import.meta.env.VITE_BASE_URL}/api/chat/find/${authUser._id}/${otherUser}`
       );
       if (!findChat?.data) {
         try {
           const chatRes = await axiosInstance.post(
             `${import.meta.env.VITE_BASE_URL}/api/chat/`,
             {
-              senderId: id,
+              senderId: authUser._id,
               recieverId: otherUser,
             }
           );
@@ -30,11 +38,11 @@ const PostModal = ({ user, collabId, post, onCancel, page, closeModel }) => {
           console.log(err);
         }
         console.log("chat not found");
-        navigate(`/chats/${id}`);
+        navigate(`/chats`);
       }
       if (findChat?.data) {
         console.log("chat found");
-        navigate(`/chats/${id}`);
+        navigate(`/chats`);
       }
     } catch (err) {
       console.log(err);
@@ -44,6 +52,7 @@ const PostModal = ({ user, collabId, post, onCancel, page, closeModel }) => {
   const handleAccept = async () => {
     try {
       // update current loggedin use
+      setPageLoading(true);
       const resToCurrentUserOne = await axiosInstance.post(
         `${import.meta.env.VITE_BASE_URL}/api/company/updateuser/${otherUser}`,
         { $push: { collaborationIdsAccepted: collabId } }
@@ -59,11 +68,14 @@ const PostModal = ({ user, collabId, post, onCancel, page, closeModel }) => {
         }`,
         { $push: { collaborationIdsAccepted: collabId } }
       );
+
       const resToOtherUserTwo = await axiosInstance.post(
         `${import.meta.env.VITE_BASE_URL}/api/company/updateuser/${post?.createdById
         }`,
         { $pull: { collaborationIds: collabId } }
       );
+      dispatch(setUserAuth({ user: resToOtherUserTwo.data }));
+      localStorage.setItem("IsUser", JSON.stringify(resToOtherUserTwo.data));
       const updateCollabs = await axiosInstance.post(
         `${import.meta.env.VITE_BASE_URL}/api/collaboration/update/${collabId}`,
         {
@@ -76,14 +88,20 @@ const PostModal = ({ user, collabId, post, onCancel, page, closeModel }) => {
         title: "Collab Request Accepted",
         message: "Collab Request Accepted",
       });
-      handleChatClick();
+      // handleChatClick();
+      setIsAccepted(!isAccepted);
+      onCancel(false);
+      toast.success("Collab Accepted");
     } catch (err) {
       console.log(err);
+    } finally {
+      setPageLoading(false);
     }
   };
 
   const handleDecline = async () => {
     try {
+      setPageLoading(true);
       // update current loggedin use
       const resToCurrentUser = await axiosInstance.post(
         `${import.meta.env.VITE_BASE_URL}/api/company/updateuser/${otherUser}`,
@@ -105,16 +123,22 @@ const PostModal = ({ user, collabId, post, onCancel, page, closeModel }) => {
         }`,
         { $pull: { collaborationIds: collabId } }
       );
+      dispatch(setUserAuth({ user: resToOtherUserTwo.data }));
+      localStorage.setItem("IsUser", JSON.stringify(resToOtherUserTwo.data));
+
       const updateCollabs = await axiosInstance.post(
         `${import.meta.env.VITE_BASE_URL}/api/collaboration/update/${collabId}`,
         {
           completed: "declined"
         }
       );
-
       onCancel(false);
+      toast.success("Collab Rejected");
+      setIsAccepted(!isAccepted);
     } catch (err) {
       console.log(err);
+    } finally {
+      setPageLoading(false);
     }
   };
 

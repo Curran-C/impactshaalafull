@@ -60,3 +60,27 @@ export const deleteFeedback = async (req, res) => {
     res.status(500).send(err);
   }
 };
+
+
+//get all feedback admin
+export const getAll = async (req, res) => {
+  try {
+    const filterStakeholder = req.query.stakeholder;
+    console.log(filterStakeholder);
+    const feedbacks = await Feedback.find()
+      .populate('author')
+      .populate('target')
+      .sort({ _id: -1 });
+    let filteredFeedbacks = feedbacks;
+    if (filterStakeholder !== "" && filterStakeholder !== null && filterStakeholder !== "null" && filterStakeholder != undefined) {
+      filteredFeedbacks = feedbacks.filter(feedback =>
+        feedback.author.stakeholder === filterStakeholder ||
+        feedback.target.stakeholder === filterStakeholder
+      );
+    }
+    res.status(200).send({ data: filteredFeedbacks });
+  } catch (err) {
+    res.status(500).send(err);
+  }
+};
+

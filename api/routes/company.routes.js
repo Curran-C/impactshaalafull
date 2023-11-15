@@ -19,9 +19,11 @@ import {
   forgotPassword,
   resetPassword,
   searchCompany,
+  uploadImage,
 } from "../controllers/company.controller.js";
 // import { cookieAuth } from "../utils/cookieAuth.js";
 import { authenticateUser } from "../middlewares/authenticateUsers.js";
+
 
 const router = express.Router();
 
@@ -49,6 +51,7 @@ router.get("/stats/:id", getUserStat);
 router.get("/getAllUsersByStakeholder/:stakeholder", getAllUsersByStakeholder);
 router.get("/getAddress/:pincode", getAddress);
 
+router.post("/uploadImage", uploadImage)
 // router.use(cookieAuth);
 router.use(authenticateUser);
 

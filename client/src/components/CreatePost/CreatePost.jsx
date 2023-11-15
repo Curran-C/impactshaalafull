@@ -12,6 +12,11 @@ const CreatePost = ({ onCancel }) => {
   const user = useSelector((state) => state.authUser.user);
   const id = user._id;
   const userDetails = user;
+  const loggedInUser = JSON.parse(localStorage.getItem("IsUser"));
+
+  useEffect(() => {
+    console.log("Logg", loggedInUser);
+  }, [])
 
   //states
   const [post, setPost] = useState({
@@ -19,6 +24,7 @@ const CreatePost = ({ onCancel }) => {
     toDate: date.toISOString().slice(0, 10),
     time: date.toTimeString().slice(0, 5),
     tenure: "Micro Projects: (1 to 3 days)",
+    keywords: loggedInUser.tags,
   });
   const [selectedFiles, setSelectedFiles] = useState([]);
 
@@ -31,10 +37,10 @@ const CreatePost = ({ onCancel }) => {
   const handleCreatePost = async (e) => {
     e.preventDefault();
     console.log(post);
-    let updatedPost = post;
-    if (updatedPost?.keywords) {
-      updatedPost.keywords = updatedPost?.keywords.split(" ");
-    }
+    // let updatedPost = post;
+    // if (updatedPost?.keywords) {
+    //   updatedPost.keywords = updatedPost?.keywords.split(" ");
+    // }
     try {
       const res = await axiosInstance.post(
         `${import.meta.env.VITE_BASE_URL}/api/post/create`,
@@ -67,14 +73,25 @@ const CreatePost = ({ onCancel }) => {
         <div className="inputs">
           <div className="input">
             <h4>Keywords</h4>
-            <input
-              onChange={handleInputChange}
+            {/* <input
+              // onChange={handleInputChange}
               type="text"
               placeholder="Seperate using space"
               name="keywords"
               value={post.keywords}
               required
-            />
+            /> */}
+            <div className="tagsWrapper">
+              {loggedInUser.tags.length !== 0 ? (
+                loggedInUser.tags.map((tag, index) => (
+                  <div key={index} className="tag">
+                    <p>{tag}</p>
+                  </div>
+                ))
+              ) : (
+                <p className="no-keywords">No keywords</p>
+              )}
+            </div>
           </div>
           <div className="input">
             <h4>Collaborate with</h4>

@@ -29,18 +29,14 @@ export const getAllNotification = async (req, res) => {
 
 //get notification by user
 export const getNotificationByUser = async (req, res) => {
-  const token = req.cookies.accessToken;
-  if (!token) res.status(401).send("You are not authenticated");
-  else {
-    try {
-      const notification = await Notification.find({ toId: req.params.id })
-        .populate("fromId", "name stakeholder pfp")
-        .sort({ createdAt: -1 });
-      res.status(200).send(notification);
-    } catch (err) {
-      console.log(err);
-      res.status(500).send(err);
-    }
+  try {
+    const notification = await Notification.find({ toId: req.id })
+      .populate("fromId")
+      .sort({ createdAt: -1 });
+    res.status(200).send(notification);
+  } catch (err) {
+    console.log(err);
+    res.status(500).send(err);
   }
 };
 
