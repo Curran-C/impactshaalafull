@@ -106,10 +106,10 @@ const EditProfile = () => {
           name="city"
         />
         <div className="action_buttons">
-          <Link to="/profile" className="btn-outline-primary">
+          <Link to="/profile" className="btn btn-outline-primary">
             Back
           </Link>
-          <button type="submit" className="btn-primary" disabled={updating}>
+          <button type="submit" className="btn btn-primary" disabled={updating}>
             {updating ? "Updating..." : "Update"}
           </button>
         </div>
