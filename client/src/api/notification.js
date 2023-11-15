@@ -1,14 +1,14 @@
 import axiosInstance from "../utils/service";
 
 const routes = {
-  getAll:`${import.meta.env.VITE_BASE_URL}/api/notification/getall`,
+  getAll:`${import.meta.env.VITE_BASE_URL}/api/notification/getAllNotificationByUser`,
   markAsRead: `${import.meta.env.VITE_BASE_URL}/api/notification/markAsRead`,
 };
 
 export const getAllNotificationsAPI = async () => {
   try {
     const res = await axiosInstance.get(routes.getAll);
-    console.log(res.data);
+    // console.log(res.data);
     return res.data;
   } catch (err) {
     console.log(err);

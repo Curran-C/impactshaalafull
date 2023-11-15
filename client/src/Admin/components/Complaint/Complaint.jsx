@@ -4,10 +4,11 @@ import { useState, useEffect } from "react";
 import CancelCollab from "../CancelCollab/CancelCollab";
 import axiosInstance from "../../../utils/service";
 
-const Complaint = ({ userId, complaint, id }) => {
+const Complaint = ({ complaint, id }) => {
   const navigate = useNavigate();
   const [showReply, setShowReply] = useState(false);
   const [userDetails, setUserDetails] = useState([]);
+  const targetDetails = complaint?.target || {};
 
   const handleDeleteComplaint = async () => {
     try {
@@ -21,45 +22,75 @@ const Complaint = ({ userId, complaint, id }) => {
     }
   };
 
-  useEffect(() => {
-    const getUser = async () => {
-      try {
-        const res = await axiosInstance.get(
-          `${import.meta.env.VITE_BASE_URL}/api/company/getuser/${userId}`
-        );
-        setUserDetails(res.data);
-      } catch (err) {
-        console.log(err);
-      }
-    };
-    getUser();
-  }, [userId]);
+  // useEffect(() => {
+  //   const getUser = async () => {
+  //     try {
+  //       const res = await axiosInstance.get(
+  //         `${import.meta.env.VITE_BASE_URL}/api/company/getuser/${userId}`
+  //       );
+  //       setUserDetails(res.data);
+  //     } catch (err) {
+  //       console.log(err);
+  //     }
+  //   };
+  //   getUser();
+  // }, [userId]);
 
   return (
     <div className="complaint">
       {showReply && (
-        <CancelCollab title={"Reply"} onCancel={setShowReply} button={"Send"} feedbackId={id}/>
+        <CancelCollab title={"Reply"} onCancel={setShowReply} button={"Send"} feedbackId={id} />
       )}
-      <div className="userProfile">
-        <div className="pfp">
-          <img src={userDetails.pfp || "https://picsum.photos/200"} alt="pfp" />
-          <div className="about">
-            <h4>{userDetails.companyName}</h4>
-            <p>{userDetails.stakeholder}</p>
+      <div className="userProfiles">
+        <div className="userProfile">
+          <div className="pfp">
+            <img
+              src={complaint?.author.pfp || "https://res.cloudinary.com/drjt9guif/image/upload/v1692264454/TheCapitalHub/users/default-user-avatar_fe2ky5.webp"}
+              alt="pfp"
+            />
+            <div className="about">
+              <h4>{complaint?.author.companyName}</h4>
+              <p>{complaint?.author.stakeholder}</p>
+            </div>
           </div>
         </div>
-
-        <p>{complaint}</p>
-        <div className="buttons">
-          <button className="red" onClick={handleDeleteComplaint}>Delete</button>
-          <button className="white" onClick={() => navigate(`/profile/${userDetails._id }`)}>
-            View Profile
-          </button>
-          <button onClick={() => setShowReply(true)} className="blue">
-            Reply
-          </button>
-        </div>
+        {targetDetails && (
+          <div className="userProfile">
+            <div className="pfp">
+              <img
+                src={targetDetails.pfp || "https://res.cloudinary.com/drjt9guif/image/upload/v1692264454/TheCapitalHub/users/default-user-avatar_fe2ky5.webp"}
+                alt="pfp"
+              />
+              <div className="about">
+                <h4>{targetDetails.companyName}</h4>
+                <p>{targetDetails.stakeholder}</p>
+              </div>
+            </div>
+          </div>
+        )}
       </div>
+      <p style={{ textAlign: "center" }}>{complaint?.text}</p>
+      <div className="buttons">
+        <button className="red" onClick={handleDeleteComplaint}>
+          Delete
+        </button>
+        <button
+          className="white"
+          onClick={() => navigate(`/profile/${complaint.author._id}`)}
+        >
+          View Author Profile
+        </button>
+        <button
+          className="white"
+          onClick={() => navigate(`/profile/${complaint.target._id}`)}
+        >
+          View Target Profile
+        </button>
+        <button onClick={() => setShowReply(true)} className="blue">
+          Reply
+        </button>
+      </div>
+
     </div>
   );
 };

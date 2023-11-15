@@ -15,30 +15,46 @@ const Complaints = () => {
   const [loading, setLoading] = useState(false);
 
   const [complaints, setComplaint] = useState([]);
+  const [selectedStakeholder, setSelectedStakeholder] = useState(null);
 
   useEffect(() => {
     const getComplaints = async () => {
       try {
         const res = await axiosInstance.get(
-          `${import.meta.env.VITE_BASE_URL}/api/feedback/all`
+          `${import.meta.env.VITE_BASE_URL}/api/feedback/getAll?stakeholder=${selectedStakeholder}`
         );
-        setComplaint(res.data);
+        console.log("res", res);
+        setComplaint(res.data.data);
       } catch (err) {
         console.log(err);
       }
     };
     getComplaints();
     setPageTitle("complaints");
-  }, []);
+  }, [selectedStakeholder]);
+
+  const handleStakeholderClick = (stakeholder) => {
+    if (stakeholder === "See All") {
+      setSelectedStakeholder("");
+    } else {
+      setSelectedStakeholder(stakeholder);
+    }
+  };
+
 
   return (
     <div className="complaints">
       <AdminSearch />
       <div className="stakeholders">
-        <p>NGOs</p>
-        <p>Corporates</p>
-        <p>Working Professionals</p>
-        <p>Institutes</p>
+        {["NGO", "Corporate", "Working Professional", "Educational Institution", "See All"].map((stakeholder) => (
+          <p
+            key={stakeholder}
+            onClick={() => handleStakeholderClick(stakeholder)}
+            className={selectedStakeholder === stakeholder ? "highlighted" : ""}
+          >
+            {stakeholder}
+          </p>
+        ))}
       </div>
 
       <div className="complainsContainer">
@@ -46,9 +62,7 @@ const Complaints = () => {
           // eslint-disable-next-line react/jsx-key
           <Complaint
             key={index}
-            userId={complaint.userId}
-            complaint={complaint.text}
-            id={complaint._id}
+            complaint={complaint}
           />
         ))}
       </div>

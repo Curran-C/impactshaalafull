@@ -7,7 +7,7 @@ import PostModal from "../PostModal/PostModal";
 import { useNavigate } from "react-router-dom";
 import GetCreditScore from "../GetCreditScore/GetCreditScore";
 
-const CollaborationsCard = ({ collabId, user, post, page }) => {
+const CollaborationsCard = ({ collabId, user, post, page, setIsAccepted, isAccepted }) => {
   const navigate = useNavigate();
 
   const [Post, setPost] = useState(null);
@@ -56,6 +56,8 @@ const CollaborationsCard = ({ collabId, user, post, page }) => {
             onCancel={setShowPost}
             page={page}
             collabId={collabId}
+            setIsAccepted={setIsAccepted}
+            isAccepted={isAccepted}
           />
         </div>
       )}

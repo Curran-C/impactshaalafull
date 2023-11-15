@@ -3,62 +3,79 @@
     width: 700px;
     padding: 30px 40px;
     border-radius: 25px;
-    .userProfile {
-        .pfp {
-            display: flex;
-            gap: 20px;
-            img {
-                height: 50px;
-                border-radius: 25px;
-            }
-            .about {
+
+    .userProfiles {
+        display: flex;
+        justify-content: space-between;
+
+        .userProfile {
+            .pfp {
                 display: flex;
-                align-items: start;
-                flex-direction: column;
-                gap: 4px;
-                h4 {
-                    margin: 0;
-                }
-                p {
-                    text-align: center;
-                    margin: 0;
-                    background: #f0f2f5;
-                    padding: 1px 5px;
-                    font-size: 12px;
+                gap: 20px;
+
+                img {
+                    height: 50px;
                     border-radius: 25px;
                 }
-            }
-        }
-        p {
-            font-size: 18px;
-            line-height: 28px;
-        }
-        .buttons {
-            margin-top: 30px;
-            display: flex;
-            gap: 20px;
-            align-items: center;
-            justify-content: center;
-            button {
-                background-color: #759bd3;
-                border: none;
-                border-radius: 20px;
-                padding: 10px 25px;
-                color: white;
-                letter-spacing: 1px;
-                font-size: 15px;
-                outline: none;
-                &:hover {
-                    cursor: pointer;
+
+                .about {
+                    display: flex;
+                    align-items: start;
+                    flex-direction: column;
+                    gap: 4px;
+
+                    h4 {
+                        margin: 0;
+                    }
+
+                    p {
+                        text-align: center;
+                        margin: 0;
+                        background: #f0f2f5;
+                        padding: 1px 5px;
+                        font-size: 12px;
+                        border-radius: 25px;
+                    }
                 }
             }
-            .red {
-                background-color: #d37577;
+
+            p {
+                font-size: 18px;
+                line-height: 28px;
             }
-            .white {
-                background-color: white;
-                color: black;
+
+        }
+    }
+
+    .buttons {
+        margin-top: 30px;
+        display: flex;
+        gap: 20px;
+        align-items: center;
+        justify-content: center;
+
+        button {
+            background-color: #759bd3;
+            border: none;
+            border-radius: 20px;
+            padding: 10px 25px;
+            color: white;
+            letter-spacing: 1px;
+            font-size: 15px;
+            outline: none;
+
+            &:hover {
+                cursor: pointer;
             }
+        }
+
+        .red {
+            background-color: #d37577;
+        }
+
+        .white {
+            background-color: white;
+            color: black;
         }
     }
 }

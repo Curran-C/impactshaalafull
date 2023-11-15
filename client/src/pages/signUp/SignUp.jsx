@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import jwt_decode from "jwt-decode";
 import axiosInstance from "../../utils/service";
 import "./signUp.scss";
-import { upload } from "../../../../api/utils/upload";
+// import { upload } from "../../../../api/utils/upload";
 import {
   citizenOptions,
   corporateOptions,
@@ -22,6 +22,7 @@ import ForgotPasswordPopup from "../../components/ForgotPasswordPopup/ForgotPass
 import { toast } from "react-toastify";
 import { setUserAuth } from "../../store/slices/user";
 import { useDispatch } from "react-redux";
+import { getBase64 } from "../../utils/getBase64";
 
 const SignUp = () => {
   // states
@@ -75,37 +76,47 @@ const SignUp = () => {
 
   // connecting to google
   const handleGoogleCallback = async (res) => {
-    console.log(jwt_decode(res.credential));
     setJwtToken(jwt_decode(res.credential));
-    const { email, name, picture } = jwt_decode(res.credential);
+    const { email } = jwt_decode(res.credential);
     // checking if user already exists and signing them in
+    console.log(email);
     try {
       const res = await axiosInstance.post(
         `${import.meta.env.VITE_BASE_URL}/api/company/verifyuser`,
         { email }
       );
-      console.log(res?.data._id);
-      setLoggedInUser(res?.data._id);
-      navigate(`/profile/${res.data._id}`);
+      console.log(res);
+      // setLoggedInUser(res?.data._id);
+      localStorage.setItem("accessToken", res.data.token);
+      localStorage.setItem("IsUser", JSON.stringify(res.data.user));
+      dispatch(
+        setUserAuth({
+          user: res.data.user,
+          token: res.data.token,
+        })
+      );
+      navigate(`/home`);
+
     } catch (err) {
+      console.log("Error", err);
       // adding new user
-      const { stakeholder, type } = newUser;
-      try {
-        const res = await axiosInstance.post(
-          `${import.meta.env.VITE_BASE_URL}/api/company/register`,
-          {
-            name,
-            email,
-            pfp: picture,
-            stakeholder,
-            type,
-          }
-        );
-        console.log(res.data);
-        navigate(`/googlesignup/${res.data._id}`);
-      } catch (err) {
-        console.log(err);
-      }
+      // const { stakeholder, type } = newUser;
+      // try {
+      //   const res = await axiosInstance.post(
+      //     `${import.meta.env.VITE_BASE_URL}/api/company/register`,
+      //     {
+      //       name,
+      //       email,
+      //       pfp: picture,
+      //       stakeholder,
+      //       type,
+      //     }
+      //   );
+      //   console.log(res.data);
+      //   navigate(`/googlesignup/${res.data._id}`);
+      // } catch (err) {
+      //   console.log(err);
+      // }
     }
   };
   useEffect(() => {
@@ -154,9 +165,8 @@ const SignUp = () => {
       navigator.geolocation.getCurrentPosition((position) => {
         const latitude = position.coords.latitude;
         const longitude = position.coords.longitude;
-        const geoUrl = `http://dataservice.accuweather.com/locations/v1/cities/geoposition/search?apikey=${
-          import.meta.env.VITE_ACCUWEATHER_KEY
-        }&q=${latitude}%2C${longitude}`;
+        const geoUrl = `http://dataservice.accuweather.com/locations/v1/cities/geoposition/search?apikey=${import.meta.env.VITE_ACCUWEATHER_KEY
+          }&q=${latitude}%2C${longitude}`;
         fetch(geoUrl)
           .then((res) => res.json())
           .then((data) => {
@@ -190,6 +200,7 @@ const SignUp = () => {
     setNewUser((prev) => {
       return { ...prev, [e.target.name]: e.target.value };
     });
+    // console.log(e.target.name, e.target.value);
   };
 
   const handleSignUpChange = () => {
@@ -245,17 +256,32 @@ const SignUp = () => {
       } else {
         setIsLoading(true);
         let pfpUrl, coverPicUrl;
-        if (pfp) pfpUrl = await upload(pfp);
-        if (coverPic) coverPicUrl = await upload(coverPic);
+        // if (pfp) pfpUrl = await upload(pfp);
+        // if (coverPic) coverPicUrl = await upload(coverPic);
+        if (pfp) {
+          const base64 = await getBase64(pfp);
 
+          const response = await axiosInstance.post(`${import.meta.env.VITE_BASE_URL}/api/company/uploadImage`, {
+            image: base64,
+          })
+          console.log(response.data.url);
+          pfpUrl = response.data.url
+        }
+        if (coverPic) {
+          const base64 = await getBase64(coverPic);
+          const response = await axiosInstance.post(`${import.meta.env.VITE_BASE_URL}/api/company/uploadImage`, {
+            image: base64,
+          })
+          coverPicUrl = response.data.url
+        }
         try {
           const res = await axiosInstance.post(
             `${import.meta.env.VITE_BASE_URL}/api/company/register`,
             {
               ...newUser,
-              pfp: pfpUrl?.toString(),
+              pfp: pfpUrl,
               type: newType !== "" ? newType : newUser.type,
-              coverPic: coverPicUrl?.toString(),
+              coverPic: coverPicUrl,
               tags: tags,
             }
           );
@@ -323,7 +349,7 @@ const SignUp = () => {
       );
 
       res.data.info && setIsLoading(true);
-      // localStorage.setItem("IsUser", JSON.stringify(res.data.info));
+      localStorage.setItem("IsUser", JSON.stringify(res.data.info));
       dispatch(
         setUserAuth({
           user: res.data.info,
@@ -354,16 +380,18 @@ const SignUp = () => {
   const handlePincode = async () => {
     console.log(newUser.pinCode);
     const { data: response } = await axiosInstance.get(
-      `${import.meta.env.VITE_BASE_URL}/api/company/getAddress/${
-        newUser.pinCode
+      `${import.meta.env.VITE_BASE_URL}/api/company/getAddress/${newUser.pinCode
       }`
     );
     // const data = response.data;
     const city = response[0].PostOffice[0].Division;
     const state = response[0].PostOffice[0].State;
-    setNewUser({
-      city: city,
-      state: state,
+    setNewUser((prev) => {
+      return {
+        ...prev,
+        city: city,
+        state: state,
+      };
     });
   };
 
@@ -388,14 +416,14 @@ const SignUp = () => {
         onSubmit={handleSignIn}
       >
         <h1>Sign In</h1>
-        {/* <div className="signupButtons">
+        <div className="signupButtons">
           <div id="googlesignin"></div>
         </div>
         <div className="or">
           <hr />
           <p>Or</p>
           <hr />
-        </div> */}
+        </div>
         <div className="inputs">
           <input
             required
@@ -688,7 +716,7 @@ const SignUp = () => {
             required
             placeholder={`${newUser?.stakeholder} name`}
             type="text"
-            name="companyName"
+            name="name"
             id=""
           />
           <input
@@ -852,7 +880,7 @@ const SignUp = () => {
                 type="submit"
                 name=""
                 id=""
-                // hidden
+              // hidden
               >
                 {" "}
                 Add{" "}

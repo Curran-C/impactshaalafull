@@ -18,7 +18,7 @@ const Notifications = () => {
   useEffect(() => {
     getAllNotificationsAPI()
       .then((response) => {
-        setNotifications(response.data.slice(0, 10));
+        setNotifications(response.slice(0, 10));
       })
       .catch((error) => {
         console.error("Error fetching notifications: ", error);
@@ -47,7 +47,7 @@ const Notifications = () => {
       notification.title === "Collab Request Declined" ||
       notification.title === "Collab Request Accepted"
     ) {
-      navigate(`/collaborations/${id}`);
+      navigate(`/collaborations`);
     }
   };
 

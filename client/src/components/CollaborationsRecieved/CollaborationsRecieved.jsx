@@ -13,24 +13,25 @@ const CollaborationsRecieved = () => {
   const [post, setPosts] = useState([]);
   const [loading, setLoading] = useState(false);
 
+  const [isAccepted, setIsAccepted] = useState(false);
+
   useEffect(() => {
     const getUser = async () => {
       setLoading(true);
       try {
         const resCollabGot = await axiosInstance.get(
-          `${import.meta.env.VITE_BASE_URL}/api/collaboration/singletoId/${
-            authUser._id
+          `${import.meta.env.VITE_BASE_URL}/api/collaboration/singletoId/${authUser._id
           }`
         );
-        setCollabs(resCollabGot.data);
+        const requestedCollabs = resCollabGot.data.filter(collab => collab.completed === 'requested');
+        setCollabs(requestedCollabs);
         console.log(resCollabGot.data);
         console.log("first");
-        resCollabGot.data?.map(async (collab) => {
+        requestedCollabs?.map(async (collab) => {
           try {
             console.log(collab.fromId);
             const resFromUser = await axiosInstance.get(
-              `${import.meta.env.VITE_BASE_URL}/api/company/getuser/${
-                collab.fromId
+              `${import.meta.env.VITE_BASE_URL}/api/company/getuser/${collab.fromId
               }`
             );
             setFromUsers((prev) => [...prev, resFromUser?.data]);
@@ -46,7 +47,8 @@ const CollaborationsRecieved = () => {
       }
     };
     getUser();
-  }, []);
+  }, [isAccepted]);
+
   return (
     <div className="collaborationsRecieved">
       {fromUsers?.map((user, index) => (
@@ -54,10 +56,15 @@ const CollaborationsRecieved = () => {
           key={index}
           user={user}
           post={post[index]}
-          collabId={collabs[index]._id}
+          collabId={collabs[index]?._id}
           page={"collabsRecieved"}
+          setIsAccepted={setIsAccepted}
+          isAccepted={isAccepted}
         />
       ))}
+      {!loading && fromUsers?.length === 0 &&
+        <p style={{ marginTop: "20px" }}><strong>No Recevied collabs</strong></p>
+      }
       <Spin spinning={loading && !fromUsers?.length} />
     </div>
   );

@@ -58,6 +58,8 @@ const companySchema = new Schema(
     pfp: {
       type: String,
       // required: true,
+      default:
+        "https://res.cloudinary.com/drjt9guif/image/upload/v1692264454/TheCapitalHub/users/default-user-avatar_fe2ky5.webp",
     },
     coverPic: {
       type: String,
@@ -131,7 +133,7 @@ const companySchema = new Schema(
     },
   },
   {
-      stamps: true,
+    stamps: true,
   }
 );
 

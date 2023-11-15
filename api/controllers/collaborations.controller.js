@@ -114,3 +114,36 @@ export const getCollabs = async (req, res) => {
     res.status(500).send(err);
   }
 };
+
+export const isCollabSent = async (req, res) => {
+  try {
+    const fromId = req.params.fromId;
+    const toId = req.params.toId;
+    const postId = req.params.postId;
+    const existingCollab = await Collaboration.findOne({
+      fromId: fromId,
+      toId: toId,
+      postId: postId
+    });
+    const isSent = !!existingCollab;
+
+    res.status(200).send({
+      isSent: isSent,
+    });
+  } catch (err) {
+    console.error(err);
+    res.status(500).send(err);
+  }
+};
+
+export const getAllOngoingCompletedCollabs = async (req, res) => {
+  try {
+    const ongoingCompletedCollabs = await Collaboration.find({
+      completed: { $in: ['ongoing', 'completed'] }
+    });
+    const ongoingCompletedCollabsIds = ongoingCompletedCollabs.map(collab => collab.postId);
+    res.status(200).send(ongoingCompletedCollabsIds);
+  } catch (err) {
+    res.status(500).send(err);
+  }
+};

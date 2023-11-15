@@ -7,6 +7,8 @@ import {
   getSingleCollab,
   updateCollab,
   getCollabs,
+  isCollabSent,
+  getAllOngoingCompletedCollabs,
 } from "../controllers/collaborations.controller.js";
 import { authenticateUser } from "../middlewares/authenticateUsers.js";
 
@@ -25,5 +27,8 @@ router.get("/all", getAllCollab);
 router.get("/singletoId/:id", getCollabWithToId);
 router.get("/singlefromId/:id", getCollabWithFromId);
 
+
+router.get("/isCollabSent/:fromId/:toId/:postId", isCollabSent);
+router.get("/getAllOngoingCompletedCollabs", getAllOngoingCompletedCollabs);
 
 export default router;
