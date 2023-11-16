@@ -8,7 +8,7 @@
     "build": "vite build",
     "lint": "eslint src --ext js,jsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview",
-    "deploy": "npm run build && aws s3 sync dist/ s3://impactshaala-testsite.tech"
+    "deploy": "npm run build && aws s3 sync dist/ s3://test.impactshaala-testsite.tech"
   },
   "dependencies": {
     "@emailjs/browser": "^3.11.0",
