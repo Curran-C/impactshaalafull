@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { upload } from "../../../../api/utils/upload";
+// import { upload } from "../../../../api/utils/upload";
 import "./GetCreditScore.scss";
 import axiosInstance from "../../utils/service";
 const GetCreditScore = ({ onCancel, collabId }) => {
@@ -7,7 +7,7 @@ const GetCreditScore = ({ onCancel, collabId }) => {
 
   const handleUpload = async () => {
     let documentUrl;
-    if (document) documentUrl = await upload(document);
+    // if (document) documentUrl = await upload(document);
     console.log(documentUrl?.toString());
     try {
       const res = await axiosInstance.post(

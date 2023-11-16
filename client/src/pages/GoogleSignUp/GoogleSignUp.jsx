@@ -3,7 +3,7 @@ import "./googleSignup.scss";
 import axiosInstance from "../../utils/service";
 import { gmail } from "../../assets/signUp";
 import { useNavigate, useParams } from "react-router-dom";
-import { upload } from "../../../../api/utils/upload";
+// import { upload } from "../../../../api/utils/upload";
 import {
   citizenOptions,
   corporateOptions,
@@ -40,13 +40,13 @@ const GoogleSignUp = () => {
   const handleFormSubmit = async (e) => {
     e.preventDefault();
     console.log(updatedUser);
-    const coverPicUrl = await upload(coverImg);
+    // const coverPicUrl = await upload(coverImg);
     try {
       const res = await axiosInstance.post(
         `${import.meta.env.VITE_BASE_URL}/api/company/updateuser/${id}`,
         {
           ...updatedUser,
-          coverPic: coverPicUrl?.toString(),
+          // coverPic: coverPicUrl?.toString(),
           tags: tags,
         }
       );
